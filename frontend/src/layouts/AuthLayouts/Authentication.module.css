@@ -1,0 +1,30 @@
+.main {
+  height: 100vh;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.AuthenticationLeft {
+  background-color: var(--clr-light-grayish-blue);
+}
+
+.AuthenticationRight {
+  padding: calc(var(--space-2xl) * 2);
+  overflow: auto;
+  height: 100%;
+  grid-gap: calc(var(--space-2xl) * 2);
+}
+
+@media (max-width: 991px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .AuthenticationRight {
+    margin: auto 0;
+    height: auto;
+  }
+
+  .AuthenticationLeft {
+    display: none;
+  }
+}

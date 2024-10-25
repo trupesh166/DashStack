@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const Aside = () => {
-    const location = useLocation();
-    const [currentPage, setCurrentPage] = useState(location.pathname);
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState(location.pathname);
 
-    useEffect(() => {
-        switch (location.pathname) {
-            case "/":
-                setCurrentPage("/");
-                break;
-            default:
-                break;
-        }
-    }, [location.pathname]);
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setCurrentPage("/");
+        break;
+      default:
+        break;
+    }
+  }, [location.pathname]);
 
-    return { currentPage };
+  return { currentPage };
 };

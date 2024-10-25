@@ -1,11 +1,10 @@
+import { RouterProvider } from "react-router-dom";
+
+import DashStackRoute from "./routes";
+import "./assets/css/style.css";
 
 function App() {
-
-  return (
-    <>
-      <h1>shfdghj</h1>
-    </>
-  )
+  return <RouterProvider router={DashStackRoute} />;
 }
 
-export default App
+export default App;

@@ -1,56 +1,77 @@
 import Icons from "@/constants/Icons";
+import { NavLink } from "react-router-dom";
 
-function getItem(label, key, icon, path) {
+const getItem = (label, key, icon, path, children, type) => {
+  const wrappedLabel = path ? <NavLink to={path}>{label}</NavLink> : label;
   return {
     key,
-    label,
     icon,
-    path,
+    children,
+    label: wrappedLabel,
+    type,
   };
-}
+};
 
 export const AdminAsideData = [
-  getItem("Dashboard", "dashboard", Icons.NotificationBall, "/dashboard"),
+  getItem("Dashboard", "/admin", Icons.NotificationBall, "/admin"),
   getItem(
     "Resident Management",
     "resident_management",
     Icons.NotificationBall,
-    "/residents"
+    "/admin/residents"
   ),
   getItem(
     "Financial Management",
     "financial_management",
     Icons.NotificationBall,
-    "/financial",
+    null,
     [
-      getItem("Income", "income", null, "/financial/income"),
-      getItem("Expense", "expense", null, "/financial/expense"),
-      getItem("Note", "note", null, "/financial/note"),
+      getItem("Income", "income", null, "/admin/financial/income"),
+      getItem("Expense", "expense", null, "/admin/financial/expense"),
+      getItem("Note", "note", null, "/admin/financial/note"),
     ]
   ),
   getItem(
     "Facility Management",
     "facility_management",
     Icons.NotificationBall,
-    "/facility"
+    "/admin/facility"
   ),
   getItem(
     "Complaint Tracking",
     "complaint_tracking",
     Icons.NotificationBall,
-    "/complaints"
+    null,
+    [
+      getItem("Create Complaint", "income", null, "/admin/financial/income"),
+      getItem("Request Tracking", "expense", null, "/admin/financial/expense"),
+    ]
   ),
   getItem(
     "Security Management",
     "security_management",
     Icons.NotificationBall,
-    "/security"
+    null,
+    [
+      getItem("Visitor Logs", "income", null, "/admin/financial/income"),
+      getItem(
+        "Security Protocols",
+        "expense",
+        null,
+        "/admin/financial/expense"
+      ),
+    ]
   ),
-  getItem("Security Guard", "security_guard", Icons.NotificationBall, "/guard"),
+  getItem(
+    "Security Guard",
+    "security_guard",
+    Icons.NotificationBall,
+    "/admin/guard"
+  ),
   getItem(
     "Announcement",
     "announcement",
     Icons.NotificationBall,
-    "/announcement"
+    "/admin/announcement"
   ),
 ];

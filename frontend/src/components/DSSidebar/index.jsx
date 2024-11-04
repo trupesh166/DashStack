@@ -1,12 +1,12 @@
-import { Layout, Menu } from "antd";
-import clsx from "clsx";
 import { Link } from "react-router-dom";
+import clsx from "clsx";
+import { Layout, Menu } from "antd";
 import { Aside } from "@/hook";
 import styles from "./DSSidebar.module.css";
 
 const { Sider } = Layout;
 
-export const DSSidebar = ({ collapsed, className,  items }) => {
+export const DSSidebar = ({ collapsed, className, items }) => {
   const { currentPage } = Aside();
 
   return (

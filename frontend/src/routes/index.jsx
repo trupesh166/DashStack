@@ -23,11 +23,75 @@ const DashStackRoute = createBrowserRouter(
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,
-              children: [{ index: true, element: <AdminDashBoard /> }],
+              children: [
+                {
+                  index: true,
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "residents",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "financial",
+                  children: [
+                    {
+                      path: "income",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "expense",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "note",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "facility",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "complaint",
+                  children: [
+                    {
+                      path: "create",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "request",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "security",
+                  children: [
+                    {
+                      path: "visitors",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "protocols",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "guard",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "announcement",
+                  element: <AdminDashBoard />,
+                },
+              ],
             },
             {
-              path: "register",
-              element: "register user",
+              element: <AuthLayouts />,
+              children: [{ path: "register", element: "register user" }],
             },
           ],
         },

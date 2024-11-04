@@ -6,7 +6,7 @@
 
   /* RGBA */
   --clr-primary-rgb: 254, 81, 46;
-  --clr-gray-rgb: ;
+  --clr-gray-rgb: 79 79 79;
 
   /* Colors */
   --clr-primary: rgb(var(--clr-primary-rgb), 1);
@@ -15,13 +15,13 @@
   --clr-white: #ffffff;
   --clr-black: #000000;
   --clr-dark: #202224;
+  --clr-gray: rgba(var(--clr-gray-rgb), 1);
 
   --clr-success: #39973d;
   --clr-warning: #ffc313;
   --clr-danger: #e74c3c;
 
   /* Extra Colors */
-  --clr-gray: #a7a7a7;
   --clr-cult: #5678e9;
   --clr-pearl: #f6f8fb;
   --clr-fuchsia: #eb37c3;

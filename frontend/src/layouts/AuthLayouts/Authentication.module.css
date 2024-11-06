@@ -22,8 +22,7 @@
 
 .AuthenticationRight {
   padding: calc(var(--space-2xl) * 2);
-  overflow: auto;
-  height: 100%;
+  height: 100vh;
   grid-gap: calc(var(--space-2xl) * 2);
 }
 
@@ -32,6 +31,8 @@
   border-radius: var(--space-lg);
   border: 1px solid var(--clr-pearl);
   padding: 5rem;
+  overflow: auto;
+  box-shadow: 0px 0px 25px 0px #00000008; 
 }
 
 @media (max-width: 991px) {

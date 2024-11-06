@@ -1,7 +1,16 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
-import { AdminAsideData } from "@/constants";
+import { createBrowserRouter } from "react-router-dom";
+import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
 import { AdminDashBoard } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
+import {
+  CheckBox,
+  DSButtons,
+  DSIcons,
+  Inputs,
+  Modal,
+  Tabs,
+} from "../pages/Styleguide";
+import { Login, Register } from "../pages/Auth";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -91,7 +100,7 @@ const DashStackRoute = createBrowserRouter(
             },
             {
               element: <AuthLayouts />,
-              children: [{ path: "register", element: "register user" }],
+              children: [{ path: "register", element: <Register /> }],
             },
           ],
         },
@@ -111,7 +120,7 @@ const DashStackRoute = createBrowserRouter(
           children: [
             {
               path: "login",
-              element: "Login",
+              element: <Login />,
             },
             {
               path: "forgot-password",
@@ -131,9 +140,8 @@ const DashStackRoute = createBrowserRouter(
     },
     {
       /* StyleGuide Routes */
-      path: "StyleGuide",
-      // element: <StyleGuideLayout items={StyleGuideAsideMenu} />,
-      element: <Outlet />,
+      path: "style-guide",
+      element: <DashboardLayout items={StyleGuideAsideMenu} />,
       children: [
         {
           index: true,
@@ -141,19 +149,19 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "button",
-          element: "button",
+          element: <DSButtons />,
         },
         {
           path: "input",
-          element: "input",
+          element: <Inputs />,
         },
         {
           path: "checkbox",
-          element: "checkbox",
+          element: <CheckBox />,
         },
         {
           path: "modal",
-          element: "modal",
+          element: <Modal />,
         },
         {
           path: "table",
@@ -161,11 +169,11 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "icons",
-          element: "icons",
+          element: <DSIcons />,
         },
         {
           path: "tabs",
-          element: "tabs",
+          element: <Tabs />,
         },
         {
           path: "tags",

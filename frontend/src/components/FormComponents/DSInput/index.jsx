@@ -20,6 +20,7 @@ export const DSInput = ({
   parentClassName,
   labelClassName,
   rootClassName,
+  require,
   ...rest
 }) => {
   return (
@@ -27,9 +28,9 @@ export const DSInput = ({
       {label && (
         <label
           htmlFor={id}
-          className={clsx(styles.label, labelClassName, "position-absolute")}
+          className={clsx(styles.label, "d-flex", labelClassName)}
         >
-          {label}
+          {label} {require && <span className="d-block clr-danger">*</span>}
         </label>
       )}
       <Input
@@ -71,6 +72,7 @@ export const DSPasswordInput = ({
   parentClassName,
   labelClassName,
   rootClassName,
+  require,
   ...rest
 }) => {
   const finalClassName = {
@@ -81,13 +83,12 @@ export const DSPasswordInput = ({
       {label && (
         <label
           htmlFor={id}
-          className={clsx(styles.label, labelClassName, "position-absolute")}
+          className={clsx(styles.label, "d-flex", labelClassName)}
         >
-          {label}
+          {label} {require && <span className="d-block clr-danger">*</span>}
         </label>
       )}
       <Input.Password
-        className={clsx(styles.inputWrap, rootClassName)}
         id={id}
         size={size}
         value={value}

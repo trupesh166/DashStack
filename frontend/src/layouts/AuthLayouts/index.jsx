@@ -4,7 +4,7 @@ import styles from "./Authentication.module.css";
 
 import { Outlet } from "react-router-dom";
 
-export const AuthLayouts = ({ Title }) => {
+export const AuthLayouts = () => {
   return (
     <Layout className={clsx(styles.main, "d-grid bg-white")}>
       <div className={clsx(styles.AuthenticationLeft, "position-relative")}>

@@ -5,8 +5,8 @@
     -apple-system;
 
   /* RGBA */
-  --clr-primary-rgb: 254, 81, 46;
-  --clr-gray-rgb: ;
+  --clr-primary-rgb: 231, 76, 60;
+  --clr-gray-rgb: 79, 79, 79;
 
   /* Colors */
   --clr-primary: rgb(var(--clr-primary-rgb), 1);
@@ -15,13 +15,13 @@
   --clr-white: #ffffff;
   --clr-black: #000000;
   --clr-dark: #202224;
+  --clr-gray: rgba(var(--clr-gray-rgb), 1);
 
   --clr-success: #39973d;
   --clr-warning: #ffc313;
   --clr-danger: #e74c3c;
 
   /* Extra Colors */
-  --clr-gray: #a7a7a7;
   --clr-gray_2: #4f4f4f;
   --clr-cult: #5678e9;
   --clr-pearl: #f6f8fb;
@@ -36,9 +36,16 @@
 
   /* Gradients Colors */
   --clr-primary-gradient: linear-gradient(90deg, #fe512e 0%, #f09619 100%);
-  --clr-pink-gradient: linear-gradient(255.6deg,
-      #eb37c3 7.71%,
-      rgba(255, 255, 255, 0) 18.54%);
+  --clr-primary-gradient-hover: linear-gradient(
+    180deg,
+    #fe512e 0%,
+    #f09619 100%
+  );
+  --clr-pink-gradient: linear-gradient(
+    255.6deg,
+    #eb37c3 7.71%,
+    rgba(255, 255, 255, 0) 18.54%
+  );
 
   /* Header Height */
   --header-height: 8rem;

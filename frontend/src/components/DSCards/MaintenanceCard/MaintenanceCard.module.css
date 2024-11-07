@@ -1,0 +1,108 @@
+.maintenanceCard {
+  width: 370px;
+  height: 305px;
+}
+
+.cardTitle {
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--clr-cult);
+  padding: 12px 15px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.cardTitle>p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.cardTitle>button {
+  width: 113px;
+  height: 31px;
+  color: var(--clr-white);
+  background-color: var(--clr-periwinkle);
+  border: none;
+  border-radius: 58px;
+  padding: 5px 12px;
+}
+
+.cardDetails {
+  height: 251px;
+  border-radius: 0px 0px 10px 10px;
+  border: 1px solid var(--clr-periwinkle);
+  padding: 15px;
+  gap: 10px;
+}
+
+.cardBox {
+  width: 340px;
+  height: 221px;
+  gap: 10px;
+}
+
+.cardContent {
+  height: 160px;
+  gap: 10px;
+}
+
+.billDetails>.billDate>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.billDetails>.billDate>div>p {
+  height: 21px;
+  color: var(--clr-gray_2);
+}
+
+.billDetails>.billDate>div>span {
+  height: 21px;
+  color: var(--clr-gray);
+}
+
+hr {
+  margin: 15px 0px;
+  border-top: 1px solid var(--clr-Pearl);
+}
+
+.billDetails>.billAmount>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.billDetails>.billAmount>div>p {
+  height: 21px;
+  color: var(--clr-gray_2);
+}
+
+.billDetails>.billAmount>div>span {
+  height: 21px;
+  color: var(--clr-danger);
+}
+
+.billTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.paymentButton>button {
+  width: 340px;
+  height: 51px;
+  font-size: 18px;
+  font-weight: 500;
+  background: var(--clr-primary-gradient);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}

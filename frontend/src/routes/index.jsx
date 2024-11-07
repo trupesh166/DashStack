@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import { AdminAsideData } from "@/constants";
 import { AdminDashBoard } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
+import MaintenanceCard from "../components/DSCards/MaintenanceCard";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -106,6 +107,10 @@ const DashStackRoute = createBrowserRouter(
         {
           path: "tags",
           element: "tags",
+        },
+        {
+          path: "cards",
+          element: "cards",
         },
       ],
     },

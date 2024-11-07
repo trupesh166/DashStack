@@ -1,0 +1,48 @@
+.arleneMcCoy {
+  display: flex;
+  gap: 25px;
+}
+
+.arleneMcCoyCard {
+  width: 370px;
+  height: 213px;
+}
+
+.cardTitle {
+  width: 100%;
+  height: 54px;
+  background-color: var(--clr-cult);
+  padding: 12px 15px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.cardTitle>p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--clr-white);
+}
+
+.cardDetails {
+  height: 159px;
+  border-radius: 0px 0px 10px 10px;
+  border: 1px solid var(--clr-periwinkle);
+  padding: 15px;
+  gap: 10px;
+}
+
+.cardDetails>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  height: 25px;
+}
+
+.cardDetails>div>p {
+  color: var(--clr-gray_2);
+}
+
+.cardDetails>div>span {
+  color: var(--clr-dark);
+}

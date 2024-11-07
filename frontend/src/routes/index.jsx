@@ -180,6 +180,10 @@ const DashStackRoute = createBrowserRouter(
           path: "tags",
           element: "tags",
         },
+        {
+          path: "cards",
+          element: "cards",
+        },
       ],
     },
     {

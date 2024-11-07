@@ -6,6 +6,7 @@ import {
   CheckBox,
   DSButtons,
   DSIcons,
+  FontFamily,
   Inputs,
   Modal,
   Tabs,
@@ -145,7 +146,7 @@ const DashStackRoute = createBrowserRouter(
       children: [
         {
           index: true,
-          element: "Home",
+          element: <FontFamily />,
         },
         {
           path: "button",

@@ -5,8 +5,8 @@
     -apple-system;
 
   /* RGBA */
-  --clr-primary-rgb: 254, 81, 46;
-  --clr-gray-rgb: 79 79 79;
+  --clr-primary-rgb: 231, 76, 60;
+  --clr-gray-rgb: 79, 79, 79;
 
   /* Colors */
   --clr-primary: rgb(var(--clr-primary-rgb), 1);
@@ -35,6 +35,11 @@
 
   /* Gradients Colors */
   --clr-primary-gradient: linear-gradient(90deg, #fe512e 0%, #f09619 100%);
+  --clr-primary-gradient-hover: linear-gradient(
+    180deg,
+    #fe512e 0%,
+    #f09619 100%
+  );
   --clr-pink-gradient: linear-gradient(
     255.6deg,
     #eb37c3 7.71%,

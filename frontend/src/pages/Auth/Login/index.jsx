@@ -19,7 +19,9 @@ export const Login = () => {
             <Link to="/forgot-password">Forgot Password ?</Link>
           </div>
         </div>
-        <DSButton block>Sign In</DSButton>
+        <DSButton variant={"primary"} block>
+          Sign In
+        </DSButton>
         <h6 className="text-center fw-normal">
           Don't have an account?{" "}
           <Link to={"/admin/register"}>Registration</Link>

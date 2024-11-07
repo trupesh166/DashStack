@@ -4,11 +4,11 @@ export const CheckBox = () => {
   return (
     <>
       <div>
-        <h2>Without Lable</h2>
+        <h3>Without Label</h3>
         <DSCheckbox></DSCheckbox>
       </div>
       <div>
-        <h2>With Lable</h2>
+        <h3>With Label</h3>
         <DSCheckbox>Hello</DSCheckbox>
       </div>
     </>

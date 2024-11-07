@@ -1,5 +1,6 @@
-import { DSButton, DSModal, DSSuccessModal } from "@/components";
+import { DSButton, DSModal } from "@/components";
 import { useState } from "react";
+import { DeleteModal } from "../../../components/DSModalComponents/ModalTemplate";
 
 export const Modal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,12 +26,15 @@ export const Modal = () => {
       </div>
       <div>
         <DSButton onClick={() => setIsSuccessOpen(true)}>
-          Open Success Modal Button
+          Open Delete Number Modal
         </DSButton>
-        <DSSuccessModal
-          open={isSuccessOpen}
+        <DeleteModal
+          Title={"Delete Number?"}
+          isModalOpen={isSuccessOpen}
           handleClose={() => setIsSuccessOpen(false)}
-        />
+        >
+          Are you sure you want to delate this complain?
+        </DeleteModal>
       </div>
     </>
   );

@@ -58,7 +58,7 @@ export const Register = () => {
           I agree to all the Terms and{" "}
           <Link to="/privacy-policies">Privacy Policies</Link>.
         </DSCheckbox>
-        <DSButton block>Register</DSButton>
+        <DSButton  variant={"primary"} block>Register</DSButton>
         <h6 className="text-center fw-normal">
           Already have an account? <Link to={"/login"}>Login</Link>
         </h6>

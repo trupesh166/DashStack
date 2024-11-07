@@ -34,6 +34,7 @@ export const Inputs = () => {
         <h5>isInvalid Password Input</h5>
         <DSPasswordInput
           isInvalid={true}
+          value="Hello"
           errorMessage={"password is wrong"}
           placeholder={"hello This the demo"}
         />
@@ -42,6 +43,7 @@ export const Inputs = () => {
         <h5>isInvalid Input</h5>
         <DSInput
           isInvalid={true}
+          value="Hello"
           errorMessage={"input is invalid"}
           placeholder={"hello This the demo"}
         />

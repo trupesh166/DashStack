@@ -1,8 +1,17 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
-import { AdminAsideData } from "@/constants";
+import { createBrowserRouter } from "react-router-dom";
+import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
 import { AdminDashBoard } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
-import MaintenanceCard from "../components/DSCards/MaintenanceCard";
+import {
+  CheckBox,
+  DSButtons,
+  DSIcons,
+  FontFamily,
+  Inputs,
+  Modal,
+  Tabs,
+} from "../pages/Styleguide";
+import { Login, Register } from "../pages/Auth";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -24,11 +33,75 @@ const DashStackRoute = createBrowserRouter(
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,
-              children: [{ index: true, element: <AdminDashBoard /> }],
+              children: [
+                {
+                  index: true,
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "residents",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "financial",
+                  children: [
+                    {
+                      path: "income",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "expense",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "note",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "facility",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "complaint",
+                  children: [
+                    {
+                      path: "create",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "request",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "security",
+                  children: [
+                    {
+                      path: "visitors",
+                      element: <AdminDashBoard />,
+                    },
+                    {
+                      path: "protocols",
+                      element: <AdminDashBoard />,
+                    },
+                  ],
+                },
+                {
+                  path: "guard",
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "announcement",
+                  element: <AdminDashBoard />,
+                },
+              ],
             },
             {
-              path: "register",
-              element: "register user",
+              element: <AuthLayouts />,
+              children: [{ path: "register", element: <Register /> }],
             },
           ],
         },
@@ -48,7 +121,7 @@ const DashStackRoute = createBrowserRouter(
           children: [
             {
               path: "login",
-              element: "Login",
+              element: <Login />,
             },
             {
               path: "forgot-password",
@@ -68,29 +141,28 @@ const DashStackRoute = createBrowserRouter(
     },
     {
       /* StyleGuide Routes */
-      path: "StyleGuide",
-      // element: <StyleGuideLayout items={StyleGuideAsideMenu} />,
-      element: <Outlet />,
+      path: "style-guide",
+      element: <DashboardLayout items={StyleGuideAsideMenu} />,
       children: [
         {
           index: true,
-          element: "Home",
+          element: <FontFamily />,
         },
         {
           path: "button",
-          element: "button",
+          element: <DSButtons />,
         },
         {
           path: "input",
-          element: "input",
+          element: <Inputs />,
         },
         {
           path: "checkbox",
-          element: "checkbox",
+          element: <CheckBox />,
         },
         {
           path: "modal",
-          element: "modal",
+          element: <Modal />,
         },
         {
           path: "table",
@@ -98,11 +170,11 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "icons",
-          element: "icons",
+          element: <DSIcons />,
         },
         {
           path: "tabs",
-          element: "tabs",
+          element: <Tabs />,
         },
         {
           path: "tags",

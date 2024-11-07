@@ -16,8 +16,11 @@ export const DSModal = ({
   closeOnOutsideClick,
   handleCancel,
   handleContent,
+  danger,
+  loading,
   IsCloseIcon = false,
   IsFooter = false,
+  disabledButton = true,
   ...rest
 }) => {
   const finalClassName = {
@@ -34,18 +37,30 @@ export const DSModal = ({
       rootClassName={styles.modalParent}
       open={open}
       className={clsx(styles.modal, className)}
-      title={title}
+      title={<h3>{title}</h3>}
       onCancel={handleCancel}
       maskClosable={closeOnOutsideClick}
       width={width}
+      loading={loading}
       footer={
         IsFooter &&
         (() => (
-          <div className="d-flex align-items-center gap-xl justify-content-center">
+          <div
+            className={clsx(
+              styles.Footer,
+              "d-flex align-items-center justify-content-center"
+            )}
+          >
             <DSButton block onClick={handleClose}>
               Cancel
             </DSButton>
-            <DSButton block variant={"primary"} onClick={handleOk}>
+            <DSButton
+              block
+              onClick={handleOk}
+              disabled={disabledButton}
+              variant={disabledButton == false ? "primary" : ""}
+              danger={danger}
+            >
               {handleContent}
             </DSButton>
           </div>

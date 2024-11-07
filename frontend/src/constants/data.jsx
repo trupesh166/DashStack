@@ -1,56 +1,116 @@
 import Icons from "@/constants/Icons";
+import { NavLink } from "react-router-dom";
 
-function getItem(label, key, icon, path) {
+const getItem = (label, key, icon, path, children) => {
+  const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
+
   return {
     key,
-    label,
     icon,
-    path,
+    children,
+    label: wrappedLabel,
   };
-}
+};
 
 export const AdminAsideData = [
-  getItem("Dashboard", "dashboard", Icons.NotificationBall, "/dashboard"),
+  getItem("Dashboard", "/admin", Icons.Dashboard, "/admin"),
   getItem(
     "Resident Management",
-    "resident_management",
-    Icons.NotificationBall,
-    "/residents"
+    "/admin/residents",
+    Icons.Money,
+    "/admin/residents"
   ),
   getItem(
     "Financial Management",
     "financial_management",
-    Icons.NotificationBall,
-    "/financial",
+    Icons.DollarSquare,
+    null,
     [
-      getItem("Income", "income", null, "/financial/income"),
-      getItem("Expense", "expense", null, "/financial/expense"),
-      getItem("Note", "note", null, "/financial/note"),
+      getItem(
+        "Income",
+        "/admin/financial/income",
+        null,
+        "/admin/financial/income"
+      ),
+      getItem(
+        "Expense",
+        "/admin/financial/expense",
+        null,
+        "/admin/financial/expense"
+      ),
+      getItem("Note", "/admin/financial/note", null, "/admin/financial/note"),
     ]
   ),
   getItem(
     "Facility Management",
-    "facility_management",
-    Icons.NotificationBall,
-    "/facility"
+    "/admin/facility",
+    Icons.Building,
+    "/admin/facility"
   ),
-  getItem(
-    "Complaint Tracking",
-    "complaint_tracking",
-    Icons.NotificationBall,
-    "/complaints"
-  ),
+  getItem("Complaint Tracking", "complaint_tracking", Icons.SmsTracking, null, [
+    getItem(
+      "Create Complaint",
+      "/admin/complaint/create",
+      null,
+      "/admin/complaint/create"
+    ),
+    getItem(
+      "Request Tracking",
+      "/admin/complaint/request",
+      null,
+      "/admin/complaint/request"
+    ),
+  ]),
   getItem(
     "Security Management",
     "security_management",
-    Icons.NotificationBall,
-    "/security"
+    Icons.ShieldSecurity,
+    null,
+    [
+      getItem(
+        "Visitor Logs",
+        "/admin/security/visitors",
+        null,
+        "/admin/security/visitors"
+      ),
+      getItem(
+        "Security Protocols",
+        "/admin/security/protocols",
+        null,
+        "/admin/security/protocols"
+      ),
+    ]
   ),
-  getItem("Security Guard", "security_guard", Icons.NotificationBall, "/guard"),
+  getItem(
+    "Security Guard",
+    "/admin/guard",
+    Icons.SecurityGuard,
+    "/admin/guard"
+  ),
   getItem(
     "Announcement",
-    "announcement",
-    Icons.NotificationBall,
-    "/announcement"
+    "/admin/announcement",
+    Icons.Announcement,
+    "/admin/announcement"
   ),
+];
+
+const StyleGuideGetItem = (label, key, path, children) => {
+  const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
+
+  return {
+    key,
+    children,
+    label: wrappedLabel,
+  };
+};
+
+export const StyleGuideAsideMenu = [
+  StyleGuideGetItem("Home", "/style-guide", "/style-guide"),
+  StyleGuideGetItem("Input", "/style-guide/input", "/style-guide/input"),
+  StyleGuideGetItem("Button", "/style-guide/button", "/style-guide/button"),
+  StyleGuideGetItem("CheckBox", "/style-guide/checkBox", "/style-guide/checkBox"),
+  StyleGuideGetItem("Icons", "/style-guide/icons", "/style-guide/icons"),
+  StyleGuideGetItem("Modal", "/style-guide/modal", "/style-guide/modal"),
+  StyleGuideGetItem("Tab", "/style-guide/tabs", "/style-guide/tabs"),
 ];

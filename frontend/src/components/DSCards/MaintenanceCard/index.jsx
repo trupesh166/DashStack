@@ -1,54 +1,48 @@
-import React, { useState } from 'react'
-import style from "./MaintenanceCard.module.css"
+import React, { useState } from "react";
+import clsx from "clsx";
+import { Card, Divider } from "antd";
+import { DSButton } from "@/components/";
+import Icons from "@/constants/Icons";
 
-const MaintenanceCard = () => {
-
-  const [status, setStatus] = useState(false)
+export const MaintenanceCard = ({
+  date,
+  datePending,
+  maintenance,
+  penalty,
+  total,
+}) => {
+  const [status, setStatus] = useState(false);
 
   return (
-    <div className={style.maintenanceCard}>
-      <div className={style.cardTitle}>
-        <p>Maintenance</p>
-        <button>{status ? "Success" : "Panding"}</button>
+    <Card title="Maintenance" extra={status ? "Success" : "Pending"}>
+      <div className="card-grid">
+        <h6>Bill Date</h6>
+        <h6>{date}</h6>
       </div>
-      <div className={style.cardDetails}>
-        <div className={style.cardBox}>
-          <div className={style.cardContent}>
-            <div className={style.billDetails}>
-              <div className={style.billDate}>
-                <div>
-                  <p>Bill Date</p>
-                  <span>11/04/2024</span>
-                </div>
-                <div>
-                  <p>Pending Date</p>
-                  <span>11/04/2024</span>
-                </div>
-              </div>
-              <hr />
-              <div className={style.billAmount}>
-                <div>
-                  <p>Maintanance Amount</p>
-                  <span>{1000}.00</span>
-                </div>
-                <div>
-                  <p>Maintenance Penalty Amount</p>
-                  <span>{250}.00</span>
-                </div>
-              </div>
-            </div>
-            <div className={style.billTotal}>
-              <p>Grand Total</p>
-              <span>{1250}.00</span>
-            </div>
-          </div>
-          <div className={style.paymentButton}>
-            <button onClick={() => setStatus(!status)}>Pay Now</button>
-          </div>
-        </div>
+      <div className="card-grid">
+        <h6>Pending Date</h6>
+        <h6>{datePending}</h6>
       </div>
-    </div>
-  )
-}
-
-export default MaintenanceCard
+      <Divider />
+      <div className="card-grid">
+        <h6>Maintenance Amount</h6>
+        <h6>{maintenance}</h6>
+      </div>
+      <div className="card-grid">
+        <h6>Maintenance Penalty Amount</h6>
+        <h6>{penalty}</h6>
+      </div>
+      <Divider />
+      <div className="card-grid">
+        <h6 className="fw-semibold">Grand Total</h6>
+        <h6 className="clr-success lh-1 fw-semibold">
+          {Icons.Rupee}
+          {total}
+        </h6>
+      </div>
+      <DSButton block variant="primary" onClick={() => setStatus(!status)}>
+        Pay Now
+      </DSButton>
+    </Card>
+  );
+};

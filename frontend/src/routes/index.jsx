@@ -3,6 +3,7 @@ import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
 import { AdminDashBoard } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
 import {
+  Cards,
   CheckBox,
   DSButtons,
   DSIcons,
@@ -12,6 +13,8 @@ import {
   Tabs,
 } from "../pages/Styleguide";
 import { Login, Register } from "../pages/Auth";
+import { FacilityManagement, Note } from "../pages/Admin";
+import ResidentManagement from "../pages/Admin/ResidentManagement";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -40,7 +43,7 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "residents",
-                  element: <AdminDashBoard />,
+                  element: <ResidentManagement />,
                 },
                 {
                   path: "financial",
@@ -55,13 +58,13 @@ const DashStackRoute = createBrowserRouter(
                     },
                     {
                       path: "note",
-                      element: <AdminDashBoard />,
+                      element: <Note />,
                     },
                   ],
                 },
                 {
                   path: "facility",
-                  element: <AdminDashBoard />,
+                  element: <FacilityManagement />,
                 },
                 {
                   path: "complaint",
@@ -182,7 +185,7 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "cards",
-          element: "cards",
+          element: <Cards />,
         },
       ],
     },

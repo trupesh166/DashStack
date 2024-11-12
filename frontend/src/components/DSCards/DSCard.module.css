@@ -1,0 +1,10 @@
+.card {
+  background-color: var(--clr-white);
+  padding: var(--space-xl);
+  border-radius: var(--space-lg);
+}
+
+.header {
+  margin-bottom: var(--space-xl);
+  gap: var(--space-sm);
+}

@@ -109,8 +109,43 @@ export const StyleGuideAsideMenu = [
   StyleGuideGetItem("Home", "/style-guide", "/style-guide"),
   StyleGuideGetItem("Input", "/style-guide/input", "/style-guide/input"),
   StyleGuideGetItem("Button", "/style-guide/button", "/style-guide/button"),
-  StyleGuideGetItem("CheckBox", "/style-guide/checkBox", "/style-guide/checkBox"),
+  StyleGuideGetItem(
+    "CheckBox",
+    "/style-guide/checkBox",
+    "/style-guide/checkBox"
+  ),
   StyleGuideGetItem("Icons", "/style-guide/icons", "/style-guide/icons"),
   StyleGuideGetItem("Modal", "/style-guide/modal", "/style-guide/modal"),
   StyleGuideGetItem("Tab", "/style-guide/tabs", "/style-guide/tabs"),
+  StyleGuideGetItem("Cards", "/style-guide/cards", "/style-guide/cards"),
+];
+
+export const MemberCardData = [
+  {
+    id: 1,
+    title: "Arlene McCoy",
+    email: "arlenemccoy@gmail.com",
+    phone: "99130 52221",
+    age: 22,
+    gender: "Male",
+    relation: "Brother",
+  },
+  {
+    id: 2,
+    title: "Arlene McCoy",
+    email: "arlenemccoy@gmail.com",
+    phone: "99130 52221",
+    age: 22,
+    gender: "Male",
+    relation: "Brother",
+  },
+  {
+    id: 3,
+    title: "Arlene McCoy",
+    email: "arlenemccoy@gmail.com",
+    phone: "99130 52221",
+    age: 22,
+    gender: "Male",
+    relation: "Brother",
+  },
 ];

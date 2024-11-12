@@ -1,0 +1,25 @@
+.card {
+  max-width: 380px;
+  min-height: 105px;
+  background-color: var(--clr-white);
+  border: none;
+  box-shadow: 3px -3px 0px -1px var(--clr-danger);
+}
+
+.body {
+  max-width: 320px;
+  min-height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail>p {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--font-primary);
+}
+
+.detail>h6 {
+  font-size: 26px;
+}

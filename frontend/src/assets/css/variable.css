@@ -23,6 +23,7 @@
 
   /* Extra Colors */
   --clr-gray_2: #4f4f4f;
+  --clr-silver: #a7a7a7;
   --clr-cult: #5678e9;
   --clr-pearl: #f6f8fb;
   --clr-fuchsia: #eb37c3;
@@ -36,16 +37,12 @@
 
   /* Gradients Colors */
   --clr-primary-gradient: linear-gradient(90deg, #fe512e 0%, #f09619 100%);
-  --clr-primary-gradient-hover: linear-gradient(
-    180deg,
-    #fe512e 0%,
-    #f09619 100%
-  );
-  --clr-pink-gradient: linear-gradient(
-    255.6deg,
-    #eb37c3 7.71%,
-    rgba(255, 255, 255, 0) 18.54%
-  );
+  --clr-primary-gradient-hover: linear-gradient(180deg,
+      #fe512e 0%,
+      #f09619 100%);
+  --clr-pink-gradient: linear-gradient(255.6deg,
+      #eb37c3 7.71%,
+      rgba(255, 255, 255, 0) 18.54%);
 
   /* Header Height */
   --header-height: 8rem;

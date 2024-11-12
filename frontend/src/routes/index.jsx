@@ -14,6 +14,7 @@ import {
 } from "../pages/Styleguide";
 import { Login, Register } from "../pages/Auth";
 import { FacilityManagement, Note } from "../pages/Admin";
+import ResidentManagement from "../pages/Admin/ResidentManagement";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -42,7 +43,7 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "residents",
-                  element: <AdminDashBoard />,
+                  element: <ResidentManagement />,
                 },
                 {
                   path: "financial",

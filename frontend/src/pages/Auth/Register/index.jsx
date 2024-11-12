@@ -10,6 +10,11 @@ import { Link } from "react-router-dom";
 import styles from "./Register.module.css/";
 
 export const Register = () => {
+  const fakeOptions = [
+    { value: "john_doe", label: "John Doe" },
+    { value: "jane_smith", label: "Jane Smith" },
+    { value: "samuel_green", label: "Samuel Green" },
+  ];
   return (
     <>
       <h2>Registration</h2>
@@ -39,6 +44,15 @@ export const Register = () => {
             label={"Select Society"}
             placeholder={"Select Society*"}
             parentClassName={styles.colSpan}
+            dropdownRender={(menu) => (
+              <>
+                {menu}
+                <DSButton variant={"primary"} block>
+                  Add Society
+                </DSButton>
+              </>
+            )}
+            options={fakeOptions}
             require
           />
           <DSPasswordInput
@@ -58,7 +72,9 @@ export const Register = () => {
           I agree to all the Terms and{" "}
           <Link to="/privacy-policies">Privacy Policies</Link>.
         </DSCheckbox>
-        <DSButton  variant={"primary"} block>Register</DSButton>
+        <DSButton variant={"primary"} block>
+          Register
+        </DSButton>
         <h6 className="text-center fw-normal">
           Already have an account? <Link to={"/login"}>Login</Link>
         </h6>

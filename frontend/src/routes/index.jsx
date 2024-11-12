@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
-import { AdminDashBoard } from "@/pages/";
-import { AuthLayouts, DashboardLayout } from "@/layouts";
 import {
+  AdminDashBoard,
   Cards,
   CheckBox,
   DSButtons,
@@ -11,9 +10,15 @@ import {
   Inputs,
   Modal,
   Tabs,
-} from "../pages/Styleguide";
-import { Login, Register } from "../pages/Auth";
-import { FacilityManagement, Note } from "../pages/Admin";
+  FacilityManagement,
+  Note,
+  SecurityGuard,
+  SecurityProtocols,
+  VisitorLogs,
+  Login,
+  Register,
+} from "@/pages/";
+import { AuthLayouts, DashboardLayout } from "@/layouts";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -83,17 +88,17 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "visitors",
-                      element: <AdminDashBoard />,
+                      element: <VisitorLogs />,
                     },
                     {
                       path: "protocols",
-                      element: <AdminDashBoard />,
+                      element: <SecurityProtocols />,
                     },
                   ],
                 },
                 {
                   path: "guard",
-                  element: <AdminDashBoard />,
+                  element: <SecurityGuard />,
                 },
                 {
                   path: "announcement",

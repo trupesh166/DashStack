@@ -59,15 +59,8 @@ export const DSSelect = ({
         className={finalClassName}
         placeholder={placeholder ? placeholder : '"Select a value"'}
         mode={mode}
-        // allowClear={
-        //   allowClear && {
-        //     clearIcon: (
-        //       <div className={styles.clearIcon}> {Icons.CloseCircle} </div>
-        //     ),
-        //   }
-        // }
         popupClassName={styles.selectPopup}
-        // suffixIcon={<span className="clr-black">{Icons.AltArrowDown}</span>}
+        suffixIcon={<span className="clr-black">{Icons.AltArrowDown}</span>}
         disabled={disabled}
         {...rest}
       />

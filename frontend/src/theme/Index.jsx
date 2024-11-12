@@ -48,6 +48,8 @@ const ThemeConfig = ({ children }) => {
             paddingBlock: 14,
             onlyIconSize: 24,
             contentFontSize: 18,
+            controlHeightSM: 40,
+            borderRadiusSM: 10,
             colorError: "var(--clr-primary)",
             colorErrorBg: "var(--clr-primary)",
             defaultActiveBorderColor: "rgb(254,81,46)",

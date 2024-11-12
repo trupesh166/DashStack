@@ -1,5 +1,6 @@
 /* Normal All Pages */
 export { Dashboard as AdminDashBoard } from "./Dashboard/";
+export { ResidentManagement } from "./ResidentManagement/";
 export { FacilityManagement } from "./FacilityManagement/";
 export { SecurityGuard } from "./SecurityGuard/";
 export { Announcement } from "./Announcement/";

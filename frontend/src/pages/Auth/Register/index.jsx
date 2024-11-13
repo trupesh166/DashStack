@@ -44,7 +44,7 @@ export const Register = () => {
           <DSInput label={"Country"} placeholder={"Enter Name"} require />
           <DSInput label={"State"} placeholder={"Enter Name"} require />
           <DSInput label={"City"} placeholder={"Enter Name"} require />
-          <DSInput label={"City"} placeholder={"Enter Name"} require />
+          <DSInput label={"Zip Code"} placeholder={"Enter Zip Code"} require />
           <DSSelect
             label={"Select Society"}
             placeholder={"Select Society*"}

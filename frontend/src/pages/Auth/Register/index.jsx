@@ -1,8 +1,11 @@
+import { useState } from "react";
 import {
   DSButton,
   DSInput,
   DSPasswordInput,
   DSCheckbox,
+  SelectSocietyModal,
+  DSModal,
   DSSelect,
 } from "@/components";
 import clsx from "clsx";
@@ -10,6 +13,8 @@ import { Link } from "react-router-dom";
 import styles from "./Register.module.css/";
 
 export const Register = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const fakeOptions = [
     { value: "john_doe", label: "John Doe" },
     { value: "jane_smith", label: "Jane Smith" },
@@ -47,8 +52,12 @@ export const Register = () => {
             dropdownRender={(menu) => (
               <>
                 {menu}
-                <DSButton variant={"primary"} block>
-                  Add Society
+                <DSButton
+                  onClick={() => setIsModalOpen(true)}
+                  block
+                  variant="primary"
+                >
+                  Open Modal Button
                 </DSButton>
               </>
             )}
@@ -79,6 +88,17 @@ export const Register = () => {
           Already have an account? <Link to={"/login"}>Login</Link>
         </h6>
       </form>
+      <DSModal
+        title={"Create New Society"}
+        IsFooter
+        open={isModalOpen}
+        handleOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+        handleClose={() => setIsModalOpen(false)}
+        handleContent={"Apply"}
+      >
+        <SelectSocietyModal />
+      </DSModal>
     </>
   );
 };

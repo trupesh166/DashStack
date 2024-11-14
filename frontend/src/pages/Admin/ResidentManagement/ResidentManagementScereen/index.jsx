@@ -1,105 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { PlusSquareOutlined } from "@ant-design/icons";
+import { DSButton, DSModal, DSCheckbox, DSCard } from "@/components";
 import style from "./ResidentManagement.module.css";
-import { PlusSquareOutlined, EditOutlined, EyeOutlined, ShopFilled, CalendarFilled } from '@ant-design/icons';
-import { Button } from 'antd';
-import { DSButton, DSTable, DSModal, DSCheckbox } from '../../../../components';
+import { DSTable } from "../../../../components";
+import { Avatar, Space, Tag } from "antd";
+import Icons from "../../../../constants/Icons";
 
-const dataSource = [
+const columns = [
   {
-    key: '1',
-    firstname: 'Mike',
-    unitnumber: ["A", 1001],
-    unitstatus: "Occupied",
-    residentstatus: "tenant" || "--",
-    phonenumber: "01234 56789" || "--",
-    member: 1 || "-",
-    vehicle: 2 || "-",
-    action: "" || "--"
+    title: "Full Name",
+    dataIndex: "fullName",
+    key: "fullName",
+    render: (text, record) => (
+      <Space>
+        <Avatar src={record.avatar} width="40" style={{ marginRight: 8 }} />
+        {text}
+      </Space>
+    ),
   },
   {
-    key: '2',
-    firstname: 'Joy',
-    unitnumber: ["A", 1011],
-    unitstatus: "Vacate",
-    residentstatus: "Owner" || "--",
-    phonenumber: "01234 56789" || "--",
-    member: 5 || "-",
-    vehicle: 2 || "-",
-    action: "" || "--"
+    title: "Unit Number",
+    dataIndex: "unitNumber",
+    key: "unitNumber",
+    render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
+  },
+  {
+    title: "Unit Status",
+    dataIndex: "unitStatus",
+    key: "unitStatus",
+    render: (status) => (
+      <Tag color={status === "Occupied" ? "green" : "purple"}>{status}</Tag>
+    ),
+  },
+  {
+    title: "Resident Status",
+    dataIndex: "residentStatus",
+    key: "residentStatus",
+    render: (status) => (
+      <Tag color={status === "Tenant" ? "pink" : "blue"}>{status}</Tag>
+    ),
+  },
+  {
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber",
+  },
+  {
+    title: "Member",
+    dataIndex: "member",
+    key: "member",
+  },
+  {
+    title: "Vehicle",
+    dataIndex: "vehicle",
+    key: "vehicle",
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) =>
+      record.unitStatus !== "Vacate" ? (
+        <Space size="middle">
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.Edit}
+            className="clr-success"
+          />
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.EyeShow}
+            className="clr-cult"
+          />
+        </Space>
+      ) : <Tag>--</Tag>,
   },
 ];
 
-const tableColumn = [
+const data = [
   {
-    title: <div className={style.tableHeader}>Full Name</div>,
-    dataIndex: 'firstname',
-    key: 'firstname',
-    render: (text) => <div className={style.tableData}>
-      <img src="" alt="profile photo" />
-      {text}
-    </div>,
+    key: "1",
+    fullName: "Evelyn Harper",
+    avatar: "https://example.com/avatar1.jpg",
+    unitNumber: "1001",
+    unitColor: "blue",
+    unitStatus: "Occupied",
+    residentStatus: "Tenant",
+    phoneNumber: "97587 85828",
+    member: "1",
+    vehicle: "2",
   },
   {
-    title: <div className={style.tableHeader}>Unit Number</div>,
-    dataIndex: 'unitnumber',
-    key: 'unitnumber',
-    render: (text) => <div className={style.tableData}>{text}</div>,
-  },
-  {
-    title: <div className={style.tableHeader}>Unit Status</div>,
-    dataIndex: 'unitstatus',
-    key: 'unitstatus',
-    render: (text) => (
-      <div className={style.tableData}>
-        {
-          text === "Occupied"
-            ? <Button style={{ backgroundColor: "var(--clr-Pearls)", color: "var(--clr-cyan)" }}><ShopFilled />{text}</Button>
-            : <Button style={{ backgroundColor: "var(--clr-snow)", color: "var(--clr-violet)" }}><CalendarFilled />{text}</Button>
-        }
-      </div>),
-  },
-  {
-    title: <div className={style.tableHeader}>Resident Status</div>,
-    dataIndex: 'residentstatus',
-    key: 'residentstatus',
-    render: (text) => <div className={style.tableData}>{text}</div>,
-  },
-  {
-    title: <div className={style.tableHeader}>Phone Number</div>,
-    dataIndex: 'phonenumber',
-    key: 'phonenumber',
-    render: (text) => <div className={style.tableData}>{text}</div>,
-  },
-  {
-    title: <div className={style.tableHeader}>Member</div>,
-    dataIndex: 'member',
-    key: 'member',
-    render: (text) => <div className={style.tableData}>{text}</div>,
-  },
-  {
-    title: <div className={style.tableHeader}>Vehicle</div>,
-    dataIndex: 'vehicle',
-    key: 'vehicle',
-    render: (text) => <div className={style.tableData}>{text}</div>,
-  },
-  {
-    title: <div className={style.tableHeader}>Action</div>,
-    dataIndex: 'action',
-    key: 'action',
-    render: (_) => (
-      <div style={{ display: "flex", gap: "20px" }}>
-        <Button
-          icon={<EditOutlined />}
-          className={style.successButton}
-          style={{ width: "24px", height: "24px" }}
-        />
-        <Button
-          icon={<EyeOutlined />}
-          className={style.cultButton}
-          style={{ width: "24px", height: "24px" }}
-        />
-      </div>
-    ),
+    key: "2",
+    fullName: "-",
+    avatar: "",
+    unitNumber: "1002",
+    unitColor: "blue",
+    unitStatus: "Vacate",
+    residentStatus: "--",
+    phoneNumber: "--",
+    member: "-",
+    vehicle: "-",
   },
 ];
 
@@ -108,51 +110,61 @@ const ResidentManagementScreen = () => {
   const [activeButton, setActiveButton] = useState("Occupied");
 
   const handleButtonClick = (value) => {
-    console.log(value)
+    console.log(value);
     setActiveButton(value);
   };
 
   return (
-    <div className={style.residentManagementScreen}>
-      <div className={style.rmHeader}>
-        <h5>Resident Tenant and Owner Details</h5>
-        <DSButton variant={"primary"} icon={<PlusSquareOutlined />} onClick={() => setIsModalOpen(true)}>
-          Add New Resident details
-        </DSButton>
-        <DSModal
-          title={"Residence Status"}
-          open={isModalOpen}
-          closeIcon
-          handleOk={() => setIsModalOpen(false)}
-          onCancel={() => setIsModalOpen(false)}
-          handleClose={() => setIsModalOpen(false)}
-          IsFooter
-          handleContent={"Save"}
-          disabledButton={false}
-        >
-          <div className={style.cardButton}>
-            <DSButton
-              className={activeButton === 'Occupied' ? style.activeButton : style.inactiveButton}
-              onClick={() => handleButtonClick('Occupied')}
-            >
-              Occupied
-            </DSButton>
-            <DSButton
-              className={activeButton === 'Vacate' ? style.activeButton : style.inactiveButton}
-              onClick={() => handleButtonClick('Vacate')}
-            >
-              Vacate
-            </DSButton>
-          </div>
-          <div>
-            <DSCheckbox>By submitting, you agree to select Occupied</DSCheckbox>
-          </div>
-        </DSModal>
-      </div>
-      <div className={style.rmTable}>
-        <DSTable tableColumn={tableColumn} tableDataSource={dataSource} />
-      </div>
-    </div>
+    <>
+      <DSCard
+        title="Resident Tenant and Owner Details"
+        className={style.residentManagementScreen}
+        icon={<PlusSquareOutlined />}
+        onClick={() => setIsModalOpen(true)}
+        button
+        buttonContent="Add New Resident details"
+      >
+        <div className={style.rmTable}>
+          <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+        </div>
+      </DSCard>
+      <DSModal
+        title={"Residence Status"}
+        open={isModalOpen}
+        handleOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+        handleClose={() => setIsModalOpen(false)}
+        IsFooter
+        handleContent={"Save"}
+        disabledButton={false}
+      >
+        <div className={style.cardButton}>
+          <DSButton
+            className={
+              activeButton === "Occupied"
+                ? style.activeButton
+                : style.inactiveButton
+            }
+            onClick={() => handleButtonClick("Occupied")}
+          >
+            Occupied
+          </DSButton>
+          <DSButton
+            className={
+              activeButton === "Vacate"
+                ? style.activeButton
+                : style.inactiveButton
+            }
+            onClick={() => handleButtonClick("Vacate")}
+          >
+            Vacate
+          </DSButton>
+        </div>
+        <div>
+          <DSCheckbox>By submitting, you agree to select Occupied</DSCheckbox>
+        </div>
+      </DSModal>
+    </>
   );
 };
 

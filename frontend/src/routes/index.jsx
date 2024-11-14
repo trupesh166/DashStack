@@ -18,8 +18,11 @@ import {
   Login,
   Register,
   ResidentManagement,
+  ComplaintCreate,
+  RequestTracking,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
+import { Expense } from "../pages/Admin";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -59,7 +62,7 @@ const DashStackRoute = createBrowserRouter(
                     },
                     {
                       path: "expense",
-                      element: <AdminDashBoard />,
+                      element: <Expense />,
                     },
                     {
                       path: "note",
@@ -76,11 +79,11 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "create",
-                      element: <AdminDashBoard />,
+                      element: <ComplaintCreate />,
                     },
                     {
                       path: "request",
-                      element: <AdminDashBoard />,
+                      element: <RequestTracking />,
                     },
                   ],
                 },

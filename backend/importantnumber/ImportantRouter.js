@@ -7,5 +7,6 @@ const importantRouter = Router()
 importantRouter.post("/create", asyncHandler(importantController.createWorkerNumber))
 importantRouter.get("/list", asyncHandler(importantController.getWorkerDetails))
 importantRouter.delete("/delete/:id", asyncHandler(importantController.deleteWorkerDetails))
+importantRouter.put('/updateimportantnumber/:id', asyncHandler(importantController.updateImportantNumber))
 
 module.exports = importantRouter

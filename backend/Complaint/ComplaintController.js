@@ -1,5 +1,7 @@
+const { populate } = require("dotenv");
 const { httpErrors, httpSuccess } = require("../constents");
 const complaintModel = require("./ComplaintModel");
+const userModel = require("../Users/UserModel");
 
 class ComplaintController {
   async createComplaint(req, res) {
@@ -15,10 +17,39 @@ class ComplaintController {
     }
   }
 
+  async updateComplaint(req, res) {
+    try {
+      const { id } = req.params
+      if (!id) throw httpErrors[400]
+      const result = await complaintModel.model.updateOne({ _id: id }, { ...req.body })
+      if (!result && result.updatedCount < 0) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteCompain(req, res) {
+    try {
+      const { id } = req.params
+      if (!id) throw httpErrors[400]
+      const result = await complaintModel.model.deleteOne({ _id: id })
+      if (!result && result.deleteCount < 0) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async listAllComplain(req, res) {
     try {
-      const { societyId } = req.params
-      const result = await complaintModel.model.find({ societyId: societyId })
+      const { societyId, type } = req.body
+      console.log(req.body);
+      const result = await complaintModel.model.find({ societyId: societyId, complaintype: type }).populate([
+        { path: "memberId", populate: { path: "userId" } },
+        { path: "wingId" },
+        { path: "unitId" }
+      ])
       if (!result) throw httpErrors[500]
       return res.status(200).send({ message: httpSuccess, data: result })
     } catch (error) {

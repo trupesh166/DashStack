@@ -8,7 +8,7 @@ class EpxanseNoteController {
       if (!societyId || !title || !description || !date) throw httpErrors[400]
       const result = await expanseNoteModel.model.create({ ...req.body })
       if (!result) throw httpErrors[500]
-      return req.status(200).send({ message: httpSuccess })
+      return res.status(200).send({ message: httpSuccess })
     } catch (error) {
       console.log(error)
       throw httpErrors[500]

@@ -31,5 +31,11 @@ module.exports = {
     let filePath = "/public/" + fileName
     file.mv("." + filePath)
     return filePath
+  },
+  extractPublicId: (imagePath) => {
+    const parts = imagePath.split('/');
+    const publicIdWithExtension = parts.slice(-2).join('/'); // Combine folder and public ID parts
+    const publicId = publicIdWithExtension.split('.')[0]; // Remove file extension
+    return publicId;
   }
 }

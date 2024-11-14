@@ -4,9 +4,10 @@ class VisitorModel {
   constructor() {
     this.schema = new mongoose.Schema({
       visitorName: { type: String, required: true },
-      visitorPhone: { type: Number, required: true },
+      time: { type: String, required: true },
       societyId: { type: mongoose.Types.ObjectId, ref: "tbl_societies", required: true },
       securityId: { type: mongoose.Types.ObjectId, ref: 'tbl_Securities', required: true },
+      wingId: { type: mongoose.Types.ObjectId, require: true, ref: 'tbl_wings' },
       unitId: { type: mongoose.Types.ObjectId, ref: "tbl_units", required: true },
       date: { type: Date, required: true }
     }, {

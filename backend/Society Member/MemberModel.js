@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose"); class MemberModel {
     this.schema = new mongoose.Schema(
       {
         residentStatus: { type: String, enum: ["Owner", "Tenant"], required: true },
-        unitStatus: { type: String, enum: ["Occupied", "Vacate"], required: true },
+        unitStatus: { type: String, enum: ["Occupied", "Vacate"], default: "Occupied" },
         userId: { type: mongoose.Types.ObjectId, ref: "tbl_users", required: true },
         societyId: { type: mongoose.Types.ObjectId, ref: "tbl_societies", required: true },
         age: { type: Number, required: true },

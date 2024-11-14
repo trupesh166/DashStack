@@ -8,6 +8,8 @@ class MaintenanceController {
     try {
       let { maintenanceAmount, penaltyAmount, dueDate, dueDays, societyId } = req.body
       if (!maintenanceAmount || !penaltyAmount || !dueDate || !dueDays || !societyId) throw httpErrors[400]
+      dueDate = new Date(dueDate)
+      dueDays = Number(dueDays)
       const result = await maintenanceModel.model.create({ ...req.body })
       if (!result) throw httpErrors[500]
 

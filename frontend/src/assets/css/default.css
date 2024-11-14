@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-weight: 400;
 }
 
 html {
@@ -12,6 +13,7 @@ html {
 body {
   font-size: var(--text-xl);
   line-height: 1.5;
+  color: var(--clr-dark);
 }
 
 button:disabled {
@@ -239,7 +241,28 @@ img {
   flex: 0 0 auto;
 }
 
+.ant-divider-horizontal {
+  margin: var(--space-md) 0;
+}
+
 /* Utilities End */
+
+/* Common CSS For And Components Start */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.card-grid h6:first-child {
+  color: var(--clr-gray);
+}
+.card-grid h6:not(:first-child) {
+  text-align: end;
+}
+/* Common CSS For And Components End */
 
 /* TEXT CLAMP */
 .text-ellipsis {
@@ -259,8 +282,6 @@ img {
 .line-clamp-3 {
   -webkit-line-clamp: 3;
 }
-
-/* Page CSS */
 
 ::-webkit-scrollbar {
   display: none;

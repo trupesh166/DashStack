@@ -1,17 +1,17 @@
-.content .header {
-  border-bottom: 1px solid rgba(var(--clr-gray-rgb), 0.1);
-  padding-bottom: var(--space-lg);
-  margin-bottom: var(--space-2xl);
+.modal .content {
+  border-radius: var(--space-xl);
+  padding: var(--space-xl);
 }
 
-.modal .content {
-  padding: var(--space-xl);
-  border-radius: var(--space-xl);
+.content .header {
+  border-bottom: 1px solid #F4F4F4;
+  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-xl);
 }
 
 .content :global .ant-modal-close {
-  top: calc(var(--space-2xl));
-  right: calc(var(--space-2xl));
+  top: calc(var(--space-xl));
+  right: calc(var(--space-xl));
 }
 
 .content .closeBtn {
@@ -24,7 +24,7 @@
   height: 100%;
 }
 
-
-.content .footer{
-  margin-top: 3rem;
+.Footer {
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
 }

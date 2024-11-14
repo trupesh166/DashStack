@@ -1,48 +1,51 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+// Base URL for the backend
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
 
 const axiosApi = axios.create({
-    baseURL: backendUrl,
+  baseURL: backendUrl,
 });
 
-const setAuthHeader = (name) => {
-    const cookieMatch = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
-    return cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
+// Helper to get cookie by name
+const getCookie = (name) => {
+  const cookieMatch = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+  return cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
 };
 
-if (typeof window !== "undefined") {
-    axiosApi.defaults.headers = {
-        Authorization: window?.localStorage?.getItem("_token")
-            ? `Bearer ${window?.localStorage?.getItem("_token")}`
-            : "",
-        //requestToken: config?.REQUEST_TOKEN,
-    };
-}
+// Function to set Authorization header
+const setAuthHeader = () => {
+  const token = window.localStorage.getItem("_token") || getCookie("_token");
+  if (token) {
+    axiosApi.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+};
 
+// Set the authorization token initially
+setAuthHeader();
+
+// Intercept responses to handle errors globally
 axiosApi.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        if (error?.response?.status === 404) {
-            toast.error("ERROR => 404 => API not available");
-            console.log("ERROR => 404 => API not available");
-        } else if (error?.response?.status === 500) {
-            console.log("ERROR => 500 => Server Error");
-            toast.error("ERROR => 500 => Server Error");
-        } else if (error?.response?.status === 401) {
-            toast.error(error.response.data.message);
-            console.log("ERROR => 401 => User is not authorized");
-            if (localStorage.getItem("_token")) {
-                localStorage.removeItem("_token");
-                window.location("/");
-            }
-        } else {
-            console.log("/other-errors.");
-        }
+  (response) => response,
+  (error) => {
+    const status = error?.response?.status;
+    const errorMsg = error?.response?.data?.message || "An error occurred";
 
-        return Promise.reject(error);
+    if (status === 404) {
+      toast.error("API not available (404)");
+    } else if (status === 500) {
+      toast.error("Server Error (500)");
+    } else if (status === 401) {
+      toast.error(errorMsg);
+      localStorage.removeItem("_token");
+      window.location.href = "/";
+    } else {
+      toast.error(`Error ${status}: ${errorMsg}`);
     }
+
+    return Promise.reject(error);
+  }
 );
 
 export { axiosApi, setAuthHeader };

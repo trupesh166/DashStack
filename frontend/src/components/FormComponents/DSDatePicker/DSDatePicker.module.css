@@ -19,7 +19,7 @@
 }
 .errorMessage {
   margin-top: var(--space-xs);
-  color: var(--clr-error);
+  color: var(--clr-danger);
   font-size: var(--text-lg);
 }
 

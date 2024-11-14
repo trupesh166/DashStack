@@ -6,12 +6,22 @@ import { Outlet } from "react-router-dom";
 
 export const AuthLayouts = () => {
   return (
-    <Layout className={clsx(styles.main, "d-grid")}>
-      <div
-        className={clsx(styles.AuthenticationLeft, "position-relative")}
-      ></div>
+    <Layout className={clsx(styles.main, "d-grid bg-white")}>
+      <div className={clsx(styles.AuthenticationLeft, "position-relative")}>
+        <h1 className="font-secondary">
+          <span className={styles.logoPart}>Dash</span>
+          Stack
+        </h1>
+      </div>
       <div className={clsx(styles.AuthenticationRight, "d-flex flex-column")}>
-        <Outlet />
+        <div
+          className={clsx(
+            styles.AuthenticationContent,
+            "w-100 m-auto bg-white"
+          )}
+        >
+          <Outlet />
+        </div>
       </div>
     </Layout>
   );

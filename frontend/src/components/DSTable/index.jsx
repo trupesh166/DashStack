@@ -28,7 +28,7 @@ export const DSTable = ({
         id={id}
         name={name}
         data-test-id={dataTestId}
-        columns={tableColumn.map((column) => ({
+        columns={tableColumn?.map((column) => ({
           ...column,
           render: loading
             ? () => (

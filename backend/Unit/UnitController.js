@@ -50,7 +50,8 @@ class UnitController {
 
   async listUnit(req, res) {
     try {
-      const result = await unitModel.model.find()
+      const { wingId } = req.params
+      const result = await unitModel.model.find({ wingId: wingId }).populate({ path: "wingId" })
       if (!result) throw httpErrors[400]
       return res.status(200).send({ message: httpSuccess, data: result })
     } catch (error) {

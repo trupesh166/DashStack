@@ -1,4 +1,5 @@
-const { httpErrors } = require("../constents")
+const { httpErrors, httpSuccess } = require("../constents")
+const maintenanceModel = require("../Maintenance/MaintenanceModel.js")
 const maintenanceDetailsModel = require('./MaintenanceDetailsModel.js')
 
 class MaintenanceDetailsController {
@@ -34,6 +35,56 @@ class MaintenanceDetailsController {
       throw httpErrors[500]
     }
   }
+
+  async getMaintenanceDetailsByMember(req, res) {
+    try {
+      const { id } = req.params
+      const result = await maintenanceDetailsModel.model.findOne({ _id: id }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }])
+      if (!result) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess, data: result })
+    } catch (error) {
+      console.log(error)
+      throw httpErrors[500]
+    }
+  }
+
+  async dueMaintenance(req, res) {
+    try {
+      const { memberId } = req.params
+      const result = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus: "Pending" }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }])
+      if (!result) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess, data: result })
+    } catch (error) {
+      console.log(error)
+      throw httpErrors[500]
+    }
+  }
+
+  async pendingMaintenance(req, res) {
+    try {
+      const { memberId } = req.params
+      const result = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: { $gt: 0 } }).populate({ path: "memberId", populate: { path: "userId" } })
+      if (!result) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess, data: result })
+    } catch (error) {
+      console.log(error)
+      throw httpErrors[500]
+    }
+  }
+
+  async completedMaintenance(req, res) {
+    try {
+      const { memberId } = req.params
+      const result = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus: 'Done' }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }])
+      if (!result) throw httpErrors[500]
+      return res.status(200).send({ message: httpSuccess, data: result })
+    } catch (error) {
+      console.log(error)
+      throw httpErrors[500]
+    }
+  }
+
+
 
   async updateMaintenanceDetails(req, res) {
     try {

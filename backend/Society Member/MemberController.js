@@ -8,19 +8,9 @@ const userModel = require("../Users/UserModel");
 class MemberController {
   async createMember(req, res) {
     try {
-      let { residentStatus, unitStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo } = req.body;
+      let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
-      unitStatus = "Occupied";
-      // just for testing
-      (residentStatus = "Owner"),
-        (OwnerInfo = {
-          fullName: "jnsdlkjnjsndkjansdf",
-          phoneNumber: 1234598760,
-          address: "14 kajsdkjfkj asnd kjasnkjfjs kjnakjdfja knbkjnawnkf b",
-        });
-      //
-
-      if (!residentStatus || !unitStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
+      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
       if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
@@ -61,7 +51,6 @@ class MemberController {
       const data = {
         userId: user._id,
         residentStatus,
-        unitStatus,
         age,
         wing,
         unit,
@@ -72,9 +61,10 @@ class MemberController {
         aadharBack,
         veraBill,
         agreement,
-        societyId: "671ac29415a25bbaedeb52ca"
+        societyId: societyId
       };
       if (residentStatus === "Tenant") {
+        OwnerInfo = JSON.parse(OwnerInfo);
         result = await memberModel.model.create({ ...data, OwnerInfo: OwnerInfo });
         if (!result) throw httpErrors[500];
       } else {
@@ -111,11 +101,22 @@ class MemberController {
       throw httpErrors[500];
     }
   }
+  async listMemberByUnit(req, res) {
+    try {
+      const { unitId } = req.params
+      const Member = await memberModel.model.findOne({ unit: unitId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
+      if (!Member) throw httpErrors[500];
+      return res.status(200).send({ message: httpSuccess, data: Member });
+    } catch (error) {
+      console.log(error);
+      throw httpErrors[500];
+    }
+  }
 
   async getMemberById(req, res) {
     try {
-      const { MemberId } = req.params
-      const Member = await memberModel.model.findOne({ _id: MemberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
+      const { memberId } = req.params
+      const Member = await memberModel.model.findOne({ _id: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
       if (!Member) throw httpErrors[500];
       return res.status(200).send({ message: httpSuccess, data: Member });
     } catch (error) {

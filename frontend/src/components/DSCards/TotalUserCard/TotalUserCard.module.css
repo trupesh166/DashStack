@@ -1,9 +1,18 @@
 .card {
-  max-width: 380px;
-  min-height: 105px;
+  width: 250px;
+  font-family: Poppins;
   background-color: var(--clr-white);
   border: none;
-  box-shadow: 3px -3px 0px -1px var(--clr-danger);
+  position: relative;
+}
+
+.designBox {
+  width: 8px;
+  height: 52px;
+  border-radius: 0px 5px 5px 0px;
+  position: absolute;
+  top: 29%;
+  left: 0;
 }
 
 .body {
@@ -14,12 +23,15 @@
   align-items: center;
 }
 
-.detail>p {
-  font-size: 16px;
-  font-weight: 500;
-  font-family: var(--font-primary);
+h3 {
+  font-weight: bold;
 }
 
-.detail>h6 {
-  font-size: 26px;
+.cardIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

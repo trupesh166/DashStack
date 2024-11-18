@@ -1,13 +1,26 @@
 .card {
-  max-width: 340px;
+  width: 380px;
+  height: 398px;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  font-family: Poppins;
+  overflow: hidden;
+  background-color: var(--clr-white);
 }
 
 .body {
+  width: 340px;
+  height: 300px;
+  overflow: auto;
+}
+
+.importantNumber {
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid var(--clr-pearl);
+  border-radius: 10px;
 }
 
 .detail>p {
@@ -24,22 +37,4 @@
 .actions {
   display: flex;
   gap: 5px;
-}
-
-.btn {
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  background-color: var(--clr-pearl);
-  border-radius: 5px;
-  font-size: 24px;
-}
-
-.delateButton {
-  color: var(--clr-danger);
-}
-
-.editButton {
-  color: var(--clr-success);
 }

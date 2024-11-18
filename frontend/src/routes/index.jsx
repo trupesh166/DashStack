@@ -17,7 +17,6 @@ import {
   VisitorLogs,
   Login,
   Register,
-  ResidentManagement,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
 
@@ -48,7 +47,7 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "residents",
-                  element: <ResidentManagement />,
+                  element: "residents",
                 },
                 {
                   path: "financial",

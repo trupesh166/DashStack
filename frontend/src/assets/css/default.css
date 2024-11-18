@@ -259,9 +259,11 @@ img {
 .card-grid h6:first-child {
   color: var(--clr-gray);
 }
+
 .card-grid h6:not(:first-child) {
   text-align: end;
 }
+
 /* Common CSS For And Components End */
 
 /* TEXT CLAMP */

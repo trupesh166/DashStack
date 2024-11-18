@@ -1,232 +1,128 @@
 import { axiosApi } from "@/axiosApi";
 
-class ApiHelper {
-  async request(method, url, data) {
-    try {
-      const response = await axiosApi[method](`${this.baseUrl}${url}`, data);
-      return response.data;
-    } catch (error) {
-      console.error(
-        `Error in ${method.toUpperCase()} request to ${url}:`,
-        error
-      );
-      throw error;
-    }
-  }
-
-  // User Management
-  async loginUser(data) {
-    return this.request("post", "/user/login", data);
-  }
-
-  // Society Management
-  async listSociety() {
-    return this.request("get", "/society/list");
-  }
-
-  async createSociety(data) {
-    return this.request("post", "/society/create", data);
-  }
-
-  async createChairman(data) {
-    return this.request("post", "/society-handler/create", data);
-  }
-
-  // Unit Management
-  async createUnit(data) {
-    return this.request("post", "/unit/create", data);
-  }
-
-  async listUnit(wingId) {
-    return this.request("get", `/unit/list/${wingId}`);
-  }
-
-  // Wing Management
-  async listWing(societyId) {
-    return this.request("get", `/wing/list/${societyId}`);
-  }
-
-  // Member Management
-  async listMember(societyId) {
-    return this.request("get", `/member/${societyId}`);
-  }
-
-  async createMember(data) {
-    return this.request("post", "/member/createMember", data);
-  }
-
-  async getMemberById(memberId) {
-    return this.request("get", `/member/list/${memberId}`);
-  }
-
-  async listByUnit(unitId) {
-    return this.request("get", `/member/listbyunit/${unitId}`);
-  }
-
-  // Event Management
-  async createEvent(data) {
-    return this.request("post", "/event/create", data);
-  }
-
-  async getEvents(id) {
-    return this.request("get", `/event/${id}`);
-  }
-
-  // Maintenance Management
-  async createMaintenance(data) {
-    return this.request("post", "/maintain/create", data);
-  }
-
-  async listMaintenance(societyId) {
-    return this.request("get", `/maintain-detail/member/${societyId}`);
-  }
-
-  async dueMaintenance(memberId) {
-    return this.request("get", `/maintain-detail/due/${memberId}`);
-  }
-
-  async pendingMaintenance(memberId) {
-    return this.request("get", `/maintain-detail/pending/${memberId}`);
-  }
-
-  async completedMaintenance(memberId) {
-    return this.request("get", `/maintain-detail/complete/${memberId}`);
-  }
-
-  async getMaintenanceDetailsByMember(id) {
-    return this.request("get", `/maintain-detail/list/${id}`);
-  }
-
-  // Expense Management
-  async createExpense(data) {
-    return this.request("post", "/expanse/create", data);
-  }
-
-  async listExpense(societyId) {
-    return this.request("get", `/expanse/list/${societyId}`);
-  }
-
-  async updateExpense(expanseId, data) {
-    return this.request("put", `/expanse/update/${expanseId}`, data);
-  }
-
-  async deleteExpense(expanseId) {
-    return this.request("delete", `/expanse/delete/${expanseId}`);
-  }
-
-  // Notes Management
-  async createNotes(data) {
-    return this.request("post", "/expanseNote/create", data);
-  }
-
-  async listNotes(societyId) {
-    return this.request("get", `/expanseNote/list/${societyId}`);
-  }
-
-  async updateNote(societyId, data) {
-    return this.request("put", `/expanseNote/update/${societyId}`, data);
-  }
-
-  async deleteNote(id) {
-    return this.request("delete", `/expanseNote/delete/${id}`);
-  }
-
-  // Facility Management
-  async createFacility(data) {
-    return this.request("post", "/facility/addfacility", data);
-  }
-
-  async listFacility(societyId) {
-    return this.request("get", `/facility/getfacility/${societyId}`);
-  }
-
-  async editFacility(id, data) {
-    return this.request("put", `/facility/updatefacility/${id}`, data);
-  }
-
-  // Complaint Management
-  async createComplaint(data) {
-    return this.request("post", "/complain/create", data);
-  }
-
-  async listComplaint(data) {
-    return this.request("post", "/complain/list", data);
-  }
-
-  async updateComplaint(id, data) {
-    return this.request("put", `/complain/update/${id}`, data);
-  }
-
-  async deleteComplaint(id) {
-    return this.request("delete", `/complain/delete/${id}`);
-  }
-
-  // Security Protocol Management
-  async createSecurityProtocol(data) {
-    return this.request("post", "/securityprotocol/createprotocol", data);
-  }
-
-  async listSecurityProtocol(societyId) {
-    return this.request("get", `/securityprotocol/getprotocol/${societyId}`);
-  }
-
-  async updateSecurityProtocol(id, data) {
-    return this.request(
-      "put",
-      `/securityprotocol/updatesecurityprotocol/${id}`,
-      data
-    );
-  }
-
-  async deleteSecurityProtocol(id) {
-    return this.request("delete", `/securityprotocol/deleteprotocol/${id}`);
-  }
-
-  // Visitor Management
-  async listVisitor(societyId) {
-    return this.request("get", `/visitor/getvisitor/${societyId}`);
-  }
-
-  // Announcement Management
-  async createAnnouncement(data) {
-    return this.request("post", "/announcement/create", data);
-  }
-
-  async listAnnouncement(societyId) {
-    return this.request("get", `/announcement/list/${societyId}`);
-  }
-
-  async updateAnnouncement(id, data) {
-    return this.request("put", `/announcement/update/${id}`, data);
-  }
-
-  async deleteAnnouncement(id) {
-    return this.request("delete", `/announcement/delete/${id}`);
-  }
-
-  // Security Guard Management
-  async createGuard(data) {
-    return this.request("post", "/security/createsecurity", data);
-  }
-
-  async listGuard(societyId) {
-    return this.request("get", `/security/getsecurity/${societyId}`);
-  }
-
-  async editGuard(id, data) {
-    return this.request("put", `/security/updatesecurity/${id}`, data);
-  }
-
-  async deleteGuard(id) {
-    return this.request("delete", `/security/deletesecurity/${id}`);
-  }
-
-  // Image Management
-  async imageDetails(data) {
-    return this.request("post", "/image-details", data);
+async function request(method, url, data) {
+  try {
+    const response = await axiosApi[method](`${url}`, data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error in ${method.toUpperCase()} request to ${url}:`, error);
+    throw error;
   }
 }
 
-// Export instance of ApiHelper
-const apiHelper = new ApiHelper();
-export default apiHelper;
+// User Management
+export const loginUser = (data) => request("post", "/auth/login", data);
+
+// Society Management
+export const listSociety = () => request("get", "/society/getSociety");
+export const createSociety = (data) =>
+  request("post", "/society/insertSociety", data);
+export const createChairman = (data) => request("post", "/auth/register", data);
+
+// Unit Management
+export const createUnit = (data) => request("post", "/unit/create", data);
+export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+
+// Wing Management
+export const listWing = (societyId) =>
+  request("get", `/wing/list/${societyId}`);
+
+// Member Management
+export const listMember = () => request("get", `/auth/user/getUser`);
+export const createMember = (data) =>
+  request("post", "/member/createMember", data);
+export const getMemberById = (memberId) =>
+  request("get", `/member/list/${memberId}`);
+export const listByUnit = (unitId) =>
+  request("get", `/member/listbyunit/${unitId}`);
+
+// Event Management
+export const createEvent = (data) => request("post", "/event/create", data);
+export const getEvents = (id) => request("get", `/event/${id}`);
+
+// Maintenance Management
+export const createMaintenance = (data) =>
+  request("post", "/maintain/create", data);
+export const listMaintenance = (societyId) =>
+  request("get", `/maintain-detail/member/${societyId}`);
+export const dueMaintenance = (memberId) =>
+  request("get", `/maintain-detail/due/${memberId}`);
+export const pendingMaintenance = (memberId) =>
+  request("get", `/maintain-detail/pending/${memberId}`);
+export const completedMaintenance = (memberId) =>
+  request("get", `/maintain-detail/complete/${memberId}`);
+export const getMaintenanceDetailsByMember = (id) =>
+  request("get", `/maintain-detail/list/${id}`);
+
+// Expense Management
+export const createExpense = (data) => request("post", "/expanse/create", data);
+export const listExpense = (societyId) =>
+  request("get", `/expanse/list/${societyId}`);
+export const updateExpense = (expanseId, data) =>
+  request("put", `/expanse/update/${expanseId}`, data);
+export const deleteExpense = (expanseId) =>
+  request("delete", `/expanse/delete/${expanseId}`);
+
+// Notes Management
+export const createNotes = (data) =>
+  request("post", "/expanseNote/create", data);
+export const listNotes = (societyId) =>
+  request("get", `/expanseNote/list/${societyId}`);
+export const updateNote = (societyId, data) =>
+  request("put", `/expanseNote/update/${societyId}`, data);
+export const deleteNote = (id) =>
+  request("delete", `/expanseNote/delete/${id}`);
+
+// Facility Management
+export const createFacility = (data) =>
+  request("post", "/facility/addfacility", data);
+export const listFacility = (societyId) =>
+  request("get", `/facility/getfacility/${societyId}`);
+export const editFacility = (id, data) =>
+  request("put", `/facility/updatefacility/${id}`, data);
+
+// Complaint Management
+export const createComplaint = (data) =>
+  request("post", "/complain/create", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
+export const updateComplaint = (id, data) =>
+  request("put", `/complain/update/${id}`, data);
+export const deleteComplaint = (id) =>
+  request("delete", `/complain/delete/${id}`);
+
+// Security Protocol Management
+export const createSecurityProtocol = (data) =>
+  request("post", "/securityprotocol/createprotocol", data);
+export const listSecurityProtocol = (societyId) =>
+  request("get", `/securityprotocol/getprotocol/${societyId}`);
+export const updateSecurityProtocol = (id, data) =>
+  request("put", `/securityprotocol/updatesecurityprotocol/${id}`, data);
+export const deleteSecurityProtocol = (id) =>
+  request("delete", `/securityprotocol/deleteprotocol/${id}`);
+
+// Visitor Management
+export const listVisitor = (societyId) =>
+  request("get", `/visitor/getvisitor/${societyId}`);
+
+// Announcement Management
+export const createAnnouncement = (data) =>
+  request("post", "/announcement/create", data);
+export const listAnnouncement = (societyId) =>
+  request("get", `/announcement/list/${societyId}`);
+export const updateAnnouncement = (id, data) =>
+  request("put", `/announcement/update/${id}`, data);
+export const deleteAnnouncement = (id) =>
+  request("delete", `/announcement/delete/${id}`);
+
+// Security Guard Management
+export const createGuard = (data) =>
+  request("post", "/security/createsecurity", data);
+export const listGuard = (societyId) =>
+  request("get", `/security/getsecurity/${societyId}`);
+export const editGuard = (id, data) =>
+  request("put", `/security/updatesecurity/${id}`, data);
+export const deleteGuard = (id) =>
+  request("delete", `/security/deletesecurity/${id}`);
+
+// Image Management
+export const imageDetails = (data) => request("post", "/image-details", data);

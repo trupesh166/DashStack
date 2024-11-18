@@ -23,6 +23,7 @@ import {
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
 import { Expense } from "../pages/Admin";
+import ProtectedRoute from "./ProtectedRoute";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -31,7 +32,11 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: <DashboardLayout />,
+          element: (
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -41,6 +46,7 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "admin",
+          element: <ProtectedRoute />,
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,
@@ -112,7 +118,16 @@ const DashStackRoute = createBrowserRouter(
             },
             {
               element: <AuthLayouts />,
-              children: [{ path: "register", element: <Register /> }],
+              children: [
+                {
+                  path: "register",
+                  element: <Register />,
+                },
+                {
+                  path: "login",
+                  element: <Login />,
+                },
+              ],
             },
           ],
         },

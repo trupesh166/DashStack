@@ -1,6 +1,6 @@
 import { Space, Tag, Tooltip } from "antd";
-import { DSButton, DSCard, DSTable } from "../../../../components";
-import Icons from "../../../../constants/Icons";
+import { DSButton, DSCard, DSTable } from "@/components";
+import Icons from "@/constants/Icons";
 
 const columns = [
   {

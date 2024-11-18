@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import {
@@ -12,95 +11,21 @@ import {
 } from "@/components";
 import { useRegister } from "@/hook/Auth/Register";
 import styles from "./Register.module.css";
-import { axiosApi } from "../../../axiosApi";
 
 export const Register = () => {
-  const { societyNames, isModalOpen, setIsModalOpen } = useRegister();
+  const {
+    societyNames,
+    isModalOpen,
+    setIsModalOpen,
+    formData,
+    handleChange,
+    handleSubmit,
+    setFormData,
+    errors,
+    isLoading,
+    handleZipCodeChange,
+  } = useRegister();
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    emailOrPhone: "",
-    phoneNumber: "",
-    country: "",
-    state: "",
-    city: "",
-    society: null,
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.emailOrPhone)
-      newErrors.emailOrPhone = "Email or phone is required.";
-    if (!formData.phoneNumber)
-      newErrors.phoneNumber = "Phone number is required.";
-    if (!formData.country) newErrors.country = "Country is required.";
-    if (!formData.state) newErrors.state = "State is required.";
-    if (!formData.city) newErrors.city = "City is required.";
-    if (!formData.society) newErrors.society = "Please select a society.";
-    if (!formData.password) newErrors.password = "Password is required.";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    setIsLoading(true);
-    try {
-      // Transform formData to match the required API request format
-      const apiRequestData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.emailOrPhone.includes("@") ? formData.emailOrPhone : "",
-        phoneNumber: formData.phoneNumber,
-        country: formData.country,
-        state: formData.state,
-        city: formData.city,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-        selectSociety: formData.society,
-      };
-
-      const response = await axiosApi.post(
-        "/society-handler/create",
-        apiRequestData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log(response);
-      alert("Registration successful!");
-    } catch (error) {
-      console.error("Registration failed", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <>
       <h2>Registration</h2>
@@ -126,20 +51,20 @@ export const Register = () => {
             error={errors.lastName}
           />
           <DSInput
-            label="Email or Phone"
-            name="emailOrPhone"
-            placeholder="Enter Your Phone Number Or Email"
-            value={formData.emailOrPhone}
+            label="Email"
+            name="email"
+            placeholder="Enter Your Email"
+            value={formData.email}
             onChange={handleChange}
-            error={errors.emailOrPhone}
+            error={errors.email}
           />
           <DSInput
             label="Phone Number"
-            name="phoneNumber"
+            name="number"
             placeholder="91+"
-            value={formData.phoneNumber}
+            value={formData.number}
             onChange={handleChange}
-            error={errors.phoneNumber}
+            error={errors.number}
           />
           <DSInput
             label="Country"
@@ -165,25 +90,25 @@ export const Register = () => {
             onChange={handleChange}
             error={errors.city}
           />
-          {/* <DSInput
+          <DSInput
             label="Zip Code"
             name="zipCode"
             placeholder="Enter Zip Code"
             value={formData.zipCode}
-            onChange={handleChange}
+            onChange={handleZipCodeChange}
             error={errors.zipCode}
-          /> */}
+          />
           <DSSelect
             label="Select Society"
-            name="society"
+            name="societyId"
             placeholder="Select Society*"
             parentClassName={styles.colSpan}
             options={societyNames}
-            value={formData.society}
+            value={formData.societyId}
             onChange={(value) =>
-              setFormData((prev) => ({ ...prev, society: value }))
+              setFormData((prev) => ({ ...prev, societyId: value }))
             }
-            error={errors.society}
+            error={errors.societyId}
             dropdownRender={(menu) => (
               <>
                 {menu}
@@ -192,7 +117,7 @@ export const Register = () => {
                   block
                   variant="primary"
                 >
-                  Open Modal Button
+                  Create New Society
                 </DSButton>
               </>
             )}
@@ -219,8 +144,8 @@ export const Register = () => {
 
         <DSCheckbox
           name="termsAccepted"
-          // checked={formData.termsAccepted}
-          // onChange={handleChange}
+          checked={formData.termsAccepted}
+          onChange={handleChange}
         >
           I agree to all the Terms and
           <Link to="/privacy-policies">Privacy Policies</Link>.
@@ -231,7 +156,7 @@ export const Register = () => {
           block
           type="submit"
           disabled={isLoading}
-          isLoading={isLoading}
+          loading={isLoading}
         >
           Register
         </DSButton>

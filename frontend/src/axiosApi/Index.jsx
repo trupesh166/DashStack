@@ -17,6 +17,7 @@ const getCookie = (name) => {
 // Function to set Authorization header
 const setAuthHeader = () => {
   const token = window.localStorage.getItem("_token") || getCookie("_token");
+
   if (token) {
     axiosApi.defaults.headers.Authorization = `Bearer ${token}`;
   }

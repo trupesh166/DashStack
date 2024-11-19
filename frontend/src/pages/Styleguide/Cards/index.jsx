@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Chart,
   DSCard,
   EventCard,
   FacilityCard,
@@ -66,6 +67,7 @@ export const Cards = () => {
         date="01/07/2024"
         description="The celebration of Navratri involves the installation of clay idols of Durga in Resident."
       />
+      <Chart />
     </div>
   );
 };

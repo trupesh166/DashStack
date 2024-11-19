@@ -5,7 +5,7 @@ import { Card } from 'antd'
 import { DSButton } from '../..';
 import clsx from 'clsx';
 
-const ImportantNumbersCard = () => {
+export const ImportantNumbersCard = () => {
 
   const ImportantNumber = [
     {
@@ -72,5 +72,3 @@ const ImportantNumbersCard = () => {
     </Card>
   )
 }
-
-export default ImportantNumbersCard

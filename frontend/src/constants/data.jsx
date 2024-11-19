@@ -1,5 +1,6 @@
 import Icons from "@/constants/Icons";
 import { NavLink } from "react-router-dom";
+import { authOne, authTwo } from "../assets/images";
 
 const getItem = (label, key, icon, path, children) => {
   const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
@@ -147,5 +148,18 @@ export const MemberCardData = [
     age: 22,
     gender: "Male",
     relation: "Brother",
+  },
+];
+
+export const AuthSliderData = [
+  {
+    id: 1,
+    title: "Connect, Collaborate, and Control - Society Management Simplified",
+    image: authOne,
+  },
+  {
+    id: 2,
+    title: "Your Space, Your Place: Society Management Made Simple",
+    image: authTwo,
   },
 ];

@@ -3,7 +3,7 @@ import React from 'react'
 import Icons from '@/constants/Icons'
 import style from "./TotalUserCard.module.css"
 
-const TotalUserCard = () => {
+export const TotalUserCard = () => {
 
   const data = [
     {
@@ -52,7 +52,7 @@ const TotalUserCard = () => {
   ]
 
   return (
-    <Flex justify='space-between' gap={"small"}>
+    <Flex gap={"small"}>
       {
         data.map((item, index) => (
           <Card

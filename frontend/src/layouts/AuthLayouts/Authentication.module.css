@@ -10,6 +10,7 @@
 .AuthenticationLeft {
   background-color: var(--clr-pearl);
   padding: 6rem;
+  height: 100vh;
 }
 
 .logoPart {
@@ -33,6 +34,39 @@
   padding: 5rem;
   overflow: auto;
   box-shadow: 0px 0px 25px 0px #00000008;
+}
+
+.slide {
+  max-width: 568px;
+  width: 100%;
+  margin: auto;
+  height: calc(100% - 6rem);
+  display: flex;
+  align-items: center;
+}
+
+.slide :global .swiper-wrapper {
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.slideImg {
+  object-fit: contain;
+}
+
+.slide :global .swiper-pagination-bullets.swiper-pagination-horizontal {
+  --swiper-pagination-bottom: 0.5%;
+}
+.slide :global .swiper-pagination-bullet {
+  transition: all 0.3s linear;
+  --swiper-pagination-bullet-width: 10px;
+  --swiper-pagination-bullet-height: 10px;
+  --swiper-theme-color: var(--clr-primary-gradient);
+  --swiper-pagination-bullet-inactive-color: var(--clr-primary-gradient);
+}
+.slide :global .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  --swiper-pagination-bullet-width: 35px;
+  --swiper-pagination-bullet-border-radius: 3rem;
 }
 
 @media (max-width: 991px) {

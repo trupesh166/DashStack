@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { listSociety } from "@/axiosApi/ApiHelper";
+import { register } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import { createChairman } from "@/axiosApi/ApiHelper";
 import debounce from "lodash.debounce";
 
 export const useRegister = () => {
@@ -35,7 +34,7 @@ export const useRegister = () => {
   const fetchSocieties = async (zipCode = "") => {
     try {
       setLoading(true);
-      const data = await listSociety(zipCode);
+      const data = await register(zipCode);
       setSocieties(data.data || []);
       if (zipCode) {
         toast.success("Societies loaded for the given zip code.");
@@ -117,7 +116,7 @@ export const useRegister = () => {
         confirmPassword: formData.confirmPassword,
       };
 
-      const data = await createChairman(apiRequestData);
+      const data = await register(apiRequestData);
       toast.success("Registration successful!");
     } catch (error) {
       toast.error("Registration failed.");

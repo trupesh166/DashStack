@@ -14,7 +14,7 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
-const Chart = () => {
+export const Chart = () => {
 
   // Chart data reference
   const chartRef = useRef(null);
@@ -93,5 +93,3 @@ const Chart = () => {
     </Card>
   )
 }
-
-export default Chart

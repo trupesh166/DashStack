@@ -5,7 +5,7 @@ import Icons from "@/constants/Icons";
 import { DSSelect } from '../../FormComponents';
 import clsx from 'clsx';
 
-const UpcomingActivityCard = () => {
+export const UpcomingActivityCard = () => {
 
   const UpcomingActivityData = [
     {
@@ -142,5 +142,3 @@ const UpcomingActivityCard = () => {
     </Card>
   )
 }
-
-export default UpcomingActivityCard

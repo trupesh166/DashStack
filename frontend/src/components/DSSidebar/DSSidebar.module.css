@@ -27,7 +27,8 @@
 }
 
 .menu {
-  height: 100%;
+  height: 100vh;
+  overflow: auto;
   padding: 0 15px 0 0;
 }
 .menu :global .ant-menu-submenu-title {

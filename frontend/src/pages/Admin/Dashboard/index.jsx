@@ -1,5 +1,9 @@
-import TotalUserCard from "../../../components/DSCards/TotalUserCard";
+import { TotalUserCard } from "../../../components";
 
 export const Dashboard = () => {
-  return <div><TotalUserCard /></div>;
+  return (
+    <div>
+      <TotalUserCard />
+    </div>
+  );
 };

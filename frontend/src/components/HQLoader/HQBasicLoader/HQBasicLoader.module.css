@@ -1,0 +1,7 @@
+.HQBasicLoader:global.ant-spin {
+  color: var(--kingfisher);
+}
+
+.HQBasicLoader:global.ant-spin .ant-spin-dot-item {
+  background-color: var(--kingfisher);
+}

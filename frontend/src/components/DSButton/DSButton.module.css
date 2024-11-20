@@ -6,16 +6,17 @@
   min-height: 40px;
 }
 
-.Button:global.ant-btn-primary.ant-btn-variant-solid {
+.Button:global.ant-btn-primary.ant-btn-variant-solid:not(:disabled) {
   background-image: var(--clr-primary-gradient);
   transition: background 0.3s linear;
 }
 
+/* .Button:global.ant-btn-variant-solid:disabled, */
 .Button:global.ant-btn-primary.ant-btn-variant-solid.ant-btn-dangerous {
   background-image: none;
 }
 
-.Button:global.ant-btn-primary.ant-btn-variant-solid:hover {
+.Button:global.ant-btn-primary.ant-btn-variant-solid:hover:not(:disabled) {
   background: var(--clr-primary-gradient-hover);
 }
 

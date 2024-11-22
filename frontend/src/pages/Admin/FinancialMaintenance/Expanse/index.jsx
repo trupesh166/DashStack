@@ -1,6 +1,8 @@
 import { Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
+import { useState } from "react";
+import { AddExpensesDetailsModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
 
 const columns = [
   {
@@ -101,9 +103,49 @@ const data = [
 ];
 
 export const Expense = () => {
+
+  const [addExpensesModalOpen, setAddExpensesModalOpen] = useState(false);
+  const [editExpensesModalOpen, setEditExpensesModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+
   return (
-    <DSCard title={"Add Expenses Details"}>
-      <DSTable tableColumn={columns} dataSource={data} pagination={false} />
-    </DSCard>
+    <div>
+      <DSCard
+        title={"Add Expenses Details"}
+        icon={Icons.AddSquare}
+        buttonContent={`Add New Expenses details`}
+        button={true}
+        onClick={() => setAddExpensesModalOpen(true)}
+      >
+        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+
+      </DSCard>
+      <div>
+        {/* Add Expense Modal */}
+        <AddExpensesDetailsModal
+          open={addExpensesModalOpen}
+          handleOk={() => setAddExpensesModalOpen(false)}
+          handleCancel={() => setAddExpensesModalOpen(false)}
+          handleClose={() => setAddExpensesModalOpen(false)}
+        />
+
+        {/* Edit Expense Modal */}
+        <EditExpensesModal
+          open={editExpensesModalOpen}
+          handleOk={() => setEditExpensesModalOpen(false)}
+          handleCancel={() => setEditExpensesModalOpen(false)}
+          handleClose={() => setEditExpensesModalOpen(false)}
+        />
+
+        {/* View Expense Modal */}
+        <ViewExpenseDetailsModal
+          open={viewModalOpen}
+          handleOk={() => setViewModalOpen(false)}
+          handleCancel={() => setViewModalOpen(false)}
+          handleClose={() => setViewModalOpen(false)}
+        />
+
+      </div>
+    </div>
   );
 };

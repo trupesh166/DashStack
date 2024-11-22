@@ -1,6 +1,8 @@
 import { Avatar, Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
+import { useState } from "react";
+import { CreateRequestModal, EditRequestModal, ViewRequestModal } from "../../../../components";
 
 const columns = [
   {
@@ -139,9 +141,45 @@ const data = [
 ];
 
 export const RequestTracking = () => {
+
+  const [createRequest, setCreateRequest] = useState(false)
+  const [editRequest, setEditRequest] = useState(false)
+  const [viewRequest, setViewRequest] = useState(false)
+
   return (
-    <DSCard title={"Request Tracking"}>
-      <DSTable tableColumn={columns} dataSource={data} pagination={false} />
-    </DSCard>
+    <div>
+      <DSCard
+        title={"Request Tracking"}
+        buttonContent={"Create Request"}
+        button={true}
+        onClick={() => setCreateRequest(true)}
+      >
+        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+      </DSCard>
+
+      {/* Create Request Modal */}
+      <CreateRequestModal
+        open={createRequest}
+        handleCancel={() => setCreateRequest(false)}
+        handleClose={() => setCreateRequest(false)}
+        handleOk={() => setCreateRequest(false)}
+      />
+
+      {/* Edit Request Modal */}
+      <EditRequestModal
+        open={editRequest}
+        handleCancel={() => setEditRequest(false)}
+        handleClose={() => setEditRequest(false)}
+        handleOk={() => setEditRequest(false)}
+      />
+
+      {/* View Request Modal */}
+      <ViewRequestModal
+        open={viewRequest}
+        handleCancel={() => setViewRequest(false)}
+        handleClose={() => setViewRequest(false)}
+        handleOk={() => setViewRequest(false)}
+      />
+    </div>
   );
 };

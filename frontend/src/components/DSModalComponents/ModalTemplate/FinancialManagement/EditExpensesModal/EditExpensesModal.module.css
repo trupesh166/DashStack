@@ -1,0 +1,10 @@
+.editExpensesDetails {
+  font-family: Poppins;
+}
+
+.uploadImage {
+  padding: 10px;
+  border: 2px solid #D3D3D3;
+  border-radius: 7px;
+  cursor: pointer;
+}

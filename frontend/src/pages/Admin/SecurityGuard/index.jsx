@@ -1,6 +1,7 @@
 import { Avatar, Space, Tag } from "antd";
-import { DSButton, DSCard, DSTable } from "../../../components";
+import { AddSecurityModal, DSButton, DSCard, DSTable, EditSecurityModal, ViewSecurityModal } from "../../../components";
 import Icons from "../../../constants/Icons";
+import { useState } from "react";
 
 const data = [
   {
@@ -73,7 +74,7 @@ const columns = [
     render: (gender) => (
       <Tag
         color={gender === "Male" ? "blue" : "pink"}
-        // icon={gender === "Male" ? <ManOutlined /> : <WomanOutlined />}
+      // icon={gender === "Male" ? <ManOutlined /> : <WomanOutlined />}
       >
         {gender}
       </Tag>
@@ -108,16 +109,54 @@ const columns = [
 ];
 
 export const SecurityGuard = () => {
+
+  const [addSecurity, setAddSecurity] = useState(false)
+  const [editSecurity, setEditSecurity] = useState(false)
+  const [viewSecurity, setViewSecurity] = useState(false)
+
   return (
-    <DSCard title="SecurityGuard">
-      <DSTable
-        dataSource={data}
-        tableColumn={columns}
-        pagination={false}
-        rowClassName={(record, index) =>
-          index % 2 === 0 ? "table-row-light" : "table-row-dark"
-        }
+    <div>
+      <DSCard
+        title="SecurityGuard"
+        button={true}
+        icon={Icons.AddSquare}
+        buttonContent={"Add Security"}
+        onClick={() => setAddSecurity(true)}
+      >
+        <DSTable
+          dataSource={data}
+          tableColumn={columns}
+          pagination={false}
+          rowClassName={(record, index) =>
+            index % 2 === 0 ? "table-row-light" : "table-row-dark"
+          }
+        />
+      </DSCard>
+
+      {/* Add Security Modal */}
+      <AddSecurityModal
+        open={addSecurity}
+        handleCancel={() => setAddSecurity(false)}
+        handleClose={() => setAddSecurity(false)}
+        handleOk={() => setAddSecurity(false)}
       />
-    </DSCard>
+
+      {/* Edit Security Modal */}
+      <EditSecurityModal
+        open={editSecurity}
+        handleCancel={() => setEditSecurity(false)}
+        handleClose={() => setEditSecurity(false)}
+        handleOk={() => setEditSecurity(false)}
+      />
+
+      {/* View Security Modal */}
+      <ViewSecurityModal
+        open={viewSecurity}
+        handleCancel={() => setViewSecurity(false)}
+        handleClose={() => setViewSecurity(false)}
+        handleOk={() => setViewSecurity(false)}
+      />
+
+    </div>
   );
 };

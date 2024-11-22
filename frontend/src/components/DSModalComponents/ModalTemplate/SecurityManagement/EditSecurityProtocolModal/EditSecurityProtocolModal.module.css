@@ -1,0 +1,8 @@
+.editSecurityProtocolModal {
+  font-family: Poppins;
+}
+
+.dark {
+  font-weight: 500;
+  color: var(--clr-dark);
+}

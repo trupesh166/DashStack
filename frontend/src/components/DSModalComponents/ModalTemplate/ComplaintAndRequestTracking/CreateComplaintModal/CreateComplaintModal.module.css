@@ -1,0 +1,9 @@
+.createComplaint {
+  font-family: Poppins;
+}
+
+.h5 {
+  color: var(--clr-dark);
+  font-family: Poppins;
+  font-weight: 500;
+}

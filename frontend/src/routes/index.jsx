@@ -22,8 +22,9 @@ import {
   RequestTracking,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
-import { Expense } from "../pages/Admin";
+import { Announcement, Expense } from "../pages/Admin";
 import ProtectedRoute from "./ProtectedRoute";
+import Income from "../pages/Admin/FinancialMaintenance/Income";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -64,7 +65,7 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "income",
-                      element: <AdminDashBoard />,
+                      element: <Income />,
                     },
                     {
                       path: "expense",
@@ -112,7 +113,7 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "announcement",
-                  element: <AdminDashBoard />,
+                  element: <Announcement />,
                 },
               ],
             },

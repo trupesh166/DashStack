@@ -1,6 +1,8 @@
 import { Avatar, Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
+import { useState } from "react";
+import { CreateComplaintModal, EditComplaintModal, ViewComplaintModal } from "../../../../components";
 
 const columns = [
   {
@@ -131,9 +133,46 @@ const data = [
 ];
 
 export const ComplaintCreate = () => {
+
+  const [createComplaint, setCreateComplaint] = useState(false)
+  const [editComplaint, setEditComplaint] = useState(false)
+  const [viewComplaint, setViewComplaint] = useState(false)
+
   return (
-    <DSCard title={"Create Complaint"}>
-      <DSTable tableColumn={columns} dataSource={data} pagination={false} />
-    </DSCard>
+    <div>
+      <DSCard
+        title={"Create Complaint"}
+        buttonContent={"Create Complaint"}
+        button={true}
+        onClick={() => setCreateComplaint(true)}
+      >
+        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+      </DSCard>
+
+      {/* Create Complaint Modal */}
+      <CreateComplaintModal
+        open={createComplaint}
+        handleCancel={() => setCreateComplaint(false)}
+        handleClose={() => setCreateComplaint(false)}
+        handleOk={() => setCreateComplaint(false)}
+      />
+
+      {/* Edit Complaint Modal */}
+      <EditComplaintModal
+        open={editComplaint}
+        handleCancel={() => setEditComplaint(false)}
+        handleClose={() => setEditComplaint(false)}
+        handleOk={() => setEditComplaint(false)}
+      />
+
+      {/* View Complaint Modal */}
+      <ViewComplaintModal
+        open={viewComplaint}
+        handleCancel={() => setViewComplaint(false)}
+        handleClose={() => setViewComplaint(false)}
+        handleOk={() => setViewComplaint(false)}
+      />
+
+    </div>
   );
 };

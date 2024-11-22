@@ -1,6 +1,7 @@
 import { Space } from "antd";
-import { DSButton, DSCard, DSTable } from "../../../../components";
+import { AddSecurityProtocolModal, DSButton, DSCard, DSTable, EditSecurityProtocolModal, ViewSecurityProtocolModal } from "../../../../components";
 import Icons from "../../../../constants/Icons";
+import { useState } from "react";
 
 const data = [
   {
@@ -69,16 +70,53 @@ const columns = [
 ];
 
 export const SecurityProtocols = () => {
+
+  const [addSecurityProtocolModal, setAddSecurityProtocolModal] = useState(false)
+  const [editSecurityProtocolModal, setEditSecurityProtocolModal] = useState(false)
+  const [viewSecurityProtocolModal, setViewSecurityProtocolModal] = useState(false)
+
   return (
-    <DSCard title="Security Protocols">
-      <DSTable
-        dataSource={data}
-        tableColumn={columns}
-        pagination={false}
-        rowClassName={(record, index) =>
-          index % 2 === 0 ? "table-row-light" : "table-row-dark"
-        }
+    <div>
+      <DSCard
+        title="Security Protocols"
+        buttonContent={"Create Protocol"}
+        button={true}
+        onClick={() => setAddSecurityProtocolModal(true)}
+      >
+        <DSTable
+          dataSource={data}
+          tableColumn={columns}
+          pagination={false}
+          rowClassName={(record, index) =>
+            index % 2 === 0 ? "table-row-light" : "table-row-dark"
+          }
+        />
+      </DSCard>
+
+      {/* Add Security Protocol Modal */}
+      <AddSecurityProtocolModal
+        open={addSecurityProtocolModal}
+        handleCancel={() => setAddSecurityProtocolModal(false)}
+        handleClose={() => setAddSecurityProtocolModal(false)}
+        handleOk={() => setAddSecurityProtocolModal(false)}
       />
-    </DSCard>
+
+      {/* Edit Security Protocol Modal */}
+      <EditSecurityProtocolModal
+        open={editSecurityProtocolModal}
+        handleCancel={() => setEditSecurityProtocolModal(false)}
+        handleClose={() => setEditSecurityProtocolModal(false)}
+        handleOk={() => setEditSecurityProtocolModal(false)}
+      />
+
+      {/* View Security Protocol Modal */}
+      <ViewSecurityProtocolModal
+        open={viewSecurityProtocolModal}
+        handleCancel={() => setViewSecurityProtocolModal(false)}
+        handleClose={() => setViewSecurityProtocolModal(false)}
+        handleOk={() => setViewSecurityProtocolModal(false)}
+      />
+
+    </div>
   );
 };

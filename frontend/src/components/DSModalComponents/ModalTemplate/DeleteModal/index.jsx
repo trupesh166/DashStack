@@ -1,4 +1,4 @@
-import { DSModal } from "../../..";
+import { DSModal } from "@/components/";
 
 export const DeleteModal = ({
   handleOk,
@@ -7,6 +7,7 @@ export const DeleteModal = ({
   handleClose,
   Title,
   isModalOpen,
+  ...rest
 }) => {
   return (
     <DSModal
@@ -19,6 +20,7 @@ export const DeleteModal = ({
       disabledButton={false}
       handleContent={"Delete"}
       danger={true}
+      {...rest}
     >
       <h6 className="lh-base clr-gray fw-normal">{children}</h6>
     </DSModal>

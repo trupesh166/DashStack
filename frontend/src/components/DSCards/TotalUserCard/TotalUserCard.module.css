@@ -1,7 +1,6 @@
 .card {
-  width: 250px;
-  font-family: Poppins;
-  background-color: var(--clr-white);
+  width: 100%;
+    background-color: var(--clr-white);
   border: none;
   position: relative;
 }

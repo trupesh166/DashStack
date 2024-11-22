@@ -4,7 +4,7 @@ import { Card, Flex } from 'antd'
 import { DSButton } from '../..'
 import Icons from "@/constants/Icons";
 
-const PendingMaintenancesCard = () => {
+export const PendingMaintenancesCard = () => {
 
   const pendingMaintenancesData = [
     {
@@ -114,4 +114,3 @@ const PendingMaintenancesCard = () => {
   )
 }
 
-export default PendingMaintenancesCard

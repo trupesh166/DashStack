@@ -20,6 +20,9 @@ import {
   ResidentManagement,
   ComplaintCreate,
   RequestTracking,
+  ForgetPassword,
+  OTP,
+  ResetPassword,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
 import { Announcement, Expense } from "../pages/Admin";
@@ -152,15 +155,15 @@ const DashStackRoute = createBrowserRouter(
             },
             {
               path: "forgot-password",
-              element: "ForgotPassword",
+              element: <ForgetPassword />,
             },
             {
               path: "otp",
-              element: "Otp",
+              element: <OTP />,
             },
             {
               path: "reset-password",
-              element: "reset-password",
+              element: <ResetPassword />,
             },
           ],
         },

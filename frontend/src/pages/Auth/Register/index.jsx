@@ -15,15 +15,16 @@ import styles from "./Register.module.css";
 export const Register = () => {
   const {
     societyNames,
-    isModalOpen,
-    setIsModalOpen,
     formData,
     handleChange,
+    handleZipCodeChange,
     handleSubmit,
     setFormData,
+    isModalOpen,
+    setIsModalOpen,
     errors,
     isLoading,
-    handleZipCodeChange,
+    isDisabled,
   } = useRegister();
 
   return (
@@ -41,6 +42,7 @@ export const Register = () => {
             value={formData.firstName}
             onChange={handleChange}
             error={errors.firstName}
+            require
           />
           <DSInput
             label="Last Name"
@@ -49,6 +51,7 @@ export const Register = () => {
             value={formData.lastName}
             onChange={handleChange}
             error={errors.lastName}
+            require
           />
           <DSInput
             label="Email"
@@ -57,6 +60,7 @@ export const Register = () => {
             value={formData.email}
             onChange={handleChange}
             error={errors.email}
+            require
           />
           <DSInput
             label="Phone Number"
@@ -65,6 +69,7 @@ export const Register = () => {
             value={formData.number}
             onChange={handleChange}
             error={errors.number}
+            require
           />
           <DSInput
             label="Country"
@@ -73,6 +78,7 @@ export const Register = () => {
             value={formData.country}
             onChange={handleChange}
             error={errors.country}
+            require
           />
           <DSInput
             label="State"
@@ -81,6 +87,7 @@ export const Register = () => {
             value={formData.state}
             onChange={handleChange}
             error={errors.state}
+            require
           />
           <DSInput
             label="City"
@@ -89,6 +96,7 @@ export const Register = () => {
             value={formData.city}
             onChange={handleChange}
             error={errors.city}
+            require
           />
           <DSInput
             label="Zip Code"
@@ -97,6 +105,7 @@ export const Register = () => {
             value={formData.zipCode}
             onChange={handleZipCodeChange}
             error={errors.zipCode}
+            require
           />
           <DSSelect
             label="Select Society"
@@ -105,6 +114,7 @@ export const Register = () => {
             parentClassName={styles.colSpan}
             options={societyNames}
             value={formData.societyId}
+            require
             onChange={(value) =>
               setFormData((prev) => ({ ...prev, societyId: value }))
             }
@@ -130,6 +140,7 @@ export const Register = () => {
             onChange={handleChange}
             error={errors.password}
             parentClassName={styles.colSpan}
+            require
           />
           <DSPasswordInput
             label="Confirm Password"
@@ -139,6 +150,7 @@ export const Register = () => {
             onChange={handleChange}
             error={errors.confirmPassword}
             parentClassName={styles.colSpan}
+            require
           />
         </div>
 
@@ -147,7 +159,7 @@ export const Register = () => {
           checked={formData.termsAccepted}
           onChange={handleChange}
         >
-          I agree to all the Terms and
+          I agree to all the Terms and {""}
           <Link to="/privacy-policies">Privacy Policies</Link>.
         </DSCheckbox>
 
@@ -155,7 +167,7 @@ export const Register = () => {
           variant="primary"
           block
           type="submit"
-          disabled={isLoading}
+          disabled={isDisabled}
           loading={isLoading}
         >
           Register

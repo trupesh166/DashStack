@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Avatar, Space, Tag } from "antd";
 import { DSButton, DSModal, DSCheckbox, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
-import { listMember } from "@/axiosApi/ApiHelper";
+import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
 import style from "./ResidentManagement.module.css";
 
@@ -16,7 +16,8 @@ export const ResidentManagement = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await listMember();
+        console.log("response");
+        const response = await getUser();
         console.log(response);
 
         if (response.status === 1 && response.data) {
@@ -25,6 +26,7 @@ export const ResidentManagement = () => {
             fullName: item.fullName || "-",
             avatar: item.profile_image || "",
             unitNumber: item.unit || "-",
+            wing: item.wing || "-",
             unitColor: "blue",
             unitStatus: item.isActive ? "Occupied" : "Vacate",
             residentStatus: item.type === "owner" ? "Owner" : "Tenant",
@@ -64,7 +66,11 @@ export const ResidentManagement = () => {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
+      render: (_, record) => (
+        <Tag color="blue">
+          {record.wing} - {record.unitNumber}
+        </Tag>
+      ),
     },
     {
       title: "Unit Status",

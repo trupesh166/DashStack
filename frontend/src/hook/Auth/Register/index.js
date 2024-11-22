@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
-import { listSociety } from "@/axiosApi/ApiHelper";
+import { useState } from "react";
+import { register, getSociety } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import { createChairman } from "@/axiosApi/ApiHelper";
-import debounce from "lodash.debounce";
 
 export const useRegister = () => {
   const [societies, setSocieties] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -25,53 +22,52 @@ export const useRegister = () => {
     termsAccepted: false,
   });
 
-  const [errors, setErrors] = useState({});
-
-  // Fetch societies on component mount
-  useEffect(() => {
-    fetchSocieties();
-  }, []);
-
-  const fetchSocieties = async (zipCode = "") => {
+  // Fetch societies based on zip code
+  const fetchSocieties = async (zipCode) => {
     try {
-      setLoading(true);
-      const data = await listSociety(zipCode);
-      setSocieties(data.data || []);
-      if (zipCode) {
-        toast.success("Societies loaded for the given zip code.");
-      }
+      const response = await getSociety();
+      const filteredSocieties = response.data.filter(
+        (item) => item.zipcode === Number(zipCode)
+      );
+      setSocieties(filteredSocieties);
     } catch (err) {
-      setError("Error fetching societies.");
       toast.error("Error fetching societies.");
-    } finally {
-      setLoading(false);
     }
   };
 
-  // Debounce the fetchSocieties function
-  const debouncedFetchSocieties = debounce(fetchSocieties, 300);
+  // Handle zip code change and fetch societies
+  const handleZipCodeChange = (e) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, zipCode: value }));
+    if (value.length >= 5) {
+      fetchSocieties(value);
+    }
+  };
 
-  // Map societies into a value-label format for dropdowns
+  // Map societies for dropdown
   const societyNames = societies.map((society) => ({
     value: society._id,
     label: society.name,
   }));
 
-  // Handle form input changes
+  // Handle input change
   const handleChange = (e) => {
     const { name, value, checked, type } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
 
-  // Handle zip code change
-  const handleZipCodeChange = (e) => {
-    const { value } = e.target;
-    setFormData((prev) => ({ ...prev, zipCode: value }));
-    if (value.length >= 5) {
-      debouncedFetchSocieties(value);
+    // Check password match dynamically
+    if (name === "password" || name === "confirmPassword") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword:
+          name === "confirmPassword" && value !== formData.password
+            ? "Passwords do not match."
+            : undefined,
+      }));
     }
   };
 
@@ -97,6 +93,12 @@ export const useRegister = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Check if all fields are filled and valid
+  const isDisabled =
+    Object.values(formData).some(
+      (value) => value === "" || (typeof value === "boolean" && !value)
+    ) || Object.keys(errors).length > 0;
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -114,14 +116,12 @@ export const useRegister = () => {
         city: formData.city,
         societyId: formData.societyId,
         password: formData.password,
-        confirmPassword: formData.confirmPassword,
       };
 
-      const data = await createChairman(apiRequestData);
+      await register(apiRequestData);
       toast.success("Registration successful!");
     } catch (error) {
-      toast.error("Registration failed.");
-      console.error("Registration failed:", error);
+      toast.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -129,16 +129,15 @@ export const useRegister = () => {
 
   return {
     societyNames,
-    error,
-    isModalOpen,
-    setIsModalOpen,
     formData,
     handleChange,
-    validateForm,
+    handleZipCodeChange,
     handleSubmit,
     setFormData,
+    isModalOpen,
+    setIsModalOpen,
     errors,
     isLoading,
-    handleZipCodeChange,
+    isDisabled,
   };
 };

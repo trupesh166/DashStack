@@ -21,14 +21,7 @@ export const DSCard = ({
         )}
       >
         <h3 className="fw-semibold lh-base">{title}</h3>
-        <div>
-          {button && (
-            <DSButton variant={"primary"} {...rest}>
-              {buttonContent}
-            </DSButton>
-          )}
-          {headerContent}
-        </div>
+        <div>{headerContent}</div>
       </div>
       <div className={className}>{children}</div>
     </div>

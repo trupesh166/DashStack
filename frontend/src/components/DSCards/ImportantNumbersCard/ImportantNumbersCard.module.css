@@ -1,17 +1,6 @@
 .card {
-  width: 380px;
-  height: 398px;
-  border: none;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  font-family: var(--font-primary);
   overflow: hidden;
-  background-color: var(--clr-white);
-}
-
-.body {
-  width: 340px;
-  height: 300px;
-  overflow: auto;
 }
 
 .importantNumber {
@@ -23,18 +12,21 @@
   border-radius: 10px;
 }
 
-.detail>p {
+.detail > p {
   line-height: 25px;
   font-size: 13px;
   color: var(--clr-black);
-  font-family: var(--font-primary);
 }
 
-.detail>p>span {
+.detail > p > span {
   color: var(--clr-silver);
 }
 
 .actions {
   display: flex;
   gap: 5px;
+}
+
+.cardBody {
+  gap: var(--space-sm);
 }

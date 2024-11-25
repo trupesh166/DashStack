@@ -11,8 +11,9 @@ async function request(method, url, data) {
 }
 
 /* Authentication */
-export const register = (data) => request("post", "/auth/register", data);
-export const loginUser = (data) => request("post", "/auth/login", data);
+export const register = (data) =>
+  request("post", "/society-handler/create", data);
+export const loginUser = (data) => request("post", "/user/login", data);
 export const forgotPassword = (data) =>
   request("post", "/auth/forgot-password", data);
 export const verifyOtp = (data) => request("post", "/auth/verify-otp", data);
@@ -20,14 +21,13 @@ export const resetPassword = (data) =>
   request("post", "/auth/reset-password", data);
 
 /* Society  */
-export const createSociety = (data) =>
-  request("post", "/society/insertSociety", data);
-export const getSociety = () => request("get", "/society/getSociety");
+export const createSociety = (data) => request("post", "/society/create", data);
+export const getSociety = () => request("get", "/society/list");
 
 /* User */
 export const userRegistration = (data) =>
   request("post", "/auth/user/insertUser", data);
-export const getUser = () => request("get", "auth/user/getUser/");
+export const getUser = () => request("get", "/member/671ac29415a25bbaedeb52ca");
 export const editUser = () => request("get", "auth/user/edit-user/");
 export const vacateUser = () => request("get", "auth/user/vacate-user/");
 
@@ -110,9 +110,9 @@ export const getMaintenanceDetailsByMember = () =>
 // export const deleteSecurityProtocol = (id) =>
 //   request("delete", `/securityprotocol/deleteprotocol/${id}`);
 
-// // Visitor Management
-// export const listVisitor = (societyId) =>
-//   request("get", `/visitor/getvisitor/${societyId}`);
+// Visitor Management
+export const listVisitor = (societyId) =>
+  request("get", `/visitor/getvisitor/${societyId}`);
 
 // // Announcement Management
 // export const createAnnouncement = (data) =>

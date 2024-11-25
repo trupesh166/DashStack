@@ -60,6 +60,7 @@ export const DSModal = ({
               disabled={disabledButton}
               variant={disabledButton == false ? "primary" : ""}
               danger={danger}
+              type="submit"
             >
               {handleContent}
             </DSButton>

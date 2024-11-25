@@ -12,3 +12,7 @@
 .colSpan {
   grid-column: span 2;
 }
+
+.selectSociety {
+  margin-top: var(--space-sm);
+}

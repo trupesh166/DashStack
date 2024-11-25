@@ -12,14 +12,14 @@
   cursor: pointer;
 }
 
-h6 {
+.addExpensesDetails h6 {
   color: var(--clr-cult);
 }
 
-span {
+.addExpensesDetails span {
   color: var(--clr-gray_2);
 }
 
-p {
+.addExpensesDetails p {
   color: var(--clr-silver);
 }

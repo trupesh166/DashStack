@@ -2,13 +2,13 @@
   font-family: Poppins;
 }
 
-img {
+.img {
   width: 70px !important;
   height: 70px !important;
   border-radius: 32px;
 }
 
-h5 {
+.memberDetail h5 {
   color: var(--clr-silver);
 }
 

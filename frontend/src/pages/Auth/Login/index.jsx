@@ -10,6 +10,7 @@ export const Login = () => {
     isLoading,
     setPassword,
     rememberMe,
+    setRememberMe,
     email,
     password,
     handleSubmit,
@@ -38,7 +39,12 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="d-flex justify-content-between">
-            <DSCheckbox checked={rememberMe}>Remember me</DSCheckbox>
+            <DSCheckbox
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)} // Update state on change
+            >
+              Remember me
+            </DSCheckbox>
             <Link to="/forgot-password">Forgot Password ?</Link>
           </div>
         </div>

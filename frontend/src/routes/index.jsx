@@ -50,7 +50,7 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "admin",
-          element: <ProtectedRoute />,
+          // element: <ProtectedRoute />,
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,

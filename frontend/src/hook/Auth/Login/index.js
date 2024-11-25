@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import { loginUser } from "@/axiosApi/ApiHelper";
@@ -7,63 +7,57 @@ import { loginUser } from "@/axiosApi/ApiHelper";
 export const useLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const apiRequestData = {
-      email,
-      password,
-    };
-
     setIsLoading(true);
+
     try {
-      const response = await loginUser(apiRequestData);
-      const { data } = response;
+      const response = await loginUser({ email, password });
       toast.success("Login successful!");
 
-      const token = data;
-      localStorage.setItem("_token", token);
-      const decodedToken = jwtDecode(token);
-      const { userData, exp } = decodedToken;
-      const { role } = userData;
+      const token = response.token;
 
-      const currentTime = Math.floor(Date.now() / 1000);
-      if (currentTime >= exp) {
-        toast.error("Session expired. Please log in again.");
-        return;
+      // Store token based on rememberMe preference
+      if (rememberMe) {
+        localStorage.setItem("_token", token);
+      } else {
+        sessionStorage.setItem("_token", token);
       }
 
-      if (role === "admin") {
+      const { role } = jwtDecode(token);
+
+      // Navigate based on user role
+      if (role === "Chairman") {
         navigate("/admin");
-      } else if (role === "user") {
+      } else if (role === "Member") {
         navigate("/");
       } else {
+        toast.error("Unauthorized role. Please contact support.");
         navigate("/login");
       }
     } catch (error) {
-      if (!error.response) {
-        toast.error("An error occurred. Please try again.");
-      }
+      toast.error(
+        error?.response?.data?.message || "Login failed. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return {
+    email,
     setEmail,
-    isLoading,
+    password,
     setPassword,
     rememberMe,
     setRememberMe,
-    handleSubmit,
-    email,
-    password,
+    isLoading,
     location,
+    handleSubmit,
   };
 };

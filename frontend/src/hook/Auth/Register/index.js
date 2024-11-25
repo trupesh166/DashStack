@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { register, getSociety } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const useRegister = () => {
+  let navigate = useNavigate();
+
   const [societies, setSocieties] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,12 +14,12 @@ export const useRegister = () => {
     firstName: "",
     lastName: "",
     email: "",
-    number: "",
+    phoneNumber: "",
     country: "",
     state: "",
     city: "",
     zipCode: "",
-    societyId: "",
+    selectSociety: [],
     password: "",
     confirmPassword: "",
     termsAccepted: false,
@@ -27,8 +30,9 @@ export const useRegister = () => {
     try {
       const response = await getSociety();
       const filteredSocieties = response.data.filter(
-        (item) => item.zipcode === Number(zipCode)
+        (item) => item.zipCode === zipCode
       );
+
       setSocieties(filteredSocieties);
     } catch (err) {
       toast.error("Error fetching societies.");
@@ -47,7 +51,7 @@ export const useRegister = () => {
   // Map societies for dropdown
   const societyNames = societies.map((society) => ({
     value: society._id,
-    label: society.name,
+    label: society.societyName,
   }));
 
   // Handle input change
@@ -78,11 +82,13 @@ export const useRegister = () => {
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
     if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.number) newErrors.number = "Phone number is required.";
+    if (!formData.phoneNumber)
+      newErrors.phoneNumber = "Phone number is required.";
     if (!formData.country) newErrors.country = "Country is required.";
     if (!formData.state) newErrors.state = "State is required.";
     if (!formData.city) newErrors.city = "City is required.";
-    if (!formData.societyId) newErrors.societyId = "Please select a society.";
+    if (!formData.selectSociety)
+      newErrors.selectSociety = "Please select a society.";
     if (!formData.password) newErrors.password = "Password is required.";
     if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match.";
@@ -94,10 +100,7 @@ export const useRegister = () => {
   };
 
   // Check if all fields are filled and valid
-  const isDisabled =
-    Object.values(formData).some(
-      (value) => value === "" || (typeof value === "boolean" && !value)
-    ) || Object.keys(errors).length > 0;
+  const isDisabled = Object.values(formData).some((value) => value === "");
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -108,20 +111,24 @@ export const useRegister = () => {
     setIsLoading(true);
     try {
       const apiRequestData = {
-        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
-        number: formData.number,
+        phoneNumber: formData.phoneNumber,
         country: formData.country,
         state: formData.state,
         city: formData.city,
-        societyId: formData.societyId,
+        selectSociety: formData.selectSociety,
         password: formData.password,
+        confirmPassword: formData.confirmPassword,
       };
+      console.log(apiRequestData);
 
       await register(apiRequestData);
+      navigate("/admin/login");
       toast.success("Registration successful!");
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message || "Registration failed.");
     } finally {
       setIsLoading(false);
     }

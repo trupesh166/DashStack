@@ -6,7 +6,6 @@ import {
   DSPasswordInput,
   DSCheckbox,
   SelectSocietyModal,
-  DSModal,
   DSSelect,
 } from "@/components";
 import { useRegister } from "@/hook/Auth/Register";
@@ -64,11 +63,11 @@ export const Register = () => {
           />
           <DSInput
             label="Phone Number"
-            name="number"
+            name="phoneNumber"
             placeholder="91+"
-            value={formData.number}
+            value={formData.phoneNumber}
             onChange={handleChange}
-            error={errors.number}
+            error={errors.phoneNumber}
             require
           />
           <DSInput
@@ -108,17 +107,21 @@ export const Register = () => {
             require
           />
           <DSSelect
+            showSearch
             label="Select Society"
-            name="societyId"
-            placeholder="Select Society*"
+            name="selectSociety"
+            placeholder="Select Society"
             parentClassName={styles.colSpan}
             options={societyNames}
-            value={formData.societyId}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            value={formData.selectSociety}
             require
             onChange={(value) =>
-              setFormData((prev) => ({ ...prev, societyId: value }))
+              setFormData((prev) => ({ ...prev, selectSociety: value }))
             }
-            error={errors.societyId}
+            error={errors.selectSociety}
             dropdownRender={(menu) => (
               <>
                 {menu}
@@ -126,6 +129,7 @@ export const Register = () => {
                   onClick={() => setIsModalOpen(true)}
                   block
                   variant="primary"
+                  className={styles.selectSociety}
                 >
                   Create New Society
                 </DSButton>
@@ -177,18 +181,10 @@ export const Register = () => {
           Already have an account? <Link to="/login">Login</Link>
         </h6>
       </form>
-
-      <DSModal
-        title="Create New Society"
-        IsFooter
+      <SelectSocietyModal
         open={isModalOpen}
-        handleOk={() => setIsModalOpen(false)}
-        onCancel={() => setIsModalOpen(false)}
         handleClose={() => setIsModalOpen(false)}
-        handleContent="Apply"
-      >
-        <SelectSocietyModal />
-      </DSModal>
+      />
     </>
   );
 };

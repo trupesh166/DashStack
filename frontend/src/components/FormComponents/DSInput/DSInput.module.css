@@ -37,10 +37,6 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: none;
 }
 
-.input::placeholder {
-  color: #a7a7a7;
-}
-
 .errorMessage {
   margin-top: var(--space-xs);
   color: var(--clr-danger);

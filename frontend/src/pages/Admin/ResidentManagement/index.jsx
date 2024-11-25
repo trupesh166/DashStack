@@ -20,7 +20,7 @@ export const ResidentManagement = () => {
         const response = await getUser();
         console.log(response);
 
-        if (response.status === 1 && response.data) {
+        if ((response.message = "Success" && response.data)) {
           const formattedData = response.data.map((item, index) => ({
             key: item._id || index,
             fullName: item.fullName || "-",
@@ -37,7 +37,7 @@ export const ResidentManagement = () => {
           setTableData(formattedData);
           console.log(formattedData);
         } else {
-          toast.error(response.message || "Failed to fetch data.");
+          toast.error("Failed to fetch data.");
         }
       } catch (error) {
         toast.error("Error fetching user data.");

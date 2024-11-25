@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import style from "./ComplaintCard.module.css";
-import { Avatar, Card, Flex } from "antd";
-import { DSSelect } from "../../FormComponents";
+import { Avatar, Flex } from "antd";
 import clsx from "clsx";
-import { DeleteModal, DSButton, DSTable, EditComplaintModal, ViewComplaintModal } from "../..";
 import Icons from "@/constants/Icons";
+import { DeleteModal, DSButton, DSCard, DSSelect, DSTable, EditComplaintModal, ViewComplaintModal } from "../..";
 
 const tableColumn = [
   {
@@ -13,11 +12,7 @@ const tableColumn = [
     key: "complainerName",
     render: (_, { profileImage, complainerName }) => (
       <Flex align="center" gap={"small"}>
-        <Avatar
-          size={40}
-          src={profileImage}
-          alt="profileImage"
-        />
+        <Avatar size={40} src={profileImage} alt="profileImage" />
         <div>
           <h5 className={style.h5}>{complainerName}</h5>
         </div>
@@ -166,38 +161,32 @@ const dataSource = [
 ];
 
 export const ComplaintCard = () => {
-
-  const [editComplaint, setEditComplaint] = useState(false)
-  const [viewComplaint, setViewComplaint] = useState(false)
-  const [deleteComplaint, setDeleteComplaint] = useState(false)
+  const [editComplaint, setEditComplaint] = useState(false);
+  const [viewComplaint, setViewComplaint] = useState(false);
+  const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
-    <div>
-      <Card className={style.card}>
-        <Flex
-          justify="space-between"
-          align="center"
-          className={clsx(style.header, "mb-5")}
+    <DSCard
+      size="small"
+      rootClass={style.card}
+      className={clsx(style.cardBody, "d-flex flex-column")}
+      title={"Complaint List"}
+      headerContent={
+        <DSSelect
+          className="w-100"
+          defaultValue="Month"
+          options={[
+            { label: "Month", value: "Month" },
+            { label: "Year", value: "Year" },
+          ]}
         >
-          <h3 className="fw-semibold">Complaint List</h3>
-          <div className="w-auto">
-            <DSSelect
-              className="w-100"
-              defaultValue="Month"
-              options={[
-                { label: "Month", value: "Month" },
-                { label: "Year", value: "Year" },
-              ]}
-            >
-              View all
-            </DSSelect>
-          </div>
-        </Flex>
-
-        <div className={style.body}>
-          <DSTable tableColumn={tableColumn} tableDataSource={dataSource} />
-        </div>
-      </Card>
+          View all
+        </DSSelect>
+      }
+    >
+      <div className={style.body}>
+        <DSTable tableColumn={tableColumn} tableDataSource={dataSource} />
+      </div>
 
       {/* Edit Complaint Modal */}
       <EditComplaintModal
@@ -215,16 +204,16 @@ export const ComplaintCard = () => {
         handleOk={() => setViewComplaint(false)}
       />
 
-      {/* Remove Complaint modal */}
+      {/* Delete Complaint Modal */}
       <DeleteModal
-        title={"Delete Complain?"}
+        title={"Delete Complaint?"}
         isModalOpen={deleteComplaint}
         handleClose={() => setDeleteComplaint(false)}
         handleOk={() => setDeleteComplaint(false)}
         onCancel={() => setDeleteComplaint(false)}
-        children={"Are you sure you want to delate this complain?"}
-      />
-
-    </div>
+      >
+        Are you sure you want to delete this complaint?
+      </DeleteModal>
+    </DSCard>
   );
 };

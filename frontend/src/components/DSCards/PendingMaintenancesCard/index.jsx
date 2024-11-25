@@ -1,7 +1,7 @@
-import React from 'react'
-import style from "./PendingMaintenancesCard.module.css"
-import { Avatar, Card, Flex } from 'antd'
-import { DSButton } from '../..'
+import React from "react";
+import style from "./PendingMaintenancesCard.module.css";
+import { Avatar, Flex } from "antd";
+import { DSButton, DSCard } from "../..";
 import Icons from "@/constants/Icons";
 
 export const PendingMaintenancesCard = () => {
@@ -80,37 +80,45 @@ export const PendingMaintenancesCard = () => {
   ]
 
   return (
-    <Card size='small' className={style.card}>
-
-      <div className='d-flex justify-content-between align-items-center mb-4'>
-        <h3 className='fw-semibold'>Important Numbers</h3>
-        <DSButton variant={"text"} size={"small"}>View all</DSButton>
-      </div>
-
+    <DSCard
+      size="small"
+      rootClass={style.card}
+      className="d-flex flex-column"
+      title="Pending Maintenances"
+      headerContent={
+        <DSButton variant="text" size="small">
+          View all
+        </DSButton>
+      }
+    >
       <div className={style.pendingMaintenances}>
-
-        {
-          pendingMaintenancesData.map((item) => (
-            <div className={style.users} key={item._id}>
-              <Flex justify='space-between' align='center'>
-                <div className='d-flex align-items-center gap-3'>
-                  <Avatar size={40} src={item.profileImage} alt="userImage" className={style.userImage} />
-                  <div className={style.userDetails}>
-                    <h6 className='fw-medium' style={{ color: "var(--clr-dark)" }}>{item.fullName}</h6>
-                    <p>{item.dueDays}</p>
-                  </div>
+        {pendingMaintenancesData.map((item) => (
+          <div className={style.users} key={item._id}>
+            <Flex justify="space-between" align="center">
+              <div className="d-flex align-items-center gap-3">
+                <Avatar
+                  size={40}
+                  src={item.profileImage}
+                  alt="userImage"
+                  className={style.userImage}
+                />
+                <div className={style.userDetails}>
+                  <h6 className="fw-medium" style={{ color: "var(--clr-dark)" }}>
+                    {item.fullName}
+                  </h6>
+                  <p>{item.dueDays}</p>
                 </div>
-                <div>
-                  <h5 className={style.maintenancesAmount}>{Icons.Rupee}{item.maintenanceAmount}</h5>
-                </div>
-              </Flex>
-            </div>
-          ))
-        }
-
+              </div>
+              <div>
+                <h5 className={style.maintenancesAmount}>
+                  {Icons.Rupee}
+                  {item.maintenanceAmount}
+                </h5>
+              </div>
+            </Flex>
+          </div>
+        ))}
       </div>
-
-    </Card>
-  )
-}
-
+    </DSCard>
+  );
+};

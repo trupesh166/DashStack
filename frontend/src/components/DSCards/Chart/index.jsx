@@ -1,7 +1,4 @@
-import React, { useEffect, useRef } from 'react'
-import style from "./Chart.module.css"
-import { Card, Flex } from 'antd'
-import { DSSelect } from '../../FormComponents'
+import React, { useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -12,19 +9,20 @@ import {
   Tooltip,
 } from 'chart.js';
 
+import style from './Chart.module.css';
+import clsx from 'clsx';
+import { DSCard, DSSelect } from '../..';
+
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
 export const Chart = () => {
-
-  // Chart data reference
   const chartRef = useRef(null);
 
-  // Data for the balance chart
   const balanceData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // Y-axis
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        data: [10000, 20000, 15000, 30000, 35000, 40000, 38000, 42000, 46000, 48000, 55000, 65000], // X-axis values
+        data: [10000, 20000, 15000, 30000, 35000, 40000, 38000, 42000, 46000, 48000, 55000, 65000],
         fill: true,
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
@@ -33,24 +31,12 @@ export const Chart = () => {
     ],
   };
 
-  // Cleanup chart instance on unmount
-  useEffect(() => {
-    const chartInstance = chartRef.current?.chartInstance;
-    return () => {
-      if (chartInstance) {
-        chartInstance.destroy(); // Ensure the previous chart is destroyed
-      }
-    };
-  }, []);
-
   const options = {
     maintainAspectRatio: false,
     scales: {
       x: {
         type: 'category',
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        reverse: false,
-
       },
       y: {
         type: 'linear',
@@ -64,32 +50,25 @@ export const Chart = () => {
   };
 
   return (
-    <Card className={style.card}>
-
-      <div>
-        <Flex justify='space-between' align='center'>
-          <h3 className='fw-semibold'>Complaint List</h3>
-          <div className='w-auto ms-auto'>
-            <DSSelect
-              className="w-100"
-              defaultValue="Month"
-              options={[
-                { label: "Month", value: "Month" },
-                { label: "Year", value: "Year" },
-              ]}
-            >
-              View all
-            </DSSelect>
-          </div>
-
-        </Flex>
-
-        <div className={style.chart}>
-          <Line ref={chartRef} data={balanceData} options={options} />
-        </div>
-
+    <DSCard
+      size="small"
+      rootClass={style.card}
+      className={clsx(style.cardBody, 'd-flex flex-column')}
+      title="Balance Overview"
+      headerContent={
+        <DSSelect
+          className="w-100"
+          defaultValue="Month"
+          options={[
+            { label: 'Month', value: 'Month' },
+            { label: 'Year', value: 'Year' },
+          ]}
+        />
+      }
+    >
+      <div className={style.chart}>
+        <Line ref={chartRef} data={balanceData} options={options} />
       </div>
-
-    </Card>
-  )
-}
+    </DSCard>
+  );
+};

@@ -1,5 +1,5 @@
 import { Space } from "antd";
-import { AddSecurityProtocolModal, DSButton, DSCard, DSTable, EditSecurityProtocolModal, ViewSecurityProtocolModal } from "../../../../components";
+import { AddSecurityProtocolModal, DeleteModal, DSButton, DSCard, DSTable, EditSecurityProtocolModal, ViewSecurityProtocolModal } from "../../../../components";
 import Icons from "../../../../constants/Icons";
 import { useState } from "react";
 
@@ -74,6 +74,7 @@ export const SecurityProtocols = () => {
   const [addSecurityProtocolModal, setAddSecurityProtocolModal] = useState(false)
   const [editSecurityProtocolModal, setEditSecurityProtocolModal] = useState(false)
   const [viewSecurityProtocolModal, setViewSecurityProtocolModal] = useState(false)
+  const [deleteComplaint, setDeleteComplaint] = useState(false)
 
   return (
     <div>
@@ -115,6 +116,16 @@ export const SecurityProtocols = () => {
         handleCancel={() => setViewSecurityProtocolModal(false)}
         handleClose={() => setViewSecurityProtocolModal(false)}
         handleOk={() => setViewSecurityProtocolModal(false)}
+      />
+
+      {/* Remove Security Protocol Modal */}
+      <DeleteModal
+        title={"Delete Protocol?"}
+        isModalOpen={deleteComplaint}
+        handleClose={() => setDeleteComplaint(false)}
+        handleOk={() => setDeleteComplaint(false)}
+        onCancel={() => setDeleteComplaint(false)}
+        children={"Are you sure you want to delate this Protocol?"}
       />
 
     </div>

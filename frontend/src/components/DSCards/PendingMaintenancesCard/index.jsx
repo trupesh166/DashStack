@@ -1,6 +1,6 @@
 import React from 'react'
 import style from "./PendingMaintenancesCard.module.css"
-import { Card, Flex } from 'antd'
+import { Avatar, Card, Flex } from 'antd'
 import { DSButton } from '../..'
 import Icons from "@/constants/Icons";
 
@@ -94,9 +94,9 @@ export const PendingMaintenancesCard = () => {
             <div className={style.users} key={item._id}>
               <Flex justify='space-between' align='center'>
                 <div className='d-flex align-items-center gap-3'>
-                  <img src={item.profileImage} alt="userImage" className={style.userImage} />
+                  <Avatar size={40} src={item.profileImage} alt="userImage" className={style.userImage} />
                   <div className={style.userDetails}>
-                    <h6 className='fw-medium'>{item.fullName}</h6>
+                    <h6 className='fw-medium' style={{ color: "var(--clr-dark)" }}>{item.fullName}</h6>
                     <p>{item.dueDays}</p>
                   </div>
                 </div>

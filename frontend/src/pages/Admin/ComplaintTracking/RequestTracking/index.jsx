@@ -2,7 +2,7 @@ import { Avatar, Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { useState } from "react";
-import { CreateRequestModal, EditRequestModal, ViewRequestModal } from "../../../../components";
+import { CreateRequestModal, DeleteModal, EditRequestModal, ViewRequestModal } from "../../../../components";
 
 const columns = [
   {
@@ -145,6 +145,7 @@ export const RequestTracking = () => {
   const [createRequest, setCreateRequest] = useState(false)
   const [editRequest, setEditRequest] = useState(false)
   const [viewRequest, setViewRequest] = useState(false)
+  const [deleteComplaint, setDeleteComplaint] = useState(false)
 
   return (
     <div>
@@ -179,6 +180,15 @@ export const RequestTracking = () => {
         handleCancel={() => setViewRequest(false)}
         handleClose={() => setViewRequest(false)}
         handleOk={() => setViewRequest(false)}
+      />
+      {/* Remove Request Modal */}
+      <DeleteModal
+        title={"Delete Request?"}
+        isModalOpen={deleteComplaint}
+        handleClose={() => setDeleteComplaint(false)}
+        handleOk={() => setDeleteComplaint(false)}
+        onCancel={() => setDeleteComplaint(false)}
+        children={"Are you sure you want to delate this Request?"}
       />
     </div>
   );

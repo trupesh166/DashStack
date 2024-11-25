@@ -28,6 +28,7 @@ import { AuthLayouts, DashboardLayout } from "@/layouts";
 import { Announcement, Expense } from "../pages/Admin";
 import ProtectedRoute from "./ProtectedRoute";
 import Income from "../pages/Admin/FinancialMaintenance/Income";
+import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -58,6 +59,10 @@ const DashStackRoute = createBrowserRouter(
                 {
                   index: true,
                   element: <AdminDashBoard />,
+                },
+                {
+                  path: "editProfile",
+                  element: <EditProfile />,
                 },
                 {
                   path: "residents",

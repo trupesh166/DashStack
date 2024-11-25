@@ -47,6 +47,7 @@ export const Note = () => {
         handleClose={() => setAddNote(false)}
       />
 
+      {/* Edit Note Modal */}
       <EditNote
         open={editNote}
         handleOk={() => setEditNote(false)}

@@ -1,5 +1,5 @@
 import { Avatar, Space, Tag } from "antd";
-import { AddSecurityModal, DSButton, DSCard, DSTable, EditSecurityModal, ViewSecurityModal } from "../../../components";
+import { AddSecurityModal, DeleteModal, DSButton, DSCard, DSTable, EditSecurityModal, ViewSecurityModal } from "../../../components";
 import Icons from "../../../constants/Icons";
 import { useState } from "react";
 
@@ -113,6 +113,7 @@ export const SecurityGuard = () => {
   const [addSecurity, setAddSecurity] = useState(false)
   const [editSecurity, setEditSecurity] = useState(false)
   const [viewSecurity, setViewSecurity] = useState(false)
+  const [deleteComplaint, setDeleteComplaint] = useState(false)
 
   return (
     <div>
@@ -155,6 +156,16 @@ export const SecurityGuard = () => {
         handleCancel={() => setViewSecurity(false)}
         handleClose={() => setViewSecurity(false)}
         handleOk={() => setViewSecurity(false)}
+      />
+
+      {/* Remove Security Modal */}
+      <DeleteModal
+        title={"Delete Security?"}
+        isModalOpen={deleteComplaint}
+        handleClose={() => setDeleteComplaint(false)}
+        handleOk={() => setDeleteComplaint(false)}
+        onCancel={() => setDeleteComplaint(false)}
+        children={"Are you sure you want to delate this Security?"}
       />
 
     </div>

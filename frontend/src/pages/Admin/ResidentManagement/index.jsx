@@ -5,12 +5,12 @@ import Icons from "@/constants/Icons";
 import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
 import style from "./ResidentManagement.module.css";
+import { useNavigate } from "react-router-dom";
 
 export const ResidentManagement = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeButton, setActiveButton] = useState("Occupied");
   const [tableData, setTableData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -128,20 +128,24 @@ export const ResidentManagement = () => {
     },
   ];
 
-  const handleButtonClick = (value) => {
-    console.log(value);
-    setActiveButton(value);
-  };
-
   return (
     <>
       <DSCard
         title="Resident Tenant and Owner Details"
         className={style.residentManagementScreen}
-        icon={Icons.AddSquare}
-        onClick={() => setIsModalOpen(true)}
         button
-        buttonContent="Add New Resident details"
+        headerContent={
+          <>
+            <DSButton
+              size={"small"}
+              variant={"primary"}
+              icon={Icons.AddSquare}
+              onClick={() => navigate("/admin/resident-detail")}
+            >
+              Add New Resident details
+            </DSButton>
+          </>
+        }
       >
         <div className={style.rmTable}>
           <DSTable
@@ -152,42 +156,6 @@ export const ResidentManagement = () => {
           />
         </div>
       </DSCard>
-      <DSModal
-        title={"Residence Status"}
-        open={isModalOpen}
-        handleOk={() => setIsModalOpen(false)}
-        onCancel={() => setIsModalOpen(false)}
-        handleClose={() => setIsModalOpen(false)}
-        IsFooter
-        handleContent={"Save"}
-        disabledButton={false}
-      >
-        <div className={style.cardButton}>
-          <DSButton
-            className={
-              activeButton === "Occupied"
-                ? style.activeButton
-                : style.inactiveButton
-            }
-            onClick={() => handleButtonClick("Occupied")}
-          >
-            Occupied
-          </DSButton>
-          <DSButton
-            className={
-              activeButton === "Vacate"
-                ? style.activeButton
-                : style.inactiveButton
-            }
-            onClick={() => handleButtonClick("Vacate")}
-          >
-            Vacate
-          </DSButton>
-        </div>
-        <div>
-          <DSCheckbox>By submitting, you agree to select Occupied</DSCheckbox>
-        </div>
-      </DSModal>
     </>
   );
 };

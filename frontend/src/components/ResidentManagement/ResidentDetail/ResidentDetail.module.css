@@ -1,0 +1,25 @@
+.document {
+  margin-top: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 2px dashed #D3D3D3;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.h6 {
+  color: var(--clr-cult);
+  font-weight: bold;
+}
+
+span {
+  color: var(--clr-gray_2);
+  font-weight: bold;
+}
+
+p {
+  color: var(--clr-silver);
+}

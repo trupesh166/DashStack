@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import styles from "./DSCard.module.css";
-import { DSButton } from "..";
 
 export const DSCard = ({
   children,

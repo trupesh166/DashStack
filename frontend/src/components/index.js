@@ -5,6 +5,7 @@ export { DSTable } from "./DSTable/";
 export { DSDropdown } from "./DSDropdown/";
 export { DSTabs } from "./DSTabs/";
 export { DSSwiperSlider } from "./DSSwiperSlider/";
+export { DSBreadCrumb } from "./DSBreadCrumb/";
 
 /* DSCard */
 export { DSCard } from "./DSCards";

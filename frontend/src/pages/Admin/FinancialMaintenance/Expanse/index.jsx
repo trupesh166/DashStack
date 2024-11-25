@@ -2,7 +2,7 @@ import { Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { useState } from "react";
-import { AddExpensesDetailsModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
+import { AddExpensesDetailsModal, DeleteModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
 
 const columns = [
   {
@@ -107,6 +107,7 @@ export const Expense = () => {
   const [addExpensesModalOpen, setAddExpensesModalOpen] = useState(false);
   const [editExpensesModalOpen, setEditExpensesModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
     <div>
@@ -143,6 +144,16 @@ export const Expense = () => {
           handleOk={() => setViewModalOpen(false)}
           handleCancel={() => setViewModalOpen(false)}
           handleClose={() => setViewModalOpen(false)}
+        />
+
+        {/* Remove Expense Modal */}
+        <DeleteModal
+          title={"Delete Expense?"}
+          isModalOpen={deleteComplaint}
+          handleClose={() => setDeleteComplaint(false)}
+          handleOk={() => setDeleteComplaint(false)}
+          onCancel={() => setDeleteComplaint(false)}
+          children={"Are you sure you want to delate this?"}
         />
 
       </div>

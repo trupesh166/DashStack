@@ -21,6 +21,14 @@
 
 /* Table section */
 
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 36px;
+  object-fit: cover;
+  object-position: top;
+}
+
 .h5 {
   text-align: center;
   color: var(--clr-gray_2);

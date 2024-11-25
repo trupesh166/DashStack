@@ -1,5 +1,14 @@
 .card {
+  width: 380px;
+  height: 398px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+.cardBody {
+  width: 340px;
+  height: 320px;
+  gap: var(--space-sm);
+  overflow: auto;
 }
 
 .importantNumber {

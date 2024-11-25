@@ -5,11 +5,12 @@
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   font-family: var(--font-primary);
   background-color: var(--clr-white);
+  overflow: hidden;
 }
 
 .pendingMaintenances {
   width: 340px;
-  height: 332px;
+  height: 320px;
   overflow-y: auto;
 }
 
@@ -21,7 +22,6 @@
 .userImage {
   border: 2px solid #d3d3d3;
 }
-
 
 .maintenancesAmount {
   color: var(--clr-danger);

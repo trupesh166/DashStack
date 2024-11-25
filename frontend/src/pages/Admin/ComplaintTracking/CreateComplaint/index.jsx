@@ -1,8 +1,13 @@
-import { Avatar, Space, Tag, Tooltip } from "antd";
+import { Avatar, Badge, Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { useState } from "react";
-import { CreateComplaintModal, DeleteModal, EditComplaintModal, ViewComplaintModal } from "../../../../components";
+import {
+  CreateComplaintModal,
+  DeleteModal,
+  EditComplaintModal,
+  ViewComplaintModal,
+} from "../../../../components";
 
 const columns = [
   {
@@ -38,7 +43,7 @@ const columns = [
     title: "Unit Number",
     dataIndex: "unitNumber",
     key: "unitNumber",
-    render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
+    render: (text, record) => <Badge>{text}</Badge>,
   },
   {
     title: "Priority",
@@ -133,11 +138,10 @@ const data = [
 ];
 
 export const ComplaintCreate = () => {
-
-  const [createComplaint, setCreateComplaint] = useState(false)
-  const [editComplaint, setEditComplaint] = useState(false)
-  const [viewComplaint, setViewComplaint] = useState(false)
-  const [deleteComplaint, setDeleteComplaint] = useState(false)
+  const [createComplaint, setCreateComplaint] = useState(false);
+  const [editComplaint, setEditComplaint] = useState(false);
+  const [viewComplaint, setViewComplaint] = useState(false);
+  const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
     <div>
@@ -183,7 +187,6 @@ export const ComplaintCreate = () => {
         onCancel={() => setDeleteComplaint(false)}
         children={"Are you sure you want to delate this complain?"}
       />
-
     </div>
   );
 };

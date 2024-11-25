@@ -143,6 +143,10 @@ p,
   color: var(--clr-foundation);
 }
 
+.clr-silver {
+  color: var(--clr-silver);
+}
+
 /* Color End */
 
 /* Background Color Start */

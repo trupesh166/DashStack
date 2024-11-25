@@ -52,7 +52,7 @@ export const ImportantNumbersCard = () => {
     <div>
       <DSCard
         size="small"
-        rootClass={style.card}
+        rootClass={clsx(style.card, "overflow-hidden")}
         className={clsx(style.cardBody, "d-flex flex-column")}
         title={"Important Numbers"}
         headerContent={
@@ -69,29 +69,28 @@ export const ImportantNumbersCard = () => {
         }
       >
         {ImportantNumber.map((item) => (
-          <div className={style.importantNumber}>
+          <div
+            className={clsx(style.importantNumber, "d-flex align-items-center")}
+          >
             <div className={style.detail}>
-              <p>
-                Name : <span>{item.fullName}</span>
-              </p>
-              <p>
-                Ph Number : <span>{item.phoneNumber}</span>
-              </p>
-              <p>
-                Work : <span>{item.work}</span>
-              </p>
+              <h6 className="lh-base">
+                Name : <span className="clr-silver">{item.fullName}</span>
+              </h6>
+              <h6 className="lh-base">
+                Ph Number :{" "}
+                <span className="clr-silver">{item.phoneNumber}</span>
+              </h6>
+              <h6 className="lh-base">
+                Work : <span className="clr-silver">{item.work}</span>
+              </h6>
             </div>
-            <div className={style.actions}>
+            <div className={clsx(style.actions, "d-flex")}>
               <DSButton
                 icon={Icons.Trash}
-                className={style.trashButton}
                 size={"small"}
+                className="clr-danger"
               />
-              <DSButton
-                icon={Icons.Edit}
-                className={style.editButton}
-                size={"small"}
-              />
+              <DSButton icon={Icons.Edit} size={"small"} className="clr-cult" />
             </div>
           </div>
         ))}

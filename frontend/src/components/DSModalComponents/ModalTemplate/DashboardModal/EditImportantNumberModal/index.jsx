@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import style from "./EditImportantNumberModal.module.css"
-import { DSInput, DSModal } from '../../../..';
+import React, { useState } from "react";
+import style from "./EditImportantNumberModal.module.css";
+import { DSInput, DSModal } from "../../../..";
 
 export const EditImportantNumberModal = ({
   open,
@@ -8,41 +8,38 @@ export const EditImportantNumberModal = ({
   handleClose,
   handleOk,
 }) => {
-
   return (
-    <div>
-      <DSModal
-        title={"Edit Important Number"}
-        open={open}
-        closeIcon
-        handleOk={handleOk}
-        onCancel={handleCancel}
-        handleClose={handleClose}
-        IsFooter
-        handleContent="Save"
-        disabledButton={false}
-      >
-        <DSInput
-          className="mb-4"
-          label={"Full Name"}
-          placeholder={"Enter Full Name"}
-          require
-        />
+    <DSModal
+      title={"Edit Important Number"}
+      open={open}
+      closeIcon
+      handleOk={handleOk}
+      onCancel={handleCancel}
+      handleClose={handleClose}
+      IsFooter
+      handleContent="Save"
+      disabledButton={false}
+    >
+      <DSInput
+        className="mb-4"
+        label={"Full Name"}
+        placeholder={"Enter Full Name"}
+        require
+      />
 
-        <DSInput
-          className="mb-4"
-          label={"Phone Number"}
-          placeholder={"+91"}
-          require
-        />
+      <DSInput
+        className="mb-4"
+        label={"Phone Number"}
+        placeholder={"+91"}
+        require
+      />
 
-        <DSInput
-          className="mb-4"
-          label={"Work"}
-          placeholder={"Enter Work"}
-          require
-        />
-      </DSModal>
-    </div>
+      <DSInput
+        className="mb-4"
+        label={"Work"}
+        placeholder={"Enter Work"}
+        require
+      />
+    </DSModal>
   );
 };

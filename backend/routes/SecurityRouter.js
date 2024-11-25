@@ -13,7 +13,8 @@ const uploadFields = upload.fields([
 const securityRouter = express.Router();
 
 securityRouter.post('/createsecurity', uploadFields, asyncHandler(securityController.createSecurity));
-securityRouter.get('/getsecurity', asyncHandler(securityController.getSecurity));
+securityRouter.get('/getsecurity/:societyId', asyncHandler(securityController.getSecurity));
 securityRouter.delete('/deletesecurity/:id', asyncHandler(securityController.deleteSecurity))
+securityRouter.put('/updatesecurity/:id', uploadFields, asyncHandler(securityController.updateSecurity))
 
 module.exports = securityRouter

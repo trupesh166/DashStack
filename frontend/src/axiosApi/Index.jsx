@@ -1,48 +1,81 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+// Base URL for the backend
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
 
 const axiosApi = axios.create({
-    baseURL: backendUrl,
+  baseURL: backendUrl,
 });
 
-const setAuthHeader = (name) => {
-    const cookieMatch = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
-    return cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
+// Helper to get cookie by name
+const getCookie = (name) => {
+  const cookieMatch = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+  return cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
 };
 
-if (typeof window !== "undefined") {
-    axiosApi.defaults.headers = {
-        Authorization: window?.localStorage?.getItem("_token")
-            ? `Bearer ${window?.localStorage?.getItem("_token")}`
-            : "",
-        //requestToken: config?.REQUEST_TOKEN,
-    };
-}
+// Function to set Authorization header
+const setAuthHeader = () => {
+  const token = window.localStorage.getItem("_token") || getCookie("_token");
+  if (token) {
+    axiosApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete axiosApi.defaults.headers.common["Authorization"];
+  }
+};
 
+// Set the authorization token initially
+setAuthHeader();
+
+// Intercept requests to ensure the latest token is always used
+axiosApi.interceptors.request.use(
+  (config) => {
+    setAuthHeader();
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Intercept responses to handle errors globally
 axiosApi.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        if (error?.response?.status === 404) {
-            toast.error("ERROR => 404 => API not available");
-            console.log("ERROR => 404 => API not available");
-        } else if (error?.response?.status === 500) {
-            console.log("ERROR => 500 => Server Error");
-            toast.error("ERROR => 500 => Server Error");
-        } else if (error?.response?.status === 401) {
-            toast.error(error.response.data.message);
-            console.log("ERROR => 401 => User is not authorized");
-            if (localStorage.getItem("_token")) {
-                localStorage.removeItem("_token");
-                window.location("/");
-            }
-        } else {
-            console.log("/other-errors.");
-        }
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const errorMsg = error.response?.data?.message || "An error occurred";
 
-        return Promise.reject(error);
+    switch (status) {
+      case 400:
+        toast.error(`Bad Request: ${errorMsg}`);
+        break;
+      case 401:
+        toast.error(`Unauthorized: ${errorMsg}`);
+        localStorage.removeItem("_token");
+        window.location.href = "/login";
+        break;
+      case 403:
+        toast.error(`Forbidden: ${errorMsg}`);
+        break;
+      case 404:
+        toast.error("API not available (404)");
+        break;
+      case 500:
+        toast.error("Server Error (500)");
+        break;
+      case 502:
+        toast.error("Bad Gateway (502)");
+        break;
+      case 503:
+        toast.error("Service Unavailable (503)");
+        break;
+      case 504:
+        toast.error("Gateway Timeout (504)");
+        break;
+      default:
+        toast.error(`Unexpected Error (${status || "Unknown"}): ${errorMsg}`);
     }
+
+    return Promise.reject(error);
+  }
 );
 
 export { axiosApi, setAuthHeader };

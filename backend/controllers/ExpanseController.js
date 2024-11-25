@@ -5,9 +5,10 @@ class ExpanseController {
   async createExpanses(req, res) {
     try {
       const { societyId, title, amount, date, discription } = req.body
-      const { file } = req.files
-      // console.log(req.file);
+      console.log(req.body)
+      const file = req.file
       if (!societyId || !title || !amount || !date || !discription || !file) throw httpErrors[400]
+      console.log(file)
       const result = await expanseModel.model.create({ ...req.body, billDocument: file.path })
       if (!result) throw httpErrors[500]
       return res.status(200).send({ message: httpSuccess })
@@ -59,7 +60,8 @@ class ExpanseController {
     try {
       const { expanseId } = req.params
       const { societyId, title, amount, date, discription } = req.body
-      const { file } = req.files
+      const file = req.file
+      console.log(file)
       if (!expanseId) throw httpErrors[400]
       if (file && file.path) req.body.billDocument = file.path
       const result = await expanseModel.model.updateOne({ _id: expanseId }, { ...req.body })

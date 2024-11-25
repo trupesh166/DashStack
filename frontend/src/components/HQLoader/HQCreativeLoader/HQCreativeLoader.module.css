@@ -1,0 +1,52 @@
+.HQCreativeLoader {
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--kingfisher);
+  box-shadow: 0 0 0 0 rgba(var(--kingfisher-rgb), 0.5);
+  animation: l2 1.5s infinite linear;
+  position: relative;
+}
+
+.HQCreativeLoader.smallLoader {
+  width: 10px;
+  animation: small 1.5s infinite linear;
+}
+
+.HQCreativeLoader.largeLoader {
+  width: 30px;
+  animation: large 1.5s infinite linear;
+}
+
+.HQCreativeLoader:before,
+.HQCreativeLoader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(var(--kingfisher-rgb), 0.5);
+  animation: inherit;
+  animation-delay: -0.5s;
+}
+
+.HQCreativeLoader:after {
+  animation-delay: -1s;
+}
+
+@keyframes l2 {
+  100% {
+    box-shadow: 0 0 0 40px rgb(115 103 240 / 0.02);
+  }
+}
+
+@keyframes small {
+  100% {
+    box-shadow: 0 0 0 30px rgb(115 103 240 / 0.02);
+  }
+}
+
+@keyframes large {
+  100% {
+    box-shadow: 0 0 0 50px rgb(115 103 240 / 0.02);
+  }
+}

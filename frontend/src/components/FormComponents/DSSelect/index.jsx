@@ -20,33 +20,20 @@ export const DSSelect = ({
   parentClassName,
   labelClassName,
   mode,
+  require,
   key = "select",
   ...rest
 }) => {
-  const finalClassName = clsx(
-    styles.select,
-    {
-      [styles.small]: size === "small",
-      [styles.tags]: mode === "multiple",
-    },
-    rootClassName
-  );
+  const finalClassName = clsx(styles.select, "w-100", rootClassName);
 
   return (
-    <div
-      className={clsx(styles.parent, {
-        [parentClassName]: parentClassName,
-      })}
-      key={key}
-    >
+    <div className={clsx(styles.parent, parentClassName)} key={key}>
       {label && (
         <label
           htmlFor={id}
-          className={clsx(styles.label, {
-            [labelClassName]: labelClassName,
-          })}
+          className={clsx(styles.label, "d-flex", labelClassName)}
         >
-          {label}
+          {label} {require && <span className="d-block clr-danger">*</span>}
         </label>
       )}
       <Select
@@ -59,15 +46,8 @@ export const DSSelect = ({
         className={finalClassName}
         placeholder={placeholder ? placeholder : '"Select a value"'}
         mode={mode}
-        // allowClear={
-        //   allowClear && {
-        //     clearIcon: (
-        //       <div className={styles.clearIcon}> {Icons.CloseCircle} </div>
-        //     ),
-        //   }
-        // }
         popupClassName={styles.selectPopup}
-        // suffixIcon={<span className="clr-black">{Icons.AltArrowDown}</span>}
+        suffixIcon={<span className="clr-black">{Icons.AltArrowDown}</span>}
         disabled={disabled}
         {...rest}
       />

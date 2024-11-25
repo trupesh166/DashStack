@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler');
 const unitRouter = Router()
 
 unitRouter.post("/create", asyncHandler(unitController.createUnit))
-unitRouter.get("/list", asyncHandler(unitController.listUnit))
+unitRouter.get("/list/:wingId", asyncHandler(unitController.listUnit))
 unitRouter.get("/listbyid/:id", asyncHandler(unitController.getUnitById))
 unitRouter.delete("/delete/:id", asyncHandler(unitController.deleteUnitById))
 

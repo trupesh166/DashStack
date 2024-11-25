@@ -1,0 +1,9 @@
+.editRequest {
+  font-family: Poppins;
+}
+
+.h5 {
+  font-weight: 500;
+  font-family: Poppins;
+  color: var(--clr-dark);
+}

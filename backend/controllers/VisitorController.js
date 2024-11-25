@@ -4,9 +4,10 @@ const { httpErrors, httpSuccess } = require("../constents")
 class VisitorController {
   async createvisitor(req, res) {
     try {
-      const { visitorName, visitorPhone, societyId, unitId, date, securityId } = req.body
+      const { visitorName, time, societyId, wingId, unitId, date, securityId } = req.body
+      console.log(req.body)
 
-      if (!visitorName || !visitorPhone || !societyId || !unitId || !date || !securityId) throw httpErrors[400]
+      if (!visitorName || !time || !societyId || !unitId || !date || !securityId || !wingId) throw httpErrors[400]
 
       const result = await visitorModel.model.create({ ...req.body })
       if (!result) throw httpErrors[400]
@@ -20,7 +21,8 @@ class VisitorController {
 
   async getvisitor(req, res) {
     try {
-      const result = await visitorModel.model.find().populate([{ path: 'societyId' }, { path: 'unitId' }, { path: 'securityId' }])
+      const { societyId } = req.params
+      const result = await visitorModel.model.find({ societyId: societyId }).populate([{ path: 'unitId' }, { path: 'securityId' }, { path: 'wingId' }])
       if (!result) throw httpErrors[400]
 
       return res.status(200).send({ message: httpSuccess, data: result })

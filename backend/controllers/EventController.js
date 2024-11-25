@@ -8,7 +8,7 @@ class EventController {
       const { societyId, title, date, dueDate, amount, description } = req.body
       if (!societyId || !title || !date || !dueDate || !amount || !description) throw httpErrors[400]
       const result = await eventModel.model.create({ ...req.body })
-      const societyMembers = await eventModel.model.find({ societyId: societyId })
+      const societyMembers = await memberModel.model.find({ societyId: societyId })
       await Promise.all(
         societyMembers.map(async (data) => {
           // Create maintenance details for each member
@@ -34,14 +34,21 @@ class EventController {
   async listEvent(req, res) {
     try {
       const { societyId } = req.params
-      const result = await eventModel.model.find({ societyId: societyId })
-      if (!result) throw httpErrors[500]
+      let events = await eventModel.model.find({ societyId: societyId })
+      if (!events) throw httpErrors[500]
+      let MemberCount = await memberModel.model.find({ societyId: societyId })
+      MemberCount = MemberCount?.length
+      const result = events.map(event => ({
+        ...event._doc,
+        MemberCount
+      }));
       return res.status(200).send({ message: httpSuccess, data: result })
     } catch (error) {
       console.log(error)
       throw httpErrors[500]
     }
   }
+
 
   async getEventById(req, res) {
     try {

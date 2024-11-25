@@ -1,6 +1,7 @@
 const { httpErrors, httpSuccess } = require("../constents")
 const userModel = require("../models/UserModel")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 class UserController {
   async loginUser(req, res) {
@@ -16,8 +17,17 @@ class UserController {
         user = await userModel.model.findOne({ email: email })
         if (!user) throw httpErrors[500]
       }
+      let societyData
+      if (user.role === "Chairman") {
+        societyData = await societyHandlerModel.model.findOne({ userId: user._id })
+      } else if (user.role === "Member") {
+        societyData = await memberModel.model.findOne({ userId: user._id })
+      } else if (user.role === "Security") {
+        societyData = await securityModel.model.findOne({ userId: user._id })
+      }
+      const payload = { ...user._doc, societyData: societyData }
       if (!bcrypt.compareSync(password, user.password)) return res.status(500).send({ message: "Invalid Password" })
-      const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "30d" })
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" })
       if (!token) throw httpErrors[500]
       return res.status(200).send({ message: httpSuccess, token })
     } catch (error) {

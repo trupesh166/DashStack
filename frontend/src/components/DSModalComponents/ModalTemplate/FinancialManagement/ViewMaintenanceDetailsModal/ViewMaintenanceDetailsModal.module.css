@@ -1,0 +1,17 @@
+.viewMaintenanceDetails {
+  font-family: Poppins;
+}
+
+.img {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 32px;
+}
+
+.memberDetail h5 {
+  color: var(--clr-silver);
+}
+
+.center {
+  text-align: center;
+}

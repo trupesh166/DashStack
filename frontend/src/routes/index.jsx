@@ -1,7 +1,34 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
-import { AdminAsideData } from "@/constants";
-import { AdminDashBoard } from "@/pages/";
+import { createBrowserRouter } from "react-router-dom";
+import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
+import {
+  AdminDashBoard,
+  Cards,
+  CheckBox,
+  DSButtons,
+  DSIcons,
+  FontFamily,
+  Inputs,
+  Modal,
+  Tabs,
+  FacilityManagement,
+  Note,
+  SecurityGuard,
+  SecurityProtocols,
+  VisitorLogs,
+  Login,
+  Register,
+  ResidentManagement,
+  ComplaintCreate,
+  RequestTracking,
+  ForgetPassword,
+  OTP,
+  ResetPassword,
+} from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
+import { Announcement, Expense } from "../pages/Admin";
+import ProtectedRoute from "./ProtectedRoute";
+import Income from "../pages/Admin/FinancialMaintenance/Income";
+import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -10,7 +37,11 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: <DashboardLayout />,
+          element: (
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -20,14 +51,92 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "admin",
+          // element: <ProtectedRoute />,
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,
-              children: [{ index: true, element: <AdminDashBoard /> }],
+              children: [
+                {
+                  index: true,
+                  element: <AdminDashBoard />,
+                },
+                {
+                  path: "editProfile",
+                  element: <EditProfile />,
+                },
+                {
+                  path: "residents",
+                  element: <ResidentManagement />,
+                },
+                {
+                  path: "financial",
+                  children: [
+                    {
+                      path: "income",
+                      element: <Income />,
+                    },
+                    {
+                      path: "expense",
+                      element: <Expense />,
+                    },
+                    {
+                      path: "note",
+                      element: <Note />,
+                    },
+                  ],
+                },
+                {
+                  path: "facility",
+                  element: <FacilityManagement />,
+                },
+                {
+                  path: "complaint",
+                  children: [
+                    {
+                      path: "create",
+                      element: <ComplaintCreate />,
+                    },
+                    {
+                      path: "request",
+                      element: <RequestTracking />,
+                    },
+                  ],
+                },
+                {
+                  path: "security",
+                  children: [
+                    {
+                      path: "visitors",
+                      element: <VisitorLogs />,
+                    },
+                    {
+                      path: "protocols",
+                      element: <SecurityProtocols />,
+                    },
+                  ],
+                },
+                {
+                  path: "guard",
+                  element: <SecurityGuard />,
+                },
+                {
+                  path: "announcement",
+                  element: <Announcement />,
+                },
+              ],
             },
             {
-              path: "register",
-              element: "register user",
+              element: <AuthLayouts />,
+              children: [
+                {
+                  path: "register",
+                  element: <Register />,
+                },
+                {
+                  path: "login",
+                  element: <Login />,
+                },
+              ],
             },
           ],
         },
@@ -47,19 +156,19 @@ const DashStackRoute = createBrowserRouter(
           children: [
             {
               path: "login",
-              element: "Login",
+              element: <Login />,
             },
             {
               path: "forgot-password",
-              element: "ForgotPassword",
+              element: <ForgetPassword />,
             },
             {
               path: "otp",
-              element: "Otp",
+              element: <OTP />,
             },
             {
               path: "reset-password",
-              element: "reset-password",
+              element: <ResetPassword />,
             },
           ],
         },
@@ -67,29 +176,28 @@ const DashStackRoute = createBrowserRouter(
     },
     {
       /* StyleGuide Routes */
-      path: "StyleGuide",
-      // element: <StyleGuideLayout items={StyleGuideAsideMenu} />,
-      element: <Outlet />,
+      path: "style-guide",
+      element: <DashboardLayout items={StyleGuideAsideMenu} />,
       children: [
         {
           index: true,
-          element: "Home",
+          element: <FontFamily />,
         },
         {
           path: "button",
-          element: "button",
+          element: <DSButtons />,
         },
         {
           path: "input",
-          element: "input",
+          element: <Inputs />,
         },
         {
           path: "checkbox",
-          element: "checkbox",
+          element: <CheckBox />,
         },
         {
           path: "modal",
-          element: "modal",
+          element: <Modal />,
         },
         {
           path: "table",
@@ -97,15 +205,19 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "icons",
-          element: "icons",
+          element: <DSIcons />,
         },
         {
           path: "tabs",
-          element: "tabs",
+          element: <Tabs />,
         },
         {
           path: "tags",
           element: "tags",
+        },
+        {
+          path: "cards",
+          element: <Cards />,
         },
       ],
     },

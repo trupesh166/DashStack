@@ -2,14 +2,13 @@ const { httpErrors, httpSuccess } = require('../constents')
 const userModel = require('../models/UserModel')
 const societyHandlerModel = require('../models/SocietyHandlerModel')
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
 
 class SocietyHandlerController {
 
   async createChairman(req, res) {
     try {
-      const { firstName, lastName, email, phoneNumber, country, state, city, password, confirmPassword, selectSociety } = req.body
-      if (!firstName || !lastName || !email || !phoneNumber || !country || !state || !city || !password || !confirmPassword || !selectSociety) throw httpErrors[400]
+      const { firstName, lastName, email, phoneNumber, password, confirmPassword, selectSociety } = req.body
+      if (!firstName || !lastName || !email || !phoneNumber || !password || !confirmPassword || !selectSociety) throw httpErrors[400]
       const encryptedPass = bcrypt.hashSync(password, 5)
       if (!encryptedPass) throw httpErrors[500]
       const userName = `${firstName} ${lastName}`
@@ -18,9 +17,6 @@ class SocietyHandlerController {
       delete req.body.password
       delete req.body.confirmPassword
       const data = {
-        country,
-        state,
-        city,
         selectSociety,
         userId: user._id
       }

@@ -5,7 +5,7 @@ const visitorRouter = Router()
 
 visitorRouter.post('/createvisitor', asyncHandler(visitorController.createvisitor))
 visitorRouter.post('/createemergency', asyncHandler(visitorController.createEmergencyAnnouncement))
-visitorRouter.get('/getvisitor', asyncHandler(visitorController.getvisitor))
+visitorRouter.get('/getvisitor/:societyId', asyncHandler(visitorController.getvisitor))
 visitorRouter.get('/getemergency', asyncHandler(visitorController.getEmergencyAnnouncement))
 
 

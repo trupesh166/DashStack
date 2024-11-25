@@ -1,6 +1,11 @@
 export { DeleteModal } from "./DeleteModal/";
 export { SelectSocietyModal } from "./SelectSocietyModal/";
 
+// Dashboard  Start
+export { AddImportantNumberModal } from "./DashboardModal/AddImportantNumberModal/"
+export { EditImportantNumberModal } from "./DashboardModal/EditImportantNumberModal/"
+// Dashboard  End
+
 // Financial Management Start
 // Income Section
 export { AddMaintenanceModal } from "./FinancialManagement/AddMaintenanceModal/"

@@ -1,8 +1,9 @@
 .card {
   width: 100%;
-    background-color: var(--clr-white);
+  background-color: var(--clr-white);
   border: none;
   position: relative;
+  font-family: var(--font-primary);
 }
 
 .designBox {
@@ -20,6 +21,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.h6 {
+  color: var(--clr-dark);
+  font-weight: 500;
 }
 
 h3 {

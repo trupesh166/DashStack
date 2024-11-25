@@ -52,7 +52,7 @@ export const TotalUserCard = () => {
   ]
 
   return (
-    <Flex gap={"small"}>
+    <Flex gap={"middle"}>
       {
         data.map((item, index) => (
           <Card
@@ -66,7 +66,7 @@ export const TotalUserCard = () => {
             ></div>
             <div className={style.body}>
               <div className={style.detail}>
-                <h6>{item.title}</h6>
+                <h6 className={style.h6}>{item.title}</h6>
                 <h3>
                   {Icons.Rupee}
                   {item.amount}

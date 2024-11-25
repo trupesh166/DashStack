@@ -29,6 +29,7 @@ import { Announcement, Expense } from "../pages/Admin";
 import ProtectedRoute from "./ProtectedRoute";
 import Income from "../pages/Admin/FinancialMaintenance/Income";
 import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
+import { Resident } from "../pages/Admin/ResidentManagement/Resident";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -67,6 +68,10 @@ const DashStackRoute = createBrowserRouter(
                 {
                   path: "residents",
                   element: <ResidentManagement />,
+                },
+                {
+                  path: "resident-detail",
+                  element: <Resident />
                 },
                 {
                   path: "financial",

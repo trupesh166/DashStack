@@ -117,6 +117,12 @@ const ThemeConfig = ({ children }) => {
             margin: 0,
             colorSplit: "rgb(244,244,244)",
           },
+          Badge: {
+            dotSize: 28,
+            indicatorHeight: 28,
+            statusSize: 5,
+            fontSize: 14,
+          },
           Breadcrumb: {},
           Pagination: {},
           Checkbox: {},

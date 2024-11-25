@@ -2,7 +2,6 @@
   width: 380px;
   height: 398px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  overflow: hidden;
 }
 
 .cardBody {
@@ -13,25 +12,23 @@
 }
 
 .importantNumber {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: calc(var(--space-sm) + 2px) var(--space-md);
   border: 1px solid var(--clr-pearl);
   border-radius: 10px;
 }
 
-.detail>p {
-  line-height: 25px;
-  font-size: 13px;
-  color: var(--clr-black);
-}
-
-.detail>p>span {
-  color: var(--clr-silver);
+.detail {
+  width: calc(100% - 60px);
+  margin-right: 22px;
+  border-right: 1px solid #f6f8fb;
 }
 
 .actions {
-  display: flex;
-  gap: 5px;
+  gap: var(--space-xs);
+}
+
+.cardBody {
+  gap: var(--space-sm);
+  height: calc(400px - 60px - calc(var(--space-xl)) * 2);
+  overflow: auto;
 }

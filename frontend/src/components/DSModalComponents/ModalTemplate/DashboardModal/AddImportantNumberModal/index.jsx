@@ -14,7 +14,8 @@ export const AddImportantNumberModal = ({
     work: "",
   });
 
-  const isDisabled = !formValues.fullName || !formValues.phoneNumber || !formValues.work;
+  const isDisabled =
+    !formValues.fullName || !formValues.phoneNumber || !formValues.work;
 
   const handleInputChange = (field, value) => {
     setFormValues((prev) => ({
@@ -24,45 +25,43 @@ export const AddImportantNumberModal = ({
   };
 
   return (
-    <div>
-      <DSModal
-        title={"Add Important Number"}
-        open={open}
-        closeIcon
-        handleOk={handleOk}
-        onCancel={handleCancel}
-        handleClose={handleClose}
-        IsFooter
-        handleContent="Save"
-        disabledButton={isDisabled}
-      >
-        <DSInput
-          className="mb-4"
-          label={"Full Name"}
-          placeholder={"Enter Full Name"}
-          require
-          value={formValues.fullName}
-          onChange={(e) => handleInputChange("fullName", e.target.value)}
-        />
+    <DSModal
+      title={"Add Important Number"}
+      open={open}
+      closeIcon
+      handleOk={handleOk}
+      onCancel={handleCancel}
+      handleClose={handleClose}
+      IsFooter
+      handleContent="Save"
+      disabledButton={isDisabled}
+    >
+      <DSInput
+        className="mb-4"
+        label={"Full Name"}
+        placeholder={"Enter Full Name"}
+        require
+        value={formValues.fullName}
+        onChange={(e) => handleInputChange("fullName", e.target.value)}
+      />
 
-        <DSInput
-          className="mb-4"
-          label={"Phone Number"}
-          placeholder={"+91"}
-          require
-          value={formValues.phoneNumber}
-          onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-        />
+      <DSInput
+        className="mb-4"
+        label={"Phone Number"}
+        placeholder={"+91"}
+        require
+        value={formValues.phoneNumber}
+        onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+      />
 
-        <DSInput
-          className="mb-4"
-          label={"Work"}
-          placeholder={"Enter Work"}
-          require
-          value={formValues.work}
-          onChange={(e) => handleInputChange("work", e.target.value)}
-        />
-      </DSModal>
-    </div>
+      <DSInput
+        className="mb-4"
+        label={"Work"}
+        placeholder={"Enter Work"}
+        require
+        value={formValues.work}
+        onChange={(e) => handleInputChange("work", e.target.value)}
+      />
+    </DSModal>
   );
 };

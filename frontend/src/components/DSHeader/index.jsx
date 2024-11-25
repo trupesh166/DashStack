@@ -1,7 +1,7 @@
-import { Avatar, Dropdown, Layout } from "antd";
+import { Layout } from "antd";
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
-import { DSButton, DSInput } from "@/components/";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DSButton, DSInput, DSBreadCrumb } from "@/components/";
 import Icons from "@/constants/Icons";
 import styles from "./DSHeader.module.css";
 
@@ -9,6 +9,7 @@ const { Header } = Layout;
 
 export const DSHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <Header
@@ -18,7 +19,11 @@ export const DSHeader = () => {
       )}
     >
       <div className="d-flex align-items-center justify-content-center gap-xl">
-        <DSInput placeholder={"Search"} prefix={Icons.Search} />
+        {location.pathname == "/admin" ? (
+          <DSInput placeholder={"Search"} prefix={Icons.Search} />
+        ) : (
+          <DSBreadCrumb separator=">" admin />
+        )}
       </div>
       <div className="d-flex align-items-center justify-content-center gap-xl">
         <DSButton

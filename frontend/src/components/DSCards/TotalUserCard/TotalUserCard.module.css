@@ -1,6 +1,6 @@
 .card {
   width: 100%;
-  background-color: var(--clr-white);
+  /* background-color: var(--clr-white); */
   border: none;
   position: relative;
   font-family: var(--font-primary);

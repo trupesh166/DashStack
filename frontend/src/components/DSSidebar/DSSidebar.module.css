@@ -1,6 +1,5 @@
 .sider {
   z-index: 9;
-  border-radius: var(--space-xl);
 }
 
 .sider :global .ant-layout-sider-children {

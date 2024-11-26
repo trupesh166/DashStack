@@ -1,5 +1,8 @@
 const { httpErrors, httpSuccess } = require("../constents")
 const userModel = require("../models/UserModel")
+const societyHandlerModel = require("../models/SocietyHandlerModel")
+const memberModel = require("../models/MemberModel")
+const securityModel = require("../models/SecurityModel")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 

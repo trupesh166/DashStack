@@ -1,22 +1,17 @@
 .card {
-  width: 380px;
-  height: 398px;
-  border: none;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  font-family: var(--font-primary);
-  background-color: var(--clr-white);
   overflow: hidden;
 }
 
 .pendingMaintenances {
-  width: 340px;
-  height: 320px;
-  overflow-y: auto;
+  gap: var(--space-sm);
+  height: calc(400px - 60px - calc(var(--space-xl)) * 2);
+  overflow: auto;
 }
 
 .users {
-  height: 50px;
-  margin-bottom: 7px;
+  border-bottom: 1px solid #f6f8fb;
+  padding-bottom: var(--space-sm);
 }
 
 .userImage {

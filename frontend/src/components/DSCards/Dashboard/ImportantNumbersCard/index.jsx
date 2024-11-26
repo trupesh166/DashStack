@@ -7,7 +7,7 @@ import {
   DSButton,
   DSCard,
   EditImportantNumberModal,
-} from "../..";
+} from "../../..";
 import style from "./ImportantNumbersCard.module.css";
 
 export const ImportantNumbersCard = () => {
@@ -49,7 +49,7 @@ export const ImportantNumbersCard = () => {
   const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
-    <div>
+    <>
       <DSCard
         size="small"
         rootClass={clsx(style.card, "overflow-hidden")}
@@ -68,7 +68,7 @@ export const ImportantNumbersCard = () => {
           </>
         }
       >
-        {ImportantNumber.map((item) => (
+        {ImportantNumber?.map((item) => (
           <div
             className={clsx(style.importantNumber, "d-flex align-items-center")}
           >
@@ -121,6 +121,6 @@ export const ImportantNumbersCard = () => {
         onCancel={() => setDeleteComplaint(false)}
         children={"Are you sure you want to delate this number?"}
       />
-    </div>
+    </>
   );
 };

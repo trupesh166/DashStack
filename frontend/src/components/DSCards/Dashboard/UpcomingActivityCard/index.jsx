@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./UpcomingActivityCard.module.css";
 import clsx from "clsx";
-import { DSCard, DSSelect } from "../..";
+import { DSCard, DSSelect } from "@/components/";
 import { Flex } from "antd";
+import style from "./UpcomingActivityCard.module.css";
 
 export const UpcomingActivityCard = () => {
   const UpcomingActivityData = [

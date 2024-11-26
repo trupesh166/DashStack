@@ -163,3 +163,86 @@ export const AuthSliderData = [
     image: authTwo,
   },
 ];
+
+export const pendingMaintenancesData = [
+  {
+    _id: 1,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 2,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 3,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 4,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 5,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 6,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 7,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 8,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 9,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+  {
+    _id: 10,
+    profileImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-y-fFn8KjGMJWwHyFA32_Xvysu-c0c3pHIw&s",
+    fullName: "Roger Lubin",
+    dueDays: "2 Month Pending",
+    maintenanceAmount: "5000",
+  },
+];

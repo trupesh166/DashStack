@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-import style from "./ComplaintCard.module.css";
+import { useState } from "react";
 import { Avatar, Flex } from "antd";
 import clsx from "clsx";
 import Icons from "@/constants/Icons";
-import { DeleteModal, DSButton, DSCard, DSSelect, DSTable, EditComplaintModal, ViewComplaintModal } from "../..";
+import {
+  DeleteModal,
+  DSButton,
+  DSCard,
+  DSSelect,
+  DSTable,
+  EditComplaintModal,
+  ViewComplaintModal,
+} from "@/components/";
+import style from "./ComplaintCard.module.css";
 
 const tableColumn = [
   {
@@ -46,10 +54,10 @@ const tableColumn = [
             priorityStatus === "High"
               ? "#E74C3C"
               : priorityStatus === "Medium"
-                ? "#5678E9"
-                : priorityStatus === "Low"
-                  ? "#39973D"
-                  : "#FFFFFF",
+              ? "#5678E9"
+              : priorityStatus === "Low"
+              ? "#39973D"
+              : "#FFFFFF",
           borderRadius: "20px",
           padding: "5px 15px",
         }}
@@ -70,18 +78,18 @@ const tableColumn = [
             status === "Pending"
               ? "#FFC313"
               : status === "Open"
-                ? "#5678E9"
-                : status === "Solve"
-                  ? "#39973D"
-                  : "#FFFFFF",
+              ? "#5678E9"
+              : status === "Solve"
+              ? "#39973D"
+              : "#FFFFFF",
           backgroundColor:
             status === "Pending"
               ? "#FFF9E7"
               : status === "Open"
-                ? "#EEF1FD"
-                : status === "Solve"
-                  ? "#EBF5EC"
-                  : "#FFFFFF",
+              ? "#EEF1FD"
+              : status === "Solve"
+              ? "#EBF5EC"
+              : "#FFFFFF",
           borderRadius: "20px",
           padding: "5px 15px",
         }}
@@ -160,7 +168,7 @@ const dataSource = [
   },
 ];
 
-export const ComplaintCard = () => {
+export const ComplaintCard = ({ className }) => {
   const [editComplaint, setEditComplaint] = useState(false);
   const [viewComplaint, setViewComplaint] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
@@ -168,7 +176,7 @@ export const ComplaintCard = () => {
   return (
     <DSCard
       size="small"
-      rootClass={style.card}
+      rootClass={clsx(style.card, className)}
       className={clsx(style.cardBody, "d-flex flex-column")}
       title={"Complaint List"}
       headerContent={

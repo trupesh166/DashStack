@@ -6,9 +6,11 @@ export { DSDropdown } from "./DSDropdown/";
 export { DSTabs } from "./DSTabs/";
 export { DSSwiperSlider } from "./DSSwiperSlider/";
 export { DSBreadCrumb } from "./DSBreadCrumb/";
+export { DSDropDownImg } from "./DSDropDownImg/";
 
 /* DSCard */
 export { DSCard } from "./DSCards";
+export { DSEventsCard } from "./DSCards/DSEventsCard/";
 export { MemberCard } from "./DSCards/MemberCard";
 export { EventCard } from "./DSCards/EventCard";
 export { MaintenanceCard } from "./DSCards/MaintenanceCard/";

@@ -8,7 +8,7 @@ class ImportantController {
       const { fullName, phoneNumber, work } = req.body
       if (!fullName || !phoneNumber || !work) throw httpErrors[400]
 
-      const result = await importantModal.model.create({ ...req.body })
+      const result = await importantModal.model.create({...req.body})
       if (!result) throw httpErrors[400]
       return res.status(200).send({ message: httpSuccess, data: result })
     } catch (error) {

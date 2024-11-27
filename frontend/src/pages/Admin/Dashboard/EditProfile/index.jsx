@@ -13,12 +13,28 @@ export const EditProfile = () => {
     country: "India",
     state: "Gujarat",
     city: "Baroda",
+    profileImage:
+      "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
   });
 
   const fileUpload = useRef(null);
 
   const handleEditImage = () => {
     fileUpload.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUserDetail((prev) => ({
+          ...prev,
+          profileImage: event.target.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -42,13 +58,19 @@ export const EditProfile = () => {
             <h3 className="mb-5">Edit Profile</h3>
 
             <DSCard>
-              <Row>
+              <Row className="mt-3">
                 <Col span={6} className={styles.userImage}>
-                  <input type="file" className="d-none" ref={fileUpload} />
+                  <input
+                    type="file"
+                    className="d-none"
+                    ref={fileUpload}
+                    onChange={handleFileChange}
+                  />
                   <Avatar
                     size={100}
-                    src="https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
+                    src={userdetail.profileImage}
                     onClick={handleEditImage}
+                    style={{ cursor: "pointer" }}
                   />
                   <h4>{`${userdetail.firstName} ${userdetail.lastName}`}</h4>
                 </Col>

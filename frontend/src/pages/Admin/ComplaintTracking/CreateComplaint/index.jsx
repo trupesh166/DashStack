@@ -169,7 +169,6 @@ export const ComplaintCreate = () => {
             Create Complaint
           </DSButton>
         }
-        onClick={() => setCreateComplaint(true)}
       >
         <DSTable tableColumn={columns} dataSource={data} pagination={false} />
       </DSCard>

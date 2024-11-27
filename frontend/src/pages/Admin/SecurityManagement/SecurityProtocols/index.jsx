@@ -1,5 +1,13 @@
 import { Space } from "antd";
-import { AddSecurityProtocolModal, DeleteModal, DSButton, DSCard, DSTable, EditSecurityProtocolModal, ViewSecurityProtocolModal } from "../../../../components";
+import {
+  AddSecurityProtocolModal,
+  DeleteModal,
+  DSButton,
+  DSCard,
+  DSTable,
+  EditSecurityProtocolModal,
+  ViewSecurityProtocolModal,
+} from "../../../../components";
 import Icons from "../../../../constants/Icons";
 import { useState } from "react";
 
@@ -70,19 +78,26 @@ const columns = [
 ];
 
 export const SecurityProtocols = () => {
-
-  const [addSecurityProtocolModal, setAddSecurityProtocolModal] = useState(false)
-  const [editSecurityProtocolModal, setEditSecurityProtocolModal] = useState(false)
-  const [viewSecurityProtocolModal, setViewSecurityProtocolModal] = useState(false)
-  const [deleteComplaint, setDeleteComplaint] = useState(false)
+  const [addSecurityProtocolModal, setAddSecurityProtocolModal] =
+    useState(false);
+  const [editSecurityProtocolModal, setEditSecurityProtocolModal] =
+    useState(false);
+  const [viewSecurityProtocolModal, setViewSecurityProtocolModal] =
+    useState(false);
+  const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
     <div>
       <DSCard
         title="Security Protocols"
-        buttonContent={"Create Protocol"}
-        button={true}
-        onClick={() => setAddSecurityProtocolModal(true)}
+        headerContent={
+          <DSButton
+            variant={"primary"}
+            onClick={() => setAddSecurityProtocolModal(true)}
+          >
+            Create Protocol
+          </DSButton>
+        }
       >
         <DSTable
           dataSource={data}
@@ -127,7 +142,6 @@ export const SecurityProtocols = () => {
         onCancel={() => setDeleteComplaint(false)}
         children={"Are you sure you want to delate this Protocol?"}
       />
-
     </div>
   );
 };

@@ -1,8 +1,14 @@
-import { Avatar, Space, Tag, Tooltip } from "antd";
-import { DSButton, DSCard, DSTable } from "@/components";
-import Icons from "@/constants/Icons";
 import { useState } from "react";
-import { CreateRequestModal, DeleteModal, EditRequestModal, ViewRequestModal } from "../../../../components";
+import { Avatar, Space, Tag, Tooltip } from "antd";
+import {
+  DSButton,
+  DSCard,
+  DSTable,
+  CreateRequestModal,
+  DeleteModal,
+  ViewRequestModal,
+} from "@/components";
+import Icons from "@/constants/Icons";
 
 const columns = [
   {
@@ -141,19 +147,136 @@ const data = [
 ];
 
 export const RequestTracking = () => {
+  const [createRequest, setCreateRequest] = useState(false);
+  const [viewRequest, setViewRequest] = useState({
+    open: false,
+    data: null,
+  });
+  const [deleteRequest, setDeleteRequest] = useState({
+    open: false,
+    data: null,
+  });
 
-  const [createRequest, setCreateRequest] = useState(false)
-  const [editRequest, setEditRequest] = useState(false)
-  const [viewRequest, setViewRequest] = useState(false)
-  const [deleteComplaint, setDeleteComplaint] = useState(false)
+  const columns = [
+    {
+      title: "Requester Name",
+      dataIndex: "requesterName",
+      key: "requesterName",
+      render: (text, record) => (
+        <Space>
+          <Avatar src={record.avatar} />
+          {text}
+        </Space>
+      ),
+    },
+    {
+      title: "Request Name",
+      dataIndex: "requestName",
+      key: "requestName",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (description) => (
+        <Tooltip placement="topLeft" title={description}>
+          {description}
+        </Tooltip>
+      ),
+    },
+    {
+      title: "Request Date",
+      dataIndex: "requestDate",
+      key: "requestDate",
+    },
+    {
+      title: "Unit Number",
+      dataIndex: "unitNumber",
+      key: "unitNumber",
+      render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
+    },
+    {
+      title: "Priority",
+      key: "priority",
+      dataIndex: "priority",
+      render: (priority) => {
+        let color =
+          priority === "High"
+            ? "red"
+            : priority === "Medium"
+            ? "blue"
+            : "green";
+        return (
+          <Tag color={color} key={priority}>
+            {priority.toUpperCase()}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status",
+      render: (status) => {
+        let color =
+          status === "Pending" ? "gold" : status === "Open" ? "cyan" : "lime";
+        return (
+          <Tag color={color} key={status}>
+            {status.toUpperCase()}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          {/* Edit Button */}
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.Edit}
+            className="clr-success"
+            onClick={() => setCreateRequest(true)} // Open Create Request modal
+          />
+          {/* View Button */}
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.EyeShow}
+            className="clr-cult"
+            onClick={
+              () => setViewRequest({ open: true, data: record }) // Open View Request modal
+            }
+          />
+          {/* Delete Button */}
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.Trash}
+            className="clr-danger"
+            onClick={
+              () => setDeleteRequest({ open: true, data: record }) // Open Delete Request modal
+            }
+          />
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div>
       <DSCard
         title={"Request Tracking"}
-        buttonContent={"Create Request"}
-        button={true}
-        onClick={() => setCreateRequest(true)}
+        headerContent={
+          <DSButton variant={"primary"} onClick={() => setCreateRequest(true)}>
+            Create Request
+          </DSButton>
+        }
       >
         <DSTable tableColumn={columns} dataSource={data} pagination={false} />
       </DSCard>
@@ -166,30 +289,28 @@ export const RequestTracking = () => {
         handleOk={() => setCreateRequest(false)}
       />
 
-      {/* Edit Request Modal */}
-      <EditRequestModal
-        open={editRequest}
-        handleCancel={() => setEditRequest(false)}
-        handleClose={() => setEditRequest(false)}
-        handleOk={() => setEditRequest(false)}
-      />
-
       {/* View Request Modal */}
       <ViewRequestModal
-        open={viewRequest}
-        handleCancel={() => setViewRequest(false)}
-        handleClose={() => setViewRequest(false)}
-        handleOk={() => setViewRequest(false)}
+        open={viewRequest.open}
+        requestData={viewRequest.data} // Pass selected request data
+        handleCancel={() => setViewRequest({ open: false, data: null })}
+        handleClose={() => setViewRequest({ open: false, data: null })}
+        handleOk={() => setViewRequest({ open: false, data: null })}
       />
+
       {/* Remove Request Modal */}
       <DeleteModal
         title={"Delete Request?"}
-        isModalOpen={deleteComplaint}
-        handleClose={() => setDeleteComplaint(false)}
-        handleOk={() => setDeleteComplaint(false)}
-        onCancel={() => setDeleteComplaint(false)}
-        children={"Are you sure you want to delate this Request?"}
-      />
+        isModalOpen={deleteRequest.open}
+        handleClose={() => setDeleteRequest({ open: false, data: null })}
+        handleOk={() => {
+          console.log("Deleting request:", deleteRequest.data);
+          setDeleteRequest({ open: false, data: null });
+        }}
+        onCancel={() => setDeleteRequest({ open: false, data: null })}
+      >
+        Are you sure you want to delete this request?
+      </DeleteModal>
     </div>
   );
 };

@@ -1,12 +1,4 @@
-.viewMaintenanceDetails {
-  font-family: Poppins;
-}
-
-.memberDetail h5 {
-  color: var(--clr-silver);
-}
-
-.center {
+.textCenter {
   text-align: center;
 }
 

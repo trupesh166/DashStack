@@ -1,0 +1,31 @@
+.card {
+  max-width: 370px;
+  position: relative;
+}
+
+.menuIcon {
+  color: var(--clr-white);
+  cursor: pointer;
+}
+
+.menu {
+  width: 100px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background-color: var(--clr-white);
+  line-height: 30px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: absolute;
+  top: 14%;
+  right: 7%;
+}
+
+.h6 {
+  color: var(--clr-silver);
+  cursor: pointer;
+}
+
+.h6:hover {
+  color: var(--clr-dark);
+  font-weight: bold;
+}

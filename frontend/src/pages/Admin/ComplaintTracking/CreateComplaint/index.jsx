@@ -66,8 +66,8 @@ export const ComplaintCreate = () => {
           priority === "High"
             ? "red"
             : priority === "Medium"
-            ? "blue"
-            : "green";
+              ? "blue"
+              : "green";
         return (
           <Tag color={color} key={priority}>
             {priority.toUpperCase()}

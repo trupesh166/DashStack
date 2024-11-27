@@ -1,5 +1,5 @@
 const { httpSuccess, httpErrors } = require('../constents')
-const facilityModel = require('./FacilityModel')
+const facilityModel = require('../models/FacilityModel')
 
 
 class FacilityController {

@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt")
 const sendEmail = require("../mailconfig/Nodemailer");
 const { generateOtp } = require('../mailconfig/otpService')
 const jwt = require("jsonwebtoken")
+const session = require("express-session")
 
 class UserController {
   async loginUser(req, res) {
@@ -49,8 +50,14 @@ class UserController {
 
         const otp = generateOtp();
         user.otp = otp;
+        const otpExpires = Date.now() + 15 * 60 *1000
+        user.otpExpires = otpExpires
         await user.save();
 
+        req.session.email = email ;
+        req.session.otp = otp ;
+        req.session.otpExpires = otpExpires ;
+        
         const subject = 'Password Reset OTP';
         const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
         await sendEmail({ to: user.email, subject, text });
@@ -62,15 +69,15 @@ class UserController {
   }
   async verifyOtp(req, res) {
     try {
-        const { email, otp } = req.body;
+        const {otp } = req.body;
 
-        if (!email || !otp)  return res.status(400).json({ message: 'Email and OTP are required.' });
-        const user = await userModel.model.findOne({ email: email });
-        console.log(user);
-        
-        if (!user)  return res.status(404).json({ message: 'User not found.' });
-        if (user.otp !== otp) return res.status(401).json({ message: 'Invalid OTP.' });
-        if (Date.now() > user.otpExpires)  return res.status(401).json({ message: 'OTP has expired. Please request a new one.' });
+        if (!otp)  return res.status(400).json({ message: 'OTP are required.' });
+
+        const {email , otp:storedOtp , otpExpires} = req.session
+        if(!email || !storedOtp) return res.status(401).json({message : "OTP session expires. Try Again"})
+
+        if (storedOtp !== otp) return res.status(401).json({ message: 'Invalid OTP.' });
+        if (Date.now() > otpExpires)  return res.status(401).json({ message: 'OTP has expired. Please request a new one.' });
 
         res.status(200).json({ message: 'OTP verified successfully. You can now reset your password.' });
     } catch (error) {

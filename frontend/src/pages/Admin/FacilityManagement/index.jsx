@@ -1,21 +1,29 @@
 import clsx from "clsx";
-import { CreateFacilityModal, DSCard, EditFacilityModal, FacilityCard } from "../../../components";
+import {
+  CreateFacilityModal,
+  DSButton,
+  DSCard,
+  FacilityCard,
+} from "@/components";
 import styles from "./FacilityManagement.module.css";
 import { useState } from "react";
 
 export const FacilityManagement = () => {
-
-  const [createFacilityModal, setCreateFacilityModal] = useState(false)
-  const [editFacilityModal, setEditFacilityModal] = useState(false)
+  const [createFacilityModal, setCreateFacilityModal] = useState(false);
 
   return (
     <div>
       <DSCard
         title="Facility Management"
         className={clsx(styles.GridWrapper, "d-grid")}
-        button
-        buttonContent="Create Facility"
-        onClick={() => setCreateFacilityModal(true)}
+        headerContent={
+          <DSButton
+            variant={"primary"}
+            onClick={() => setCreateFacilityModal(true)}
+          >
+            Create Facility
+          </DSButton>
+        }
       >
         <FacilityCard
           title="Parking Facilities"
@@ -46,15 +54,6 @@ export const FacilityManagement = () => {
         handleCancel={() => setCreateFacilityModal(false)}
         handleClose={() => setCreateFacilityModal(false)}
       />
-
-      {/* Edit Facility Modal */}
-      <EditFacilityModal
-        open={editFacilityModal}
-        handleOk={() => setEditFacilityModal(false)}
-        handleCancel={() => setEditFacilityModal(false)}
-        handleClose={() => setEditFacilityModal(false)}
-      />
-
     </div>
   );
 };

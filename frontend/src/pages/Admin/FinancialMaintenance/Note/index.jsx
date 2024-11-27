@@ -1,21 +1,21 @@
-import clsx from "clsx";
-import { AddNote, DSCard, EditNote, NoteCard } from "../../../../components";
-import styles from "./Note.module.css";
 import { useState } from "react";
+import clsx from "clsx";
+import { AddNote, DSButton, DSCard, EditNote, NoteCard } from "@/components";
+import styles from "./Note.module.css";
 
 export const Note = () => {
-
-  const [addNote, setAddNote] = useState(false)
-  const [editNote, setEditNote] = useState(false)
+  const [addNote, setAddNote] = useState(false);
 
   return (
-    <div>
+    <>
       <DSCard
         title="Note"
         className={clsx(styles.GridWrapper, "d-grid")}
-        button
-        buttonContent="Create Note"
-        onClick={() => setEditNote(true)}
+        headerContent={
+          <DSButton variant={"primary"} onClick={() => setAddNote(true)}>
+            Create Note
+          </DSButton>
+        }
       >
         <NoteCard
           title="Rent or Mortgage"
@@ -46,15 +46,6 @@ export const Note = () => {
         handleCancel={() => setAddNote(false)}
         handleClose={() => setAddNote(false)}
       />
-
-      {/* Edit Note Modal */}
-      <EditNote
-        open={editNote}
-        handleOk={() => setEditNote(false)}
-        handleCancel={() => setEditNote(false)}
-        handleClose={() => setEditNote(false)}
-      />
-
-    </div>
+    </>
   );
 };

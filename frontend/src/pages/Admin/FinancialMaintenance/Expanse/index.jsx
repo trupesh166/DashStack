@@ -2,10 +2,14 @@ import { Space, Tag, Tooltip } from "antd";
 import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { useState } from "react";
-import { AddExpensesDetailsModal, DeleteModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
+import {
+  AddExpensesDetailsModal,
+  DeleteModal,
+  EditExpensesModal,
+  ViewExpenseDetailsModal,
+} from "../../../../components";
 
 export const Expense = () => {
-
   const data = [
     {
       key: "1",
@@ -106,7 +110,6 @@ export const Expense = () => {
   ];
 
   const [addExpensesModalOpen, setAddExpensesModalOpen] = useState(false);
-  const [editExpensesModalOpen, setEditExpensesModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
 
@@ -123,49 +126,36 @@ export const Expense = () => {
             Add New Expenses details
           </DSButton>
         }
-        button={true}
         onClick={() => setAddExpensesModalOpen(true)}
       >
         <DSTable tableColumn={columns} dataSource={data} pagination={false} />
-
       </DSCard>
-      <div>
 
-        {/* Add Expense Modal */}
-        <AddExpensesDetailsModal
-          open={addExpensesModalOpen}
-          handleOk={() => setAddExpensesModalOpen(false)}
-          handleCancel={() => setAddExpensesModalOpen(false)}
-          handleClose={() => setAddExpensesModalOpen(false)}
-        />
+      {/* Add Expense Modal */}
+      <AddExpensesDetailsModal
+        open={addExpensesModalOpen}
+        handleOk={() => setAddExpensesModalOpen(false)}
+        handleCancel={() => setAddExpensesModalOpen(false)}
+        handleClose={() => setAddExpensesModalOpen(false)}
+      />
 
-        {/* Edit Expense Modal */}
-        <EditExpensesModal
-          open={editExpensesModalOpen}
-          handleOk={() => setEditExpensesModalOpen(false)}
-          handleCancel={() => setEditExpensesModalOpen(false)}
-          handleClose={() => setEditExpensesModalOpen(false)}
-        />
+      {/* View Expense Modal */}
+      <ViewExpenseDetailsModal
+        open={viewModalOpen}
+        handleOk={() => setViewModalOpen(false)}
+        handleCancel={() => setViewModalOpen(false)}
+        handleClose={() => setViewModalOpen(false)}
+      />
 
-        {/* View Expense Modal */}
-        <ViewExpenseDetailsModal
-          open={viewModalOpen}
-          handleOk={() => setViewModalOpen(false)}
-          handleCancel={() => setViewModalOpen(false)}
-          handleClose={() => setViewModalOpen(false)}
-        />
-
-        {/* Remove Expense Modal */}
-        <DeleteModal
-          title={"Delete Expense?"}
-          isModalOpen={deleteComplaint}
-          handleClose={() => setDeleteComplaint(false)}
-          handleOk={() => setDeleteComplaint(false)}
-          onCancel={() => setDeleteComplaint(false)}
-          children={"Are you sure you want to delate this?"}
-        />
-
-      </div>
+      {/* Remove Expense Modal */}
+      <DeleteModal
+        title={"Delete Expense?"}
+        isModalOpen={deleteComplaint}
+        handleClose={() => setDeleteComplaint(false)}
+        handleOk={() => setDeleteComplaint(false)}
+        onCancel={() => setDeleteComplaint(false)}
+        children={"Are you sure you want to delate this?"}
+      />
     </div>
   );
 };

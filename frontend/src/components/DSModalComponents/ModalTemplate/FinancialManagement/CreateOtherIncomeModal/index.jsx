@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import style from "./CreateOtherIncomeModal.module.css"
-import { DSDatePicker, DSInput, DSModal } from '../../../..'
-import Icons from '../../../../../constants/Icons'
+import React, { useState } from "react";
+import styles from "./CreateOtherIncomeModal.module.css";
+import { DSDatePicker, DSInput, DSModal } from "../../../..";
+import Icons from "../../../../../constants/Icons";
 
 export const CreateOtherIncomeModal = ({
   open,
@@ -9,14 +9,13 @@ export const CreateOtherIncomeModal = ({
   handleCancel,
   handleClose,
 }) => {
-
   const [createOtherIncome, setCreateOtherIncome] = useState({
     title: "",
     date: "",
     dueDate: "",
     description: "",
     amount: "",
-  })
+  });
 
   const isFormValid =
     createOtherIncome.title &&
@@ -46,7 +45,6 @@ export const CreateOtherIncomeModal = ({
         disabledButton={!isFormValid}
       >
         <div>
-
           <div className="mb-4">
             <DSInput
               block
@@ -64,7 +62,12 @@ export const CreateOtherIncomeModal = ({
               type="Date"
               label={"Date"}
               placeholder={"Select Date"}
-              style={{ width: "100%", height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+              style={{
+                width: "100%",
+                height: "45px",
+                borderRadius: "10px",
+                padding: "0px 10px",
+              }}
               value={createOtherIncome.date}
               onChange={(date) => handleChange("date", date)}
             />
@@ -74,11 +77,15 @@ export const CreateOtherIncomeModal = ({
               type="Due Date"
               label={"Due Date"}
               placeholder={"Select Date"}
-              style={{ width: "100%", height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+              style={{
+                width: "100%",
+                height: "45px",
+                borderRadius: "10px",
+                padding: "0px 10px",
+              }}
               value={createOtherIncome.dueDate}
               onChange={(date) => handleChange("dueDate", date)}
             />
-
           </div>
 
           <div className="mb-4">
@@ -106,5 +113,5 @@ export const CreateOtherIncomeModal = ({
         </div>
       </DSModal>
     </div>
-  )
-}
+  );
+};

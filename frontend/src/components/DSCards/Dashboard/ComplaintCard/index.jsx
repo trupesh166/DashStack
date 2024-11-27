@@ -1,55 +1,63 @@
-import React, { useState } from "react";
-import style from "./ComplaintCard.module.css";
+import { useState } from "react";
 import { Avatar, Flex } from "antd";
 import clsx from "clsx";
 import Icons from "@/constants/Icons";
-import { DeleteModal, DSButton, DSCard, DSSelect, DSTable, EditComplaintModal, ViewComplaintModal } from "../..";
+import {
+  DeleteModal,
+  DSButton,
+  DSCard,
+  DSSelect,
+  DSTable,
+  EditComplaintModal,
+  ViewComplaintModal,
+} from "@/components/";
+import styles from "./ComplaintCard.module.css";
 
 const tableColumn = [
   {
-    title: <h6 className={style.h6}>Complainer Name</h6>,
+    title: <h6 className={styles.h6}>Complainer Name</h6>,
     dataIndex: "complainerName",
     key: "complainerName",
     render: (_, { profileImage, complainerName }) => (
       <Flex align="center" gap={"small"}>
         <Avatar size={40} src={profileImage} alt="profileImage" />
         <div>
-          <h5 className={style.h5}>{complainerName}</h5>
+          <h5 className={styles.h5}>{complainerName}</h5>
         </div>
       </Flex>
     ),
   },
   {
-    title: <h6 className={style.h6}>Complaint Name</h6>,
+    title: <h6 className={styles.h6}>Complaint Name</h6>,
     dataIndex: "complaintName",
     key: "complaintName",
     render: (complaintName) => (
-      <h5 className={clsx(style.h5, "text-start")}>{complaintName}</h5>
+      <h5 className={clsx(styles.h5, "text-start")}>{complaintName}</h5>
     ),
   },
   {
-    title: <h6 className={clsx(style.h6, "text-center")}>Date</h6>,
+    title: <h6 className={clsx(styles.h6, "text-center")}>Date</h6>,
     dataIndex: "date",
     key: "date",
-    render: (date) => <h5 className={style.h5}>{date}</h5>,
+    render: (date) => <h5 className={styles.h5}>{date}</h5>,
   },
   {
-    title: <h6 className={clsx(style.h6, "text-center")}>Priority</h6>,
+    title: <h6 className={clsx(styles.h6, "text-center")}>Priority</h6>,
     dataIndex: "priorityStatus",
     key: "priorityStatus",
     render: (priorityStatus) => (
       <h5
-        className={style.h5}
+        className={styles.h5}
         style={{
           color: "#ffffff",
           backgroundColor:
             priorityStatus === "High"
               ? "#E74C3C"
               : priorityStatus === "Medium"
-                ? "#5678E9"
-                : priorityStatus === "Low"
-                  ? "#39973D"
-                  : "#FFFFFF",
+              ? "#5678E9"
+              : priorityStatus === "Low"
+              ? "#39973D"
+              : "#FFFFFF",
           borderRadius: "20px",
           padding: "5px 15px",
         }}
@@ -59,29 +67,29 @@ const tableColumn = [
     ),
   },
   {
-    title: <h6 className={clsx(style.h6, "text-center")}>Complain Status</h6>,
+    title: <h6 className={clsx(styles.h6, "text-center")}>Complain Status</h6>,
     dataIndex: "status",
     key: "status",
     render: (status) => (
       <h5
-        className={style.h5}
+        className={styles.h5}
         style={{
           color:
             status === "Pending"
               ? "#FFC313"
               : status === "Open"
-                ? "#5678E9"
-                : status === "Solve"
-                  ? "#39973D"
-                  : "#FFFFFF",
+              ? "#5678E9"
+              : status === "Solve"
+              ? "#39973D"
+              : "#FFFFFF",
           backgroundColor:
             status === "Pending"
               ? "#FFF9E7"
               : status === "Open"
-                ? "#EEF1FD"
-                : status === "Solve"
-                  ? "#EBF5EC"
-                  : "#FFFFFF",
+              ? "#EEF1FD"
+              : status === "Solve"
+              ? "#EBF5EC"
+              : "#FFFFFF",
           borderRadius: "20px",
           padding: "5px 15px",
         }}
@@ -160,7 +168,7 @@ const dataSource = [
   },
 ];
 
-export const ComplaintCard = () => {
+export const ComplaintCard = ({ className }) => {
   const [editComplaint, setEditComplaint] = useState(false);
   const [viewComplaint, setViewComplaint] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
@@ -168,8 +176,8 @@ export const ComplaintCard = () => {
   return (
     <DSCard
       size="small"
-      rootClass={style.card}
-      className={clsx(style.cardBody, "d-flex flex-column")}
+      rootClass={clsx(styles.card, className)}
+      className={clsx(styles.cardBody, "d-flex flex-column")}
       title={"Complaint List"}
       headerContent={
         <DSSelect
@@ -184,7 +192,7 @@ export const ComplaintCard = () => {
         </DSSelect>
       }
     >
-      <div className={style.body}>
+      <div className={styles.body}>
         <DSTable tableColumn={tableColumn} tableDataSource={dataSource} />
       </div>
 

@@ -14,7 +14,7 @@ export const Announcement = () => {
   const [editAnnouncement, setEditAnnouncement] = useState(false);
   const [viewAnnouncement, setViewAnnouncement] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
-
+ 
   return (
     <>
       <DSCard

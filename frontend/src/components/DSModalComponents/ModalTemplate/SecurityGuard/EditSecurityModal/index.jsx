@@ -1,16 +1,15 @@
-import React, { useRef } from 'react'
-import style from "./EditSecurityModal.module.css"
-import { DSDatePicker, DSInput, DSModal, DSSelect } from '../../../..';
-import { Avatar, Col, Flex, Row } from 'antd';
-import Icons from '../../../../../constants/Icons';
+import React, { useRef } from "react";
+import styles from "./EditSecurityModal.module.css";
+import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
+import { Avatar, Col, Flex, Row } from "antd";
+import Icons from "../../../../../constants/Icons";
 
 export const EditSecurityModal = ({
   open,
   handleCancel,
   handleClose,
-  handleOk
+  handleOk,
 }) => {
-
   const fileInputRef = useRef(null);
 
   const handleUploadClick = () => {
@@ -18,7 +17,7 @@ export const EditSecurityModal = ({
   };
 
   return (
-    <div className={style.editSecurityModal}>
+    <div className={styles.editSecurityModal}>
       <DSModal
         title={"Edit Security"}
         open={open}
@@ -30,11 +29,23 @@ export const EditSecurityModal = ({
         handleContent={"Create"}
         disabledButton={false}
       >
-
-        <Flex align='center' gap={"middle"} className='mb-4 cursor-pointer' onClick={handleUploadClick}>
-          <input type="file" className='d-none' ref={fileInputRef} accept='image/*' />
-          <Avatar size={64} src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" />
-          <h5 className={style.h5}>Add Photo</h5>
+        <Flex
+          align="center"
+          gap={"middle"}
+          className="mb-4 cursor-pointer"
+          onClick={handleUploadClick}
+        >
+          <input
+            type="file"
+            className="d-none"
+            ref={fileInputRef}
+            accept="image/*"
+          />
+          <Avatar
+            size={64}
+            src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"
+          />
+          <h5 className={styles.h5}>Add Photo</h5>
         </Flex>
 
         <DSInput
@@ -43,13 +54,14 @@ export const EditSecurityModal = ({
           placeholder={"Enter Full Name"}
         />
 
-        <DSInput
-          className="mb-4"
-          label={"Phone Number"}
-          placeholder={"+91"}
-        />
+        <DSInput className="mb-4" label={"Phone Number"} placeholder={"+91"} />
 
-        <Flex gap={"middle"} justify='space-between' align='center' className="mb-4">
+        <Flex
+          gap={"middle"}
+          justify="space-between"
+          align="center"
+          className="mb-4"
+        >
           <DSSelect
             block={true}
             label={"Gender"}
@@ -72,12 +84,16 @@ export const EditSecurityModal = ({
           />
         </Flex>
 
-        <Flex justify='space-between' align='center' className="mb-4">
+        <Flex justify="space-between" align="center" className="mb-4">
           <DSDatePicker
             block={true}
             label={"Shift Date"}
             placeholder={"Select Date"}
-            style={{ height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+            style={{
+              height: "45px",
+              borderRadius: "10px",
+              padding: "0px 10px",
+            }}
           />
           <DSInput
             block={true}
@@ -86,23 +102,32 @@ export const EditSecurityModal = ({
           />
         </Flex>
 
-        <Row className='mb-4'>
-          <Col span={24}><h5 className={style.dark}>Upload Aadhar Card</h5></Col>
-          <Col span={24} className='mt-3'>
+        <Row className="mb-4">
+          <Col span={24}>
+            <h5 className={styles.dark}>Upload Aadhar Card</h5>
+          </Col>
+          <Col span={24} className="mt-3">
             <Row>
-              <Col span={2}><h2>{Icons.Jpg}</h2></Col>
+              <Col span={2}>
+                <h2>{Icons.Jpg}</h2>
+              </Col>
               <Col span={20}>
                 <Row>
-                  <Col span={24}><h6 className={style.dark}>Adharcard Front Side.JPG</h6></Col>
-                  <Col span={24}><h6 className={style.silver}>3.5 MB</h6></Col>
+                  <Col span={24}>
+                    <h6 className={styles.dark}>Adharcard Front Side.JPG</h6>
+                  </Col>
+                  <Col span={24}>
+                    <h6 className={styles.silver}>3.5 MB</h6>
+                  </Col>
                 </Row>
               </Col>
-              <Col span={2}><div className={style.silver}>{Icons.EyeShow}</div></Col>
+              <Col span={2}>
+                <div className={styles.silver}>{Icons.EyeShow}</div>
+              </Col>
             </Row>
           </Col>
         </Row>
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

@@ -7,8 +7,8 @@ import {
   DSButton,
   DSCard,
   EditImportantNumberModal,
-} from "../..";
-import style from "./ImportantNumbersCard.module.css";
+} from "../../..";
+import styles from "./ImportantNumbersCard.module.css";
 
 export const ImportantNumbersCard = () => {
   const ImportantNumber = [
@@ -49,11 +49,11 @@ export const ImportantNumbersCard = () => {
   const [deleteComplaint, setDeleteComplaint] = useState(false);
 
   return (
-    <div>
+    <>
       <DSCard
         size="small"
-        rootClass={clsx(style.card, "overflow-hidden")}
-        className={clsx(style.cardBody, "d-flex flex-column")}
+        rootClass={clsx(styles.card, "overflow-hidden")}
+        className={clsx(styles.cardBody, "d-flex flex-column")}
         title={"Important Numbers"}
         headerContent={
           <>
@@ -68,11 +68,14 @@ export const ImportantNumbersCard = () => {
           </>
         }
       >
-        {ImportantNumber.map((item) => (
+        {ImportantNumber?.map((item) => (
           <div
-            className={clsx(style.importantNumber, "d-flex align-items-center")}
+            className={clsx(
+              styles.importantNumber,
+              "d-flex align-items-center"
+            )}
           >
-            <div className={style.detail}>
+            <div className={styles.detail}>
               <h6 className="lh-base">
                 Name : <span className="clr-silver">{item.fullName}</span>
               </h6>
@@ -84,7 +87,7 @@ export const ImportantNumbersCard = () => {
                 Work : <span className="clr-silver">{item.work}</span>
               </h6>
             </div>
-            <div className={clsx(style.actions, "d-flex")}>
+            <div className={clsx(styles.actions, "d-flex")}>
               <DSButton
                 icon={Icons.Trash}
                 size={"small"}
@@ -121,6 +124,6 @@ export const ImportantNumbersCard = () => {
         onCancel={() => setDeleteComplaint(false)}
         children={"Are you sure you want to delate this number?"}
       />
-    </div>
+    </>
   );
 };

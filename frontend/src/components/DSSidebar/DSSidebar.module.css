@@ -28,8 +28,9 @@
 .menu {
   height: 100vh;
   overflow: auto;
-  padding: 0 15px 0 0;
+  padding: 0 var(--space-xs) 0 0;
 }
+
 .menu :global .ant-menu-submenu-title {
   padding: var(--space-md) calc(var(--space-md) + 2px) !important;
   margin-inline: 0px;

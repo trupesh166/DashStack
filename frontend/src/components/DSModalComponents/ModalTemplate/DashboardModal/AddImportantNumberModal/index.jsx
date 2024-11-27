@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./AddImportantNumberModal.module.css";
+import styles from "./AddImportantNumberModal.module.css";
 import { DSInput, DSModal } from "../../../..";
 
 export const AddImportantNumberModal = ({

@@ -1,8 +1,9 @@
-import { Layout } from "antd";
+import { Divider, Layout } from "antd";
 import clsx from "clsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import { DSButton, DSInput, DSBreadCrumb } from "@/components/";
+import { DSButton, DSInput, DSBreadCrumb, DSDropDownImg } from "@/components/";
 import Icons from "@/constants/Icons";
+import UseDecodeToken from "@/hook/UseDecodeToken";
 import styles from "./DSHeader.module.css";
 
 const { Header } = Layout;
@@ -10,6 +11,14 @@ const { Header } = Layout;
 export const DSHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const userData = UseDecodeToken();
+
+  const dropdownItems = [
+    {
+      key: "1",
+      label: "Profile",
+    },
+  ];
 
   return (
     <Header
@@ -25,10 +34,24 @@ export const DSHeader = () => {
           <DSBreadCrumb separator=">" admin />
         )}
       </div>
-      <div className="d-flex align-items-center justify-content-center gap-xl">
+      <div
+        className={clsx(
+          styles.HeaderRight,
+          "d-flex align-items-center justify-content-center gap-xl"
+        )}
+      >
         <DSButton
           icon={Icons.NotificationBall}
           onClick={() => navigate("/notifications")}
+          className={styles.NotificationBallBtn}
+        />
+        <DSDropDownImg
+          items={dropdownItems}
+          name={userData?.fullName}
+          image={"https://i.pravatar.cc/300"}
+          position={userData?.role}
+          imageAlt={"fakeImg"}
+          arrow
         />
       </div>
     </Header>

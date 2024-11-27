@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./UpcomingActivityCard.module.css";
 import clsx from "clsx";
-import { DSCard, DSSelect } from "../..";
+import { DSCard, DSSelect } from "@/components/";
 import { Flex } from "antd";
+import styles from "./UpcomingActivityCard.module.css";
 
 export const UpcomingActivityCard = () => {
   const UpcomingActivityData = [
@@ -82,8 +82,8 @@ export const UpcomingActivityCard = () => {
   return (
     <DSCard
       size="small"
-      rootClass={style.card}
-      className={clsx(style.cardBody, "d-flex flex-column")}
+      rootClass={styles.card}
+      className={clsx(styles.cardBody, "d-flex flex-column")}
       title="Upcoming Activity"
       headerContent={
         <div className="w-100">
@@ -98,16 +98,17 @@ export const UpcomingActivityCard = () => {
         </div>
       }
     >
-      <div className={style.body}>
+      <div className={styles.body}>
         {UpcomingActivityData.map((item, index) => {
-          const color = activityProfileColor[index % activityProfileColor.length];
+          const color =
+            activityProfileColor[index % activityProfileColor.length];
 
           return (
-            <div className={style.activity} key={item._id}>
+            <div className={styles.activity} key={item._id}>
               <Flex justify="space-between" align="center">
                 <div className="d-flex align-items-center gap-3">
                   <h4
-                    className={style.activityProfile}
+                    className={styles.activityProfile}
                     style={{
                       color: color.text_color,
                       backgroundColor: color.background_color,
@@ -116,13 +117,13 @@ export const UpcomingActivityCard = () => {
                     {item.title.charAt(0)}
                   </h4>
 
-                  <div className={style.userDetails}>
-                    <h6 className={style.meetingName}>{item.title}</h6>
-                    <h6 className={style.meetingTime}>{item.dueDays}</h6>
+                  <div className={styles.userDetails}>
+                    <h6 className={styles.meetingName}>{item.title}</h6>
+                    <h6 className={styles.meetingTime}>{item.dueDays}</h6>
                   </div>
                 </div>
                 <div>
-                  <h6 className={style.activityDate}>{item.date}</h6>
+                  <h6 className={styles.activityDate}>{item.date}</h6>
                 </div>
               </Flex>
             </div>

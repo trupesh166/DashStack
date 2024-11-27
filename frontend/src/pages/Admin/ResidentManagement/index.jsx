@@ -4,7 +4,7 @@ import { DSButton, DSModal, DSCheckbox, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import style from "./ResidentManagement.module.css";
+import styles from "./ResidentManagement.module.css";
 import { useNavigate } from "react-router-dom";
 
 export const ResidentManagement = () => {
@@ -18,7 +18,6 @@ export const ResidentManagement = () => {
       try {
         console.log("response");
         const response = await getUser();
-        console.log(response);
 
         if ((response.message = "Success" && response.data)) {
           const formattedData = response.data.map((item, index) => ({
@@ -132,12 +131,11 @@ export const ResidentManagement = () => {
     <>
       <DSCard
         title="Resident Tenant and Owner Details"
-        className={style.residentManagementScreen}
+        className={styles.residentManagementScreen}
         button
         headerContent={
           <>
             <DSButton
-              size={"small"}
               variant={"primary"}
               icon={Icons.AddSquare}
               onClick={() => navigate("/admin/resident-detail")}
@@ -147,7 +145,7 @@ export const ResidentManagement = () => {
           </>
         }
       >
-        <div className={style.rmTable}>
+        <div className={styles.rmTable}>
           <DSTable
             tableColumn={columns}
             pagination={false}

@@ -7,7 +7,7 @@ class SocietyController {
   async createSociety(req, res) {
     try {
       const { societyName, societyAddress, country, state, city, zipCode, societyType, wingCount } = req.body
-      if (!societyName || !societyAddress || !country || !state || !city || !zipCode || !societyType || !wingCount) throw httpErrors[400]
+      if (!societyName || !societyAddress || !country || !state || !city || !zipCode || !societyType) throw httpErrors[400]
       const result = await societyModel.model.create({ ...req.body })
       if (!result) throw httpErrors[500]
       for (let i = 0; i < wingCount; i++) {

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import style from "./EditProfile.module.css";
+import styles from "./EditProfile.module.css";
 import { DSButton, DSCard, DSInput, DSSelect } from "../../../../components";
 import { Avatar, Col, Row } from "antd";
 
@@ -35,15 +35,15 @@ export const EditProfile = () => {
   };
 
   return (
-    <div className={style.editProfile}>
-      <div className={style.profileCard}>
-        <div className={style.profile}>
+    <div className={styles.editProfile}>
+      <div className={styles.profileCard}>
+        <div className={styles.profile}>
           <form action="" onSubmit={handleSubmitData}>
             <h3 className="mb-5">Edit Profile</h3>
 
             <DSCard>
               <Row>
-                <Col span={6} className={style.userImage}>
+                <Col span={6} className={styles.userImage}>
                   <input type="file" className="d-none" ref={fileUpload} />
                   <Avatar
                     size={100}

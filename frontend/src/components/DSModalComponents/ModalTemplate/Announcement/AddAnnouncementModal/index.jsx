@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./AddAnnouncementModal.module.css";
+import styles from "./AddAnnouncementModal.module.css";
 import { DSDatePicker, DSInput, DSModal } from "../../../..";
 import TextArea from "antd/es/input/TextArea";
 import { Flex } from "antd";

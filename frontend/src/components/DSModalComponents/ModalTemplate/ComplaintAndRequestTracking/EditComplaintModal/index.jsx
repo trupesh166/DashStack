@@ -1,8 +1,8 @@
-import React from 'react'
-import { DSInput, DSModal, DSRadioButton } from '../../../..'
-import TextArea from 'antd/es/input/TextArea'
-import { Flex } from 'antd'
-import style from "./EditComplaintModal.module.css"
+import React from "react";
+import { DSInput, DSModal, DSRadioButton } from "../../../..";
+import TextArea from "antd/es/input/TextArea";
+import { Flex } from "antd";
+import styles from "./EditComplaintModal.module.css";
 
 export const EditComplaintModal = ({
   open,
@@ -11,8 +11,7 @@ export const EditComplaintModal = ({
   handleClose,
 }) => {
   return (
-    <div className={style.editComplaint}>
-
+    <div className={styles.editComplaint}>
       <DSModal
         title="Edit Complaint"
         open={open}
@@ -24,7 +23,6 @@ export const EditComplaintModal = ({
         handleContent="Save"
         disabledButton={false}
       >
-
         <DSInput
           className="mb-4"
           label={"Complainer Name"}
@@ -38,9 +36,9 @@ export const EditComplaintModal = ({
         />
 
         <div className="mb-4">
-          <h5 className={style.h5}>Description</h5>
+          <h5 className={styles.h5}>Description</h5>
           <TextArea
-            placeholder='Enter Description'
+            placeholder="Enter Description"
             autoSize={{
               minRows: 1.5,
               maxRows: 6,
@@ -48,17 +46,9 @@ export const EditComplaintModal = ({
           />
         </div>
 
-        <Flex justify='space-between' className='mb-4'>
-          <DSInput
-            block
-            label={"Wing"}
-            placeholder={"Enter Wing"}
-          />
-          <DSInput
-            block
-            label={"Unit"}
-            placeholder={"Enter Unit"}
-          />
+        <Flex justify="space-between" className="mb-4">
+          <DSInput block label={"Wing"} placeholder={"Enter Wing"} />
+          <DSInput block label={"Unit"} placeholder={"Enter Unit"} />
         </Flex>
 
         <DSRadioButton
@@ -85,9 +75,7 @@ export const EditComplaintModal = ({
           optionType={"button"}
           type={"radio"}
         />
-
       </DSModal>
     </div>
-  )
-}
-
+  );
+};

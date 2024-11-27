@@ -1,59 +1,43 @@
-import React, { useState } from 'react'
-import style from "./OtherIncomeCard.module.css"
-import { Card } from 'antd'
-import Icons from '../../../constants/Icons'
-import { DeleteModal, EditOtherIncomeModal } from '../..'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import Icons from "@/constants/Icons";
+import { DeleteModal, DSEventsCard, EditOtherIncomeModal } from "../..";
+import { useNavigate } from "react-router-dom";
+import styles from "./OtherIncomeCard.module.css";
 
-export const OtherIncomeCard = ({ title, amount, totalMember, date, dueDate, description }) => {
-
-  const [menuVisible, setMenuVisible] = useState(false);
+export const OtherIncomeCard = ({
+  title,
+  amount,
+  totalMember,
+  date,
+  dueDate,
+  description,
+}) => {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [editOtherIncome, setEditOtherIncome] = useState(false);
   const [deleteOtherIncome, setDeleteOtherIncome] = useState(false);
-  const navigate = useNavigate()
-
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  }
-
-  const handleView = () => {
-    navigate("/admin/financial/income")
-  }
-
-  const handleEdit = () => {
-    setSelectedRecord({
-      title,
-      amount,
-      totalMember,
-      date,
-      dueDate,
-      description,
-    });
-    setEditOtherIncome(true);
-  };
+  const items = [
+    {
+      label: "1st menu item",
+      key: "1",
+    },
+    {
+      label: "2nd menu item",
+      key: "2",
+    },
+    {
+      label: "3rd menu item",
+      key: "3",
+    },
+  ];
 
   return (
     <>
-      <Card
-        title={title}
-        extra={
-          <>
-            <div className={style.menuIcon} onClick={toggleMenu}>{Icons.MoreSquare}</div>
-          </>
-        }
-        className={style.card}
-      >
-        {menuVisible && (
-          <div className={style.menu}>
-            <h6 className={style.h6} onClick={handleEdit}>Edit</h6>
-            <h6 className={style.h6} onClick={handleView}>View</h6>
-            <h6 className={style.h6} onClick={() => setDeleteOtherIncome(true)}>Delete</h6>
-          </div>
-        )}
+      <DSEventsCard title={title} className={styles.card} items={items}>
         <div className="card-grid">
           <h6>Amount Per Member</h6>
-          <h6 className="fw-medium lh-base">{Icons.Rupee} {amount}</h6>
+          <h6 className="fw-medium lh-base">
+            {Icons.Rupee} {amount}
+          </h6>
         </div>
         <div className="card-grid">
           <h6>Total Member</h6>
@@ -71,7 +55,7 @@ export const OtherIncomeCard = ({ title, amount, totalMember, date, dueDate, des
           <h6>Description</h6>
           <span className="fw-medium lh-base h6">{description}</span>
         </div>
-      </Card>
+      </DSEventsCard>
 
       {/* Edit Other Income Modal */}
       <EditOtherIncomeModal
@@ -91,7 +75,6 @@ export const OtherIncomeCard = ({ title, amount, totalMember, date, dueDate, des
         handleOk={() => setDeleteOtherIncome(false)}
         onCancel={() => setDeleteOtherIncome(false)}
       />
-
     </>
-  )
-}
+  );
+};

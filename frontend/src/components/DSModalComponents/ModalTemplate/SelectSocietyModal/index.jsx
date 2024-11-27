@@ -1,4 +1,4 @@
-import { DSInput, DSModal } from "@/Components";
+import { DSInput, DSModal, DSSelect } from "@/Components";
 import { useAddSociety } from "@/hook/Auth/AddSociety";
 import clsx from "clsx";
 import styles from "./SelectSocietyModal.module.css";
@@ -18,7 +18,7 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
       // Apply Button
       handleContent="Apply"
       handleOk={handleSubmit}
-      disabledButton={!isFormValid} // Disable the button if the form is invalid
+      disabledButton={!isFormValid}
     >
       <form onSubmit={handleSubmit}>
         <div className={clsx(styles.InputWrapper, "d-grid flex-column")}>
@@ -69,6 +69,25 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
             placeholder="Enter Zip Code"
             name="zipcode"
             value={formData.zipcode}
+            onChange={handleChange}
+            required
+          />
+          <DSSelect
+            label="Society Type"
+            placeholder="Society Type"
+            defaultValue="Type"
+            options={[
+              { label: "Apartment", value: "apartment" },
+              { label: "Tenement", value: "tenement" },
+            ]}
+          >
+            View all
+          </DSSelect>
+          <DSInput
+            label="Wing Count"
+            placeholder="Enter Wind Count"
+            name="wingCount"
+            value={formData.wingCount}
             onChange={handleChange}
             required
           />

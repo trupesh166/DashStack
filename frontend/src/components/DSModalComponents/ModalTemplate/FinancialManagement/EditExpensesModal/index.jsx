@@ -33,16 +33,14 @@ export const EditExpensesModal = ({
             <DSInput
               label={"Title"}
               placeholder={"Enter Title"}
+              require={true}
             />
           </div>
           <div className="mb-4">
-            <h5>Description</h5>
-            <TextArea
+            <DSInput
+              label={"Description"}
               placeholder='Enter Description'
-              autoSize={{
-                minRows: 2,
-                maxRows: 6,
-              }}
+              require={true}
             />
           </div>
           <div className="d-flex align-items-center justify-content-between mb-4">

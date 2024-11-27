@@ -7,10 +7,13 @@ export { EditImportantNumberModal } from "./DashboardModal/EditImportantNumberMo
 // Dashboard  End
 
 // Financial Management Start
+// Set Maintenance
+export { SetMaintenance } from "./FinancialManagement/SetMaintenance/"
+
 // Income Section
 export { AddMaintenanceModal } from "./FinancialManagement/AddMaintenanceModal/"
 export { CreateOtherIncomeModal } from "./FinancialManagement/CreateOtherIncomeModal/"
-export { EditGaneshChaturthiModal } from "./FinancialManagement/EditGaneshChaturthiModal/";
+export { EditOtherIncomeModal } from "./FinancialManagement/EditOtherIncomeModal";
 export { ViewMaintenanceDetailsModal } from "./FinancialManagement/ViewMaintenanceDetailsModal/"
 
 // Expense Section

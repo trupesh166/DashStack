@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./AddAnnouncementModal.module.css";
 import { DSDatePicker, DSInput, DSModal } from "../../../..";
 import TextArea from "antd/es/input/TextArea";
-import { Flex } from "antd";
+import { Flex, TimePicker } from "antd";
 
 export const AddAnnouncementModal = ({
   open,
@@ -10,6 +10,9 @@ export const AddAnnouncementModal = ({
   handleClose,
   handleOk,
 }) => {
+  const onChange = (time, timeString) => {
+    console.log(time, timeString);
+  };
   return (
     <>
       <DSModal
@@ -58,11 +61,7 @@ export const AddAnnouncementModal = ({
               padding: "0px 10px",
             }}
           />
-          <DSInput
-            block={true}
-            label={"Announcement Time"}
-            placeholder={"Select Time"}
-          />
+          <TimePicker use12Hours format="h:mm a" onChange={onChange} />
         </Flex>
       </DSModal>
     </>

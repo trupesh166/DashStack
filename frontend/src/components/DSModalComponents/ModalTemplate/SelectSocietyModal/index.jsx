@@ -75,20 +75,61 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
           <DSSelect
             label="Society Type"
             placeholder="Society Type"
-            defaultValue="Type"
+            name="societyType"
+            defaultValue={formData.societyType}
             options={[
               { label: "Apartment", value: "apartment" },
               { label: "Tenement", value: "tenement" },
             ]}
+            onChange={(value) =>
+              handleChange({
+                target: { societyName: "societyType", value },
+              })
+            }
+            required
           >
             View all
           </DSSelect>
+          {
+            console.log(formData)
+          }
+          {formData.societyType === "apartment" && (
+
+            <DSInput
+              label="Flor"
+              placeholder="Enter Flor Number"
+              name="florNumber"
+              value={formData.florNumber}
+              onChange={handleChange}
+              required
+            />
+          )}
           <DSInput
             label="Wing Count"
-            placeholder="Enter Wind Count"
+            placeholder="Enter Wing Count"
             name="wingCount"
             value={formData.wingCount}
             onChange={handleChange}
+            required
+          />
+          <DSInput
+            label="Units"
+            placeholder="Enter Units"
+            name="unitNumber"
+            value={formData.unitNumber}
+            onChange={handleChange}
+            required
+          />
+          <DSSelect
+            label="Select Series"
+            placeholder="Enter Series"
+            name="selectSeries"
+            defaultValue="Select Series"
+            options={[
+              { label: "1", value: "1" },
+              { label: "10", value: "10" },
+              { label: "100", value: "100" },
+            ]}
             required
           />
         </div>

@@ -122,7 +122,6 @@ export const useRegister = () => {
         password: formData.password,
         confirmPassword: formData.confirmPassword,
       };
-      console.log(apiRequestData);
 
       await register(apiRequestData);
       navigate("/admin/login");

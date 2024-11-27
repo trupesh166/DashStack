@@ -292,3 +292,19 @@ img {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* ::-webkit-scrollbar {
+  width: 5px;
+  height: 2px;
+  display: flex;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--clr-dark);
+  border-radius: 10px;
+} */

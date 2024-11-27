@@ -1,6 +1,11 @@
 const { httpErrors, httpSuccess } = require("../constents")
 const userModel = require("../models/UserModel")
+const societyHandlerModel = require("../models/SocietyHandlerModel")
+const memberModel = require("../models/MemberModel")
+const securityModel = require("../models/SecurityModel")
 const bcrypt = require("bcrypt")
+const sendEmail = require("../mailconfig/Nodemailer");
+const { generateOtp } = require('../mailconfig/otpService')
 const jwt = require("jsonwebtoken")
 
 class UserController {
@@ -35,6 +40,62 @@ class UserController {
       throw httpErrors[500]
     }
   }
+  async forgotPassword(req, res) {
+    try {
+        const { email } = req.body;
+        const user = await userModel.model.findOne({ email: email });
+        
+        if (!user) return res.status(404).json({ message: 'User not found.' });
+
+        const otp = generateOtp();
+        user.otp = otp;
+        await user.save();
+
+        const subject = 'Password Reset OTP';
+        const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
+        await sendEmail({ to: user.email, subject, text });
+
+        res.status(200).json({ message: 'OTP sent to your email.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error processing request.', error: error.message });
+    }
+  }
+  async verifyOtp(req, res) {
+    try {
+        const { email, otp } = req.body;
+
+        if (!email || !otp)  return res.status(400).json({ message: 'Email and OTP are required.' });
+        const user = await userModel.model.findOne({ email: email });
+        console.log(user);
+        
+        if (!user)  return res.status(404).json({ message: 'User not found.' });
+        if (user.otp !== otp) return res.status(401).json({ message: 'Invalid OTP.' });
+        if (Date.now() > user.otpExpires)  return res.status(401).json({ message: 'OTP has expired. Please request a new one.' });
+
+        res.status(200).json({ message: 'OTP verified successfully. You can now reset your password.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error processing request.', error: error.message });
+    }
+}
+async resetPassword(req, res){
+  try {
+     const { email, newPassword } = req.body;
+      const user = await userModel.model.findOne({ email: email });
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+      await user.save();
+
+      res.status(200).json({ message: 'Password reset successfully.' });
+  } catch (error) {
+      res.status(500).json({ message: 'Error resetting password.', error: error.message });
+  }
+};
   async authenticationPermission(req, res) {
     try {
       const { id, password } = req.body // id : Society Chairman Id

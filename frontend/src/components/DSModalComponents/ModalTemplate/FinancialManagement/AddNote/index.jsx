@@ -1,16 +1,11 @@
-import React from 'react'
-import style from "./AddNote.module.css"
-import { DSDatePicker, DSInput, DSModal } from '../../../..'
-import TextArea from 'antd/es/input/TextArea'
+import React from "react";
+import styles from "./AddNote.module.css";
+import { DSDatePicker, DSInput, DSModal } from "../../../..";
+import TextArea from "antd/es/input/TextArea";
 
-export const AddNote = ({
-  open,
-  handleOk,
-  handleCancel,
-  handleClose,
-}) => {
+export const AddNote = ({ open, handleOk, handleCancel, handleClose }) => {
   return (
-    <div className={style.addNote}>
+    <div className={styles.addNote}>
       <DSModal
         title="Add Note"
         open={open}
@@ -22,18 +17,14 @@ export const AddNote = ({
         handleContent="Save"
         disabledButton={false}
       >
-
         <div className="mb-4">
-          <DSInput
-            label={"Title"}
-            placeholder={"Enter Title"}
-          />
+          <DSInput label={"Title"} placeholder={"Enter Title"} />
         </div>
 
         <div className="mb-4">
-          <h5 className={style.h5}>Description</h5>
+          <h5 className={styles.h5}>Description</h5>
           <TextArea
-            placeholder='Enter Description'
+            placeholder="Enter Description"
             autoSize={{
               minRows: 2,
               maxRows: 6,
@@ -47,11 +38,15 @@ export const AddNote = ({
             type="Date"
             label={"Date"}
             placeholder={"Select Date"}
-            style={{ width: "100%", height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+            style={{
+              width: "100%",
+              height: "45px",
+              borderRadius: "10px",
+              padding: "0px 10px",
+            }}
           />
         </div>
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import style from "./AddExpensesDetailsModal.module.css";
+import styles from "./AddExpensesDetailsModal.module.css";
 import Icons from "../../../../../constants/Icons";
 import { DSDatePicker, DSInput, DSModal } from "../../../..";
 
@@ -39,10 +39,15 @@ export const AddExpensesDetailsModal = ({
     }));
   };
 
-  const isFormValid = addExpensesDetails.title && addExpensesDetails.description && addExpensesDetails.date && addExpensesDetails.amount && addExpensesDetails.bill
+  const isFormValid =
+    addExpensesDetails.title &&
+    addExpensesDetails.description &&
+    addExpensesDetails.date &&
+    addExpensesDetails.amount &&
+    addExpensesDetails.bill;
 
   return (
-    <div className={style.addExpensesDetails}>
+    <div className={styles.addExpensesDetails}>
       <DSModal
         title="Add Expenses Details"
         open={open}
@@ -121,7 +126,7 @@ export const AddExpensesDetailsModal = ({
           <div className="mb-4">
             <h6>Upload Bill</h6>
             <div
-              className={style.document}
+              className={styles.document}
               onClick={() => billRef.current?.click()}
             >
               <div>
@@ -133,24 +138,24 @@ export const AddExpensesDetailsModal = ({
                 />
                 <h4>{Icons.AddImage}</h4>
               </div>
-              <h6 className={style.h6}>
-                Upload a file <span className={style.span}>or drag and drop</span>
+              <h6 className={styles.h6}>
+                Upload a file{" "}
+                <span className={styles.span}>or drag and drop</span>
               </h6>
-              <p className={style.p}>PNG, JPG, GIF up to 10MB</p>
+              <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
             </div>
             {addExpensesDetails.bill && (
-              <div className={style.uploadDocument}>
+              <div className={styles.uploadDocument}>
                 <div className="d-flex gap-3 align-items-center">
                   <h2>{Icons.Jpg}</h2>
                   <div>
                     <h6>{addExpensesDetails.bill.name}</h6>
-                    <h6 className={style.p}>{addExpensesDetails.bill.size} MB</h6>
+                    <h6 className={styles.p}>
+                      {addExpensesDetails.bill.size} MB
+                    </h6>
                   </div>
                 </div>
-                <h2
-                  onClick={handleFileRemove}
-                  className={style.trashIcon}
-                >
+                <h2 onClick={handleFileRemove} className={styles.trashIcon}>
                   {Icons.Trash}
                 </h2>
               </div>

@@ -6,5 +6,6 @@
   padding: var(--space-md) calc(var(--space-xl) * 2);
 }
 
-@media (max-width: 575px) {
+.HeaderRight {
+  gap: 20px;
 }

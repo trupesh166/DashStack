@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DSButton, DSInput, DSBreadCrumb, DSDropDownImg } from "@/components/";
 import Icons from "@/constants/Icons";
+import UseDecodeToken from "@/hook/UseDecodeToken";
 import styles from "./DSHeader.module.css";
 
 const { Header } = Layout;
@@ -10,6 +11,7 @@ const { Header } = Layout;
 export const DSHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const userData = UseDecodeToken();
 
   const dropdownItems = [
     {
@@ -45,9 +47,9 @@ export const DSHeader = () => {
         />
         <DSDropDownImg
           items={dropdownItems}
-          name="Moni Roy"
+          name={userData?.fullName}
           image={"https://i.pravatar.cc/300"}
-          position="Admin"
+          position={userData?.role}
           imageAlt={"fakeImg"}
           arrow
         />

@@ -18,7 +18,6 @@ export const ResidentManagement = () => {
       try {
         console.log("response");
         const response = await getUser();
-        console.log(response);
 
         if ((response.message = "Success" && response.data)) {
           const formattedData = response.data.map((item, index) => ({
@@ -137,7 +136,6 @@ export const ResidentManagement = () => {
         headerContent={
           <>
             <DSButton
-              size={"small"}
               variant={"primary"}
               icon={Icons.AddSquare}
               onClick={() => navigate("/admin/resident-detail")}

@@ -86,7 +86,6 @@ export const Expense = () => {
             size="small"
             icon={Icons.Edit}
             className="clr-success"
-            onClick={() => handleEditClick(record)}
           />
           <DSButton
             type="primary"
@@ -112,11 +111,6 @@ export const Expense = () => {
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
-
-  const handleEditClick = (expense) => {
-    setSelectedExpense(expense);
-    setEditExpensesModalOpen(true);
-  };
 
   const handleViewClick = (expense) => {
     setSelectedExpense(expense);

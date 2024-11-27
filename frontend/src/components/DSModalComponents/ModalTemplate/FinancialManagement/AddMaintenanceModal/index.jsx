@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import style from "./AddMaintenanceModal.module.css";
-import Icons from '../../../../../constants/Icons';
+import styles from "./AddMaintenanceModal.module.css";
+import Icons from "../../../../../constants/Icons";
 import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
 
 export const AddMaintenanceModal = ({
@@ -9,7 +9,6 @@ export const AddMaintenanceModal = ({
   handleCancel,
   handleClose,
 }) => {
-
   const [addMaintenance, setAddMaintenance] = useState({
     maintenanceAmount: "",
     penaltyAmount: "",
@@ -31,7 +30,7 @@ export const AddMaintenanceModal = ({
   };
 
   return (
-    <div className={style.addMaintenance}>
+    <div className={styles.addMaintenance}>
       <DSModal
         title="Add Maintenance Detail"
         open={open}
@@ -51,7 +50,9 @@ export const AddMaintenanceModal = ({
               placeholder={"0000"}
               prefix={Icons.Rupee}
               value={addMaintenance.maintenanceAmount}
-              onChange={(e) => handleChange("maintenanceAmount", e.target.value)}
+              onChange={(e) =>
+                handleChange("maintenanceAmount", e.target.value)
+              }
             />
             <DSInput
               block

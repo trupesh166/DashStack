@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import Icons from "@/constants/Icons";
 import { DSCard } from "@/components/";
-import style from "./TotalUserCard.module.css";
+import styles from "./TotalUserCard.module.css";
 
 export const TotalUserCard = ({
   title,
@@ -14,17 +14,17 @@ export const TotalUserCard = ({
 }) => {
   return (
     <DSCard
-      className={style.body}
-      rootClass={clsx(style.card, "d-flex flex-column position-relative")}
+      className={styles.body}
+      rootClass={clsx(styles.card, "d-flex flex-column position-relative")}
     >
       <div
-        className={style.designBox}
+        className={styles.designBox}
         style={{
           background: designBoxColor,
         }}
       ></div>
       <div className="d-flex justify-content-between align-items-center">
-        <div className={style.detail}>
+        <div className={styles.detail}>
           <h6 className="fw-semibold">{title}</h6>
           <h3 className="fw-bold">
             {Icons.Rupee}
@@ -33,7 +33,7 @@ export const TotalUserCard = ({
         </div>
         <div
           className={clsx(
-            style.cardIcon,
+            styles.cardIcon,
             "d-flex justify-content-center align-items-center"
           )}
           style={{

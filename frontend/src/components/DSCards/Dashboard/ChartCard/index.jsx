@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "chart.js";
 
-import style from "./Chart.module.css";
+import styles from "./Chart.module.css";
 import clsx from "clsx";
 import { DSCard, DSSelect } from "../../..";
 
@@ -87,8 +87,8 @@ export const ChartCard = ({ className }) => {
   return (
     <DSCard
       size="small"
-      rootClass={(style.card, className)}
-      className={clsx(style.cardBody, "d-flex flex-column")}
+      rootClass={(styles.card, className)}
+      className={clsx(styles.cardBody, "d-flex flex-column")}
       title="Balance Overview"
       headerContent={
         <DSSelect
@@ -101,7 +101,7 @@ export const ChartCard = ({ className }) => {
         />
       }
     >
-      <div className={style.chart}>
+      <div className={styles.chart}>
         <Line ref={chartRef} data={balanceData} options={options} />
       </div>
     </DSCard>

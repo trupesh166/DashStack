@@ -1,8 +1,8 @@
-import React from 'react'
-import style from "./CreateFacilityModal.module.css"
-import { DSDatePicker, DSInput, DSSelect } from '../../../../FormComponents'
-import TextArea from 'antd/es/input/TextArea'
-import { DSModal } from '../../../..'
+import React from "react";
+import styles from "./CreateFacilityModal.module.css";
+import { DSDatePicker, DSInput, DSSelect } from "../../../../FormComponents";
+import TextArea from "antd/es/input/TextArea";
+import { DSModal } from "../../../..";
 
 export const CreateFacilityModal = ({
   open,
@@ -11,7 +11,7 @@ export const CreateFacilityModal = ({
   handleClose,
 }) => {
   return (
-    <div className={style.createFacilityModal}>
+    <div className={styles.createFacilityModal}>
       <DSModal
         title="Create Facility"
         open={open}
@@ -23,18 +23,14 @@ export const CreateFacilityModal = ({
         handleContent="Save"
         disabledButton={false}
       >
-
         <div className="mb-4">
-          <DSInput
-            label={" Facility Name"}
-            placeholder={"Enter Name"}
-          />
+          <DSInput label={" Facility Name"} placeholder={"Enter Name"} />
         </div>
 
         <div className="mb-4">
-          <h5 className={style.h5}>Description</h5>
+          <h5 className={styles.h5}>Description</h5>
           <TextArea
-            placeholder='Enter Description'
+            placeholder="Enter Description"
             autoSize={{
               minRows: 2,
               maxRows: 6,
@@ -48,7 +44,12 @@ export const CreateFacilityModal = ({
             type="Date"
             label={"Schedule Service Date"}
             placeholder={"Select Schedule Service Date"}
-            style={{ width: "100%", height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+            style={{
+              width: "100%",
+              height: "45px",
+              borderRadius: "10px",
+              padding: "0px 10px",
+            }}
           />
         </div>
 
@@ -66,8 +67,7 @@ export const CreateFacilityModal = ({
             ]}
           />
         </div>
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

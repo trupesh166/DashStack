@@ -1,16 +1,15 @@
 import React, { useRef, useState } from "react";
-import style from "./ResidentDetail.module.css";
+import styles from "./ResidentDetail.module.css";
 import { Avatar, Col, Row } from "antd";
 import { DSCard, DSInput, DSSelect } from "../..";
 import Icons from "../../../constants/Icons";
 
 const ResidentDetail = () => {
-
   const aadharFrontRef = useRef(null);
   const aadharBackRef = useRef(null);
   const addressProofRef = useRef(null);
   const rentAgreementRef = useRef(null);
-  const fileInputRef = useRef(null)
+  const fileInputRef = useRef(null);
 
   const [residentType, setResidentType] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState({
@@ -182,7 +181,7 @@ const ResidentDetail = () => {
         <Col span={6}>
           <h6>Upload Aadhar Card (Front Side)</h6>
           <div
-            className={style.document}
+            className={styles.document}
             onClick={() => aadharFrontRef.current?.click()}
           >
             <div>
@@ -194,23 +193,26 @@ const ResidentDetail = () => {
               />
               <h4>{Icons.AddImage}</h4>
             </div>
-            <h6 className={style.h6}>
-              Upload a file <span className={style.span}>or drag and drop</span>
+            <h6 className={styles.h6}>
+              Upload a file{" "}
+              <span className={styles.span}>or drag and drop</span>
             </h6>
-            <p className={style.p}>PNG, JPG, GIF up to 10MB</p>
+            <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
           {uploadedFiles.aadharFront && (
-            <div className={style.uploadDocument}>
+            <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
                   <h6>{uploadedFiles.aadharFront.name}</h6>
-                  <h6 className={style.p}>{uploadedFiles.aadharFront.size} MB</h6>
+                  <h6 className={styles.p}>
+                    {uploadedFiles.aadharFront.size} MB
+                  </h6>
                 </div>
               </div>
               <h2
                 onClick={() => handleFileRemove("aadharFront")}
-                className={style.trashIcon}
+                className={styles.trashIcon}
               >
                 {Icons.Trash}
               </h2>
@@ -222,7 +224,7 @@ const ResidentDetail = () => {
         <Col span={6}>
           <h6>Upload Aadhar Card (Back Side)</h6>
           <div
-            className={style.document}
+            className={styles.document}
             onClick={() => aadharBackRef.current?.click()}
           >
             <div>
@@ -234,23 +236,26 @@ const ResidentDetail = () => {
               />
               <h4>{Icons.AddImage}</h4>
             </div>
-            <h6 className={style.h6}>
-              Upload a file <span className={style.span}>or drag and drop</span>
+            <h6 className={styles.h6}>
+              Upload a file{" "}
+              <span className={styles.span}>or drag and drop</span>
             </h6>
-            <p className={style.p}>PNG, JPG, GIF up to 10MB</p>
+            <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
           {uploadedFiles.aadharBack && (
-            <div className={style.uploadDocument}>
+            <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
                   <h6>{uploadedFiles.aadharBack.name}</h6>
-                  <h6 className={style.p}>{uploadedFiles.aadharBack.size} MB</h6>
+                  <h6 className={styles.p}>
+                    {uploadedFiles.aadharBack.size} MB
+                  </h6>
                 </div>
               </div>
               <h2
                 onClick={() => handleFileRemove("aadharBack")}
-                className={style.trashIcon}
+                className={styles.trashIcon}
               >
                 {Icons.Trash}
               </h2>
@@ -262,7 +267,7 @@ const ResidentDetail = () => {
         <Col span={6}>
           <h6>Address Proof (Vera Bill OR Light Bill)</h6>
           <div
-            className={style.document}
+            className={styles.document}
             onClick={() => addressProofRef.current?.click()}
           >
             <div>
@@ -274,23 +279,26 @@ const ResidentDetail = () => {
               />
               <h4>{Icons.AddImage}</h4>
             </div>
-            <h6 className={style.h6}>
-              Upload a file <span className={style.span}>or drag and drop</span>
+            <h6 className={styles.h6}>
+              Upload a file{" "}
+              <span className={styles.span}>or drag and drop</span>
             </h6>
-            <p className={style.p}>PNG, JPG, GIF up to 10MB</p>
+            <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
           {uploadedFiles.addressProof && (
-            <div className={style.uploadDocument}>
+            <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
                   <h6>{uploadedFiles.addressProof.name}</h6>
-                  <h6 className={style.p}>{uploadedFiles.addressProof.size} MB</h6>
+                  <h6 className={styles.p}>
+                    {uploadedFiles.addressProof.size} MB
+                  </h6>
                 </div>
               </div>
               <h2
                 onClick={() => handleFileRemove("addressProof")}
-                className={style.trashIcon}
+                className={styles.trashIcon}
               >
                 {Icons.Trash}
               </h2>
@@ -302,7 +310,7 @@ const ResidentDetail = () => {
         <Col span={6}>
           <h6>Rent Agreement</h6>
           <div
-            className={style.document}
+            className={styles.document}
             onClick={() => rentAgreementRef.current?.click()}
           >
             <div>
@@ -314,23 +322,26 @@ const ResidentDetail = () => {
               />
               <h4>{Icons.AddImage}</h4>
             </div>
-            <h6 className={style.h6}>
-              Upload a file <span className={style.span}>or drag and drop</span>
+            <h6 className={styles.h6}>
+              Upload a file{" "}
+              <span className={styles.span}>or drag and drop</span>
             </h6>
-            <p className={style.p}>PNG, JPG, GIF up to 10MB</p>
+            <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
           {uploadedFiles.rentAgreement && (
-            <div className={style.uploadDocument}>
+            <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
                   <h6>{uploadedFiles.rentAgreement.name}</h6>
-                  <h6 className={style.p}>{uploadedFiles.rentAgreement.size} MB</h6>
+                  <h6 className={styles.p}>
+                    {uploadedFiles.rentAgreement.size} MB
+                  </h6>
                 </div>
               </div>
               <h2
                 onClick={() => handleFileRemove("rentAgreement")}
-                className={style.trashIcon}
+                className={styles.trashIcon}
               >
                 {Icons.Trash}
               </h2>
@@ -338,7 +349,6 @@ const ResidentDetail = () => {
           )}
         </Col>
       </Row>
-
     </DSCard>
   );
 };

@@ -4,7 +4,7 @@ import { DSButton, DSModal, DSCheckbox, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import style from "./ResidentManagement.module.css";
+import styles from "./ResidentManagement.module.css";
 import { useNavigate } from "react-router-dom";
 
 export const ResidentManagement = () => {
@@ -131,7 +131,7 @@ export const ResidentManagement = () => {
     <>
       <DSCard
         title="Resident Tenant and Owner Details"
-        className={style.residentManagementScreen}
+        className={styles.residentManagementScreen}
         button
         headerContent={
           <>
@@ -145,7 +145,7 @@ export const ResidentManagement = () => {
           </>
         }
       >
-        <div className={style.rmTable}>
+        <div className={styles.rmTable}>
           <DSTable
             tableColumn={columns}
             pagination={false}

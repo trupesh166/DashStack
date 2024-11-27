@@ -1,8 +1,8 @@
-import React from 'react'
-import style from "./CreateComplaintModal.module.css"
-import { DSInput, DSModal, DSRadioButton } from '../../../..'
-import TextArea from 'antd/es/input/TextArea'
-import { Flex } from 'antd'
+import React from "react";
+import styles from "./CreateComplaintModal.module.css";
+import { DSInput, DSModal, DSRadioButton } from "../../../..";
+import TextArea from "antd/es/input/TextArea";
+import { Flex } from "antd";
 
 export const CreateComplaintModal = ({
   open,
@@ -11,8 +11,7 @@ export const CreateComplaintModal = ({
   handleClose,
 }) => {
   return (
-    <div className={style.createComplaint}>
-
+    <div className={styles.createComplaint}>
       <DSModal
         title="Create Complaint"
         open={open}
@@ -24,7 +23,6 @@ export const CreateComplaintModal = ({
         handleContent="Create"
         disabledButton={false}
       >
-
         <DSInput
           className="mb-4"
           label={"Complainer Name"}
@@ -38,9 +36,9 @@ export const CreateComplaintModal = ({
         />
 
         <div className="mb-4">
-          <h5 className={style.h5}>Description</h5>
+          <h5 className={styles.h5}>Description</h5>
           <TextArea
-            placeholder='Enter Description'
+            placeholder="Enter Description"
             autoSize={{
               minRows: 1.5,
               maxRows: 6,
@@ -48,17 +46,9 @@ export const CreateComplaintModal = ({
           />
         </div>
 
-        <Flex justify='space-between' className='mb-4'>
-          <DSInput
-            block
-            label={"Wing"}
-            placeholder={"Enter Wing"}
-          />
-          <DSInput
-            block
-            label={"Unit"}
-            placeholder={"Enter Unit"}
-          />
+        <Flex justify="space-between" className="mb-4">
+          <DSInput block label={"Wing"} placeholder={"Enter Wing"} />
+          <DSInput block label={"Unit"} placeholder={"Enter Unit"} />
         </Flex>
 
         <DSRadioButton
@@ -85,8 +75,7 @@ export const CreateComplaintModal = ({
           optionType={"button"}
           type={"radio"}
         />
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

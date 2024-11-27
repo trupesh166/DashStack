@@ -1,16 +1,15 @@
-import React, { useRef } from 'react'
-import style from "./AddSecurityModal.module.css"
-import { DSDatePicker, DSInput, DSModal, DSSelect } from '../../../..'
-import Icons from '../../../../../constants/Icons'
-import { Avatar, Flex } from 'antd'
+import React, { useRef } from "react";
+import styles from "./AddSecurityModal.module.css";
+import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
+import Icons from "../../../../../constants/Icons";
+import { Avatar, Flex } from "antd";
 
 export const AddSecurityModal = ({
   open,
   handleCancel,
   handleClose,
-  handleOk
+  handleOk,
 }) => {
-
   const fileInputRef = useRef(null);
 
   const handleUploadClick = () => {
@@ -18,7 +17,7 @@ export const AddSecurityModal = ({
   };
 
   return (
-    <div className={style.addSecurityModal}>
+    <div className={styles.addSecurityModal}>
       <DSModal
         title={"Add Security"}
         open={open}
@@ -30,11 +29,20 @@ export const AddSecurityModal = ({
         handleContent={"Create"}
         disabledButton={false}
       >
-
-        <Flex align='center' gap={"middle"} className='mb-4 cursor-pointer' onClick={handleUploadClick}>
-          <input type="file" className='d-none' ref={fileInputRef} accept='image/*' />
+        <Flex
+          align="center"
+          gap={"middle"}
+          className="mb-4 cursor-pointer"
+          onClick={handleUploadClick}
+        >
+          <input
+            type="file"
+            className="d-none"
+            ref={fileInputRef}
+            accept="image/*"
+          />
           <Avatar size={64} icon={Icons.User} />
-          <h5 className={style.h5}>Add Photo</h5>
+          <h5 className={styles.h5}>Add Photo</h5>
         </Flex>
 
         <DSInput
@@ -43,13 +51,14 @@ export const AddSecurityModal = ({
           placeholder={"Enter Full Name"}
         />
 
-        <DSInput
-          className="mb-4"
-          label={"Phone Number"}
-          placeholder={"+91"}
-        />
+        <DSInput className="mb-4" label={"Phone Number"} placeholder={"+91"} />
 
-        <Flex gap={"middle"} justify='space-between' align='center' className="mb-4">
+        <Flex
+          gap={"middle"}
+          justify="space-between"
+          align="center"
+          className="mb-4"
+        >
           <DSSelect
             block={true}
             label={"Gender"}
@@ -72,12 +81,16 @@ export const AddSecurityModal = ({
           />
         </Flex>
 
-        <Flex justify='space-between' align='center' className="mb-4">
+        <Flex justify="space-between" align="center" className="mb-4">
           <DSDatePicker
             block={true}
             label={"Shift Date"}
             placeholder={"Select Date"}
-            style={{ height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+            style={{
+              height: "45px",
+              borderRadius: "10px",
+              padding: "0px 10px",
+            }}
           />
           <DSInput
             block={true}
@@ -92,16 +105,17 @@ export const AddSecurityModal = ({
             ref={fileInputRef}
             className="d-none"
             label={"Upload Bill"}
-            type='file'
+            type="file"
           />
-          <div className={style.uploadImage} onClick={handleUploadClick}>
+          <div className={styles.uploadImage} onClick={handleUploadClick}>
             {Icons.AddImage}
-            <h6 className='fw-bold'>Upload a file <span className='fw-bold'>or drag and drop</span></h6>
+            <h6 className="fw-bold">
+              Upload a file <span className="fw-bold">or drag and drop</span>
+            </h6>
             <p>PNG, JPG, GIF up to 10MB</p>
           </div>
         </div>
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

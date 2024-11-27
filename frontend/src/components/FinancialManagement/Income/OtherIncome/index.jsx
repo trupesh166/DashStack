@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
-import style from "./OtherIncome.module.css"
-import { CreateOtherIncomeModal, DSButton, DSCard } from '../../..'
-import { OtherIncomeCard } from '../../../DSCards/OtherIncome'
-import Icons from '../../../../constants/Icons'
-import { Flex } from 'antd'
+import React, { useState } from "react";
+import { CreateOtherIncomeModal, DSButton, DSCard } from "../../..";
+import { OtherIncomeCard } from "../../../DSCards/OtherIncome";
+import { Flex } from "antd";
+import styles from "./OtherIncome.module.css";
 
 export const OtherIncome = () => {
-
-  const [createOtherIncome, setCreateOtherIncome] = useState(false)
+  const [createOtherIncome, setCreateOtherIncome] = useState(false);
 
   return (
     <>
@@ -22,7 +20,6 @@ export const OtherIncome = () => {
           </DSButton>
         }
       >
-
         <Flex gap={"small"}>
           <OtherIncomeCard
             title={"Ganesh chaturthi"}
@@ -30,7 +27,9 @@ export const OtherIncome = () => {
             totalMember={12}
             date={"10/10/2000"}
             dueDate={"10/10/2000"}
-            description={"The celebration of Navratri involves the installation of clay idols of Durga in Resident."}
+            description={
+              "The celebration of Navratri involves the installation of clay idols of Durga in Resident."
+            }
           />
           <OtherIncomeCard
             title={"Navratri"}
@@ -38,7 +37,9 @@ export const OtherIncome = () => {
             totalMember={12}
             date={"10/10/2000"}
             dueDate={"10/10/2000"}
-            description={"The celebration of Navratri involves the installation of clay idols of Durga in Resident."}
+            description={
+              "The celebration of Navratri involves the installation of clay idols of Durga in Resident."
+            }
           />
           <OtherIncomeCard
             title={"Diwali"}
@@ -46,10 +47,11 @@ export const OtherIncome = () => {
             totalMember={12}
             date={"10/10/2000"}
             dueDate={"10/10/2000"}
-            description={"The celebration of Navratri involves the installation of clay idols of Durga in Resident."}
+            description={
+              "The celebration of Navratri involves the installation of clay idols of Durga in Resident."
+            }
           />
         </Flex>
-
       </DSCard>
 
       {/* Create Other Income Modal */}
@@ -59,7 +61,6 @@ export const OtherIncome = () => {
         handleClose={() => setCreateOtherIncome(false)}
         handleOk={() => setCreateOtherIncome(false)}
       />
-
     </>
-  )
-}
+  );
+};

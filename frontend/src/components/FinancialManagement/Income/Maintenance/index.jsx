@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
-import style from "./Maintenance.module.css"
-import { DSButton, DSCard, DSTable, ViewMaintenanceDetailsModal } from '../../..'
-import { Avatar, Tag } from 'antd';
-import Icons from '../../../../constants/Icons';
+import React, { useState } from "react";
+import styles from "./Maintenance.module.css";
+import {
+  DSButton,
+  DSCard,
+  DSTable,
+  ViewMaintenanceDetailsModal,
+} from "../../..";
+import { Avatar, Tag } from "antd";
+import Icons from "../../../../constants/Icons";
 
 const data = [
   {
@@ -36,8 +41,7 @@ const data = [
 ];
 
 export const Maintenance = () => {
-
-  const [viewMaintenanceDetails, setViewMaintenanceDetails] = useState(false)
+  const [viewMaintenanceDetails, setViewMaintenanceDetails] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   const columns = [
@@ -56,7 +60,7 @@ export const Maintenance = () => {
       title: "Unit Number",
       key: "unitNumber",
       render: (record) => (
-        <div className='d-flex align-items-center justify-content-center gap-4'>
+        <div className="d-flex align-items-center justify-content-center gap-4">
           <Avatar>{record.wingName}</Avatar>
           {record.unitNumber}
         </div>
@@ -75,7 +79,7 @@ export const Maintenance = () => {
       key: "residentStatus",
       render: (residentStatus) => (
         <Tag
-          className={style.button}
+          className={styles.button}
           bordered={false}
           color={residentStatus === "Owner" ? "blue" : "pink"}
           icon={residentStatus === "Owner" ? Icons.TagUser : Icons.User}
@@ -95,7 +99,11 @@ export const Maintenance = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      render: (amount) => <div style={{ color: "var(--clr-success)" }}>{Icons.Rupee} {amount}</div>,
+      render: (amount) => (
+        <div style={{ color: "var(--clr-success)" }}>
+          {Icons.Rupee} {amount}
+        </div>
+      ),
       align: "center",
     },
     {
@@ -104,7 +112,7 @@ export const Maintenance = () => {
       key: "penaltyAmount",
       render: (penaltyAmount) => (
         <Tag
-          className={style.button}
+          className={styles.button}
           bordered={false}
           color={penaltyAmount ? "var(--clr-danger)" : "var(--clr-silver)"}
           icon={penaltyAmount ? Icons.Rupee : ""}
@@ -120,7 +128,7 @@ export const Maintenance = () => {
       key: "paymentStatus",
       render: (paymentStatus) => (
         <Tag
-          className={style.button}
+          className={styles.button}
           bordered={false}
           color={paymentStatus === "Panding" ? "warning" : "success"}
           icon={paymentStatus === "Panding" ? Icons.Timer : Icons.Verify}
@@ -136,7 +144,7 @@ export const Maintenance = () => {
       key: "paymentMethod",
       render: (paymentMethod) => (
         <Tag
-          className={style.button}
+          className={styles.button}
           bordered={false}
           color={paymentMethod === "Online" ? "blue" : "default"}
           icon={paymentMethod === "Online" ? Icons.Wallet : Icons.Money}
@@ -152,8 +160,8 @@ export const Maintenance = () => {
       render: (_, record) => (
         <DSButton
           onClick={() => {
-            setSelectedRecord(record)
-            setViewMaintenanceDetails(true)
+            setSelectedRecord(record);
+            setViewMaintenanceDetails(true);
           }}
           type="primary"
           size="small"
@@ -167,9 +175,7 @@ export const Maintenance = () => {
 
   return (
     <>
-      <DSCard
-        title={"Maintenance  Details"}
-      >
+      <DSCard title={"Maintenance  Details"}>
         <DSTable
           dataSource={data}
           tableColumn={columns}
@@ -181,18 +187,15 @@ export const Maintenance = () => {
       </DSCard>
 
       {/* View  */}
-      {
-        selectedRecord && (
-          <ViewMaintenanceDetailsModal
-            open={viewMaintenanceDetails}
-            handleCancel={() => setViewMaintenanceDetails(false)}
-            handleOk={() => setViewMaintenanceDetails(false)}
-            handleClose={() => setViewMaintenanceDetails(false)}
-            record={selectedRecord}
-          />
-        )
-      }
-
+      {selectedRecord && (
+        <ViewMaintenanceDetailsModal
+          open={viewMaintenanceDetails}
+          handleCancel={() => setViewMaintenanceDetails(false)}
+          handleOk={() => setViewMaintenanceDetails(false)}
+          handleClose={() => setViewMaintenanceDetails(false)}
+          record={selectedRecord}
+        />
+      )}
     </>
-  )
-}
+  );
+};

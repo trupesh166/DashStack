@@ -1,7 +1,7 @@
-import React from 'react'
-import { DSDatePicker, DSInput, DSModal, DSSelect } from '../../../..'
-import TextArea from 'antd/es/input/TextArea'
-import style from "./EditFacilityModal.module.css"
+import React from "react";
+import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
+import TextArea from "antd/es/input/TextArea";
+import styles from "./EditFacilityModal.module.css";
 
 export const EditFacilityModal = ({
   open,
@@ -10,7 +10,7 @@ export const EditFacilityModal = ({
   handleClose,
 }) => {
   return (
-    <div className={style.editFacilityModal}>
+    <div className={styles.editFacilityModal}>
       <DSModal
         title="Edit Facility"
         open={open}
@@ -22,18 +22,14 @@ export const EditFacilityModal = ({
         handleContent="Save"
         disabledButton={false}
       >
-
         <div className="mb-4">
-          <DSInput
-            label={" Facility Name"}
-            placeholder={"Enter Name"}
-          />
+          <DSInput label={" Facility Name"} placeholder={"Enter Name"} />
         </div>
 
         <div className="mb-4">
-          <h5 className={style.h5}>Description</h5>
+          <h5 className={styles.h5}>Description</h5>
           <TextArea
-            placeholder='Enter Description'
+            placeholder="Enter Description"
             autoSize={{
               minRows: 2,
               maxRows: 6,
@@ -47,7 +43,12 @@ export const EditFacilityModal = ({
             type="Date"
             label={"Schedule Service Date"}
             placeholder={"Select Schedule Service Date"}
-            style={{ width: "100%", height: "45px", borderRadius: "10px", padding: "0px 10px" }}
+            style={{
+              width: "100%",
+              height: "45px",
+              borderRadius: "10px",
+              padding: "0px 10px",
+            }}
           />
         </div>
 
@@ -65,8 +66,7 @@ export const EditFacilityModal = ({
             ]}
           />
         </div>
-
       </DSModal>
     </div>
-  )
-}
+  );
+};

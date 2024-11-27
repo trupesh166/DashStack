@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import Icons from "@/constants/Icons";
-import style from "./EventCard.module.css";
+import styles from "./EventCard.module.css";
 
 export const EventCard = ({
   title,
@@ -12,7 +12,7 @@ export const EventCard = ({
   extra,
 }) => {
   return (
-    <Card title={title} extra={extra} className={style.card}>
+    <Card title={title} extra={extra} className={styles.card}>
       <div className={"card-grid"}>
         <h6>Amount Per Member</h6>
         <h6 className="lh-1 fw-semibold">

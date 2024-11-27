@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./FamilyDetail.module.css";
+import styles from "./FamilyDetail.module.css";
 import { DSCard, DSInput, DSSelect } from "../..";
 import { Col, Row } from "antd";
 

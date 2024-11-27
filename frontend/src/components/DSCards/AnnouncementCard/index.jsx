@@ -1,24 +1,21 @@
 import { DSEventsCard } from "@/components/";
 import styles from "../EventCard/EventCard.module.css";
 
-export const AnnouncementCard = ({ title, description, date, time }) => {
-  const items = [
-    {
-      label: "1st menu item",
-      key: "1",
-    },
-    {
-      label: "2nd menu item",
-      key: "2",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
-
+export const AnnouncementCard = ({
+  title,
+  description,
+  date,
+  time,
+  items,
+  onAction,
+}) => {
   return (
-    <DSEventsCard title={title} items={items} className={styles.card}>
+    <DSEventsCard
+      title={title}
+      items={items}
+      className={styles.card}
+      onAction={onAction}
+    >
       <div className="card-grid">
         <h6>Announcement Date</h6>
         <h6 className="fw-medium lh-base">{date}</h6>

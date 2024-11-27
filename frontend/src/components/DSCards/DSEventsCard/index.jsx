@@ -3,7 +3,13 @@ import { DSButton } from "../..";
 import Icons from "@/constants/Icons";
 import styles from "./DSEventsCard.module.css";
 
-export const DSEventsCard = ({ children, title, items, className }) => {
+export const DSEventsCard = ({
+  children,
+  title,
+  items,
+  onAction,
+  className,
+}) => {
   return (
     <Card
       title={title}
@@ -12,6 +18,7 @@ export const DSEventsCard = ({ children, title, items, className }) => {
           <Dropdown
             menu={{
               items,
+              onClick: ({ key }) => onAction?.(key),
             }}
           >
             <DSButton

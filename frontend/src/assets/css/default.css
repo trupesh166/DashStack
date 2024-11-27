@@ -308,3 +308,8 @@ img {
   background: var(--clr-dark);
   border-radius: 10px;
 } */
+
+.announcement-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

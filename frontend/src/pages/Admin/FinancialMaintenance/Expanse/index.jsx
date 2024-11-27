@@ -79,26 +79,28 @@ export const Expense = () => {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (record) => (
         <Space size="middle">
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Edit}
             className="clr-success"
-            onClick={() => setEditExpensesModalOpen(true)}
+            onClick={() => handleEditClick(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
             className="clr-cult"
+            onClick={() => handleViewClick(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
             className="clr-danger"
+            onClick={() => setDeleteComplaint(true)}
           />
         </Space>
       ),
@@ -109,6 +111,17 @@ export const Expense = () => {
   const [editExpensesModalOpen, setEditExpensesModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+
+  const handleEditClick = (expense) => {
+    setSelectedExpense(expense);
+    setEditExpensesModalOpen(true);
+  };
+
+  const handleViewClick = (expense) => {
+    setSelectedExpense(expense);
+    setViewModalOpen(true);
+  };
 
   return (
     <div>
@@ -145,6 +158,7 @@ export const Expense = () => {
           handleOk={() => setEditExpensesModalOpen(false)}
           handleCancel={() => setEditExpensesModalOpen(false)}
           handleClose={() => setEditExpensesModalOpen(false)}
+          expense={selectedExpense}
         />
 
         {/* View Expense Modal */}
@@ -153,6 +167,7 @@ export const Expense = () => {
           handleOk={() => setViewModalOpen(false)}
           handleCancel={() => setViewModalOpen(false)}
           handleClose={() => setViewModalOpen(false)}
+          expense={selectedExpense}
         />
 
         {/* Remove Expense Modal */}

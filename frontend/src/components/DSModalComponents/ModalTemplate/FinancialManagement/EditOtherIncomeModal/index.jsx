@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from "./EditOtherIncomeModal.module.css";
 import { DSDatePicker, DSInput, DSModal } from '../../../..';
 import Icons from '../../../../../constants/Icons';
+import dayjs from "dayjs"
 
 export const EditOtherIncomeModal = ({
   open,
@@ -71,7 +72,7 @@ export const EditOtherIncomeModal = ({
               type="date"
               label={"Date"}
               placeholder={"Select Date"}
-              value={formData.date}
+              value={formData.date ? dayjs(formData.date) : null}
               onChange={(value) => handleInputChange('date', value ? new Date(value) : null)}
               style={{
                 width: "100%",
@@ -86,7 +87,7 @@ export const EditOtherIncomeModal = ({
               type="date"
               label={"Due Date"}
               placeholder={"Select Due Date"}
-              value={formData.dueDate}
+              value={formData.dueDate ? dayjs(formData.dueDate) : null}
               onChange={(value) => handleInputChange('dueDate', value ? new Date(value) : null)}
               style={{
                 width: "100%",

@@ -1,6 +1,9 @@
+import { Card, Dropdown } from "antd";
+import { DSButton } from "../..";
+import Icons from "@/constants/Icons";
 import styles from "./DSEventsCard.module.css";
 
-export const DSEventsCard = ({ children }) => {
+export const DSEventsCard = ({ children, title, items, className }) => {
   return (
     <Card
       title={title}
@@ -10,17 +13,17 @@ export const DSEventsCard = ({ children }) => {
             menu={{
               items,
             }}
-            trigger={["contextMenu"]}
           >
             <DSButton
               size={"small"}
               variant={"default"}
               icon={Icons.Ellipsis}
+              className={styles.btn}
             />
           </Dropdown>
         </>
       }
-      className={styles.card}
+      className={className}
     >
       {children}
     </Card>

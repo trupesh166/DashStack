@@ -1,7 +1,5 @@
-import { Card, Dropdown } from "antd";
+import { DSEventsCard } from "@/components/";
 import styles from "../EventCard/EventCard.module.css";
-import Icons from "../../../constants/Icons";
-import { DSButton } from "../..";
 
 export const AnnouncementCard = ({ title, description, date, time }) => {
   const items = [
@@ -18,27 +16,9 @@ export const AnnouncementCard = ({ title, description, date, time }) => {
       key: "3",
     },
   ];
+
   return (
-    <Card
-      title={title}
-      extra={
-        <>
-          <Dropdown
-            menu={{
-              items,
-            }}
-            trigger={["contextMenu"]}
-          >
-            <DSButton
-              size={"small"}
-              variant={"default"}
-              icon={Icons.Ellipsis}
-            />
-          </Dropdown>
-        </>
-      }
-      className={styles.card}
-    >
+    <DSEventsCard title={title} items={items} className={styles.card}>
       <div className="card-grid">
         <h6>Announcement Date</h6>
         <h6 className="fw-medium lh-base">{date}</h6>
@@ -51,6 +31,6 @@ export const AnnouncementCard = ({ title, description, date, time }) => {
         <h6>Description</h6>
         <span className="fw-medium lh-base h6">{description}</span>
       </div>
-    </Card>
+    </DSEventsCard>
   );
 };

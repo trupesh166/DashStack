@@ -129,7 +129,7 @@ export const ResidentManagement = () => {
     },
   ];
 
-  const [viewDetailsModal, setViewDetailsModal] = useState(true)
+  const [viewDetailsModal, setViewDetailsModal] = useState(false)
 
   return (
     <>

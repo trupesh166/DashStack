@@ -9,8 +9,9 @@ const ResidentDetail = () => {
   const aadharBackRef = useRef(null);
   const addressProofRef = useRef(null);
   const rentAgreementRef = useRef(null);
-  const fileInputRef = useRef(null);
+  const userPhotoRef = useRef(null);
 
+  const [userPhoto, setUserPhoto] = useState(null);
   const [residentType, setResidentType] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState({
     aadharFront: null,
@@ -26,7 +27,7 @@ const ResidentDetail = () => {
         ...prevState,
         [fileType]: {
           name: file.name,
-          size: (file.size / (1024 * 1024)).toFixed(2), // File size in MB
+          size: (file.size / (1024 * 1024)).toFixed(2),
         },
       }));
     }
@@ -39,16 +40,32 @@ const ResidentDetail = () => {
     }));
   };
 
+  const handleUserPhotoChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setUserPhoto(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <DSCard>
       <Row className="mb-5">
         <Col span={3}>
           <div
             className="d-flex flex-column align-items-center gap-3 cursor-pointer"
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => userPhotoRef.current?.click()}
           >
-            <input type="file" className="d-none" ref={fileInputRef} />
-            <Avatar size={100} icon={Icons.User} />
+            <input
+              type="file"
+              className="d-none"
+              ref={userPhotoRef}
+              onChange={handleUserPhotoChange}
+            />
+            <Avatar
+              size={100}
+              icon={userPhoto ? null : Icons.User}
+              src={userPhoto}
+            />
             <h5>Add Photo</h5>
           </div>
         </Col>

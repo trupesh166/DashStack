@@ -26,8 +26,8 @@ const data = [
   },
   {
     key: "2",
-    avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-    name: "Brooklyn Simmons",
+    avatar: "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
+    name: "Simmons Brooklyn",
     wingName: "B",
     unitNumber: 1010,
     date: "10/02/2024",

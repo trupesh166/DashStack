@@ -105,7 +105,7 @@ export const ImportantNumbersCard = () => {
                 size={"small"}
                 className="clr-danger"
               />
-              <DSButton icon={Icons.Edit} size={"small"} className="clr-cult" />
+              <DSButton icon={Icons.Edit} size={"small"} className="clr-cult" onClick={() => setEditImportantNumber(true)} />
             </div>
           </div>
         ))}
@@ -131,6 +131,8 @@ export const ImportantNumbersCard = () => {
         handleCancel={() => handleClose()}
         handleClose={() => handleClose()}
         handleOk={() => setEditImportantNumber(false)}
+        formValues={formValues}
+        handleInputChange={handleInputChange}
       />
 
       {/* Remove Important Number Modal */}

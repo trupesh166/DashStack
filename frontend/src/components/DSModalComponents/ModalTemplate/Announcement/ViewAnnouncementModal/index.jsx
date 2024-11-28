@@ -8,11 +8,16 @@ export const ViewAnnouncementModal = ({
   handleCancel,
   handleClose,
   handleOk,
+  title,
+  Description,
+  date,
+  time,
+  ModalTitle,
 }) => {
   return (
     <div>
       <DSModal
-        title={"View Announcement"}
+        title={ModalTitle}
         open={open}
         closeIcon
         handleOk={handleOk}
@@ -25,7 +30,7 @@ export const ViewAnnouncementModal = ({
             <h5 className={styles.silver}>Title</h5>
           </Col>
           <Col>
-            <h5 className={styles.dark}>Physical Security</h5>
+            <h5 className={styles.dark}>{title}</h5>
           </Col>
         </Row>
 
@@ -34,21 +39,18 @@ export const ViewAnnouncementModal = ({
             <h5 className={styles.silver}>Description</h5>
           </Col>
           <Col>
-            <h5 className={styles.dark}>
-              A visual representation of your spending categories visual
-              representation.{" "}
-            </h5>
+            <h5 className={styles.dark}>{Description}</h5>
           </Col>
         </Row>
 
         <Row className="mb-4">
           <Col span={12}>
             <h5 className={styles.silver}>Date</h5>
-            <h5 className={styles.dark}>01/02/2024</h5>
+            <h5 className={styles.dark}>{date}</h5>
           </Col>
           <Col span={12}>
             <h5 className={styles.silver}>Time</h5>
-            <h5 className={styles.dark}>3:45 PM</h5>
+            <h5 className={styles.dark}>{time}</h5>
           </Col>
         </Row>
       </DSModal>

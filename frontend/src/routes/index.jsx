@@ -72,12 +72,12 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "resident-detail",
-                  element: <Resident />
+                  element: <Resident />,
                 },
                 {
                   path: "financial",
                   children: [
-                    {
+                     {
                       path: "income",
                       children: [
                         {
@@ -86,7 +86,7 @@ const DashStackRoute = createBrowserRouter(
                         },
                         {
                           path: "event-member-list",
-                          element: <EventMemberList />,
+                          element: <Income />,
                         },
                       ],
                     },

@@ -15,9 +15,21 @@ class SocietyHandlerController {
       if (password !== confirmPassword) return res.status(400).json({message : "Password do not match"})
       const encryptedPass = bcrypt.hashSync(password, 5)
       if (!encryptedPass) return res.status(500).json({message : "Password encrypt failed."})
+
+      //user already exist
+      const existingUser = await userModel.model.findOne({ $or: [{email} , {phoneNumber}] });
+      if (existingUser) return res.status(400).json({message : "This user with the email or phone number already exists"})
+
       const userName = `${firstName} ${lastName}`
+      
       const user = await userModel.model.create({ fullName: userName, email, phoneNumber, password: encryptedPass, role: "Chairman" })
-      if (!user) return res.status(500).json({message : "Failed to  create User. Try Again"})
+      if (!user) return res.status(500).json({message : "Failed to create User. Try Again"})
+        
+      //society assign alredy exists
+      const existingSociety = await societyHandlerModel.model.findOne({ selectSociety});
+      console.log(selectSociety);
+      
+      if (existingSociety) return res.status(400).json({message : "This user is already assigned to selected society"})
       delete req.body.password
       delete req.body.confirmPassword
       const data = {

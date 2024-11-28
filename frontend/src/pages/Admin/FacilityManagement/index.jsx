@@ -1,3 +1,4 @@
+import { useState } from "react";
 import clsx from "clsx";
 import {
   CreateFacilityModal,
@@ -6,11 +7,36 @@ import {
   FacilityCard,
 } from "@/components";
 import styles from "./FacilityManagement.module.css";
-import { useState } from "react";
 
 export const FacilityManagement = () => {
   const [createFacilityModal, setCreateFacilityModal] = useState(false);
 
+  const facilities = [
+    {
+      title: "Parking Facilities",
+      date: "01/07/2024",
+      description:
+        "The celebration of Navratri involves the installation of clay idols of Durga in Resident.",
+    },
+    {
+      title: "Community Center",
+      date: "01/07/2024",
+      description:
+        "The celebration of Navratri involves the installation of clay idols of Durga in Resident.",
+    },
+    {
+      title: "Swimming Pool",
+      date: "01/07/2024",
+      description:
+        "The celebration of Navratri involves the installation of clay idols of Durga in Resident.",
+    },
+    {
+      title: "Parks and Green Spaces",
+      date: "01/07/2024",
+      description:
+        "The celebration of Navratri involves the installation of clay idols of Durga in Resident.",
+    },
+  ];
   return (
     <div>
       <DSCard
@@ -25,26 +51,15 @@ export const FacilityManagement = () => {
           </DSButton>
         }
       >
-        <FacilityCard
-          title="Parking Facilities"
-          date="01/07/2024"
-          description="The celebration of Navratri involves the installation of clay idols of Durga in Resident."
-        />
-        <FacilityCard
-          title="Community Center"
-          date="01/07/2024"
-          description="The celebration of Navratri involves the installation of clay idols of Durga in Resident."
-        />
-        <FacilityCard
-          title="Swimming Pool"
-          date="01/07/2024"
-          description="The celebration of Navratri involves the installation of clay idols of Durga in Resident."
-        />
-        <FacilityCard
-          title="Parks and Green Spaces"
-          date="01/07/2024"
-          description="The celebration of Navratri involves the installation of clay idols of Durga in Resident."
-        />
+        {facilities?.map((facility, index) => (
+          <FacilityCard
+            key={index}
+            items={[{ label: "Edit", key: "edit" }]}
+            title={facility.title}
+            date={facility.date}
+            description={facility.description}
+          />
+        ))}
       </DSCard>
 
       {/* Create Facility Modal */}

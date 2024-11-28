@@ -7,8 +7,7 @@ class UserModel {
         email: { type: String, required: true, unique: true },
         phoneNumber: { type: Number, required: true, unique: true },
         password: { type: String, required: true },
-        role: { type: String, enum: ["Member", "Chairman", "Security"], required: true },
-        otp: { type: String },           // For storing OTP
+        role: { type: String, enum: ["Member", "Chairman", "Security"], required: true }, 
         otpExpires: { type: Date }  
       },
       { timestamps: true }

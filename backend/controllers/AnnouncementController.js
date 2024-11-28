@@ -6,6 +6,7 @@ class AnnouncementController {
     try {
       const { societyId, announcementTitle, announcementDescription, announcementDate, announcementTime } = req.body
       if (!societyId || !announcementTitle || !announcementDescription || !announcementDate || !announcementTime) throw httpErrors[400]
+
       const result = await announcementModel.model.create({ ...req.body })
       if (!result) throw httpErrors[500]
       return res.status(200).send({ message: httpSuccess })

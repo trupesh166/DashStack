@@ -2,24 +2,14 @@ import { Card } from "antd";
 import styles from "../EventCard/EventCard.module.css";
 import { DSEventsCard } from "@/components/";
 
-export const FacilityCard = ({ title, description, extra, date }) => {
-  const items = [
-    {
-      label: "1st menu item",
-      key: "1",
-    },
-    {
-      label: "2nd menu item",
-      key: "2",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
-
+export const FacilityCard = ({ title, description, items, date, onAction }) => {
   return (
-    <DSEventsCard title={title} items={items} className={styles.card}>
+    <DSEventsCard
+      title={title}
+      items={items}
+      className={styles.card}
+      onAction={onAction}
+    >
       <div className="card-grid">
         <h6>Upcoming Schedule Service Date</h6>
         <h6>{date}</h6>

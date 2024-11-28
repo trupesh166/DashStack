@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require("cors")
 const dotenv = require('dotenv')
+const session = require('express-session')
 const connection = require('./Config/db')
 const societyRouter = require('./routes/SocietyRouter')
 const societyHandlerRouter = require('./routes/SocietyHandlerRouter')
@@ -20,12 +21,18 @@ const expanseRouter = require('./routes/ExpanseRouter')
 const expanseNoteRouter = require('./routes/ExpanseNoteRouter')
 const announcementRouter = require('./routes/AnnouncementRouter')
 const visitorRouter = require('./routes/VisitorRouter')
-// const facilityRouter = require('./routes/facilityRouter')
+const facilityRouter = require('./routes/facilityRouter')
 
 dotenv.config()
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 
 connection()
 
@@ -47,7 +54,7 @@ app.use('/expanse', expanseRouter)
 app.use('/expanseNote', expanseNoteRouter)
 app.use('/announcement', announcementRouter)
 app.use('/visitor', visitorRouter)
-// app.use('/facility', facilityRouter)
+app.use('/facility', facilityRouter)
 
 
 app.post('/image-details', async (req, res) => {

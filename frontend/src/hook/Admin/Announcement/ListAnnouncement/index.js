@@ -9,7 +9,11 @@ export const useListAnnouncement = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
+        console.log(societyId);
+
         const response = await listAnnouncement(societyId);
+        console.log(response.data);
+
         setAnnouncements(response.data);
       } catch (err) {
         console.error("Failed to fetch announcements:", err);

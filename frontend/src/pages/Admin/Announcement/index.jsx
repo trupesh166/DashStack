@@ -9,14 +9,14 @@ import {
 } from "@/components";
 import { deleteAnnouncement } from "@/axiosApi/ApiHelper";
 import {
-  UseAddAnnouncement,
+  useAddAnnouncement,
   useViewAnnouncement,
   useListAnnouncement,
 } from "@/hook/Admin/Announcement/";
 import toast from "react-hot-toast";
 
 export const Announcement = () => {
-  const { addAnnouncement, setAddAnnouncement } = UseAddAnnouncement();
+  const { addAnnouncement, setAddAnnouncement } = useAddAnnouncement();
   const { viewAnnouncement, setViewAnnouncement, viewAnnouncementData } =
     useViewAnnouncement();
   const { announcements } = useListAnnouncement();
@@ -40,26 +40,26 @@ export const Announcement = () => {
     }
   };
 
-  const handleDeleteAnnouncement = async () => {
-    const announcementId = deleteAnnouncementState.data?._id;
+  // const handleDeleteAnnouncement = async () => {
+  //   const announcementId = deleteAnnouncementState.data?._id;
 
-    if (!announcementId) {
-      toast.error("Unable to find the announcement to delete.");
-      return;
-    }
+  //   if (!announcementId) {
+  //     toast.error("Unable to find the announcement to delete.");
+  //     return;
+  //   }
 
-    try {
-      await deleteAnnouncement(announcementId);
-      toast.success("Announcement deleted successfully.");
-      setAnnouncements((prev) =>
-        prev.filter((announcement) => announcement._id !== announcementId)
-      );
-      setDeleteAnnouncementState({ open: false, data: null });
-    } catch (error) {
-      console.error("Failed to delete announcement:", error);
-      toast.error("Failed to delete announcement.");
-    }
-  };
+  //   try {
+  //     await deleteAnnouncement(announcementId);
+  //     toast.success("Announcement deleted successfully.");
+  //     setAnnouncements((prev) =>
+  //       prev.filter((announcement) => announcement._id !== announcementId)
+  //     );
+  //     setDeleteAnnouncementState({ open: false, data: null });
+  //   } catch (error) {
+  //     console.error("Failed to delete announcement:", error);
+  //     toast.error("Failed to delete announcement.");
+  //   }
+  // };
 
   return (
     <>
@@ -114,7 +114,7 @@ export const Announcement = () => {
       />
 
       {/* Remove Announcement Modal */}
-      <DeleteModal
+      {/* <DeleteModal
         title="Delete Announcement?"
         isModalOpen={deleteAnnouncementState.open}
         handleClose={() =>
@@ -124,7 +124,7 @@ export const Announcement = () => {
         onCancel={() => setDeleteAnnouncementState({ open: false, data: null })}
       >
         Are you sure you want to delete this Announcement?
-      </DeleteModal>
+      </DeleteModal> */}
     </>
   );
 };

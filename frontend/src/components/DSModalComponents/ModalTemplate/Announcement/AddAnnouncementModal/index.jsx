@@ -11,10 +11,11 @@ export const AddAnnouncementModal = ({
   handleClose,
   handleOk,
 }) => {
-  const {  handleChange, handleSubmit, formData} = useAddAnnouncement(handleCancel)
- 
-  console.log(formData)
-  return (
+  const { handleChange, handleSubmit, formData } =
+    useAddAnnouncement(handleCancel);
+
+  // console.log(formData);
+
   return (
     <DSModal
       title={"Add Announcement"}

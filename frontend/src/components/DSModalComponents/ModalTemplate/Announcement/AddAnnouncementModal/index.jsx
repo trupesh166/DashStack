@@ -1,6 +1,9 @@
+import React, { useState } from "react";
+import styles from "./AddAnnouncementModal.module.css";
 import { DSDatePicker, DSInput, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
 import { Flex, TimePicker } from "antd";
+import { useAddAnnouncement } from "@/hook/Admin/Announcement/AddAnnouncement";
 
 export const AddAnnouncementModal = ({
   open,
@@ -8,6 +11,10 @@ export const AddAnnouncementModal = ({
   handleClose,
   handleOk,
 }) => {
+  const {  handleChange, handleSubmit, formData} = useAddAnnouncement(handleCancel)
+ 
+  console.log(formData)
+  return (
   return (
     <DSModal
       title={"Add Announcement"}

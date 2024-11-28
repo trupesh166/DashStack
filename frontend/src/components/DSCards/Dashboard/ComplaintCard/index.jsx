@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar, Flex } from "antd";
+import { Avatar, Flex, Space, Tag } from "antd";
 import clsx from "clsx";
 import Icons from "@/constants/Icons";
 import {
@@ -46,24 +46,13 @@ const tableColumn = [
     dataIndex: "priorityStatus",
     key: "priorityStatus",
     render: (priorityStatus) => (
-      <h5
-        className={styles.h5}
-        style={{
-          color: "#ffffff",
-          backgroundColor:
-            priorityStatus === "High"
-              ? "#E74C3C"
-              : priorityStatus === "Medium"
-              ? "#5678E9"
-              : priorityStatus === "Low"
-              ? "#39973D"
-              : "#FFFFFF",
-          borderRadius: "20px",
-          padding: "5px 15px",
-        }}
+      <Tag
+        className={styles.button}
+        color={priorityStatus === "Medium" ? "var(--clr-cult)" : priorityStatus === "Low" ? "var(--clr-success)" : "var(--clr-danger)"}
+        bordered={false}
       >
         {priorityStatus}
-      </h5>
+      </Tag>
     ),
   },
   {
@@ -71,43 +60,43 @@ const tableColumn = [
     dataIndex: "status",
     key: "status",
     render: (status) => (
-      <h5
-        className={styles.h5}
-        style={{
-          color:
-            status === "Pending"
-              ? "#FFC313"
-              : status === "Open"
-              ? "#5678E9"
-              : status === "Solve"
-              ? "#39973D"
-              : "#FFFFFF",
-          backgroundColor:
-            status === "Pending"
-              ? "#FFF9E7"
-              : status === "Open"
-              ? "#EEF1FD"
-              : status === "Solve"
-              ? "#EBF5EC"
-              : "#FFFFFF",
-          borderRadius: "20px",
-          padding: "5px 15px",
-        }}
+      <Tag
+        className={styles.button}
+        color={status === "Open" ? "blue" : status === "Pending" ? "warning" : "success"}
+        bordered={false}
       >
         {status}
-      </h5>
+      </Tag>
     ),
+    align: "center",
   },
   {
     title: <h6 className="fw-semibold text-center">Action</h6>,
     key: "Action",
     render: (_, { record }) => (
-      <Flex justify="space-evenly" align="center">
-        <DSButton size={"small"}>{Icons.Edit}</DSButton>
-        <DSButton size={"small"}>{Icons.EyeShow}</DSButton>
-        <DSButton size={"small"}>{Icons.Trash}</DSButton>
-      </Flex>
+      <Space size="small">
+
+        <DSButton
+          type="primary"
+          size="small"
+          icon={Icons.Edit}
+          className="clr-success"
+        />
+        <DSButton
+          type="primary"
+          size="small"
+          icon={Icons.EyeShow}
+          className="clr-cult"
+        />
+        <DSButton
+          type="primary"
+          size="small"
+          icon={Icons.Trash}
+          className="clr-primary"
+        />
+      </Space>
     ),
+    align: "center",
   },
 ];
 

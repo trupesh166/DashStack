@@ -77,7 +77,7 @@ const DashStackRoute = createBrowserRouter(
                 {
                   path: "financial",
                   children: [
-                     {
+                    {
                       path: "income",
                       children: [
                         {

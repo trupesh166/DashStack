@@ -114,15 +114,17 @@ export const getMaintenanceDetailsByMember = () =>
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
 
-// // Announcement Management
-// export const createAnnouncement = (data) =>
-//   request("post", "/announcement/create", data);
-// export const listAnnouncement = (societyId) =>
-//   request("get", `/announcement/list/${societyId}`);
-// export const updateAnnouncement = (id, data) =>
-//   request("put", `/announcement/update/${id}`, data);
-// export const deleteAnnouncement = (id) =>
-//   request("delete", `/announcement/delete/${id}`);
+// Announcement Management
+export const createAnnouncement = (data) =>
+  request("post", "/announcement/create", data);
+export const listAnnouncement = (societyId) =>
+  request("get", `/announcement/list/${societyId}`);
+export const ViewAnnouncement = (societyId) =>
+  request("get", `/announcement/listbyid/${societyId}`);
+export const updateAnnouncement = (id, data) =>
+  request("put", `/announcement/update/${id}`, data);
+export const deleteAnnouncement = (id) =>
+  request("delete", `/announcement/delete/${id}`);
 
 // // Security Guard Management
 // export const createGuard = (data) =>

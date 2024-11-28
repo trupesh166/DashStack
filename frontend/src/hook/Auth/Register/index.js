@@ -121,6 +121,7 @@ export const useRegister = () => {
         selectSociety: formData.selectSociety,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
+        zipCode:formData.zipCode
       };
 
       await register(apiRequestData);

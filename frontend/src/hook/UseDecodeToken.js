@@ -9,13 +9,13 @@ const UseDecodeToken = () => {
     const decodeToken = () => {
       let token;
 
-      if (localStorage.getItem("_token")) {
-        token = localStorage.getItem("_token");
-      } else if (sessionStorage.getItem("_token")) {
-        token = sessionStorage.getItem("_token");
+      if (localStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
+        token = localStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
+      } else if (sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
+        token = sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
       } else {
         const cookies = parseCookies();
-        token = cookies["_token"];
+        token = cookies[import.meta.env.VITE_TOKEN_NAME];
       }
 
       if (!token) {
@@ -39,8 +39,9 @@ const UseDecodeToken = () => {
   }, []);
 
   const societyId = decodedToken?.societyData?.selectSociety;
+  const token = decodedToken;
 
-  return { decodedToken, societyId };
+  return { token, societyId };
 };
 
 export default UseDecodeToken;

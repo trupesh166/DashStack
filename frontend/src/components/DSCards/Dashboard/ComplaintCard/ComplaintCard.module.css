@@ -28,6 +28,15 @@
   object-position: top;
 }
 
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
 .h5 {
   text-align: center;
   color: var(--clr-gray_2);

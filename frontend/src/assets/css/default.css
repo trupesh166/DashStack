@@ -312,4 +312,9 @@ img {
 .announcement-card-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+.word-break {
+  word-break: break-all;
 }

@@ -1,3 +1,3 @@
 export { useAddAnnouncement } from "./AddAnnouncement/";
-export { useViewAnnouncement } from "./ViewAnnouncement/";
 export { useListAnnouncement } from "./ListAnnouncement/";
+export { useDeleteAnnouncement } from "./DeleteAnnouncement/";

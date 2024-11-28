@@ -36,7 +36,7 @@ export const ViewMaintenanceDetailsModal = ({
           >
             <Avatar
               size={70}
-              src="https://plus.unsplash.com/premium_photo-1682096259050-361e2989706d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8eW91bmclMjBtYW58ZW58MHx8MHx8fDA%3D"
+              src={record.avatar}
               alt="userImage"
               className={styles.img}
             />

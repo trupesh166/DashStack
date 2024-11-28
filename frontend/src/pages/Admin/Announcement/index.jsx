@@ -1,68 +1,84 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import {
+  useAddAnnouncement,
+  useListAnnouncement,
+  useDeleteAnnouncement,
+} from "@/hook/Admin/Announcement";
 import {
   AddAnnouncementModal,
-  DeleteModal,
-  ViewAnnouncementModal,
   AnnouncementCard,
   DSButton,
   DSCard,
+  ViewAnnouncementModal,
+  DeleteModal,
+  DSHead,
 } from "@/components";
-import { deleteAnnouncement } from "@/axiosApi/ApiHelper";
-import {
-  useAddAnnouncement,
-  useViewAnnouncement,
-  useListAnnouncement,
-} from "@/hook/Admin/Announcement/";
-import toast from "react-hot-toast";
 
 export const Announcement = () => {
-  const { addAnnouncement, setAddAnnouncement } = useAddAnnouncement();
-  const { viewAnnouncement, setViewAnnouncement, viewAnnouncementData } =
-    useViewAnnouncement();
-  const { announcements } = useListAnnouncement();
+  const { submitAnnouncement } = useAddAnnouncement();
+  const { announcements, refetchAnnouncements } = useListAnnouncement();
+  const {
+    announcementDelete,
+    deleteAnnouncementData,
+    setDeleteAnnouncementData,
+    showDeleteModal,
+    setShowDeleteModal,
+  } = useDeleteAnnouncement();
 
-  const [deleteAnnouncementState, setDeleteAnnouncementState] = useState({
+  const [viewAnnouncement, setViewAnnouncement] = useState({
     open: false,
-    data: null,
+    data: [],
   });
+
+  const [addAnnouncement, setAddAnnouncement] = useState(false);
   const [editAnnouncementData, setEditAnnouncementData] = useState(null);
-  const handleActionClick = async (key, announcement) => {
+
+  const handleActionClick = (key, announcement) => {
     if (key === "edit") {
       setEditAnnouncementData(announcement);
       setAddAnnouncement(true);
     } else if (key === "view") {
-      setViewAnnouncement({
-        open: true,
-        data: announcement,
-      });
+      setViewAnnouncement({ open: true, data: announcement });
     } else if (key === "delete") {
-      setDeleteAnnouncementState({ open: true, data: announcement });
+      setDeleteAnnouncementData(announcement);
+      setShowDeleteModal(true);
     }
   };
 
-  // const handleDeleteAnnouncement = async () => {
-  //   const announcementId = deleteAnnouncementState.data?._id;
+  const handleModalSubmit = async (formData) => {
+    const result = await submitAnnouncement(formData, refetchAnnouncements);
+    if (result.success) {
+      setAddAnnouncement(false);
+      setEditAnnouncementData(null);
+    }
+  };
 
-  //   if (!announcementId) {
-  //     toast.error("Unable to find the announcement to delete.");
-  //     return;
-  //   }
-
-  //   try {
-  //     await deleteAnnouncement(announcementId);
-  //     toast.success("Announcement deleted successfully.");
-  //     setAnnouncements((prev) =>
-  //       prev.filter((announcement) => announcement._id !== announcementId)
-  //     );
-  //     setDeleteAnnouncementState({ open: false, data: null });
-  //   } catch (error) {
-  //     console.error("Failed to delete announcement:", error);
-  //     toast.error("Failed to delete announcement.");
-  //   }
-  // };
+  const handleDeleteAnnouncement = async () => {
+    if (deleteAnnouncementData) {
+      const result = await announcementDelete(deleteAnnouncementData._id); // API Call to delete
+      if (result.success) {
+        setShowDeleteModal(false);
+        setDeleteAnnouncementData(null);
+        await refetchAnnouncements();
+      } else {
+        console.log("Error deleting announcement");
+      }
+    }
+  };
 
   return (
     <>
+      <DSHead
+        title="Announcements || SMC"
+        description="Stay updated with the latest announcements from your society."
+        keywords="society, announcements, updates, community"
+        ogTitle="Announcements || SMC"
+        ogDescription="Keep up with the latest news and updates from your society."
+        ogUrl="https://dashstack-smc.web.app/admin/announcement"
+        twitterCard="summary_large_image"
+        twitterTitle="Announcements || SMC"
+        twitterDescription="Catch up with the latest society announcements."
+      />
       <DSCard
         title="Announcement"
         headerContent={
@@ -78,7 +94,9 @@ export const Announcement = () => {
             title={announcement?.announcementTitle}
             description={announcement?.announcementDescription}
             date={new Date(announcement?.announcementDate).toLocaleDateString()}
-            time={announcement?.announcementTime}
+            time={new Date(announcement?.announcementTime).toLocaleDateString(
+              "en-CA"
+            )}
             items={[
               { label: "Edit", key: "edit" },
               { label: "View", key: "view" },
@@ -87,44 +105,52 @@ export const Announcement = () => {
             onAction={(key) => handleActionClick(key, announcement)}
           />
         ))}
+
+        {/* Add/Edit Modal */}
+        {addAnnouncement && (
+          <AddAnnouncementModal
+            open={addAnnouncement}
+            handleCancel={() => setAddAnnouncement(false)}
+            handleClose={() => setAddAnnouncement(false)}
+            handleOk={(formData) => handleModalSubmit(formData)}
+            editData={editAnnouncementData}
+          />
+        )}
+
+        {/* View Modal */}
+        {viewAnnouncement.open && (
+          <ViewAnnouncementModal
+            open={viewAnnouncement.open}
+            announcementData={viewAnnouncement.data}
+            handleCancel={() =>
+              setViewAnnouncement({ open: false, data: null })
+            }
+            handleClose={() => setViewAnnouncement({ open: false, data: null })}
+            ModalTitle={"View Announcement"}
+            title={viewAnnouncement?.data?.announcementTitle}
+            Description={viewAnnouncement?.data?.announcementDescription}
+            date={new Date(
+              viewAnnouncement?.data?.announcementDate
+            ).toLocaleDateString()}
+            time={new Date(
+              viewAnnouncement?.data?.announcementTime
+            ).toLocaleDateString("en-CA")}
+          />
+        )}
+
+        {/* Delete Modal */}
+        {showDeleteModal && (
+          <DeleteModal
+            Title={"Delete Announcement?"}
+            isModalOpen={showDeleteModal}
+            handleClose={() => setShowDeleteModal(false)}
+            handleOk={handleDeleteAnnouncement}
+            onCancel={() => setShowDeleteModal(false)}
+          >
+            Are you sure you want to delete this announcement?
+          </DeleteModal>
+        )}
       </DSCard>
-
-      {/* Add/Edit Announcement Modal */}
-      <AddAnnouncementModal
-        open={addAnnouncement}
-        handleCancel={() => setAddAnnouncement(false)}
-        handleClose={() => setAddAnnouncement(false)}
-        handleOk={() => setAddAnnouncement(false)}
-      />
-
-      {/* View Announcement Modal */}
-      <ViewAnnouncementModal
-        ModalTitle={"View Security Protocol"}
-        open={viewAnnouncement.open}
-        announcementData={viewAnnouncement.data}
-        handleCancel={() => setViewAnnouncement({ open: false, data: null })}
-        handleClose={() => setViewAnnouncement({ open: false, data: null })}
-        handleOk={() => setViewAnnouncement({ open: false, data: null })}
-        title={viewAnnouncementData?.announcementTitle}
-        Description={viewAnnouncementData?.announcementDescription}
-        date={new Date(
-          viewAnnouncementData?.announcementDate
-        ).toLocaleDateString()}
-        time={viewAnnouncementData?.announcementTime}
-      />
-
-      {/* Remove Announcement Modal */}
-      {/* <DeleteModal
-        title="Delete Announcement?"
-        isModalOpen={deleteAnnouncementState.open}
-        handleClose={() =>
-          setDeleteAnnouncementState({ open: false, data: null })
-        }
-        handleOk={handleDeleteAnnouncement}
-        onCancel={() => setDeleteAnnouncementState({ open: false, data: null })}
-      >
-        Are you sure you want to delete this Announcement?
-      </DeleteModal> */}
     </>
   );
 };

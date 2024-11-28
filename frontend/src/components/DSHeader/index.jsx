@@ -11,7 +11,7 @@ const { Header } = Layout;
 export const DSHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = UseDecodeToken();
+  const { token } = UseDecodeToken();
 
   const dropdownItems = [
     {
@@ -47,9 +47,9 @@ export const DSHeader = () => {
         />
         <DSDropDownImg
           items={dropdownItems}
-          name={userData?.fullName}
+          name={token?.fullName}
           image={"https://i.pravatar.cc/300"}
-          position={userData?.role}
+          position={token?.role}
           imageAlt={"fakeImg"}
           arrow
         />

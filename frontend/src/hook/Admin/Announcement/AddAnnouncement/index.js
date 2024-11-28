@@ -1,63 +1,20 @@
 import { createAnnouncement } from "@/axiosApi/ApiHelper";
-import { useState } from "react";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
-export const useAddAnnouncement = (handleClose) => {
-  const { societyId } = UseDecodeToken();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    announcementTitle: "",
-    announcementDescription: "",
-    announcementDate: "",
-    announcementTime: "",
-  });
-
-  // Compute if the form is valid
-  const isFormValid = Object.values(formData).every((value) => value !== "");
-
-  // Handle input change
-  const handleChange = (e) => {
-    let name, value;
-
-    if (e && e.target) {
-      name = e.target.name;
-      value = e.target.value;
-    } else if (e && e.name) {
-      name = e.name;
-      value = e.value;
-    } else {
-      console.error("Unrecognized event in handleChange:", e);
-      return;
-    }
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-    if (!isFormValid) {
-      toast.error("All fields are required!");
-      return;
-    }
+export const useAddAnnouncement = () => {
+  const submitAnnouncement = async (formData, onSuccess) => {
     try {
-      await createAnnouncement({
-        ...formData,
-        societyId: societyId,
-      });
-      toast.success("Society created successfully!");
-      setFormData({
-        announcementTitle: "",
-        announcementDescription: "",
-        announcementDate: "",
-        announcementTime: "",
-      });
-      handleClose?.();
-    } finally {
-      setIsLoading(false);
+      await createAnnouncement(formData);
+      toast.success("Announcement Added successfully.");
+      if (onSuccess) {
+        onSuccess();
+      }
+      return { success: true };
+    } catch (error) {
+      toast.error("Failed to submit announcement.");
+      return { success: false, error };
     }
   };
 
-  return { handleChange, handleSubmit, formData, isFormValid, isLoading };
+  return { submitAnnouncement };
 };

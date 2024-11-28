@@ -6,6 +6,7 @@ import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
 import styles from "./ResidentManagement.module.css";
 import { useNavigate } from "react-router-dom";
+import { ViewDetailsModal } from "../../../components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
 
 export const ResidentManagement = () => {
   const [tableData, setTableData] = useState([]);
@@ -119,6 +120,7 @@ export const ResidentManagement = () => {
               size="small"
               icon={Icons.EyeShow}
               className="clr-cult"
+              onClick={() => setViewDetailsModal(true)}
             />
           </Space>
         ) : (
@@ -126,6 +128,8 @@ export const ResidentManagement = () => {
         ),
     },
   ];
+
+  const [viewDetailsModal, setViewDetailsModal] = useState(true)
 
   return (
     <>
@@ -154,6 +158,13 @@ export const ResidentManagement = () => {
           />
         </div>
       </DSCard>
+
+      {/* Viwe Details Modal */}
+      <ViewDetailsModal
+        title={"View Owner Details"}
+        open={viewDetailsModal}
+        handleClose={() => setViewDetailsModal(false)}
+      />
     </>
   );
 };

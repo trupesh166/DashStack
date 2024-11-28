@@ -30,6 +30,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Income from "../pages/Admin/FinancialMaintenance/Income";
 import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
 import { Resident } from "../pages/Admin/ResidentManagement/Resident";
+import { EventMemberList } from "../components/FinancialManagement/Income/EventMemberList";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -78,7 +79,16 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "income",
-                      element: <Income />,
+                      children: [
+                        {
+                          index: true,
+                          element: <Income />,
+                        },
+                        {
+                          path: "event-member-list",
+                          element: <EventMemberList />,
+                        },
+                      ],
                     },
                     {
                       path: "expense",

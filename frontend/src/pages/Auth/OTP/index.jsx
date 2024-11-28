@@ -16,7 +16,7 @@ export const OTP = () => {
       <form>
         <DSInputOtp
           block
-          placeholder="000000"
+          placeholder="00000"
         />
 
         <div className="d-flex justify-content-between mt-4">

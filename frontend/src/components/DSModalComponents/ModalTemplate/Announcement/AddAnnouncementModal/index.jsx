@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AddAnnouncementModal.module.css";
 import { DSDatePicker, DSInput, DSModal } from "../../../..";
 import TextArea from "antd/es/input/TextArea";
 import { Flex, TimePicker } from "antd";
+import { useAddAnnouncement } from "../../../../../hook/Admin/Announcement/AddAnnouncement";
 
 export const AddAnnouncementModal = ({
   open,
@@ -10,9 +11,10 @@ export const AddAnnouncementModal = ({
   handleClose,
   handleOk,
 }) => {
-  const onChange = (time, timeString) => {
-    console.log(time, timeString);
-  };
+
+  const {  handleChange, handleSubmit, formData} = useAddAnnouncement(handleCancel)
+ 
+  console.log(formData)
   return (
     <>
       <DSModal
@@ -21,15 +23,18 @@ export const AddAnnouncementModal = ({
         closeIcon
         handleCancel={handleCancel}
         handleClose={handleClose}
-        handleOk={handleOk}
+        // handleOk={handleOk}
+        handleOk={handleSubmit}
         IsFooter={true}
         handleContent={"Save"}
         disabledButton={false}
       >
         <DSInput
           className="mb-4"
+          name={"announcementTitle"}
           label={"Announcement Title"}
-          placeholder={"Enter Name"}
+          placeholder={"Enter Title"}
+          onChange={handleChange}
         />
 
         <div className="mb-4">
@@ -38,10 +43,12 @@ export const AddAnnouncementModal = ({
           </h6>
           <TextArea
             placeholder="Enter Description"
+            name={"announcementDescription"}
             autoSize={{
               minRows: 1.5,
               maxRows: 5,
             }}
+            onChange={handleChange}
           />
         </div>
 
@@ -52,6 +59,7 @@ export const AddAnnouncementModal = ({
           className="mb-4"
         >
           <DSDatePicker
+            name={"announcementDate"}
             block={true}
             label={"Announcement Date"}
             placeholder={"Select Date"}
@@ -60,8 +68,17 @@ export const AddAnnouncementModal = ({
               borderRadius: "10px",
               padding: "0px 10px",
             }}
+            onChange={(date, dateString) =>
+              handleChange({ name: "announcementDate", value: date })
+            }
           />
-          <TimePicker use12Hours format="h:mm a" onChange={onChange} />
+          <TimePicker
+          name={"announcementTime"}
+            use12Hours format="h:mm a"
+            onChange={(time, timeString) =>
+              handleChange({ name: "announcementTime", value: timeString })
+            }
+          />
         </Flex>
       </DSModal>
     </>

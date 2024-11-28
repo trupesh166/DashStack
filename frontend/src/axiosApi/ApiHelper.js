@@ -115,8 +115,8 @@ export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
 
 // // Announcement Management
-// export const createAnnouncement = (data) =>
-//   request("post", "/announcement/create", data);
+export const createAnnouncement = (data) =>
+  request("post", "/announcement/create", data);
 // export const listAnnouncement = (societyId) =>
 //   request("get", `/announcement/list/${societyId}`);
 // export const updateAnnouncement = (id, data) =>

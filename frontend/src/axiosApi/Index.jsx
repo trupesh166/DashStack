@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 // Base URL for the backend
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+// const backendUrl = "http://localhost:5000";
 
 const axiosApi = axios.create({
   baseURL: backendUrl,

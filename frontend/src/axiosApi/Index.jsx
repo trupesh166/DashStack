@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 // Base URL for the backend
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
-// const backendUrl = "http://localhost:5000";
+const tokenName = import.meta.env.VITE_TOKEN_NAME;
 
 const axiosApi = axios.create({
   baseURL: backendUrl,
@@ -17,7 +17,9 @@ const getCookie = (name) => {
 
 // Function to set Authorization header
 const setAuthHeader = () => {
-  const token = window.localStorage.getItem("_token") || getCookie("_token");
+  const token =
+    window.localStorage.getItem(import.meta.env.VITE_TOKEN_NAME) ||
+    getCookie(import.meta.env.VITE_TOKEN_NAME);
   if (token) {
     axiosApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
@@ -50,7 +52,7 @@ axiosApi.interceptors.response.use(
         break;
       case 401:
         toast.error(`Unauthorized: ${errorMsg}`);
-        localStorage.removeItem("_token");
+        localStorage.removeItem("import.meta.env.VITE_TOKEN_NAME");
         window.location.href = "/login";
         break;
       case 403:

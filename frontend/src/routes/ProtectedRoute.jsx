@@ -12,7 +12,7 @@ export default function ProtectedRoute() {
 
   // useEffect(() => {
   //   const checkAuth = () => {
-  //     const token = localStorage.getItem("_token");
+  //     const token = localStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
 
   //     if (!token) {
   //       setIsAuthenticated(false);
@@ -27,7 +27,7 @@ export default function ProtectedRoute() {
   //     } catch (error) {
   //       toast.error("Error decoding token:", error.message);
   //       setIsAuthenticated(false);
-  //       localStorage.removeItem("_token");
+  //       localStorage.removeItem(import.meta.env.VITE_TOKEN_NAME);
   //     }
   //   };
 

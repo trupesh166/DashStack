@@ -11,7 +11,12 @@ const { Header } = Layout;
 export const DSHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const userData = UseDecodeToken();
+  const { userData } = UseDecodeToken();
+
+  console.log(userData);
+  // const { fullName, role } = userData;
+  // console.log("Full Name:", fullName);
+  // console.log("Role:", role);
 
   const dropdownItems = [
     {

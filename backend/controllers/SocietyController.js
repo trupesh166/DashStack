@@ -6,6 +6,7 @@ const societyModel = require('../models/SocietyModel')
 class SocietyController {
   async createSociety(req, res) {
     try {
+      console.log(req.body)
       const { societyName, societyAddress, country, state, city, zipCode, societyType, wingCount } = req.body
       if (!societyName || !societyAddress || !country || !state || !city || !zipCode || !societyType) throw httpErrors[400]
       const result = await societyModel.model.create({ ...req.body })

@@ -44,7 +44,7 @@ export const getMaintenanceDetailsByMember = () =>
   request("get", `/maintain-detail/list/`);
 
 // // Unit Management
-// export const createUnit = (data) => request("post", "/unit/create", data);
+export const createUnit = (data) => request("post", "/unit/create", data);
 // export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // // Wing Management

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 export const useAddAnnouncement = (handleClose) => {
+  const { societyId } = UseDecodeToken();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     announcementTitle: "",
@@ -43,7 +44,7 @@ export const useAddAnnouncement = (handleClose) => {
     try {
       await createAnnouncement({
         ...formData,
-        societyId: "67363d9023e13554b1e7ae79",
+        societyId: societyId,
       });
       toast.success("Society created successfully!");
       setFormData({

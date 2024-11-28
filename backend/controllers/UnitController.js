@@ -6,6 +6,7 @@ const unitModel = require("../models/UnitModel")
 class UnitController {
   async createUnit(req, res) {
     try {
+      console.log(req.body)
       let { unitCount, series, societyId, floor } = req.body
       if (floor == 0) {
         floor = 1
@@ -19,12 +20,21 @@ class UnitController {
       if (societyData.societyType === "tenement") {
         for (let i = 0; i < Wing?.length; i++) {
           for (let j = 0; j < unitCount; j++) {
-            Block = await unitModel.model.create({
-              unitNumber: ((i + 1) * series) + j + 1,
-              wingId: Wing[i]._id,
-              societyId: societyId
-            })
-            if (!Block) throw httpErrors[500]
+            if (series !== 1) {
+              Block = await unitModel.model.create({
+                unitNumber: ((i + 1) * series) + j + 1,
+                wingId: Wing[i]._id,
+                societyId: societyId
+              })
+              if (!Block) throw httpErrors[500]
+            } else {
+              Block = await unitModel.model.create({
+                unitNumber: i === 0 ? i + j + 1 : j + 1,
+                wingId: Wing[i]._id,
+                societyId: societyId
+              })
+              if (!Block) throw httpErrors[500]
+            }
           }
         }
       } else {

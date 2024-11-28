@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const asyncHandler = require('express-async-handler');
-const facilitycontroller = require('./FacilityController')
+const facilitycontroller = require('../controllers/FacilityController')
 
 const facilityRouter = Router()
 

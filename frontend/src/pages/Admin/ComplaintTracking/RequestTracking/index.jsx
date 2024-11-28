@@ -7,105 +7,9 @@ import {
   CreateRequestModal,
   DeleteModal,
   ViewRequestModal,
+  DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
-
-const columns = [
-  {
-    title: "Requester Name",
-    dataIndex: "requesterName",
-    key: "requesterName",
-    render: (text, record) => (
-      <Space>
-        <Avatar src={record.avatar} />
-        {text}
-      </Space>
-    ),
-  },
-  {
-    title: "Request Name",
-    dataIndex: "requestName",
-    key: "requestName",
-  },
-  {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
-    ellipsis: {
-      showTitle: false,
-    },
-    render: (description) => (
-      <Tooltip placement="topLeft" title={description}>
-        {description}
-      </Tooltip>
-    ),
-  },
-  {
-    title: "Request Date",
-    dataIndex: "requestDate",
-    key: "requestDate",
-  },
-  {
-    title: "Unit Number",
-    dataIndex: "unitNumber",
-    key: "unitNumber",
-    render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
-  },
-  {
-    title: "Priority",
-    key: "priority",
-    dataIndex: "priority",
-    render: (priority) => {
-      let color =
-        priority === "High" ? "red" : priority === "Medium" ? "blue" : "green";
-      return (
-        <Tag color={color} key={priority}>
-          {priority.toUpperCase()}
-        </Tag>
-      );
-    },
-  },
-  {
-    title: "Status",
-    key: "status",
-    dataIndex: "status",
-    render: (status) => {
-      let color =
-        status === "Pending" ? "gold" : status === "Open" ? "cyan" : "lime";
-      return (
-        <Tag color={color} key={status}>
-          {status.toUpperCase()}
-        </Tag>
-      );
-    },
-  },
-  {
-    title: "Action",
-    key: "action",
-    render: () => (
-      <Space size="middle">
-        <DSButton
-          type="primary"
-          size="small"
-          icon={Icons.Edit}
-          className="clr-success"
-        />
-        <DSButton
-          type="primary"
-          size="small"
-          icon={Icons.EyeShow}
-          className="clr-cult"
-        />
-        <DSButton
-          type="primary"
-          size="small"
-          icon={Icons.Trash}
-          className="clr-danger"
-        />
-      </Space>
-    ),
-  },
-];
 
 const data = [
   {
@@ -269,7 +173,19 @@ export const RequestTracking = () => {
   ];
 
   return (
-    <div>
+    <>
+      <DSHead
+        title="Complaint Request || SMC"
+        description="Request a complaint through the society management system."
+        keywords="society, complaint request, submit complaint, society management"
+        ogTitle="Complaint Request || SMC"
+        ogDescription="Request a complaint and get timely responses through the Society Management System."
+        ogUrl="https://dashstack-smc.web.app/admin/complaint/request"
+        twitterCard="summary_large_image"
+        twitterTitle="Complaint Request || SMC"
+        twitterDescription="Submit your complaint request to your society management."
+      />
+
       <DSCard
         title={"Request Tracking"}
         headerContent={
@@ -311,6 +227,6 @@ export const RequestTracking = () => {
       >
         Are you sure you want to delete this request?
       </DeleteModal>
-    </div>
+    </>
   );
 };

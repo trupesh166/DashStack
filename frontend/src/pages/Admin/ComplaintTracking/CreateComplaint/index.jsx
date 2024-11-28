@@ -7,6 +7,7 @@ import {
   CreateComplaintModal,
   DeleteModal,
   ViewComplaintModal,
+  DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
 
@@ -66,8 +67,8 @@ export const ComplaintCreate = () => {
           priority === "High"
             ? "red"
             : priority === "Medium"
-              ? "blue"
-              : "green";
+            ? "blue"
+            : "green";
         return (
           <Tag color={color} key={priority}>
             {priority.toUpperCase()}
@@ -158,7 +159,19 @@ export const ComplaintCreate = () => {
   ];
 
   return (
-    <div>
+    <>
+      <DSHead
+        title="Create Complaint || SMC"
+        description="Create and submit your complaint to the society management system."
+        keywords="society, complaints, create complaint, society management"
+        ogTitle="Create Complaint || SMC"
+        ogDescription="Submit your complaints and get timely responses through the Society Management System."
+        ogUrl="https://dashstack-smc.web.app/admin/complaint/create"
+        twitterCard="summary_large_image"
+        twitterTitle="Create Complaint || SMC"
+        twitterDescription="Easily create and submit complaints for your society management."
+      />
+
       <DSCard
         title={"Create Complaint"}
         headerContent={
@@ -203,6 +216,6 @@ export const ComplaintCreate = () => {
       >
         Are you sure you want to delete this complaint?
       </DeleteModal>
-    </div>
+    </>
   );
 };

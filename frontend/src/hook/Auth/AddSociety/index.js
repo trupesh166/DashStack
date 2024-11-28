@@ -11,6 +11,11 @@ export const useAddSociety = (handleClose) => {
     state: "",
     city: "",
     zipcode: "",
+    societyType: "",
+    florNumber: "",
+    wingCount: "",
+    unitNumber: "",
+    selectSeries: "",
   });
 
   // Compute if the form is valid
@@ -18,8 +23,11 @@ export const useAddSociety = (handleClose) => {
 
   // Handle input change
   const handleChange = (e) => {
+
+    console.log(e.target)
     const { societyName, value } = e.target;
     setFormData((prev) => ({ ...prev, [societyName]: value }));
+
   };
 
   // Handle form submission

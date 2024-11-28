@@ -37,7 +37,9 @@ const UseDecodeToken = () => {
     decodeToken();
   }, []);
 
-  return decodedToken;
+  const societyId = decodedToken?.societyData?.selectSociety;
+
+  return { decodedToken, societyId };
 };
 
 export default UseDecodeToken;

@@ -5,8 +5,8 @@ const { httpErrors, httpSuccess } = require('../constents')
 class ImportantController {
   async createWorkerNumber(req, res) {
     try {
-      const { fullName, phoneNumber, work } = req.body
-      if (!fullName || !phoneNumber || !work) throw httpErrors[400]
+      const { societyId, fullName, phoneNumber, work } = req.body
+      if ( !societyId || !fullName || !phoneNumber || !work) throw httpErrors[400]
 
       const result = await importantModal.model.create({...req.body})
       if (!result) throw httpErrors[400]
@@ -19,7 +19,9 @@ class ImportantController {
 
   async getWorkerDetails(req, res) {
     try {
-      const result = await importantModal.model.find()
+      const { societyId } = req.params
+      console.log(societyId)
+      const result = await importantModal.model.find({societyId:societyId})
       if (!result) throw httpErrors[400]
       return res.status(200).send({ message: httpSuccess, data: result })
     } catch (error) {

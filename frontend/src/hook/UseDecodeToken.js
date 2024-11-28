@@ -27,6 +27,7 @@ const UseDecodeToken = () => {
 
       try {
         const decoded = jwtDecode(token);
+        console.log("decoded-=-=---=-", decoded)
         setDecodedToken(decoded);
       } catch (error) {
         console.error(`Error decoding token:`, error);

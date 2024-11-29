@@ -1,22 +1,7 @@
 import { DSEventsCard } from "@/components/";
 import styles from "../EventCard/EventCard.module.css";
 
-export const NoteCard = ({ title, description, extra }) => {
-  const items = [
-    {
-      label: "1st menu item",
-      key: "1",
-    },
-    {
-      label: "2nd menu item",
-      key: "2",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
-
+export const NoteCard = ({ title, description, items }) => {
   return (
     <DSEventsCard title={title} items={items} className={styles.card}>
       <div>

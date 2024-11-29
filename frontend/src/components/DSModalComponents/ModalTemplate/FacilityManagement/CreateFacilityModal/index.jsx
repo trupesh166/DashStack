@@ -1,7 +1,6 @@
 import { DSDatePicker, DSInput, DSSelect, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
-import moment from "moment";
 import styles from "./CreateFacilityModal.module.css";
 
 export const CreateFacilityModal = ({
@@ -32,7 +31,6 @@ export const CreateFacilityModal = ({
     });
   };
 
-  // Check if form is valid
   const isFormValid =
     facilityName &&
     description &&

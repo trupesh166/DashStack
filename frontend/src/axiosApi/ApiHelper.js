@@ -74,14 +74,14 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 //   request("delete", `/expanse/delete/${expanseId}`);
 
 // // Notes Management
-// export const createNotes = (data) =>
-//   request("post", "/expanseNote/create", data);
-// export const listNotes = (societyId) =>
-//   request("get", `/expanseNote/list/${societyId}`);
-// export const updateNote = (societyId, data) =>
-//   request("put", `/expanseNote/update/${societyId}`, data);
-// export const deleteNote = (id) =>
-//   request("delete", `/expanseNote/delete/${id}`);
+export const createNotes = (data) =>
+  request("post", "/expanseNote/create", data);
+export const listNotes = (societyId) =>
+  request("get", `/expanseNote/list/${societyId}`);
+export const updateNote = (societyId, data) =>
+  request("put", `/expanseNote/update/${societyId}`, data);
+export const deleteNote = (id) =>
+  request("delete", `/expanseNote/delete/${id}`);
 
 // Facility Management
 export const createFacility = (data) =>

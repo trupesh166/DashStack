@@ -18,6 +18,7 @@ export const DSModal = ({
   handleContent,
   danger,
   loading,
+  IsBtnLoading,
   IsCloseIcon = false,
   IsFooter = false,
   disabledButton = true,
@@ -60,6 +61,7 @@ export const DSModal = ({
               disabled={disabledButton}
               variant={disabledButton == false ? "primary" : ""}
               danger={danger}
+              loading={IsBtnLoading}
               type="submit"
             >
               {handleContent}

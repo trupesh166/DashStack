@@ -1,4 +1,3 @@
-import { Card } from "antd";
 import styles from "../EventCard/EventCard.module.css";
 import { DSEventsCard } from "@/components/";
 

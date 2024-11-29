@@ -83,32 +83,32 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 // export const deleteNote = (id) =>
 //   request("delete", `/expanseNote/delete/${id}`);
 
-// // Facility Management
-// export const createFacility = (data) =>
-//   request("post", "/facility/addfacility", data);
-// export const listFacility = (societyId) =>
-//   request("get", `/facility/getfacility/${societyId}`);
-// export const editFacility = (id, data) =>
-//   request("put", `/facility/updatefacility/${id}`, data);
+// Facility Management
+export const createFacility = (data) =>
+  request("post", "/facility/addfacility", data);
+export const listFacility = (societyId) =>
+  request("get", `/facility/getfacility/${societyId}`);
+export const editFacility = (id, data) =>
+  request("put", `/facility/updatefacility/${id}`, data);
 
-// // Complaint Management
-// export const createComplaint = (data) =>
-//   request("post", "/complain/create", data);
-// export const listComplaint = (data) => request("post", "/complain/list", data);
-// export const updateComplaint = (id, data) =>
-//   request("put", `/complain/update/${id}`, data);
-// export const deleteComplaint = (id) =>
-//   request("delete", `/complain/delete/${id}`);
+// Complaint Management
+export const createComplaint = (data) =>
+  request("post", "/complain/create", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
+export const updateComplaint = (id, data) =>
+  request("put", `/complain/update/${id}`, data);
+export const deleteComplaint = (id) =>
+  request("delete", `/complain/delete/${id}`);
 
-// // Security Protocol Management
-// export const createSecurityProtocol = (data) =>
-//   request("post", "/securityprotocol/createprotocol", data);
-// export const listSecurityProtocol = (societyId) =>
-//   request("get", `/securityprotocol/getprotocol/${societyId}`);
-// export const updateSecurityProtocol = (id, data) =>
-//   request("put", `/securityprotocol/updatesecurityprotocol/${id}`, data);
-// export const deleteSecurityProtocol = (id) =>
-//   request("delete", `/securityprotocol/deleteprotocol/${id}`);
+// Security Protocol Management
+export const createSecurityProtocol = (data) =>
+  request("post", "/securityprotocol/createprotocol", data);
+export const listSecurityProtocol = (societyId) =>
+  request("get", `/securityprotocol/getprotocol/${societyId}`);
+export const updateSecurityProtocol = (id, data) =>
+  request("put", `/securityprotocol/updatesecurityprotocol/${id}`, data);
+export const deleteSecurityProtocol = (id) =>
+  request("delete", `/securityprotocol/deleteprotocol/${id}`);
 
 // Visitor Management
 export const listVisitor = (societyId) =>

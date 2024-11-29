@@ -67,7 +67,7 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
           <DSInput
             label="Zip Code"
             placeholder="Enter Zip Code"
-            name="zipcode"
+            name="zipCode"
             value={formData.zipcode}
             onChange={handleChange}
             required
@@ -83,16 +83,13 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
             ]}
             onChange={(value) =>
               handleChange({
-                target: { societyName: "societyType", value },
+                target: { name: "societyType", value },
               })
             }
             required
           >
             View all
           </DSSelect>
-          {
-            console.log(formData)
-          }
           {formData.societyType === "apartment" && (
 
             <DSInput
@@ -101,7 +98,7 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
               name="florNumber"
               value={formData.florNumber}
               onChange={handleChange}
-              required
+              required= {formData.societyType === "apartment" ? true : false}
             />
           )}
           <DSInput
@@ -125,11 +122,19 @@ export const SelectSocietyModal = ({ open, onCancel, handleClose }) => {
             placeholder="Enter Series"
             name="selectSeries"
             defaultValue="Select Series"
-            options={[
-              { label: "1", value: "1" },
-              { label: "10", value: "10" },
-              { label: "100", value: "100" },
+            options={ formData.societyType === "apartment" ? [
+              { label: "100", value: 100 },
+              { label: "1000", value: 1000 },
+            ] : [
+              { label: "1", value: 1 },
+              { label: "100", value: 100 },
+              { label: "1000", value: 1000 },
             ]}
+            onChange={(value) =>
+              handleChange({
+                target: { name: "selectSeries", value },
+              })
+            }
             required
           />
         </div>

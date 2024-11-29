@@ -44,7 +44,7 @@ export const getMaintenanceDetailsByMember = () =>
   request("get", `/maintain-detail/list/`);
 
 // // Unit Management
-// export const createUnit = (data) => request("post", "/unit/create", data);
+export const createUnit = (data) => request("post", "/unit/create", data);
 // export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // // Wing Management
@@ -135,6 +135,16 @@ export const deleteAnnouncement = (id) =>
 //   request("put", `/security/updatesecurity/${id}`, data);
 // export const deleteGuard = (id) =>
 //   request("delete", `/security/deletesecurity/${id}`);
+
+// Important Number Management
+export const createImportantNumber = (data) =>
+  request("post", "/workernumber/create", data);
+export const listImportantNumber = (societyId) =>
+  request("get", `/workernumber/list/${societyId}`);
+export const editImportantNumber = (id, data) =>
+  request("put", `/workernumber/updateimportantnumber/${id}`, data);
+export const deleteImportantNumber = (id) =>
+  request("delete", `/workernumber/delete/${id}`);
 
 // // Image Management
 // export const imageDetails = (data) => request("post", "/image-details", data);

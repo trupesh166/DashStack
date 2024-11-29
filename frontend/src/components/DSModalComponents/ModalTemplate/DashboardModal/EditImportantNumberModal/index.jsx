@@ -7,6 +7,8 @@ export const EditImportantNumberModal = ({
   handleCancel,
   handleClose,
   handleOk,
+  handleInputChange,
+  formValues
 }) => {
   return (
     <DSModal
@@ -25,6 +27,9 @@ export const EditImportantNumberModal = ({
         label={"Full Name"}
         placeholder={"Enter Full Name"}
         require
+        value={formValues?.fullName}
+        name={"fullName"}
+        onChange={handleInputChange}
       />
 
       <DSInput
@@ -32,6 +37,9 @@ export const EditImportantNumberModal = ({
         label={"Phone Number"}
         placeholder={"+91"}
         require
+        value={formValues?.phoneNumber}
+        name={"phoneNumber"}
+        onChange={handleInputChange}
       />
 
       <DSInput
@@ -39,6 +47,9 @@ export const EditImportantNumberModal = ({
         label={"Work"}
         placeholder={"Enter Work"}
         require
+        value={formValues?.work}
+        name={"work"}
+        onChange={handleInputChange}
       />
     </DSModal>
   );

@@ -20,6 +20,11 @@ export const DSHeader = () => {
     },
   ];
 
+  const handleMenuClick = (key) => {
+    if (key === "1") {
+      navigate("/admin/profile");
+    }
+  };
   return (
     <Header
       className={clsx(
@@ -51,6 +56,7 @@ export const DSHeader = () => {
           image={"https://i.pravatar.cc/300"}
           position={token?.role}
           imageAlt={"fakeImg"}
+          onClick={() => handleMenuClick("1")}
           arrow
         />
       </div>

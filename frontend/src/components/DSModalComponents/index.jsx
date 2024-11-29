@@ -1,2 +1,2 @@
-export { DSModal } from "./Modal/";
-export * from "./ModalTemplate/";
+export { DSModal } from "./Modal";
+export * from "./ModalTemplate";

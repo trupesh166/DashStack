@@ -2,11 +2,19 @@ import { Avatar, Dropdown } from "antd";
 import clsx from "clsx";
 import styles from "./DSDropDownImg.module.css";
 
-export const DSDropDownImg = ({ items, name, image, position, imageAlt }) => {
+export const DSDropDownImg = ({
+  items,
+  name,
+  image,
+  position,
+  imageAlt,
+  onClick,
+}) => {
   return (
     <Dropdown
       menu={{
         items,
+        onClick,
       }}
       placement="bottomLeft"
       arrow

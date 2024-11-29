@@ -51,6 +51,8 @@ export const EditProfile = () => {
   };
 
   return (
+    <>
+    
     <div className={styles.editProfile}>
       <div className={styles.profileCard}>
         <div className={styles.profile}>
@@ -169,5 +171,6 @@ export const EditProfile = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

@@ -8,10 +8,7 @@ export const useListImportantNumber = () => {
 
   const fetchimportantNumber = async () => {
     try {
-      console.log(societyId);
-
       const response = await listImportantNumber(societyId);
-      console.log(response.data);
 
       setImportantNumber(response.data);
     } catch (err) {

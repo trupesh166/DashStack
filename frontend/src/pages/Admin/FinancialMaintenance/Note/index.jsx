@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import { AddNote, DSButton, DSCard, NoteCard, DeleteModal } from "@/components";
 import { useAddNote, useListNote } from "@/hook/Admin/FinancialMaintenance";
 import { useDeleteNote } from "@/hook/Admin/FinancialMaintenance/Note/DeleteNote";
-
 import styles from "./Note.module.css";
 
 export const Note = () => {
-  const { dataListNote, fetchListNote } = useListNote(); // Fetch the notes
+  const { dataListNote, fetchListNote } = useListNote();
   const {
     title,
     setTitle,
@@ -30,7 +29,7 @@ export const Note = () => {
     setDeleteNoteData,
     showDeleteModal,
     setShowDeleteModal,
-  } = useDeleteNote();
+  } = useDeleteNote(fetchListNote);
 
   const [mode, setMode] = useState("add");
 
@@ -39,30 +38,30 @@ export const Note = () => {
       setMode("edit");
       openEditModal(note);
     } else if (key === "delete") {
-      console.log("Delete action triggered for note:", note);
-      setDeleteNoteData(note); // Set the note to be deleted
-      setShowDeleteModal(true); // Show the delete confirmation modal
+      setDeleteNoteData(note);
+      setShowDeleteModal(true);
     }
   };
 
   const handleDeleteNote = async () => {
     if (!deleteNoteData) return;
 
-    const { success } = await deleteNote(deleteNoteData._id); // Delete the selected note
+    const { success } = await deleteNote(deleteNoteData._id);
     if (success) {
-      fetchListNote(); // Refresh the note list after successful deletion
+      fetchListNote();
     }
-    setShowDeleteModal(false); // Close the modal
+    setShowDeleteModal(false);
   };
 
   return (
     <>
+      {/* Card displaying all notes */}
       <DSCard
         title="Notes"
         className={clsx(styles.GridWrapper, "announcement-card-grid")}
         headerContent={
           <DSButton
-            variant={"primary"}
+            variant="primary"
             onClick={() => {
               setMode("add");
               openCreateModal();
@@ -72,6 +71,7 @@ export const Note = () => {
           </DSButton>
         }
       >
+        {/* Render NoteCard for each note */}
         {dataListNote?.map((note) => (
           <NoteCard
             key={note._id}
@@ -87,6 +87,7 @@ export const Note = () => {
         ))}
       </DSCard>
 
+      {/* Add/Edit Note Modal */}
       <AddNote
         open={isModalOpen}
         handleOk={handleSubmit}
@@ -104,15 +105,15 @@ export const Note = () => {
         isSubmitting={isSubmitting}
       />
 
+      {/* Delete Confirmation Modal */}
       <DeleteModal
-        Title={"Delete Note?"}
+        Title="Delete Note?"
         isModalOpen={showDeleteModal}
         handleClose={() => setShowDeleteModal(false)}
         handleOk={handleDeleteNote}
         onCancel={() => setShowDeleteModal(false)}
         loading={loading}
       >
-        <p>Debug: showDeleteModal is {showDeleteModal ? "true" : "false"}</p>
         Are you sure you want to delete this note?
       </DeleteModal>
     </>

@@ -7,21 +7,16 @@ export const useDeleteNote = () => {
   const [deleteNoteData, setDeleteNoteData] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const deleteNote = async (announcementId) => {
-    try {
-      setLoading(true);
-      const response = await deleteNoteApi(announcementId);
-      setLoading(false);
-      if ((response.message = "success")) {
-        toast.success("Note Is Delete Successfully");
-        return { success: true };
-      } else {
-        throw new Error("Failed to Delete Note");
-      }
-    } catch (error) {
-      setLoading(false);
-      console.error("Error Deleting Note:", error);
-      return { success: false, error };
+  const deleteNote = async (noteId) => {
+    setLoading(true);
+    const response = await deleteNoteApi(noteId);
+    setLoading(false);
+
+    if (response?.message === "Success") {
+      toast.success("Note deleted successfully");
+      return { success: true };
+    } else {
+      throw new Error("Failed to delete note");
     }
   };
 

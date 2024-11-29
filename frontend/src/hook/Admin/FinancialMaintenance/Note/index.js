@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export const useAddNote = (onSubmitSuccess) => {
   const { societyId } = UseDecodeToken();
 
-  const [title, setTitle] = useState("Add Note");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setScheduleDate] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,10 +20,11 @@ export const useAddNote = (onSubmitSuccess) => {
   };
 
   const openEditModal = (note) => {
+    const formattedDate = dayjs(note.date);
     setEditingNoteId(note._id);
     setTitle(note.title);
     setDescription(note.description);
-    setScheduleDate(dayjs(note.date).toDate());
+    setScheduleDate(formattedDate);
     setIsModalOpen(true);
   };
 
@@ -56,8 +57,7 @@ export const useAddNote = (onSubmitSuccess) => {
 
     try {
       if (editingNoteId) {
-        console.log("Updating Note:", { id: editingNoteId, ...payload });
-        await updateNote(societyId, editingNoteId, payload);
+        const response = await updateNote(editingNoteId, payload);
         if (response.message == "Success") {
           toast.success("Note Edit successfully.");
         }

@@ -12,5 +12,6 @@ expanseRouter.put("/update/:expanseId", upload.single('file'), asyncHandler(expa
 expanseRouter.get("/list/:societyId", asyncHandler(expanseController.listExpanses))
 expanseRouter.get("/listbyid/:expanseId", asyncHandler(expanseController.listById))
 expanseRouter.delete("/delete/:expanseId", asyncHandler(expanseController.deleteExpanse))
+expanseRouter.get("/totalexpanse", asyncHandler(expanseController.totalExpanse))
 
 module.exports = expanseRouter

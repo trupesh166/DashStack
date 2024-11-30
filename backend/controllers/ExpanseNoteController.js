@@ -1,73 +1,92 @@
-const { httpErrors, httpSuccess } = require("../constents")
-const expanseNoteModel = require("../models/ExpanseNoteModel")
+const { httpErrors, httpSuccess } = require("../constents");
+const expanseNoteModel = require("../models/ExpanseNoteModel");
 
-class EpxanseNoteController {
+class ExpanseNoteController {
   async createNote(req, res) {
     try {
-      const { societyId, title, description, date } = req.body
-      if (!societyId || !title || !description || !date) throw httpErrors[400]
-      const result = await expanseNoteModel.model.create({ ...req.body })
-      if (!result) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess })
+      const { societyId, title, description, date } = req.body;
+      if (!societyId || !title || !description || !date) {
+        return res.status(400).send({ message: 'Bad Request: Missing required fields' });
+      }
+      const result = await expanseNoteModel.model.create({ ...req.body });
+      if (!result) {
+        return res.status(500).send({ message: 'Internal Server Error: Failed to create the note' });
+      }
+      return res.status(200).send({ message: httpSuccess });
     } catch (error) {
-      console.log(error)
-      throw httpErrors[500]
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
 
   async listNote(req, res) {
     try {
-      const { societyId } = req.params
-      if (!societyId) throw httpErrors[400]
-      const result = await expanseNoteModel.model.find({ societyId: societyId })
-      if (!result) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess, data: result })
+      const { societyId } = req.params;
+      if (!societyId) {
+        return res.status(400).send({ message: 'Bad Request: Society ID is required' });
+      }
+      const result = await expanseNoteModel.model.find({ societyId });
+      if (!result || result.length === 0) {
+        return res.status(404).send({ message: 'No notes found for the given society' });
+      }
+      return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
-      console.log(error);
-      throw httpErrors[500]
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
 
   async listById(req, res) {
     try {
-      const { id } = req.params
-      if (!id) throw httpErrors[400]
-      const result = await expanseNoteModel.model.findOne({ _id: id })
-      if (!result) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess, data: result })
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).send({ message: 'Bad Request: ID is required' });
+      }
+      const result = await expanseNoteModel.model.findOne({ _id: id });
+      if (!result) {
+        return res.status(404).send({ message: 'Note not found' });
+      }
+      return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
-      console.log(error)
-      throw httpErrors[500]
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
 
   async updateNote(req, res) {
     try {
-      const { id } = req.params
-      if (!id) throw httpErrors[400]
-      const result = await expanseNoteModel.model.updateOne({ _id: id }, { ...req.body })
-      if (!result && result.updatedCount < 0) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess })
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).send({ message: 'Bad Request: ID is required' });
+      }
+      const result = await expanseNoteModel.model.updateOne({ _id: id }, { ...req.body });
+      if (!result || result.modifiedCount === 0) {
+        return res.status(404).send({ message: 'Note not found or no changes made' });
+      }
+      return res.status(200).send({ message: httpSuccess });
     } catch (error) {
-      console.log(error);
-      throw httpErrors[500]
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
 
   async deleteNote(req, res) {
     try {
-      const { id } = req.params
-      if (!id) throw httpErrors[400]
-      const result = await expanseNoteModel.model.deleteOne({ _id: id })
-      if (!result && result.deletedCount < 0) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess })
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).send({ message: 'Bad Request: ID is required' });
+      }
+      const result = await expanseNoteModel.model.deleteOne({ _id: id });
+      if (!result || result.deletedCount === 0) {
+        return res.status(404).send({ message: 'Note not found or already deleted' });
+      }
+      return res.status(200).send({ message: httpSuccess });
     } catch (error) {
-      console.log(error)
-      throw httpErrors[500]
+      console.error(error); 
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
-
 }
 
-const expanseNoteController = new EpxanseNoteController()
-module.exports = expanseNoteController
+const expanseNoteController = new ExpanseNoteController();
+module.exports = expanseNoteController;

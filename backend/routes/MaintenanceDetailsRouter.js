@@ -16,4 +16,10 @@ maintenanceDetailsRouter.get("/complete/:memberId", asyncHandler(maintenanceDeta
 
 maintenanceDetailsRouter.get("/list/:id", asyncHandler(maintenanceDetailsController.getMaintenanceDetailsByMember))
 
+maintenanceDetailsRouter.get("/maintain", asyncHandler(maintenanceDetailsController.getTotalMaintenanceAmount))
+
+maintenanceDetailsRouter.get("/penalty", asyncHandler(maintenanceDetailsController.getTotalPenaltyAmount))
+
+maintenanceDetailsRouter.get("/allpending", asyncHandler(maintenanceDetailsController.allPendingMaintenance))
+
 module.exports = maintenanceDetailsRouter

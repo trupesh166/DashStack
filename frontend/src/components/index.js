@@ -18,6 +18,7 @@ export { MaintenanceCard } from "./DSCards/MaintenanceCard/";
 export { NoteCard } from "./DSCards/NoteCard/";
 export { FacilityCard } from "./DSCards/FacilityCard/";
 export { AnnouncementCard } from "./DSCards/AnnouncementCard/";
+export { OtherIncomeCard } from "./DSCards/OtherIncome/";
 export * from "./DSCards/Dashboard";
 
 /* FormComponents */

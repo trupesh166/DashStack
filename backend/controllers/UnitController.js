@@ -6,6 +6,7 @@ const unitModel = require("../models/UnitModel")
 class UnitController {
   async createUnit(req, res) {
     try {
+      console.log(req.body)
       let { unitCount, series, societyId, floor } = req.body
 
       // Validate input
@@ -36,6 +37,7 @@ class UnitController {
         // Loop through wings and create units
         for (let i = 0; i < wings.length; i++) {
           for (let j = 0; j < unitCount; j++) {
+
             Block = await unitModel.model.create({
               unitNumber: ((i + 1) * series) + j + 1,
               wingId: wings[i]._id,
@@ -43,7 +45,7 @@ class UnitController {
             })
             if (!Block) {
               return res.status(500).send({ message: "Failed to create unit." })
-            }
+      }
           }
         }
       } else {

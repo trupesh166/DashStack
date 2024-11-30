@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import style from "./EditProfile.module.css";
+import styles from "./EditProfile.module.css";
 import { DSButton, DSCard, DSInput, DSSelect } from "../../../../components";
 import { Avatar, Col, Row } from "antd";
 
@@ -13,12 +13,28 @@ export const EditProfile = () => {
     country: "India",
     state: "Gujarat",
     city: "Baroda",
+    profileImage:
+      "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
   });
 
   const fileUpload = useRef(null);
 
   const handleEditImage = () => {
     fileUpload.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUserDetail((prev) => ({
+          ...prev,
+          profileImage: event.target.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -31,24 +47,31 @@ export const EditProfile = () => {
 
   const handleSubmitData = (e) => {
     e.preventDefault();
-    console.log(userdetail);
   };
 
   return (
-    <div className={style.editProfile}>
-      <div className={style.profileCard}>
-        <div className={style.profile}>
+    <>
+
+    <div className={styles.editProfile}>
+      <div className={styles.profileCard}>
+        <div className={styles.profile}>
           <form action="" onSubmit={handleSubmitData}>
             <h3 className="mb-5">Edit Profile</h3>
 
             <DSCard>
-              <Row>
-                <Col span={6} className={style.userImage}>
-                  <input type="file" className="d-none" ref={fileUpload} />
+              <Row className="mt-3">
+                <Col span={6} className={styles.userImage}>
+                  <input
+                    type="file"
+                    className="d-none"
+                    ref={fileUpload}
+                    onChange={handleFileChange}
+                  />
                   <Avatar
                     size={100}
-                    src="https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg"
+                    src={userdetail.profileImage}
                     onClick={handleEditImage}
+                    style={{ cursor: "pointer" }}
                   />
                   <h4>{`${userdetail.firstName} ${userdetail.lastName}`}</h4>
                 </Col>
@@ -147,5 +170,6 @@ export const EditProfile = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

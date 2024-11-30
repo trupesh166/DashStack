@@ -13,17 +13,26 @@ export const DSBreadCrumb = () => {
   const location = useLocation();
   const pathSnippets = location.pathname.split("/").filter((i) => i);
 
+  // Filter out the "admin" segment from the path
+  const filteredSnippets = pathSnippets.filter(
+    (snippet) => snippet !== "admin"
+  );
+
+  // Disable the middle breadcrumb if there are exactly three segments (Home > Security > Protocols)
+  const shouldDisableMiddleBreadcrumb = filteredSnippets.length === 3;
+
   // Generate breadcrumb items dynamically
   const breadcrumbData = [
     {
       title: "Home",
       href: "/",
     },
-    ...pathSnippets.map((snippet, index) => {
-      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+    ...filteredSnippets.map((snippet, index) => {
+      const url = `/${filteredSnippets.slice(0, index + 1).join("/")}`;
       return {
         title: formatTitle(snippet),
-        href: index === pathSnippets.length - 1 ? undefined : url, // No link for the last segment
+        href: index === filteredSnippets.length - 1 ? undefined : url,
+        disabled: index === 1 && shouldDisableMiddleBreadcrumb,
       };
     }),
   ];
@@ -33,7 +42,9 @@ export const DSBreadCrumb = () => {
       separator=">"
       items={breadcrumbData.map((item, index) => ({
         key: index,
-        title: item.href ? (
+        title: item.disabled ? (
+          <span>{item.title}</span> // Display the middle breadcrumb as plain text if disabled
+        ) : item.href ? (
           <Link to={item.href}>{item.title}</Link>
         ) : (
           item.title

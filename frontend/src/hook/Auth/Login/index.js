@@ -24,9 +24,9 @@ export const useLogin = () => {
 
       // Store token based on rememberMe preference
       if (rememberMe) {
-        localStorage.setItem("_token", token);
+        localStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
       } else {
-        sessionStorage.setItem("_token", token);
+        sessionStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
       }
 
       const { role } = jwtDecode(token);
@@ -40,10 +40,6 @@ export const useLogin = () => {
         toast.error("Unauthorized role. Please contact support.");
         navigate("/login");
       }
-    } catch (error) {
-      toast.error(
-        error?.response?.data?.message || "Login failed. Please try again."
-      );
     } finally {
       setIsLoading(false);
     }

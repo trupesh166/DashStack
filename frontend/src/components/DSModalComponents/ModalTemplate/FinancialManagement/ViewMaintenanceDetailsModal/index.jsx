@@ -1,9 +1,9 @@
 import React from "react";
 import { DSModal } from "../../../..";
-import { Flex } from "antd";
+import { Avatar, Flex, Tag } from "antd";
 import clsx from "clsx";
 import Icons from "../../../../../constants/Icons";
-import style from "./ViewMaintenanceDetailsModal.module.css";
+import styles from "./ViewMaintenanceDetailsModal.module.css";
 
 export const ViewMaintenanceDetailsModal = ({
   open,
@@ -11,9 +11,12 @@ export const ViewMaintenanceDetailsModal = ({
   handleCancel,
   handleClose,
   IsFooter,
+  record,
 }) => {
+  if (!record) return null;
+
   return (
-    <div className={style.viewMaintenanceDetails}>
+    <div className={styles.viewMaintenanceDetails}>
       <DSModal
         title="View Maintenance Details"
         open={open}
@@ -29,71 +32,95 @@ export const ViewMaintenanceDetailsModal = ({
           <Flex
             gap={"middle"}
             align="center"
-            className={clsx(style.memberDetail, "mb-5")}
+            className={clsx(styles.memberDetail, "mb-5")}
           >
-            <img
-              src="https://plus.unsplash.com/premium_photo-1682096259050-361e2989706d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8eW91bmclMjBtYW58ZW58MHx8MHx8fDA%3D"
+            <Avatar
+              size={70}
+              src={record.avatar}
               alt="userImage"
-              className={style.img}            />
+              className={styles.img}
+            />
             <div>
-              <h4 className="fw-semibold">Cody Fisher</h4>
-              <h5>Feb 10, 2024</h5>
+              <h4 className="fw-semibold">{record.name}</h4>
+              <h5>{record.date}</h5>
             </div>
           </Flex>
 
-          <Flex className={clsx(style.center, "mb-4")} justify="space-between">
+          <Flex className={clsx(styles.center, "mb-4")} justify="space-between">
             <div>
               <h5>Wing</h5>
-              <h6 style={{ color: "#5678E9" }}>A</h6>
+              <h6 style={{ color: "#5678E9" }}>{record.wingName}</h6>
             </div>
             <div>
               <h5>Unit</h5>
-              <h6 style={{ color: "#202224" }}>1001</h6>
+              <h6 style={{ color: "#202224" }}>{record.unitNumber}</h6>
             </div>
             <div>
               <h5>Status</h5>
-              <h6
-                className="d-flex align-items-center gap-3"
-                style={{
-                  color: "#4F46E5",
-                  backgroundColor: "#F1F0FF",
-                  padding: "5px 12px",
-                  borderRadius: "40px",
-                }}
+              <Tag
+                className={styles.button}
+                bordered={false}
+                color={record.residentStatus === "Owner" ? "blue" : "pink"}
+                icon={
+                  record.residentStatus === "Owner" ? Icons.TagUser : Icons.User
+                }
               >
-                {Icons.TagUser} Owner
-              </h6>
+                {record.residentStatus}
+              </Tag>
             </div>
             <div>
               <h5>Amount</h5>
-              <h6 style={{ color: "#39973D" }}>{Icons.Rupee} 1000</h6>
+              <h6 style={{ color: "#39973D" }}>
+                {Icons.Rupee} {record.amount}
+              </h6>
             </div>
           </Flex>
 
-          <Flex className={style.center} justify="space-between">
+          <Flex className={styles.center} justify="space-between">
             <div>
               <h5>Penalty</h5>
-              <h6 style={{ color: "#202224" }}>1001</h6>
+              <Tag
+                className={styles.button}
+                bordered={false}
+                color={
+                  record.penaltyAmount
+                    ? "var(--clr-danger)"
+                    : "var(--clr-silver)"
+                }
+                icon={record.penaltyAmount ? Icons.Rupee : ""}
+              >
+                {record.penaltyAmount || "--"}
+              </Tag>
             </div>
             <div>
               <h5>Status</h5>
-              <h6
-                className="d-flex align-items-center gap-3"
-                style={{
-                  color: "#FFC313",
-                  backgroundColor: "#FFF9E7",
-                  padding: "5px 12px",
-                  borderRadius: "40px",
-                }}
+              <Tag
+                className={styles.button}
+                bordered={false}
+                color={
+                  record.paymentStatus === "Panding" ? "warning" : "success"
+                }
+                icon={
+                  record.paymentStatus === "Panding"
+                    ? Icons.Timer
+                    : Icons.Verify
+                }
               >
-                {Icons.Timer} Pending
-              </h6>
+                {record.paymentStatus}
+              </Tag>
             </div>
             <div>
               <h5>Payment</h5>
-              <h6 style={{ color: "#202224", backgroundColor: "#F4F4F4" }}>
-                {Icons.Rupee} Cash
-              </h6>
+              <Tag
+                className={styles.button}
+                bordered={false}
+                color={record.paymentMethod === "Online" ? "blue" : "default"}
+                icon={
+                  record.paymentMethod === "Online" ? Icons.Wallet : Icons.Money
+                }
+              >
+                {record.paymentMethod}
+              </Tag>
             </div>
           </Flex>
         </div>

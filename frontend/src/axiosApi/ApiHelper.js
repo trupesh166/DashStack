@@ -45,7 +45,10 @@ export const getMaintenanceDetailsByMember = () =>
 
 // // Unit Management
 export const createUnit = (data) => request("post", "/unit/create", data);
-// export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+
+// Wing Management
+export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
 // // Wing Management
 // export const listWing = (societyId) =>
@@ -53,8 +56,8 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 
 // // Member Management
 // export const listMember = () => request("get", `/auth/user/getUser`);
-// export const createMember = (data) =>
-//   request("post", "/member/createMember", data);
+export const createMember = (data) =>
+  request("post", "/member/createMember", data);
 // export const getMemberById = (memberId) =>
 //   request("get", `/member/list/${memberId}`);
 // export const listByUnit = (unitId) =>

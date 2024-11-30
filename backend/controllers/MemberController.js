@@ -8,9 +8,14 @@ const userModel = require("../models/UserModel");
 class MemberController {
   async createMember(req, res) {
     try {
-      let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo } = req.body;
+      console.log("Request Body:", JSON.stringify(req.body, null, 2));
+console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
+      console.log("body =====> ", req.body)
+      console.log("files =====> ", req.files)
+      return
+      let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, gender } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
-      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
+      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !gender || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
       if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
@@ -52,6 +57,7 @@ class MemberController {
         userId: user._id,
         residentStatus,
         age,
+        gender,
         wing,
         unit,
         familyMember,

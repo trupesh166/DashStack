@@ -6,7 +6,7 @@ const announcementRouter = Router()
 
 announcementRouter.post("/create", asyncHandler(announcementController.createAnnouncement))
 announcementRouter.get("/list/:societyId", asyncHandler(announcementController.listAnnouncement))
-announcementRouter.get("/lsitbyid/:id", asyncHandler(announcementController.listById))
+announcementRouter.get("/listbyid/:id", asyncHandler(announcementController.listById))
 announcementRouter.put("/update/:id", asyncHandler(announcementController.updateAnnouncement))
 announcementRouter.delete("/delete/:id", asyncHandler(announcementController.deleteAnnouncement))
 

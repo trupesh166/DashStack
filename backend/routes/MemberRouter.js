@@ -19,6 +19,6 @@ memberRouter.get('/:societyId', asyncHandler(memberController.listMember));
 memberRouter.get('/list/:memberId', asyncHandler(memberController.getMemberById));
 memberRouter.get('/listbywing/:wingId', asyncHandler(memberController.listMemberByWing));
 memberRouter.get('/listbyunit/:unitId', asyncHandler(memberController.listMemberByUnit));
-memberRouter.put('/update', asyncHandler(memberController.updateMember));
+memberRouter.put('/update',uploadFields, asyncHandler(memberController.updateMember));
 
 module.exports = memberRouter;

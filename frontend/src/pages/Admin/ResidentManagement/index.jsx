@@ -4,21 +4,20 @@ import { DSButton, DSModal, DSCheckbox, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import style from "./ResidentManagement.module.css";
+import styles from "./ResidentManagement.module.css";
+import { useNavigate } from "react-router-dom";
+import { ViewDetailsModal } from "../../../components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
 
 export const ResidentManagement = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeButton, setActiveButton] = useState("Occupied");
   const [tableData, setTableData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.log("response");
         const response = await getUser();
-        console.log(response);
 
         if ((response.message = "Success" && response.data)) {
           const formattedData = response.data.map((item, index) => ({
@@ -35,7 +34,6 @@ export const ResidentManagement = () => {
             vehicle: item.vehicles || "-",
           }));
           setTableData(formattedData);
-          console.log(formattedData);
         } else {
           toast.error("Failed to fetch data.");
         }
@@ -120,6 +118,7 @@ export const ResidentManagement = () => {
               size="small"
               icon={Icons.EyeShow}
               className="clr-cult"
+              onClick={() => setViewDetailsModal(true)}
             />
           </Space>
         ) : (
@@ -128,22 +127,27 @@ export const ResidentManagement = () => {
     },
   ];
 
-  const handleButtonClick = (value) => {
-    console.log(value);
-    setActiveButton(value);
-  };
+  const [viewDetailsModal, setViewDetailsModal] = useState(false);
 
   return (
     <>
       <DSCard
         title="Resident Tenant and Owner Details"
-        className={style.residentManagementScreen}
-        icon={Icons.AddSquare}
-        onClick={() => setIsModalOpen(true)}
+        className={styles.residentManagementScreen}
         button
-        buttonContent="Add New Resident details"
+        headerContent={
+          <>
+            <DSButton
+              variant={"primary"}
+              icon={Icons.AddSquare}
+              onClick={() => navigate("/admin/resident-detail")}
+            >
+              Add New Resident details
+            </DSButton>
+          </>
+        }
       >
-        <div className={style.rmTable}>
+        <div className={styles.rmTable}>
           <DSTable
             tableColumn={columns}
             pagination={false}
@@ -152,42 +156,13 @@ export const ResidentManagement = () => {
           />
         </div>
       </DSCard>
-      <DSModal
-        title={"Residence Status"}
-        open={isModalOpen}
-        handleOk={() => setIsModalOpen(false)}
-        onCancel={() => setIsModalOpen(false)}
-        handleClose={() => setIsModalOpen(false)}
-        IsFooter
-        handleContent={"Save"}
-        disabledButton={false}
-      >
-        <div className={style.cardButton}>
-          <DSButton
-            className={
-              activeButton === "Occupied"
-                ? style.activeButton
-                : style.inactiveButton
-            }
-            onClick={() => handleButtonClick("Occupied")}
-          >
-            Occupied
-          </DSButton>
-          <DSButton
-            className={
-              activeButton === "Vacate"
-                ? style.activeButton
-                : style.inactiveButton
-            }
-            onClick={() => handleButtonClick("Vacate")}
-          >
-            Vacate
-          </DSButton>
-        </div>
-        <div>
-          <DSCheckbox>By submitting, you agree to select Occupied</DSCheckbox>
-        </div>
-      </DSModal>
+
+      {/* Viwe Details Modal */}
+      <ViewDetailsModal
+        title={"View Owner Details"}
+        open={viewDetailsModal}
+        handleClose={() => setViewDetailsModal(false)}
+      />
     </>
   );
 };

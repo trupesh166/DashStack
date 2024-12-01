@@ -177,9 +177,11 @@ export const Register = () => {
           Register
         </DSButton>
 
-        <h6 className="text-center fw-normal">
-          Already have an account? <Link to="/login">Login</Link>
-        </h6>
+        {location.pathname === "/admin/register" && (
+          <h6 className="text-center fw-normal">
+            Already have an account? <Link to="/admin/login">Login</Link>
+          </h6>
+        )}
       </form>
       <SelectSocietyModal
         open={isModalOpen}

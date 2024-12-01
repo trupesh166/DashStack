@@ -19,7 +19,6 @@ class SocietyController {
         return res.status(500).send({ message: "Error creating society." });
       }
 
-      // Create wings based on wingCount
       for (let i = 0; i < wingCount; i++) {
         let letter = String.fromCharCode(65 + i);
         await wingModel.model.create({ wingName: letter, societyId: result._id });

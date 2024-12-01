@@ -5,6 +5,7 @@ class ImportantController {
   // Create Worker Number
   async createWorkerNumber(req, res) {
     try {
+
       const { fullName, phoneNumber, work } = req.body;
 
       // Validate required fields
@@ -28,6 +29,7 @@ class ImportantController {
   // Get all Worker Details
   async getWorkerDetails(req, res) {
     try {
+
       // Fetch all worker details
       const result = await importantModal.model.find();
       if (!result || result.length === 0) {
@@ -35,6 +37,7 @@ class ImportantController {
       }
 
       return res.status(200).send({ message: httpSuccess, data: result });
+
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: 'Error retrieving worker details.', error: error.message });

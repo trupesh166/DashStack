@@ -1,27 +1,97 @@
-import React, { useState } from 'react'
-import { AddMaintenanceModal, DSButton } from '../../../../components';
-import { Flex } from 'antd';
+import React, { useState } from "react";
+import {
+  DSButton,
+  DSCard,
+  DSTabs,
+  SetMaintenance,
+} from "../../../../components";
+import Icons from "../../../../constants/Icons";
+import styles from "./Income.module.css";
+import { Flex } from "antd";
+import { Maintenance } from "../../../../components/FinancialManagement/Income/Maintenance";
+import { OtherIncome } from "../../../../components/FinancialManagement/Income/OtherIncome";
 
 const Income = () => {
+  const [maintenance, setMaintenance] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const onChange = (key) => {
+    setActiveTab(key);
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: (
+        <DSButton
+          variant={activeTab === "1" ? "primary" : "default"}
+          style={{
+            color: activeTab === "1" ? "white" : "black",
+            padding: "8px 16px",
+            borderRadius: "8px",
+          }}
+        >
+          Maintenance
+        </DSButton>
+      ),
+      children: <Maintenance />,
+    },
+    {
+      key: "2",
+      label: (
+        <DSButton
+          variant={activeTab === "2" ? "primary" : "default"}
+          style={{
+            color: activeTab === "2" ? "white" : "black",
+            padding: "8px 16px",
+            borderRadius: "8px",
+          }}
+        >
+          Other Income
+        </DSButton>
+      ),
+      children: <OtherIncome />,
+    },
+  ];
 
   return (
-    <Flex justify='end'>
-      <DSButton
-        variant={"primary"}
-        onClick={() => setIsModalOpen(true)}
-      >
-        Set Maintenance
-      </DSButton>
-      <AddMaintenanceModal
-        open={isModalOpen}
-        handleOk={() => setIsModalOpen(false)}
-        handleCancel={() => setIsModalOpen(false)}
-        handleClose={() => setIsModalOpen(false)}
-      />
-    </Flex>
-  )
-}
+    <>
+      <DSCard className={"mb-3"}>
+        <Flex justify="space-between" align="center">
+          <Flex gap="middle">
+            <div className={styles.maintenanceAmount}>
+              <div className={styles.maintenanceBox}></div>
+              <h5 style={{ fontWeight: "500" }}>Maintenance Amount</h5>
+              <h2 style={{ color: "var(--clr-success)", fontWeight: "bold" }}>
+                {Icons.Rupee} 0
+              </h2>
+            </div>
+            <div className={styles.penaltyAmount}>
+              <div className={styles.penaltyBox}></div>
+              <h5 style={{ fontWeight: "500" }}>Penalty Amount</h5>
+              <h2 style={{ color: "var(--clr-danger)", fontWeight: "bold" }}>
+                {Icons.Rupee} 0
+              </h2>
+            </div>
+          </Flex>
 
-export default Income
+          <DSButton variant={"primary"} onClick={() => setMaintenance(true)}>
+            Set Maintenance
+          </DSButton>
+        </Flex>
+      </DSCard>
+
+      <DSTabs className={styles.tabs} items={items} onChange={onChange} />
+
+      {/* Set Maintenance Modal */}
+      <SetMaintenance
+        open={maintenance}
+        handleOk={() => setMaintenance(false)}
+        handleCancel={() => setMaintenance(false)}
+        handleClose={() => setMaintenance(false)}
+      />
+    </>
+  );
+};
+
+export default Income;

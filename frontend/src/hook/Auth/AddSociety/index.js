@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { createSociety } from "@/axiosApi/ApiHelper";
+import { createSociety, createUnit } from "@/axiosApi/ApiHelper";
 
 export const useAddSociety = (handleClose) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,16 +10,25 @@ export const useAddSociety = (handleClose) => {
     country: "",
     state: "",
     city: "",
-    zipcode: "",
+    zipCode: "",
+    societyType: "",
+    florNumber: "",
+    wingCount: "",
+    unitNumber: "",
+    selectSeries: "",
   });
 
   // Compute if the form is valid
-  const isFormValid = Object.values(formData).every((value) => value !== "");
-
+  const isFormValid = Object.entries(formData).every(([key, value]) => {
+    if (key === "florNumber" && formData.societyType === "tenement") {
+      return true;
+    }
+    return value !== "";
+  });
   // Handle input change
   const handleChange = (e) => {
-    const { societyName, value } = e.target;
-    setFormData((prev) => ({ ...prev, [societyName]: value }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Handle form submission
@@ -32,7 +41,24 @@ export const useAddSociety = (handleClose) => {
       return;
     }
     try {
-      await createSociety(formData);
+      let data = {
+        societyName:formData.societyName,
+        societyAddress:formData.societyAddress,
+        country:formData.country,
+        state:formData.state,
+        city:formData.city,
+        zipCode:formData.zipCode,
+        societyType:formData.societyType,
+        wingCount:Number(formData.wingCount),
+      }
+      let result = await createSociety(data);
+      data = {
+        societyId: result?.data?._id,
+        unitCount: Number(formData.unitNumber),
+        series: formData.selectSeries,
+        floor: Number(formData.florNumber) || 0
+      }
+      await createUnit(data)
       toast.success("Society created successfully!");
       setFormData({
         societyName: "",
@@ -40,7 +66,12 @@ export const useAddSociety = (handleClose) => {
         country: "",
         state: "",
         city: "",
-        zipcode: "",
+        zipCode: "",
+        societyType: "",
+        florNumber: "",
+        wingCount: "",
+        unitNumber: "",
+        selectSeries: "",
       });
       handleClose?.();
     } finally {

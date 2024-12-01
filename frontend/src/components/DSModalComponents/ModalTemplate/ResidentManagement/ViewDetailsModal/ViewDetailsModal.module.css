@@ -1,0 +1,12 @@
+.hr {
+  border: 0;
+  border-top: 1px solid #dbd9d9;
+  margin: 8px 0;
+}
+
+.document {
+  border: 1px solid #dbd9d9;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}

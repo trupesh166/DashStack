@@ -121,8 +121,8 @@ export const useRegister = () => {
         selectSociety: formData.selectSociety,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
+        zipCode:formData.zipCode
       };
-      console.log(apiRequestData);
 
       await register(apiRequestData);
       navigate("/admin/login");

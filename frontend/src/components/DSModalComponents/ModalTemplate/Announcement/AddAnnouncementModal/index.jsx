@@ -1,70 +1,112 @@
-import React from "react";
-import style from "./AddAnnouncementModal.module.css";
-import { DSDatePicker, DSInput, DSModal } from "../../../..";
+import React, { useState, useEffect } from "react";
+import { DSDatePicker, DSInput, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
-import { Flex } from "antd";
+import { Flex, TimePicker } from "antd";
+import useDecodeToken from "@/hook/useDecodeToken";
 
 export const AddAnnouncementModal = ({
   open,
   handleCancel,
   handleClose,
   handleOk,
+  editData,
 }) => {
+  const { societyId } = useDecodeToken();
+
+  const [formData, setFormData] = useState({
+    societyId: "",
+    announcementTitle: "",
+    announcementDescription: "",
+    announcementDate: null,
+    announcementTime: null,
+  });
+
+  useEffect(() => {
+    setFormData({
+      societyId: societyId || "",
+      announcementTitle: editData?.announcementTitle || "",
+      announcementDescription: editData?.announcementDescription || "",
+      announcementDate: editData?.announcementDate || null,
+      announcementTime: editData?.announcementTime || null,
+    });
+  }, [editData, societyId]);
+
+  const handleChange = (key, value) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const handleSave = () => {
+    handleOk(formData);
+  };
+
   return (
-    <>
-      <DSModal
-        title={"Add Announcement"}
-        open={open}
-        closeIcon
-        handleCancel={handleCancel}
-        handleClose={handleClose}
-        handleOk={handleOk}
-        IsFooter={true}
-        handleContent={"Save"}
-        disabledButton={false}
-      >
-        <DSInput
-          className="mb-4"
-          label={"Announcement Title"}
-          placeholder={"Enter Name"}
+    <DSModal
+      title={editData ? "Edit Announcement" : "Add Announcement"}
+      open={open}
+      handleCancel={() => {
+        setFormData({
+          societyId: societyId || "",
+          announcementTitle: "",
+          announcementDescription: "",
+          announcementDate: null,
+          announcementTime: null,
+        });
+        handleCancel();
+      }}
+      handleClose={handleClose}
+      handleOk={handleSave}
+      IsFooter={true}
+      handleContent={"Save"}
+      disabledButton={
+        !formData.announcementTitle ||
+        !formData.announcementDescription ||
+        !formData.announcementDate ||
+        !formData.announcementTime
+      }
+    >
+      {/* Announcement Title */}
+      <DSInput
+        className="mb-4"
+        label="Announcement Title"
+        placeholder="Enter Title"
+        value={formData.announcementTitle}
+        onChange={(e) => handleChange("announcementTitle", e.target.value)}
+      />
+
+      {/* Announcement Description */}
+      <div className="mb-4">
+        <h6>Announcement Description</h6>
+        <TextArea
+          placeholder="Enter Description"
+          autoSize={{ minRows: 2, maxRows: 5 }}
+          value={formData.announcementDescription}
+          onChange={(e) =>
+            handleChange("announcementDescription", e.target.value)
+          }
         />
+      </div>
 
-        <div className="mb-4">
-          <h6 style={{ color: "var(--clr-dark)", fontWeight: 500 }}>
-            Description
-          </h6>
-          <TextArea
-            placeholder="Enter Description"
-            autoSize={{
-              minRows: 1.5,
-              maxRows: 5,
-            }}
-          />
-        </div>
-
-        <Flex
-          justify="space-between"
-          align="center"
-          gap={"middle"}
-          className="mb-4"
-        >
-          <DSDatePicker
-            block={true}
-            label={"Announcement Date"}
-            placeholder={"Select Date"}
-            style={{
-              height: "45px",
-              borderRadius: "10px",
-              padding: "0px 10px",
-            }}
-          />
-          <DSInput
-            block={true}
-            label={"Announcement Time"}
-            placeholder={"Select Time"}
-          />
-        </Flex>
-      </DSModal>
-    </>
+      {/* Announcement Date & Time */}
+      <Flex
+        justify="space-between"
+        align="center"
+        gap="middle"
+        className="mb-4"
+      >
+        <DSDatePicker
+          block
+          label="Date"
+          placeholder="Select Date"
+          value={formData.announcementDate}
+          onChange={(value) => handleChange("announcementDate", value)}
+        />
+        <TimePicker
+          use12Hours
+          format="h:mm a"
+          value={formData.announcementTime}
+          onChange={(value) => handleChange("announcementTime", value)}
+        />
+      </Flex>
+    </DSModal>
   );
 };

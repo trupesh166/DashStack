@@ -4,7 +4,7 @@ const announcementModel = require("../models/AnnouncementModel");
 class AnnouncementController {
   async createAnnouncement(req, res) {
     try {
-      const { societyId, announcementTitle, announcementDescription, announcementDate, announcementTime } = req.body;
+    const { societyId, announcementTitle, announcementDescription, announcementDate, announcementTime } = req.body;
       if (!societyId || !announcementTitle || !announcementDescription || !announcementDate || !announcementTime) {
         return res.status(400).send({ message: 'Bad Request: Missing required fields' });
       }

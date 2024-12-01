@@ -23,12 +23,14 @@ import {
   ForgetPassword,
   OTP,
   ResetPassword,
+  Announcement,
+  Expense,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
-import { Announcement, Expense } from "../pages/Admin";
 import ProtectedRoute from "./ProtectedRoute";
 import Income from "../pages/Admin/FinancialMaintenance/Income";
 import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
+import { Resident } from "../pages/Admin/ResidentManagement/Resident";
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -51,7 +53,7 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           path: "admin",
-          // element: <ProtectedRoute />,
+          element: <ProtectedRoute />,
           children: [
             {
               element: <DashboardLayout items={AdminAsideData} />,
@@ -61,7 +63,7 @@ const DashStackRoute = createBrowserRouter(
                   element: <AdminDashBoard />,
                 },
                 {
-                  path: "editProfile",
+                  path: "profile",
                   element: <EditProfile />,
                 },
                 {
@@ -69,11 +71,24 @@ const DashStackRoute = createBrowserRouter(
                   element: <ResidentManagement />,
                 },
                 {
+                  path: "resident-detail",
+                  element: <Resident />,
+                },
+                {
                   path: "financial",
                   children: [
                     {
                       path: "income",
-                      element: <Income />,
+                      children: [
+                        {
+                          index: true,
+                          element: <Income />,
+                        },
+                        {
+                          path: "event-member-list",
+                          element: <Income />,
+                        },
+                      ],
                     },
                     {
                       path: "expense",

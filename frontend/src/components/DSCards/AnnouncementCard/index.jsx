@@ -1,9 +1,15 @@
-import { Card } from "antd";
-import styles from "../EventCard/EventCard.module.css";
+import { DSEventsCard } from "@/components/";
 
-export const AnnouncementCard = ({ title, description, extra, date, time }) => {
+export const AnnouncementCard = ({
+  title,
+  description,
+  date,
+  time,
+  items,
+  onAction,
+}) => {
   return (
-    <Card title={title} extra={extra} className={styles.card}>
+    <DSEventsCard title={title} items={items} onAction={onAction}>
       <div className="card-grid">
         <h6>Announcement Date</h6>
         <h6 className="fw-medium lh-base">{date}</h6>
@@ -14,8 +20,8 @@ export const AnnouncementCard = ({ title, description, extra, date, time }) => {
       </div>
       <div>
         <h6>Description</h6>
-        <span className="fw-medium lh-base h6">{description}</span>
+        <span className="fw-medium lh-base h6 word-break">{description}</span>
       </div>
-    </Card>
+    </DSEventsCard>
   );
 };

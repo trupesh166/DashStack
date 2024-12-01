@@ -1,28 +1,21 @@
 import React, { useState } from "react";
-import style from "./AddImportantNumberModal.module.css";
+import styles from "./AddImportantNumberModal.module.css";
 import { DSInput, DSModal } from "../../../..";
+import { useAddImportantNumber } from "../../../../../hook/Admin/ImportantNumbers/AddImportantNumbers";
 
 export const AddImportantNumberModal = ({
   open,
   handleCancel,
   handleClose,
   handleOk,
+  handleInputChange,
+  formValues
 }) => {
-  const [formValues, setFormValues] = useState({
-    fullName: "",
-    phoneNumber: "",
-    work: "",
-  });
+
+  // const { handleInputChange, formValues } = useAddImportantNumber()
 
   const isDisabled =
-    !formValues.fullName || !formValues.phoneNumber || !formValues.work;
-
-  const handleInputChange = (field, value) => {
-    setFormValues((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+    !formValues?.fullName || !formValues?.phoneNumber || !formValues?.work;
 
   return (
     <DSModal
@@ -41,8 +34,9 @@ export const AddImportantNumberModal = ({
         label={"Full Name"}
         placeholder={"Enter Full Name"}
         require
-        value={formValues.fullName}
-        onChange={(e) => handleInputChange("fullName", e.target.value)}
+        value={formValues?.fullName}
+        name={"fullName"}
+        onChange={handleInputChange}
       />
 
       <DSInput
@@ -50,8 +44,9 @@ export const AddImportantNumberModal = ({
         label={"Phone Number"}
         placeholder={"+91"}
         require
-        value={formValues.phoneNumber}
-        onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+        value={formValues?.phoneNumber}
+        name={"phoneNumber"}
+        onChange={handleInputChange}
       />
 
       <DSInput
@@ -59,8 +54,9 @@ export const AddImportantNumberModal = ({
         label={"Work"}
         placeholder={"Enter Work"}
         require
-        value={formValues.work}
-        onChange={(e) => handleInputChange("work", e.target.value)}
+        value={formValues?.work}
+        name={"work"}
+        onChange={handleInputChange}
       />
     </DSModal>
   );

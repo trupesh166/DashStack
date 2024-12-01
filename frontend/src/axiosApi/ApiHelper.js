@@ -44,7 +44,7 @@ export const getMaintenanceDetailsByMember = () =>
   request("get", `/maintain-detail/list/`);
 
 // // Unit Management
-// export const createUnit = (data) => request("post", "/unit/create", data);
+export const createUnit = (data) => request("post", "/unit/create", data);
 // export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // // Wing Management
@@ -74,55 +74,57 @@ export const getMaintenanceDetailsByMember = () =>
 //   request("delete", `/expanse/delete/${expanseId}`);
 
 // // Notes Management
-// export const createNotes = (data) =>
-//   request("post", "/expanseNote/create", data);
-// export const listNotes = (societyId) =>
-//   request("get", `/expanseNote/list/${societyId}`);
-// export const updateNote = (societyId, data) =>
-//   request("put", `/expanseNote/update/${societyId}`, data);
-// export const deleteNote = (id) =>
-//   request("delete", `/expanseNote/delete/${id}`);
+export const createNotes = (data) =>
+  request("post", "/expanseNote/create", data);
+export const listNotes = (societyId) =>
+  request("get", `/expanseNote/list/${societyId}`);
+export const updateNote = (societyId, data) =>
+  request("put", `/expanseNote/update/${societyId}`, data);
+export const deleteNote = (id) =>
+  request("delete", `/expanseNote/delete/${id}`);
 
-// // Facility Management
-// export const createFacility = (data) =>
-//   request("post", "/facility/addfacility", data);
-// export const listFacility = (societyId) =>
-//   request("get", `/facility/getfacility/${societyId}`);
-// export const editFacility = (id, data) =>
-//   request("put", `/facility/updatefacility/${id}`, data);
+// Facility Management
+export const createFacility = (data) =>
+  request("post", "/facility/addfacility", data);
+export const listFacility = (societyId) =>
+  request("get", `/facility/getfacility/${societyId}`);
+export const editFacility = (id, data) =>
+  request("put", `/facility/updatefacility/${id}`, data);
 
-// // Complaint Management
-// export const createComplaint = (data) =>
-//   request("post", "/complain/create", data);
-// export const listComplaint = (data) => request("post", "/complain/list", data);
-// export const updateComplaint = (id, data) =>
-//   request("put", `/complain/update/${id}`, data);
-// export const deleteComplaint = (id) =>
-//   request("delete", `/complain/delete/${id}`);
+// Complaint Management
+export const createComplaint = (data) =>
+  request("post", "/complain/create", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
+export const updateComplaint = (id, data) =>
+  request("put", `/complain/update/${id}`, data);
+export const deleteComplaint = (id) =>
+  request("delete", `/complain/delete/${id}`);
 
-// // Security Protocol Management
-// export const createSecurityProtocol = (data) =>
-//   request("post", "/securityprotocol/createprotocol", data);
-// export const listSecurityProtocol = (societyId) =>
-//   request("get", `/securityprotocol/getprotocol/${societyId}`);
-// export const updateSecurityProtocol = (id, data) =>
-//   request("put", `/securityprotocol/updatesecurityprotocol/${id}`, data);
-// export const deleteSecurityProtocol = (id) =>
-//   request("delete", `/securityprotocol/deleteprotocol/${id}`);
+// Security Protocol Management
+export const createSecurityProtocol = (data) =>
+  request("post", "/securityprotocol/createprotocol", data);
+export const listSecurityProtocol = (societyId) =>
+  request("get", `/securityprotocol/getprotocol/${societyId}`);
+export const updateSecurityProtocol = (id, data) =>
+  request("put", `/securityprotocol/updatesecurityprotocol/${id}`, data);
+export const deleteSecurityProtocol = (id) =>
+  request("delete", `/securityprotocol/deleteprotocol/${id}`);
 
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
 
-// // Announcement Management
-// export const createAnnouncement = (data) =>
-//   request("post", "/announcement/create", data);
-// export const listAnnouncement = (societyId) =>
-//   request("get", `/announcement/list/${societyId}`);
-// export const updateAnnouncement = (id, data) =>
-//   request("put", `/announcement/update/${id}`, data);
-// export const deleteAnnouncement = (id) =>
-//   request("delete", `/announcement/delete/${id}`);
+// Announcement Management
+export const createAnnouncement = (data) =>
+  request("post", "/announcement/create", data);
+export const listAnnouncement = (societyId) =>
+  request("get", `/announcement/list/${societyId}`);
+export const ViewAnnouncement = (societyId) =>
+  request("get", `/announcement/listbyid/${societyId}`);
+export const updateAnnouncement = (id, data) =>
+  request("put", `/announcement/update/${id}`, data);
+export const deleteAnnouncement = (id) =>
+  request("delete", `/announcement/delete/${id}`);
 
 // // Security Guard Management
 // export const createGuard = (data) =>
@@ -133,6 +135,16 @@ export const listVisitor = (societyId) =>
 //   request("put", `/security/updatesecurity/${id}`, data);
 // export const deleteGuard = (id) =>
 //   request("delete", `/security/deletesecurity/${id}`);
+
+// Important Number Management
+export const createImportantNumber = (data) =>
+  request("post", "/workernumber/create", data);
+export const listImportantNumber = (societyId) =>
+  request("get", `/workernumber/list/${societyId}`);
+export const editImportantNumber = (id, data) =>
+  request("put", `/workernumber/updateimportantnumber/${id}`, data);
+export const deleteImportantNumber = (id) =>
+  request("delete", `/workernumber/delete/${id}`);
 
 // // Image Management
 // export const imageDetails = (data) => request("post", "/image-details", data);

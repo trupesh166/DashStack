@@ -9,17 +9,12 @@ class UnitController {
       console.log(req.body)
       let { unitCount, series, societyId, floor } = req.body
 
-      // Validate input
       if (!unitCount || !societyId || !series || !floor) {
         return res.status(400).send({ message: "unitCount, societyId, series, and floor are required." })
       }
-
-      // Ensure floor is not zero, set to 1 if it is
       if (floor === 0) {
         floor = 1
       }
-
-      // Fetch the society data
       const societyData = await societyModel.model.findOne({ _id: societyId })
       if (!societyData) {
         return res.status(404).send({ message: "Society not found." })
@@ -137,6 +132,17 @@ class UnitController {
     } catch (error) {
       console.error(error)
       return res.status(500).send({ message: "Error deleting unit. Please try again later.", error: error.message })
+    }
+  }
+  async TotalUnit(req, res) {
+    try {
+  
+      const result = await unitModel.model.countDocuments()
+    
+      return res.status(200).send({ message: "Total numbers of unit", data: result });
+    } catch (error) {
+      console.error(error)
+      return res.status(500).send({ message: "Error fetching total unit. Please try again later.", error: error.message })
     }
   }
 }

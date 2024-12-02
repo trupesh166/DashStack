@@ -4,8 +4,8 @@ const complaintModel = require("../models/ComplaintModel");
 class ComplaintController {
   async createComplaint(req, res) {
     try {
-      const { memberId, complainerName, complaintName, discription, wingId, unitId, priorityStatus, complaintype } = req.body;
-      if (!memberId || !complainerName || !complaintName || !discription || !wingId || !unitId || !priorityStatus || !complaintype) {
+      const { memberId, societyId ,complainerName, complaintName, discription, wingId, unitId, priorityStatus, complaintype } = req.body;
+      if (!memberId || !societyId || !complainerName || !complaintName || !discription || !wingId || !unitId || !priorityStatus || !complaintype) {
         return res.status(400).json({ message: "Missing required fields. Please provide all the necessary information." });
       }
 
@@ -120,6 +120,8 @@ class ComplaintController {
   async getComplainById(req, res) {
     try {
       const { memberId } = req.params;
+      console.log(memberId);
+      
       if (!memberId) {
         return res.status(400).json({ message: "Member ID is required." });
       }

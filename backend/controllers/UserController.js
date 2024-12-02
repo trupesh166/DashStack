@@ -190,6 +190,8 @@ class UserController {
       throw httpErrors[500]
     }
   }
+  
+  
 }
 
 const userController = new UserController();

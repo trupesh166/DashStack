@@ -45,7 +45,10 @@ export const getMaintenanceDetailsByMember = () =>
 
 // // Unit Management
 export const createUnit = (data) => request("post", "/unit/create", data);
-// export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+
+// Wing Management
+export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
 // Wing Management
 export const listWing = (societyId) =>
@@ -72,6 +75,7 @@ export const updateExpense = (expanseId, data) =>
   request("put", `/expanse/update/${expanseId}`, data);
 export const deleteExpense = (expanseId) =>
   request("delete", `/expanse/delete/${expanseId}`);
+
 
 // // Notes Management
 export const createNotes = (data) =>

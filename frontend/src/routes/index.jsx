@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AdminAsideData, StyleGuideAsideMenu } from "@/constants";
+import { AdminAsideData, ResidentAsidData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants";
 import {
   AdminDashBoard,
   Cards,
@@ -25,6 +25,22 @@ import {
   ResetPassword,
   Announcement,
   Expense,
+
+  /* Resident Panel */
+  ResidentDashboard,
+  PersonalDetail,
+  ServiceAndComplaint,
+  EventsParticipation,
+  AccessForums,
+  Polls,
+  CommunitiesDiscussion,
+  MaintenanceInvoices,
+  OtherIncomeInvoice,
+  SecurityProtocolsResident,
+
+  /* Security Panel */
+  VisitorTracking,
+  EmergencyManagement,
 } from "@/pages/";
 import { AuthLayouts, DashboardLayout } from "@/layouts";
 import ProtectedRoute from "./ProtectedRoute";
@@ -156,14 +172,86 @@ const DashStackRoute = createBrowserRouter(
           ],
         },
         {
-          path: "security",
-          element: <DashboardLayout />,
+          /*  Resident Route */
+          path: "resident",
+          element: <ProtectedRoute />,
           children: [
             {
-              index: true,
-              element: "<AdminDashBoard />",
-            },
-          ],
+              element: <DashboardLayout items={ResidentAsidData} />,
+              children: [
+                {
+                  index: true,
+                  element: <ResidentDashboard />,
+                },
+                {
+                  path: "personal-detail",
+                  element: <PersonalDetail />,
+                },
+                {
+                  path: "service",
+                  element: <ServiceAndComplaint />,
+                },
+                {
+                  path: "events",
+                  element: <EventsParticipation />,
+                },
+                {
+                  path: "community",
+                  children: [
+                    {
+                      path: "access-forums",
+                      element: <AccessForums />,
+                    },
+                    {
+                      path: "polls",
+                      element: <Polls />,
+                    },
+                    {
+                      path: "communities-discussion",
+                      element: <CommunitiesDiscussion />,
+                    },
+                  ]
+                },
+                {
+                  path: "payment",
+                  children: [
+                    {
+                      path: "maintenance-invoices",
+                      element: <MaintenanceInvoices />,
+                    },
+                    {
+                      path: "other-income-invoice",
+                      element: <OtherIncomeInvoice />,
+                    },
+                  ]
+                },
+                {
+                  path: "security-protocols",
+                  element: <SecurityProtocolsResident />,
+                },
+              ]
+            }
+          ]
+        },
+        {
+          /* Security Route */
+          path: "security",
+          element: <ProtectedRoute />,
+          children: [
+            {
+              element: <DashboardLayout items={SecurityAsideData} />,
+              children: [
+                {
+                  index: true,
+                  element: <VisitorTracking />,
+                },
+                {
+                  path: "emergency",
+                  element: <EmergencyManagement />
+                }
+              ],
+            }
+          ]
         },
         {
           /* Authentication Routes For Super Admin */

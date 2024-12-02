@@ -50,10 +50,6 @@ export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 // Wing Management
 export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
-// Wing Management
-export const listWing = (societyId) =>
-  request("get", `/wing/list/${societyId}`);
-
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
 export const createMember = (data) =>

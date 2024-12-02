@@ -3,8 +3,32 @@ import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { useState } from "react";
 import { AddExpensesDetailsModal, DeleteModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
+// import { useAddExpense } from "../../../../hook/Admin/FinancialMaintenance";
+import { useAddExpense } from "@/hook/Admin/FinancialMaintenance";
 
 export const Expense = () => {
+
+  const {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    date,
+    setDate,
+    amount,
+    setAmount,
+    bill,
+    handleFileChange,
+    handleFileRemove,
+    isModalOpen,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    handleSubmit,
+  } = useAddExpense(() => {
+    // Callback after successfully adding/updating an expense
+    console.log("Expense submitted successfully!");
+  });
 
   const data = [
     {
@@ -125,13 +149,13 @@ export const Expense = () => {
           <DSButton
             variant={"primary"}
             icon={Icons.AddSquare}
-            onClick={() => setAddExpensesModalOpen(true)}
+            onClick={openCreateModal}
           >
             Add New Expenses details
           </DSButton>
         }
         button={true}
-        onClick={() => setAddExpensesModalOpen(true)}
+        onClick={openCreateModal}
       >
         <DSTable tableColumn={columns} dataSource={data} pagination={false} />
 
@@ -140,10 +164,25 @@ export const Expense = () => {
 
         {/* Add Expense Modal */}
         <AddExpensesDetailsModal
-          open={addExpensesModalOpen}
-          handleOk={() => setAddExpensesModalOpen(false)}
-          handleCancel={() => setAddExpensesModalOpen(false)}
-          handleClose={() => setAddExpensesModalOpen(false)}
+          open={isModalOpen}
+          handleOk={handleSubmit}
+          handleCancel={closeModal}
+          handleClose={closeModal}
+          addExpensesDetails={{
+            title,
+            description,
+            date,
+            amount,
+            bill,
+          }}
+          setAddExpensesDetails={{
+            setTitle,
+            setDescription,
+            setDate,
+            setAmount,
+            handleFileChange,
+            handleFileRemove,
+          }}
         />
 
         {/* Edit Expense Modal */}

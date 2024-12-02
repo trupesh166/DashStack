@@ -17,6 +17,7 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
 .errorMessage {
   margin-top: var(--space-xs);
   color: var(--clr-danger);

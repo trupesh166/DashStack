@@ -113,6 +113,7 @@ export const deleteSecurityProtocol = (id) =>
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
+export const createVisitor = (data) => request("post", `/visitor/createvisitor`, data)
 
 // Announcement Management
 export const createAnnouncement = (data) =>

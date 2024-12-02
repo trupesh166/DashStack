@@ -96,6 +96,103 @@ export const AdminAsideData = [
   ),
 ];
 
+export const ResidentAsidData = [
+  getItem("Dashboard", "/resident", Icons.Dashboard, "/resident"),
+  getItem(
+    "Personal Detail",
+    "/resident/personal-detail",
+    Icons.User,
+    "/resident/personal-detail",
+  ),
+  getItem(
+    "Service And Complaint",
+    "/resident/service",
+    Icons.User,
+    "/resident/service",
+  ),
+  getItem(
+    "Events Participation",
+    "/resident/events",
+    Icons.User,
+    "/resident/events",
+  ),
+  getItem(
+    "Community",
+    "community",
+    Icons.User,
+    null,
+    [
+      getItem(
+        "Access Forums",
+        "/resident/community/access-forums",
+        null,
+        "/resident/community/access-forums",
+      ),
+      getItem(
+        "Polls",
+        "/resident/community/polls",
+        null,
+        "/resident/community/polls",
+      ),
+      getItem(
+        "Communities Discussion",
+        "/resident/community/communities-discussion",
+        null,
+        "/resident/community/communities-discussion",
+      ),
+    ]
+  ),
+  getItem(
+    "Payment Portal",
+    "payment_portal",
+    Icons.User,
+    null,
+    [
+      getItem(
+        "Maintenance Invoices",
+        "/resident/payment/maintenance-invoices",
+        null,
+        "/resident/payment/maintenance-invoices",
+      ),
+      getItem(
+        "Other Income Invoice",
+        "/resident/payment/other-income-invoice",
+        null,
+        "/resident/payment/other-income-invoice",
+      ),
+    ]
+  ),
+  getItem(
+    "Security Protocols",
+    "/resident/security-protocols",
+    Icons.User,
+    "/resident/security-protocols",
+  ),
+]
+
+export const SecurityAsideData = [
+  getItem(
+    "Security",
+    "security",
+    Icons.SecurityGuard,
+    null,
+    [
+      getItem(
+        "Visitor Tracking",
+        "/security",
+        null,
+        "/security",
+      ),
+      getItem(
+        "Emergency Management",
+        "/security/emergency",
+        null,
+        "/security/emergency"
+      ),
+    ]
+  )
+]
+
 const StyleGuideGetItem = (label, key, path, children) => {
   const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
 

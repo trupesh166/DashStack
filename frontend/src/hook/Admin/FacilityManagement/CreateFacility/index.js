@@ -5,8 +5,8 @@ import UseDecodeToken from "@/hook/UseDecodeToken";
 import dayjs from "dayjs";
 
 export const useCreateFacility = (onSuccess) => {
-  const [createFacilityModal, setCreateFacilityModal] = useState(false);
   const { societyId } = UseDecodeToken();
+  const [createFacilityModal, setCreateFacilityModal] = useState(false);
 
   // State for form inputs
   const [facilityName, setFacilityName] = useState("");
@@ -16,6 +16,7 @@ export const useCreateFacility = (onSuccess) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingFacilityId, setEditingFacilityId] = useState(null);
+  const [editingFacility, setEditingFacility] = useState(null);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -78,9 +79,11 @@ export const useCreateFacility = (onSuccess) => {
     setScheduleDate(null);
     setRemindBefore("");
     setEditingFacilityId(null);
+    setEditingFacility(null);
   };
 
   const openEditModal = (facility) => {
+    setEditingFacility(facility);
     setEditingFacilityId(facility._id);
     setFacilityName(facility.facilityName);
     setDescription(facility.description);
@@ -109,5 +112,8 @@ export const useCreateFacility = (onSuccess) => {
     isSubmitting,
     openCreateModal,
     openEditModal,
+    editingFacility,
+    setEditingFacility,
+    setEditingFacilityId,
   };
 };

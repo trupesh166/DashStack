@@ -27,7 +27,6 @@ export const EditOtherIncomeModal = ({
         dueDate: record.dueDate ? new Date(record.dueDate) : null,
       });
     }
-    console.log(record);
   }, [record]);
 
   const handleInputChange = (field, value) => {

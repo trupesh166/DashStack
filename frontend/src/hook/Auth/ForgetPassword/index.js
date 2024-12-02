@@ -23,7 +23,6 @@ export const useForgetPassword = () => {
     try {
       setLoading(true);
 
-      console.log(email);
       const response = await forgotPassword(email);
 
       if (response.data?.status === 1) {

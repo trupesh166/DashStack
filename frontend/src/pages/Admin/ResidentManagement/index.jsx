@@ -17,7 +17,6 @@ export const ResidentManagement = () => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        console.log("response");
         const response = await getUser();
 
         if ((response.message = "Success" && response.data)) {
@@ -35,7 +34,6 @@ export const ResidentManagement = () => {
             vehicle: item.vehicles || "-",
           }));
           setTableData(formattedData);
-          console.log(formattedData);
         } else {
           toast.error("Failed to fetch data.");
         }
@@ -129,7 +127,7 @@ export const ResidentManagement = () => {
     },
   ];
 
-  const [viewDetailsModal, setViewDetailsModal] = useState(false)
+  const [viewDetailsModal, setViewDetailsModal] = useState(false);
 
   return (
     <>

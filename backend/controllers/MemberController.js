@@ -15,44 +15,56 @@ console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
       return
       let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, gender } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
+
       if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !gender || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
       if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
       phoneNumber = Number(phoneNumber);
       age = Number(age);
+
+      // Map family members and convert data types
       familyMember = familyMember.map((member) => ({
         ...member,
         age: Number(member.age),
         phoneNumber: Number(member.phoneNumber),
       }));
-      let password = randomstring.generate({ length: 8, charset: "alphabetic" });
+
+      // Generate random password and hash it
+      const password = randomstring.generate({ length: 8, charset: "alphabetic" });
       const encryptedPass = bcrypt.hashSync(password, 5);
-      if (!encryptedPass) throw httpErrors[500];
+      if (!encryptedPass) {
+        return res.status(500).send({ message: "Error generating password." });
+      }
 
-      const user = await userModel.model.create({ fullName, email, password: encryptedPass, phoneNumber, role: "Member" })
-      if (!user) throw httpErrors[500]
+      // Create user for the member
+      const user = await userModel.model.create({ fullName, email, password: encryptedPass, phoneNumber, role: "Member" });
+      if (!user) {
+        return res.status(500).send({ message: "Error creating user." });
+      }
 
+      // Upload the files and get paths
       profileImage = profileImage[0].path;
       aadharFront = aadharFront[0].path;
       aadharBack = aadharBack[0].path;
       veraBill = veraBill[0].path;
       agreement = agreement[0].path;
 
-      const text = `Dear ${fullName},
+      // Send email with login credentials
+      const emailText = `Dear ${fullName},
 
-             We have generated a password for your account. Please use the following credentials to log in:
-                 **Password**: ${password}
+      We have generated a password for your account. Please use the following credentials to log in:
+      **Password**: ${password}
 
-       For your security, we recommend changing your password once you log in. If you didn’t request this password, please contact our support team immediately.
+      For your security, we recommend changing your password once you log in. If you didn’t request this password, please contact our support team immediately.
 
-       Best regards,
-       Society-management-Team`;
-      const subject = `Login Crediantial For Dashstack`;
+      Best regards,
+      Society-management-Team`;
 
-      sendEmail({ to: email, subject, text });
+      const subject = "Login Credential For Dashstack";
+      sendEmail({ to: email, subject, text: emailText });
 
-      let result;
+      // Prepare member data for storage
       const data = {
         userId: user._id,
         residentStatus,
@@ -67,67 +79,81 @@ console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
         aadharBack,
         veraBill,
         agreement,
-        societyId: societyId
+        societyId,
       };
+
+      let result;
       if (residentStatus === "Tenant") {
         OwnerInfo = JSON.parse(OwnerInfo);
-        result = await memberModel.model.create({ ...data, OwnerInfo: OwnerInfo });
-        if (!result) throw httpErrors[500];
+        result = await memberModel.model.create({ ...data, OwnerInfo });
       } else {
         result = await memberModel.model.create({ ...data });
-        if (!result) throw httpErrors[500];
       }
+
+      if (!result) {
+        return res.status(500).send({ message: "Error saving member data." });
+      }
+
       return res.status(200).send({ message: httpSuccess });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error creating member.", error: error.message });
     }
   }
 
   async listMember(req, res) {
     try {
-      const { societyId } = req.params
-      const Member = await memberModel.model.find({ societyId: societyId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
-      if (!Member) throw httpErrors[500];
-      return res.status(200).send({ message: httpSuccess, data: Member });
+      const { societyId } = req.params;
+      const members = await memberModel.model.find({ societyId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      if (!members || members.length === 0) {
+        return res.status(404).send({ message: "No members found for the given society." });
+      }
+      return res.status(200).send({ message: httpSuccess, data: members });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error retrieving members.", error: error.message });
     }
   }
 
   async listMemberByWing(req, res) {
     try {
-      const { wingId } = req.params
-      const Member = await memberModel.model.find({ wing: wingId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
-      if (!Member) throw httpErrors[500];
-      return res.status(200).send({ message: httpSuccess, data: Member });
+      const { wingId } = req.params;
+      const members = await memberModel.model.find({ wing: wingId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      if (!members || members.length === 0) {
+        return res.status(404).send({ message: "No members found in the given wing." });
+      }
+      return res.status(200).send({ message: httpSuccess, data: members });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error retrieving members by wing.", error: error.message });
     }
   }
+
   async listMemberByUnit(req, res) {
     try {
-      const { unitId } = req.params
-      const Member = await memberModel.model.findOne({ unit: unitId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
-      if (!Member) throw httpErrors[500];
-      return res.status(200).send({ message: httpSuccess, data: Member });
+      const { unitId } = req.params;
+      const member = await memberModel.model.findOne({ unit: unitId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      if (!member) {
+        return res.status(404).send({ message: "No member found for the given unit." });
+      }
+      return res.status(200).send({ message: httpSuccess, data: member });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error retrieving member by unit.", error: error.message });
     }
   }
 
   async getMemberById(req, res) {
     try {
-      const { memberId } = req.params
-      const Member = await memberModel.model.findOne({ _id: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }])
-      if (!Member) throw httpErrors[500];
-      return res.status(200).send({ message: httpSuccess, data: Member });
+      const { memberId } = req.params;
+      const member = await memberModel.model.findOne({ _id: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      if (!member) {
+        return res.status(404).send({ message: "Member not found." });
+      }
+      return res.status(200).send({ message: httpSuccess, data: member });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error retrieving member.", error: error.message });
     }
   }
 
@@ -135,50 +161,53 @@ console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
     try {
       let { residentStatus, unitStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, memberId } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
-      unitStatus = "Occupied";
-      // just for testing
-      (residentStatus = "Owner"),
-        (OwnerInfo = {
-          fullName: "jnsdlkjnjsndkjansdf",
-          phoneNumber: 1234598760,
-          address: "14 kajsdkjfkj asnd kjasnkjfjs kjnakjdfja knbkjnawnkf b",
-        });
-      //
 
-      if (!memberId || !residentStatus || !unitStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !familyMember || !vehicle) throw httpErrors[400];
-      if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
+      unitStatus = "Occupied"; // Default to "Occupied" for simplicity
+      // Check required fields
+      if (!memberId || !residentStatus || !unitStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !familyMember || !vehicle) {
+        return res.status(400).send({ message: "All required fields must be provided." });
+      }
+      if (residentStatus === "Tenant" && !OwnerInfo) {
+        return res.status(400).send({ message: "Owner information is required for tenants." });
+      }
+
+      // Parse family and vehicle data
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
       phoneNumber = Number(phoneNumber);
       age = Number(age);
-      familyMember = familyMember.map((member) => ({
-        ...member,
-        age: Number(member.age),
-        phoneNumber: Number(member.phoneNumber),
-      }));
-      const Memeber = await memberModel.model.findOne({ _id: memberId })
-      const user = await userModel.model.findOneAndUpdate({ _id: Memeber.userId }, { fullName, email, phoneNumber, role: "Member" }, { new: true })
-      if (!user) throw httpErrors[500]
+
+      // Find existing member and update user details
+      const member = await memberModel.model.findOne({ _id: memberId });
+      if (!member) {
+        return res.status(404).send({ message: "Member not found." });
+      }
+
+      const user = await userModel.model.findOneAndUpdate({ _id: member.userId }, { fullName, email, phoneNumber, role: "Member" }, { new: true });
+      if (!user) {
+        return res.status(500).send({ message: "Error updating user details." });
+      }
+
+      // Handle file paths
       profileImage = profileImage[0].path;
       aadharFront = aadharFront[0].path;
       aadharBack = aadharBack[0].path;
       veraBill = veraBill[0].path;
       agreement = agreement[0].path;
 
-      const text = `Dear ${fullName},
+      // Send email with login details
+      const emailText = `Dear ${fullName},
 
-             We have generated a password for your account. Please use the following credentials to log in:
-                 **Password**: ${password}
+      We have updated your account details. Please use the following credentials to log in:
+      **Password**: [your current password]
 
-       For your security, we recommend changing your password once you log in. If you didn’t request this password, please contact our support team immediately.
+      Best regards,
+      Society-management-Team`;
 
-       Best regards,
-       Society-management-Team`;
-      const subject = `Login Crediantial For Dashstack`;
+      const subject = "Updated Login Credentials";
+      sendEmail({ to: email, subject, text: emailText });
 
-      sendEmail({ to: email, subject, text });
-
-      let result;
+      // Prepare update data
       const data = {
         userId: user._id,
         residentStatus,
@@ -194,21 +223,25 @@ console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
         veraBill,
         agreement,
       };
+
+      let result;
       if (residentStatus === "Tenant") {
-        result = await memberModel.model.create({ ...data, OwnerInfo: OwnerInfo });
-        if (!result) throw httpErrors[500];
+        result = await memberModel.model.findOneAndUpdate({ _id: memberId }, { ...data, OwnerInfo: JSON.parse(OwnerInfo) }, { new: true });
       } else {
-        result = await memberModel.model.create({ ...data });
-        if (!result) throw httpErrors[500];
+        result = await memberModel.model.findOneAndUpdate({ _id: memberId }, { ...data }, { new: true });
       }
+
+      if (!result) {
+        return res.status(500).send({ message: "Error updating member data." });
+      }
+
       return res.status(200).send({ message: httpSuccess });
     } catch (error) {
       console.log(error);
-      throw httpErrors[500];
+      return res.status(500).send({ message: "Error updating member.", error: error.message });
     }
   }
 }
 
 const memberController = new MemberController();
-
 module.exports = memberController;

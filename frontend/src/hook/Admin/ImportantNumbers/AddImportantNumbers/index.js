@@ -12,15 +12,14 @@ export const useAddImportantNumber = (handleClose) => {
     work: "",
   });
 
-//   const { fetchimportantNumber } = useListImportantNumber()
+  //   const { fetchimportantNumber } = useListImportantNumber()
 
   // Compute if the form is valid
   const isFormValid = Object.values(formValues).every((value) => value !== "");
 
   // Handle input change
   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      console.log(name, value)
+    const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -34,8 +33,6 @@ export const useAddImportantNumber = (handleClose) => {
       return;
     }
     try {
-        console.log("formValues==== ",formValues)
-        console.log("societyId==== ",societyId)
       await createImportantNumber({
         ...formValues,
         societyId: societyId,
@@ -52,5 +49,11 @@ export const useAddImportantNumber = (handleClose) => {
     }
   };
 
-  return { handleInputChange, handleSubmit, formValues, isFormValid, isLoading };
+  return {
+    handleInputChange,
+    handleSubmit,
+    formValues,
+    isFormValid,
+    isLoading,
+  };
 };

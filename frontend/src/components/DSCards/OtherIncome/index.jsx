@@ -11,28 +11,21 @@ export const OtherIncomeCard = ({
   date,
   dueDate,
   description,
+  items,
+  onAction,
 }) => {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [editOtherIncome, setEditOtherIncome] = useState(false);
   const [deleteOtherIncome, setDeleteOtherIncome] = useState(false);
-  const items = [
-    {
-      label: "1st menu item",
-      key: "1",
-    },
-    {
-      label: "2nd menu item",
-      key: "2",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-    },
-  ];
 
   return (
     <>
-      <DSEventsCard title={title} className={styles.card} items={items}>
+      <DSEventsCard
+        title={title}
+        className={styles.card}
+        items={items}
+        onAction={onAction}
+      >
         <div className="card-grid">
           <h6>Amount Per Member</h6>
           <h6 className="fw-medium lh-base">

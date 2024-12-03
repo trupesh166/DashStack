@@ -13,7 +13,7 @@ export const MaintenanceCard = ({
   const [status, setStatus] = useState(false);
 
   return (
-    <Card title="Maintenance" extra={status ? "Success" : "Pending"}>
+    <Card title="Maintenance" extra={<h6 style={{ padding: "5px 12px", color: "var(--clr-white)", backgroundColor: "var(--clr-periwinkle)", borderRadius: "58px" }} >{status ? "Success" : "Pending"}</h6>}>
       <div className="card-grid">
         <h6>Bill Date</h6>
         <h6>{date}</h6>

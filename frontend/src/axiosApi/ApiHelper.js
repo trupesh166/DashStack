@@ -147,5 +147,5 @@ export const editImportantNumber = (id, data) =>
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
 
-// // Image Management
-// export const imageDetails = (data) => request("post", "/image-details", data);
+// Image Management
+export const imageDetails = (data) => request("post", "/image-details", data);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import dayjs from "dayjs";
-import { createExpense, updateExpense } from "@/axiosApi/ApiHelper";
+import { createExpense, updateExpense, deleteExpense } from "@/axiosApi/ApiHelper";
 import UseDecodeToken from "@/hook/UseDecodeToken";
 import toast from "react-hot-toast";
 
@@ -14,6 +14,7 @@ export const useAddExpense = (onSubmitSuccess) => {
   const [bill, setBill] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [editingExpenseId, setEditingExpenseId] = useState(null);
 
   const openCreateModal = () => {
@@ -22,13 +23,15 @@ export const useAddExpense = (onSubmitSuccess) => {
   };
 
   const openEditModal = (expense) => {
+    console.log("expense =====> ", expense)
     const formattedDate = dayjs(expense.date);
     setEditingExpenseId(expense._id);
     setTitle(expense.title);
-    setDescription(expense.description);
+    setDescription(expense.discription);
     setDate(formattedDate);
     setAmount(expense.amount);
-    setBill(expense.bill || null); // Preload bill if applicable
+    setBill(expense.billDocument || null); // Preload bill if applicable
+    setIsEdit(true)
     setIsModalOpen(true);
   };
 
@@ -44,6 +47,7 @@ export const useAddExpense = (onSubmitSuccess) => {
     setAmount("");
     setBill(null);
     setEditingExpenseId(null);
+    setIsEdit(false)
   };
 
   const handleFileChange = (event) => {
@@ -94,6 +98,17 @@ export const useAddExpense = (onSubmitSuccess) => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteExpense(id)
+      console.log(response)
+      if (onSubmitSuccess) onSubmitSuccess();
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+      toast.error("Failed to Delete expense.");
+    }
+  }
+
   return {
     title,
     setTitle,
@@ -112,5 +127,7 @@ export const useAddExpense = (onSubmitSuccess) => {
     openEditModal,
     closeModal,
     handleSubmit,
+    isEdit,
+    handleDelete
   };
 };

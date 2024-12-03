@@ -4,10 +4,10 @@ import Icons from "@/constants/Icons";
 import { useState } from "react";
 import { AddExpensesDetailsModal, DeleteModal, EditExpensesModal, ViewExpenseDetailsModal } from "../../../../components";
 // import { useAddExpense } from "../../../../hook/Admin/FinancialMaintenance";
-import { useAddExpense } from "@/hook/Admin/FinancialMaintenance";
+import { useAddExpense, useListExpense, useDeleteExpense } from "@/hook/Admin/FinancialMaintenance";
 
 export const Expense = () => {
-
+  const { dataListExpense, fetchListExpense } = useListExpense()
   const {
     title,
     setTitle,
@@ -25,37 +25,17 @@ export const Expense = () => {
     openEditModal,
     closeModal,
     handleSubmit,
-  } = useAddExpense(() => {
-    // Callback after successfully adding/updating an expense
-    console.log("Expense submitted successfully!");
-  });
+    isEdit,
+    handleDelete
+  } = useAddExpense(fetchListExpense);
 
-  const data = [
-    {
-      key: "1",
-      title: "Rent or Mortgage",
-      description: "A visual representation of your spending categories...",
-      date: "10/02/2024",
-      amount: 1000,
-      billFormat: "JPG",
-    },
-    {
-      key: "2",
-      title: "Housing Costs",
-      description: "Track the fluctuations in your spending over we time...",
-      date: "11/02/2024",
-      amount: 1000,
-      billFormat: "PDF",
-    },
-    {
-      key: "3",
-      title: "Property Taxes",
-      description: "Easily compare your planned budget against we your...",
-      date: "12/02/2024",
-      amount: 1000,
-      billFormat: "JPG",
-    },
-  ];
+  const {
+    expenseDelete,
+    deleteExpenseData,
+    setDeleteExpenseData,
+    showDeleteModal,
+    setShowDeleteModal,
+  } = useDeleteExpense(fetchListExpense);
 
   const columns = [
     {
@@ -65,7 +45,7 @@ export const Expense = () => {
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "discription",
       key: "description",
       ellipsis: {
         showTitle: false,
@@ -89,16 +69,18 @@ export const Expense = () => {
     },
     {
       title: "Bill Format",
-      dataIndex: "billFormat",
+      dataIndex: "billDocument",
       key: "billFormat",
-      render: (format) => (
-        <Tag
-          icon={format === "PDF" ? Icons.Pdf : Icons.Jpg}
-          color={format === "PDF" ? "volcano" : "geekblue"}
-        >
-          {format}
-        </Tag>
-      ),
+      render: (data) => {
+        return (
+          <Tag
+            icon={data?.format === "pdf" ? Icons.Pdf : Icons.Jpg}
+            color={data?.format === "pdf" ? "volcano" : "geekblue"}
+          >
+            {data?.format}
+          </Tag>
+        )
+      }
     },
     {
       title: "Action",
@@ -110,6 +92,7 @@ export const Expense = () => {
             size="small"
             icon={Icons.Edit}
             className="clr-success"
+            onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
@@ -123,22 +106,35 @@ export const Expense = () => {
             size="small"
             icon={Icons.Trash}
             className="clr-danger"
-            onClick={() => setDeleteComplaint(true)}
+            onClick={() => {
+              setShowDeleteModal(true)
+              setDeleteExpenseData(record)
+            }}
           />
         </Space>
       ),
     },
   ];
 
-  const [addExpensesModalOpen, setAddExpensesModalOpen] = useState(false);
-  const [editExpensesModalOpen, setEditExpensesModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
-  const [deleteComplaint, setDeleteComplaint] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
 
   const handleViewClick = (expense) => {
     setSelectedExpense(expense);
     setViewModalOpen(true);
+  };
+
+  const handleDeleteExpense = async () => {
+    if (deleteExpenseData) {
+      const result = await expenseDelete(deleteExpenseData._id); // API Call to delete
+      if (result.success) {
+        setShowDeleteModal(false);
+        setDeleteExpenseData(null);
+        await refetchAnnouncements();
+      } else {
+        console.log("Error deleting announcement");
+      }
+    }
   };
 
   return (
@@ -157,7 +153,7 @@ export const Expense = () => {
         button={true}
         onClick={openCreateModal}
       >
-        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListExpense} pagination={false} />
 
       </DSCard>
       <div>
@@ -168,6 +164,7 @@ export const Expense = () => {
           handleOk={handleSubmit}
           handleCancel={closeModal}
           handleClose={closeModal}
+          isEdit={isEdit}
           addExpensesDetails={{
             title,
             description,
@@ -186,13 +183,13 @@ export const Expense = () => {
         />
 
         {/* Edit Expense Modal */}
-        <EditExpensesModal
+        {/* <EditExpensesModal
           open={editExpensesModalOpen}
           handleOk={() => setEditExpensesModalOpen(false)}
           handleCancel={() => setEditExpensesModalOpen(false)}
           handleClose={() => setEditExpensesModalOpen(false)}
           expense={selectedExpense}
-        />
+        /> */}
 
         {/* View Expense Modal */}
         <ViewExpenseDetailsModal
@@ -206,10 +203,10 @@ export const Expense = () => {
         {/* Remove Expense Modal */}
         <DeleteModal
           title={"Delete Expense?"}
-          isModalOpen={deleteComplaint}
-          handleClose={() => setDeleteComplaint(false)}
-          handleOk={() => setDeleteComplaint(false)}
-          onCancel={() => setDeleteComplaint(false)}
+          isModalOpen={showDeleteModal}
+          handleClose={() => setShowDeleteModal(false)}
+          handleOk={handleDeleteExpense}
+          onCancel={() => setShowDeleteModal(false)}
           children={"Are you sure you want to delate this?"}
         />
 

@@ -10,6 +10,7 @@ export const AddExpensesDetailsModal = ({
   handleClose,
   addExpensesDetails,
   setAddExpensesDetails,
+  isEdit
 }) => {
   const billRef = useRef(null);
 
@@ -38,11 +39,10 @@ export const AddExpensesDetailsModal = ({
   // };
 
   const isFormValid = title && description && date && amount && bill;
-
   return (
     <div className={styles.addExpensesDetails}>
       <DSModal
-        title="Add Expenses Details"
+        title={isEdit ? "Edit Expenses Details" : "Add Expenses Details"}
         open={open}
         closeIcon
         handleOk={() => handleOk(addExpensesDetails)}
@@ -122,9 +122,10 @@ export const AddExpensesDetailsModal = ({
                 <div className="d-flex gap-3 align-items-center">
                   <h2>{Icons.Jpg}</h2>
                   <div>
-                    <h6>{bill.name}</h6>
+                    <h6>{ bill.name ? bill.name : bill.display_name}</h6>
                     <h6 className={styles.p}>
-                      {(bill.size / (1024 * 1024)).toFixed(2)} MB
+                      {( bill.size ? (bill.size / (1024 * 1024)) : (bill.bytes / (1024 * 1024))?.toFixed(2))} MB
+                      {/* {(isEdit ? (bill.bytes / (1024 * 1024)) : (bill.size / (1024 * 1024)))?.toFixed(2)} MB */}
                     </h6>
                   </div>
                 </div>

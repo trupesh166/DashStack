@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UseDecodeToken from "@/hook/UseDecodeToken";
-import { listExpense } from "@/axiosApi/ApiHelper";
+import { listExpense, imageDetails } from "@/axiosApi/ApiHelper";
 
 export const useListExpense = () => {
   const [dataListExpense, setDataListExpense] = useState([]);
@@ -9,8 +9,23 @@ export const useListExpense = () => {
   const fetchListExpense = async () => {
     if (!societyId) return;
     try {
-      const response = await listExpense(societyId);
-      setDataListExpense(response.data);
+      let response = await listExpense(societyId);
+      response = response?.data?.data
+      
+      const imageUrls = response.reduce((acc, item) => {
+        if (item.billDocument) {
+          acc[item._id] = item.billDocument;
+        }
+        return acc;
+      }, {});
+      const imageData = await imageDetails(imageUrls)
+
+      const mergedData = response.map(item => ({
+        ...item,
+        billDocument: imageData.data[item._id] || null
+      }));
+      
+      setDataListExpense(mergedData);
     } catch (err) {
       console.error("Failed to fetch Note:", err);
     }

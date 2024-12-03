@@ -63,7 +63,7 @@ class UserController {
         const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
         await sendEmail({ to: user.email, subject, text });
 
-        res.status(200).json({ message: 'OTP sent to your email.' });
+        res.status(200).send({ message: 'OTP sent to your email.' });
     } catch (error) {
         res.status(500).json({ message: 'Error processing request.', error: error.message });
     }
@@ -88,7 +88,8 @@ class UserController {
   }
   async resetPassword(req, res){
     try {
-      const { email, newPassword } = req.body;
+      const { newPassword } = req.body;
+      const { email } = req.session
         const user = await userModel.model.findOne({ email: email });
 
         if (!user) {

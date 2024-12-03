@@ -15,10 +15,10 @@ export const register = (data) =>
   request("post", "/society-handler/create", data);
 export const loginUser = (data) => request("post", "/user/login", data);
 export const forgotPassword = (data) =>
-  request("post", "/auth/forgot-password", data);
-export const verifyOtp = (data) => request("post", "/auth/verify-otp", data);
+  request("post", "/user/forgot-password", data);
+export const verifyOtp = (data) => request("post", "/user/verify-otp", data);
 export const resetPassword = (data) =>
-  request("post", "/auth/reset-password", data);
+  request("post", "/user/reset-password", data);
 
 /* Society  */
 export const createSociety = (data) => request("post", "/society/create", data);

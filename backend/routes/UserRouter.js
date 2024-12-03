@@ -11,5 +11,7 @@ userRouter.post("/forgot-password", asyncHandler(userController.forgotPassword))
 userRouter.post("/verify-otp", asyncHandler(userController.verifyOtp))
 userRouter.post("/reset-password", asyncHandler(userController.resetPassword))
 userRouter.put("/edit-profile",authenticate, asyncHandler(userController.editProfile))
+userRouter.get("/searchuser", asyncHandler(userController.searchUserByName))
+userRouter.get("/userdetails",authenticate , asyncHandler(userController.UserDetails))
 
 module.exports = userRouter

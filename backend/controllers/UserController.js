@@ -9,6 +9,8 @@ const sendEmail = require("../mailconfig/Nodemailer");
 const { generateOtp } = require('../mailconfig/otpService')
 const jwt = require("jsonwebtoken")
 const session = require("express-session")
+const announcementModel = require("../models/AnnouncementModel")
+const maintenanceDetailsModel = require("../models/MaintenanceDetailsModel")
 
 class UserController {
   async loginUser(req, res) {
@@ -176,8 +178,6 @@ class UserController {
       return res.status(500).json({ message: "Error updating profile.", error: error.message });
     }
   }
-  
-
   async authenticationPermission(req, res) {
     try {
       const { id, password } = req.body // id : Society Chairman Id
@@ -190,8 +190,64 @@ class UserController {
       throw httpErrors[500]
     }
   }
-  
-  
+  async searchUserByName(req,res) {
+    try {
+      const {name} = req.body ;
+
+      console.log(name);
+      
+      if(!name || name.length < 2){
+        return res.status(400).json({ message: "Please provide a valid search term (at least 2 characters)." });
+      }
+
+      //  This searches for users whose fullName field matches the regex pattern.
+      const regex = new RegExp(name , 'i');
+      const users = await userModel.model.find({fullName : regex}).select('fullName email phoneNumber')
+
+      if(users.length === 0){
+        return res.status(400).json({ message: "No users found matching your search term."});
+      }
+
+      return res.status(200).json({
+        message: "Prodile Find",
+        data: users,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Error Searching User.", error: error.message });
+    }
+  }
+  async UserDetails(req,res) {
+    try {
+      
+      const userId = req.user._id ;
+      const user = await userModel.model.findById(userId);
+      if(!user) return res.status(400).json({ message: "User not found" });
+      
+      const memberDetails = await memberModel.model.findOne({userId : userId}).populate('familyMember').populate("vehicle");
+      if(!memberDetails) return res.status(400).json({ message: "member not found" });
+      
+      const maintenanceDetails = await maintenanceDetailsModel.model.find({memberId : memberDetails._id})
+      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id, penaltyAmount: { $gt: 0 } });
+      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id, paymentStatus:"Pending"});
+      const annoucements = await announcementModel.model.find({societyId : memberDetails.societyId});
+      
+      const responseData = {
+        userDetails : user ,
+        memberDetails : memberDetails ,
+        familyMembers : memberDetails.familyMember ,
+        vehicles : memberDetails.vehicle ,
+        maintenance : maintenanceDetails,
+        pendingMaintenance : pendingMaintenance ,
+        dueMaintenance : dueMaintenance ,
+        annoucements : annoucements    
+      }
+      return res.status(200).json({ message: "User details fetch successfully.", data : responseData });  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Error Fetching User Details.", error: error.message });
+    }   
+  }
 }
 
 const userController = new UserController();

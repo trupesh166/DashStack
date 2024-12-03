@@ -1,113 +1,70 @@
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-import toast from "react-hot-toast";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import UseDecodeToken from "../hook/UseDecodeToken";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+
+const adminRoutes = [
+  "/admin",
+  "/admin/residents",
+  "/admin/financial",
+  "/admin/facility",
+  "/admin/complaint",
+  "/admin/security",
+  "/admin/guard",
+  "/admin/announcement",
+];
+const securityRoutes = ["/security"];
+const authRestrictedRoutes = [
+  "/admin/login",
+  "/admin/register",
+  "/login",
+  "/forgot-password",
+  "/otp",
+  "/reset-password",
+];
 
 export default function ProtectedRoute() {
-  // const [isAuthenticated, setIsAuthenticated] = useState(null);
-  // const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const isAdminRoute = adminRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
+  const isSecurityRoute = securityRoutes.some((route) =>
+    location.pathname.startsWith(route)
+  );
+  const isAuthRestrictedRoute = authRestrictedRoutes.includes(
+    location.pathname
+  );
 
-  // useEffect(() => {
-  //   const checkAuth = () => {
-  //     const token = localStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
-
-  //     if (!token) {
-  //       setIsAuthenticated(false);
-  //       return;
-  //     }
-
-  //     try {
-  //       const decodedToken = jwtDecode(token);
-  //       const { userData } = decodedToken;
-  //       setUserRole(userData.role);
-  //       setIsAuthenticated(true);
-  //     } catch (error) {
-  //       toast.error("Error decoding token:", error.message);
-  //       setIsAuthenticated(false);
-  //       localStorage.removeItem(import.meta.env.VITE_TOKEN_NAME);
-  //     }
-  //   };
-
-  //   checkAuth();
-  // }, [location]);
+  const { token } = UseDecodeToken();
 
   // useEffect(() => {
-  //   if (isAuthenticated === true && userRole) {
-  //     const currentPath = location.pathname;
-
-  //     const adminRoutes = [
-  //       "/admin",
-  //       "/admin/residents",
-  //       "/admin/financial/income",
-  //       "/admin/financial/expense",
-  //       "/admin/financial/note",
-  //       "/admin/facility",
-  //       "/admin/complaint/create",
-  //       "/admin/complaint/request",
-  //       "/admin/security/visitors",
-  //       "/admin/security/protocols",
-  //       "/admin/guard",
-  //       "/admin/announcement",
-  //     ];
-
-  //     const userRoutes = ["/"];
-  //     const securityRoutes = ["/security"];
-  //     const authRestrictedRoutes = [
-  //       "/login",
-  //       "/admin/login",
-  //       "/admin/register",
-  //     ];
-
-  //     // Redirect to the appropriate dashboard if accessing auth routes while authenticated
-  //     if (authRestrictedRoutes.includes(currentPath)) {
-  //       switch (userRole) {
-  //         case "user":
-  //           navigate("/");
-  //           break;
-  //         case "admin":
-  //           navigate("/admin");
-  //           break;
-  //         case "security":
-  //           navigate("/security");
-  //           break;
-  //       }
-  //       return;
+  //   console.log(token);
+  //   if (!token) {
+  //     if (isAdminRoute) {
+  //       navigate("/admin/login");
+  //       toast.error("Admin Token Not Found");
+  //     } else {
+  //       navigate("/login");
+  //       toast.error("Not Found");
   //     }
-
-  //     switch (userRole) {
-  //       case "user":
-  //         if (!userRoutes.includes(currentPath)) {
-  //           navigate("/");
-  //         }
-  //         break;
-  //       case "admin":
-  //         if (!adminRoutes.includes(currentPath)) {
-  //           navigate("/admin");
-  //         }
-  //         break;
-  //       case "security":
-  //         if (!securityRoutes.includes(currentPath)) {
-  //           navigate("/security");
-  //         }
-  //         break;
-  //     }
-  //   }
-  // }, [isAuthenticated, userRole, navigate, location]);
-
-  // if (isAuthenticated === null) {
-  //   return null;
-  // }
-
-  // if (!isAuthenticated) {
-  //   if (location.pathname.startsWith("/admin")) {
-  //     return <Navigate to="/admin/login" replace />;
   //   } else {
-  //     return <Navigate to="/login" replace />;
+  //     if (isAuthRestrictedRoute) {
+  //       switch (token.role) {
+  //         case "Chairman":
+  //           navigate("/admin");
+  //         case "Security":
+  //           navigate("/security");
+  //         case "Member":
+  //           navigate("/member");
+  //         default:
+  //           navigate("/");
+  //       }
+  //     }
   //   }
-  // }
+  // }, [location.pathname]);
 
+  // Allow access to appropriate routes based on role
   return <Outlet />;
 }

@@ -1,22 +1,17 @@
-import { createContext, useContext, useState } from "react";
 import { RouterProvider } from "react-router-dom";
+import { DSLoader } from "./components/DSLoader";
 import DashStackRoute from "./routes";
+import { Suspense } from "react";
 import "./assets/css/style.css";
 
-// export const HeaderBreadCrumb = createContext();
-
 function App() {
-  // const [isBreadCrumb, setIsBreadCrumb] = useState([]);
-
   return (
     <>
-      {/* <HeaderBreadCrumb.Provider value={{ isBreadCrumb, setIsBreadCrumb }}> */}
-      <RouterProvider router={DashStackRoute} />
-      {/* </HeaderBreadCrumb.Provider> */}
+      <Suspense fallback={<DSLoader />}>
+        <RouterProvider router={DashStackRoute} />
+      </Suspense>
     </>
   );
 }
-
-// export const useBreadCrumb = () => useContext(HeaderBreadCrumb);
 
 export default App;

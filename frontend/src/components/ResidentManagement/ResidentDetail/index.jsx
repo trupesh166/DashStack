@@ -83,7 +83,8 @@ const ResidentDetail = () => {
             <Col span={8}>
               <DSInput
                 label={"Phone Number"}
-                type="text"
+                type="tel"
+                maxLength={13}
                 placeholder={"+91"}
                 require={true}
               />
@@ -92,7 +93,7 @@ const ResidentDetail = () => {
             <Col span={8}>
               <DSInput
                 label={"Email Address"}
-                type="text"
+                type="email"
                 placeholder={"Enter Email Address"}
               />
             </Col>
@@ -124,8 +125,9 @@ const ResidentDetail = () => {
                 <Col span={8}>
                   <DSInput
                     label={"Owner Phone"}
-                    type="text"
+                    type="tel"
                     placeholder={"+91"}
+                    maxLength={13}
                     require={true}
                   />
                 </Col>

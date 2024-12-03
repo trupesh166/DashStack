@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Divider } from "antd";
+import { Card, Divider } from "antd";
 import { DSButton } from "@/components/";
 import Icons from "@/constants/Icons";
-import { DSCard } from "../..";
 
 export const MaintenanceCard = ({
   date,
@@ -14,7 +13,7 @@ export const MaintenanceCard = ({
   const [status, setStatus] = useState(false);
 
   return (
-    <DSCard title="Maintenance" extra={status ? "Success" : "Pending"}>
+    <Card title="Maintenance" extra={status ? "Success" : "Pending"}>
       <div className="card-grid">
         <h6>Bill Date</h6>
         <h6>{date}</h6>
@@ -43,6 +42,6 @@ export const MaintenanceCard = ({
       <DSButton block variant="primary" onClick={() => setStatus(!status)}>
         Pay Now
       </DSButton>
-    </DSCard>
+    </Card>
   );
 };

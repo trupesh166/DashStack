@@ -33,7 +33,7 @@ export const DSHeader = () => {
       )}
     >
       <div className="d-flex align-items-center justify-content-center gap-xl">
-        {location.pathname == "/admin" ? (
+        {location.pathname == "/admin" || location.pathname == "/resident" ? (
           <DSInput placeholder={"Search"} prefix={Icons.Search} />
         ) : (
           <DSBreadCrumb separator=">" admin />

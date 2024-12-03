@@ -69,16 +69,17 @@ export const Announcement = () => {
   return (
     <>
       <DSHead
-        title="Announcements || SMC"
-        description="Stay updated with the latest announcements from your society."
-        keywords="society, announcements, updates, community"
-        ogTitle="Announcements || SMC"
-        ogDescription="Keep up with the latest news and updates from your society."
-        ogUrl="https://dashstack-smc.web.app/admin/announcement"
+        title="Expanse Note || SMC"
+        description="Manage your financial notes and announcements effectively with Expanse Note."
+        keywords="financial, notes, society, announcements, updates"
+        ogTitle="Expanse Note || SMC"
+        ogDescription="Stay organized and keep track of your society's financial notes with Expanse Note."
+        ogUrl="http://localhost:5173/admin/financial/note"
         twitterCard="summary_large_image"
-        twitterTitle="Announcements || SMC"
-        twitterDescription="Catch up with the latest society announcements."
+        twitterTitle="Expanse Note || SMC"
+        twitterDescription="Catch up with the latest financial updates and notes from your society."
       />
+
       <DSCard
         title="Announcement"
         headerContent={

@@ -11,9 +11,8 @@ import {
   useListFacilityManagement,
   useCreateFacility,
 } from "@/hook/Admin/FacilityManagement";
-import styles from "./FacilityManagement.module.css";
-import moment from "moment";
 import dayjs from "dayjs";
+import styles from "./FacilityManagement.module.css";
 
 export const FacilityManagement = () => {
   const { dataFacilityManagement, fetchAnnouncements } =
@@ -47,7 +46,6 @@ export const FacilityManagement = () => {
 
   const openEditModal = (facility) => {
     const formattedDate = dayjs(facility.serviceDate);
-    console.log(facility)
     if (formattedDate.isValid()) {
       setEditingFacility(facility);
       setEditingFacilityId(facility._id);

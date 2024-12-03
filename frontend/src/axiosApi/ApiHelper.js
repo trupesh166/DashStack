@@ -45,43 +45,47 @@ export const getMaintenanceDetailsByMember = () =>
 
 // // Unit Management
 export const createUnit = (data) => request("post", "/unit/create", data);
-// export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
+export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
-// // Wing Management
+// Wing Management
+export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
+
+// Wing Management
 // export const listWing = (societyId) =>
 //   request("get", `/wing/list/${societyId}`);
 
-// // Member Management
-// export const listMember = () => request("get", `/auth/user/getUser`);
-// export const createMember = (data) =>
-//   request("post", "/member/createMember", data);
-// export const getMemberById = (memberId) =>
-//   request("get", `/member/list/${memberId}`);
-// export const listByUnit = (unitId) =>
-//   request("get", `/member/listbyunit/${unitId}`);
+// Member Management
+export const listMember = () => request("get", `/auth/user/getUser`);
+export const createMember = (data) =>
+  request("post", "/member/createMember", data);
+export const getMemberById = (memberId) =>
+  request("get", `/member/list/${memberId}`);
+export const listByUnit = (unitId) =>
+  request("get", `/member/listbyunit/${unitId}`);
 
-// // Event Management
-// export const createEvent = (data) => request("post", "/event/create", data);
-// export const getEvents = (id) => request("get", `/event/${id}`);
+// Event Management
+export const createEvent = (data) => request("post", "/event/create", data);
+export const getEvents = (id) => request("get", `/event/${id}`);
 
-// // Expense Management
-// export const createExpense = (data) => request("post", "/expanse/create", data);
-// export const listExpense = (societyId) =>
-//   request("get", `/expanse/list/${societyId}`);
-// export const updateExpense = (expanseId, data) =>
-//   request("put", `/expanse/update/${expanseId}`, data);
-// export const deleteExpense = (expanseId) =>
-//   request("delete", `/expanse/delete/${expanseId}`);
+// Expense Management
+export const createExpense = (data) => request("post", "/expanse/create", data);
+export const listExpense = (societyId) =>
+  request("get", `/expanse/list/${societyId}`);
+export const updateExpense = (expanseId, data) =>
+  request("put", `/expanse/update/${expanseId}`, data);
+export const deleteExpense = (expanseId) =>
+  request("delete", `/expanse/delete/${expanseId}`);
+
 
 // // Notes Management
-// export const createNotes = (data) =>
-//   request("post", "/expanseNote/create", data);
-// export const listNotes = (societyId) =>
-//   request("get", `/expanseNote/list/${societyId}`);
-// export const updateNote = (societyId, data) =>
-//   request("put", `/expanseNote/update/${societyId}`, data);
-// export const deleteNote = (id) =>
-//   request("delete", `/expanseNote/delete/${id}`);
+export const createNotes = (data) =>
+  request("post", "/expanseNote/create", data);
+export const listNotes = (societyId) =>
+  request("get", `/expanseNote/list/${societyId}`);
+export const updateNote = (societyId, data) =>
+  request("put", `/expanseNote/update/${societyId}`, data);
+export const deleteNote = (id) =>
+  request("delete", `/expanseNote/delete/${id}`);
 
 // Facility Management
 export const createFacility = (data) =>
@@ -94,7 +98,7 @@ export const editFacility = (id, data) =>
 // Complaint Management
 export const createComplaint = (data) =>
   request("post", "/complain/create", data);
-export const listComplaint = (data) => request("post", "/complain/list", data);
+export const listComplaint = (data) => request("get", "/complain/list", data);
 export const updateComplaint = (id, data) =>
   request("put", `/complain/update/${id}`, data);
 export const deleteComplaint = (id) =>
@@ -113,6 +117,7 @@ export const deleteSecurityProtocol = (id) =>
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
+export const createVisitor = (data) => request("post", `/visitor/createvisitor`, data)
 
 // Announcement Management
 export const createAnnouncement = (data) =>

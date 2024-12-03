@@ -47,12 +47,11 @@ export const EditProfile = () => {
 
   const handleSubmitData = (e) => {
     e.preventDefault();
-    console.log(userdetail);
   };
 
   return (
     <>
-    
+
     <div className={styles.editProfile}>
       <div className={styles.profileCard}>
         <div className={styles.profile}>

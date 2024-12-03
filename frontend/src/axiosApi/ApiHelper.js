@@ -48,9 +48,6 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // Wing Management
-export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
-
-// Wing Management
 export const listWing = (societyId) =>
   request("get", `/wing/list/${societyId}`);
 
@@ -75,7 +72,6 @@ export const updateExpense = (expanseId, data) =>
   request("put", `/expanse/update/${expanseId}`, data);
 export const deleteExpense = (expanseId) =>
   request("delete", `/expanse/delete/${expanseId}`);
-
 
 // // Notes Management
 export const createNotes = (data) =>
@@ -117,7 +113,8 @@ export const deleteSecurityProtocol = (id) =>
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
-export const createVisitor = (data) => request("post", `/visitor/createvisitor`, data)
+export const createVisitor = (data) =>
+  request("post", `/visitor/createvisitor`, data);
 
 // Announcement Management
 export const createAnnouncement = (data) =>

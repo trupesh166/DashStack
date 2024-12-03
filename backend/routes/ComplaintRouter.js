@@ -5,11 +5,11 @@ const complaintController = require("../controllers/ComplaintController");
 const complaintRouter = Router()
 
 complaintRouter.post("/create", asyncHandler(complaintController.createComplaint))
-complaintRouter.post("/list", asyncHandler(complaintController.listAllComplain))
+complaintRouter.get("/list", asyncHandler(complaintController.listAllComplain))
 complaintRouter.put("/update/:id", asyncHandler(complaintController.updateComplaint))
 complaintRouter.delete("/delete/:id", asyncHandler(complaintController.deleteComplain))
 complaintRouter.get("/listComplain/:societyId", asyncHandler(complaintController.listComplain))
 complaintRouter.get("/listRequest/:societyId", asyncHandler(complaintController.listRequest))
-complaintRouter.get("/listById/:memeberId", asyncHandler(complaintController.createComplaint))
+complaintRouter.get("/listById/:memberId", asyncHandler(complaintController.getComplainById))
 
 module.exports = complaintRouter

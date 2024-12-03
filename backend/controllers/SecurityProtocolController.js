@@ -41,6 +41,25 @@ class SecurityProtocolController {
       return res.status(500).json({ message: "Server error occurred. Please try again later.", error: error.message });
     }
   }
+  async getSecurityProtocolsById(req, res) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({ message: "Society ID is required." });
+      }
+
+      const result = await securityProtocolModel.model.find({ _id : id });
+      if (!result || result.length === 0) {
+        return res.status(404).json({ message: "No security protocols found for the given society." });
+      }
+
+      return res.status(200).json({ message: httpSuccess, data: result });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Server error occurred. Please try again later.", error: error.message });
+    }
+  }
 
   async deleteProtocols(req, res) {
     try {

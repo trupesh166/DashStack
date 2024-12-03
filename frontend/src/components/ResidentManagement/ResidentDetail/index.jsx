@@ -1,34 +1,70 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ResidentDetail.module.css";
 import { Avatar, Col, Row } from "antd";
 import { DSCard, DSInput, DSSelect } from "../..";
 import Icons from "../../../constants/Icons";
+import { useAddResident } from "../../../hook/Admin/ResidentManagement/AddResident";
+import { listUnit, listWing } from "../../../axiosApi/ApiHelper";
+import UseDecodeToken from "../../../hook/UseDecodeToken";
 
-const ResidentDetail = () => {
+const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFiles, setUserPhoto, setUploadedFiles, formData, handleInputChange, ownerInfo, handleOwnerInfoChange }) => {
   const aadharFrontRef = useRef(null);
   const aadharBackRef = useRef(null);
   const addressProofRef = useRef(null);
   const rentAgreementRef = useRef(null);
   const userPhotoRef = useRef(null);
 
-  const [userPhoto, setUserPhoto] = useState(null);
-  const [residentType, setResidentType] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState({
-    aadharFront: null,
-    aadharBack: null,
-    addressProof: null,
-    rentAgreement: null,
-  });
+  const { societyId } = UseDecodeToken()
+  // const { userPhoto, residentType, setResidentType, uploadedFiles, setUserPhoto, setUploadedFiles, formData, handleInputChange,
+  //   //  ownerInfo
+  // } = useAddResident()
+  const [wing, setWing] = useState([])
+  const [unit, setUnit] = useState([])
+  const [selectWingId, setSelectWingId] = useState("")
+
+  // const [userPhoto, setUserPhoto] = useState(null);
+  // const [residentType, setResidentType] = useState("");
+  // const [uploadedFiles, setUploadedFiles] = useState({
+  //   aadharFront: null,
+  //   aadharBack: null,
+  //   addressProof: null,
+  //   rentAgreement: null,
+  // });
+
+  // const handleFileChange = (event, fileType) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setUploadedFiles((prevState) => ({
+  //       ...prevState,
+  //       [fileType]: {
+  //         name: file.name,
+  //         size: (file.size / (1024 * 1024)).toFixed(2),
+  //       },
+  //     }));
+  //   }
+  // };
+
+  // const handleFileRemove = (fileType) => {
+  //   setUploadedFiles((prevState) => ({
+  //     ...prevState,
+  //     [fileType]: null,
+  //   }));
+  // };
+
+  // const handleUserPhotoChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setUserPhoto(URL.createObjectURL(file));
+  //   }
+  // };
+
 
   const handleFileChange = (event, fileType) => {
     const file = event.target.files[0];
     if (file) {
       setUploadedFiles((prevState) => ({
         ...prevState,
-        [fileType]: {
-          name: file.name,
-          size: (file.size / (1024 * 1024)).toFixed(2),
-        },
+        [fileType]: file
       }));
     }
   };
@@ -40,12 +76,54 @@ const ResidentDetail = () => {
     }));
   };
 
-  const handleUserPhotoChange = (event) => {
+  const handleUserPhotoChange = (event, fileType) => {
     const file = event.target.files[0];
     if (file) {
       setUserPhoto(URL.createObjectURL(file));
+      setUploadedFiles((prevState) => ({
+        ...prevState,
+        [fileType]: file
+      }));
     }
   };
+
+  const GetWing = async () => {
+    try {
+      if (societyId) {
+        const result = await listWing(societyId)
+        if (result && result?.data) {
+          result?.data.map((value) => {
+            setWing((prev) => [...prev, { value: value._id, label: value.wingName }]);
+          })
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const GetUnit = async () => {
+    try {
+      if (selectWingId) {
+        const result = await listUnit(selectWingId)
+        if (result && result?.data) {
+          result?.data.map((value) => {
+            setUnit((prev) => [...prev, { value: value._id, label: value.unitNumber }]);
+          })
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    GetUnit()
+  }, [selectWingId])
+
+  useEffect(() => {
+    GetWing()
+  }, [societyId])
+
 
   return (
     <DSCard>
@@ -59,7 +137,7 @@ const ResidentDetail = () => {
               type="file"
               className="d-none"
               ref={userPhotoRef}
-              onChange={handleUserPhotoChange}
+              onChange={(e) => handleUserPhotoChange(e, "profileImage")}
             />
             <Avatar
               size={100}
@@ -77,6 +155,9 @@ const ResidentDetail = () => {
                 type="text"
                 placeholder={"Enter Full Name"}
                 require={true}
+                name={"fullName"}
+                value={formData.fullName}
+                onChange={handleInputChange}
               />
             </Col>
 
@@ -87,6 +168,9 @@ const ResidentDetail = () => {
                 maxLength={13}
                 placeholder={"+91"}
                 require={true}
+                name={"phoneNumber"}
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
               />
             </Col>
 
@@ -95,6 +179,9 @@ const ResidentDetail = () => {
                 label={"Email Address"}
                 type="email"
                 placeholder={"Enter Email Address"}
+                name={"email"}
+                value={formData.email}
+                onChange={handleInputChange}
               />
             </Col>
 
@@ -119,6 +206,9 @@ const ResidentDetail = () => {
                     type="text"
                     placeholder={"Enter Full Name"}
                     require={true}
+                    name={'fullName'}
+                    value={ownerInfo.fullName}
+                    onChange={handleOwnerInfoChange}
                   />
                 </Col>
 
@@ -129,6 +219,9 @@ const ResidentDetail = () => {
                     placeholder={"+91"}
                     maxLength={13}
                     require={true}
+                    name={'phoneNumber'}
+                    value={ownerInfo.phoneNumber}
+                    onChange={handleOwnerInfoChange}
                   />
                 </Col>
 
@@ -138,6 +231,9 @@ const ResidentDetail = () => {
                     type="text"
                     placeholder={"Enter Address"}
                     require={true}
+                    name={'address'}
+                    value={ownerInfo.address}
+                    onChange={handleOwnerInfoChange}
                   />
                 </Col>
               </>
@@ -149,6 +245,9 @@ const ResidentDetail = () => {
                 type="text"
                 placeholder={"Enter Age"}
                 require={true}
+                name={"age"}
+                value={formData.age}
+                onChange={handleInputChange}
               />
             </Col>
 
@@ -162,10 +261,13 @@ const ResidentDetail = () => {
                   { label: "Other", value: "Other" },
                 ]}
                 require={true}
+                name="gender"
+                value={formData.gender}
+                onChange={(value) => handleInputChange("gender", value)}
               />
             </Col>
 
-            <Col span={8}>
+            {/* <Col span={8}>
               <DSInput
                 label={"Wing"}
                 type="text"
@@ -180,6 +282,33 @@ const ResidentDetail = () => {
                 type="text"
                 placeholder={"Enter Unit"}
                 require={true}
+              />
+            </Col> */}
+
+            <Col span={8}>
+              <DSSelect
+                label={"Wing"}
+                placeholder={"Select Wing"}
+                options={wing}
+                require={true}
+                name="wing"
+                value={formData.wing}
+                onChange={(value) => {
+                  setSelectWingId(value)
+                  handleInputChange("wing", value)
+                }}
+              />
+            </Col>
+
+            <Col span={8}>
+              <DSSelect
+                label={"Unit"}
+                placeholder={"Select Unit"}
+                options={unit}
+                require={true}
+                name="unit"
+                value={formData.unit}
+                onChange={(value) => handleInputChange("unit", value)}
               />
             </Col>
 
@@ -218,14 +347,14 @@ const ResidentDetail = () => {
             </h6>
             <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
-          {uploadedFiles.aadharFront && (
+          {uploadedFiles?.aadharFront && (
             <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
                   <h6>{uploadedFiles.aadharFront.name}</h6>
                   <h6 className={styles.p}>
-                    {uploadedFiles.aadharFront.size} MB
+                    {(uploadedFiles.aadharFront.size / (1024 * 1024)).toFixed(2)} MB
                   </h6>
                 </div>
               </div>
@@ -268,7 +397,7 @@ const ResidentDetail = () => {
                 <div>
                   <h6>{uploadedFiles.aadharBack.name}</h6>
                   <h6 className={styles.p}>
-                    {uploadedFiles.aadharBack.size} MB
+                    {(uploadedFiles.aadharBack.size / (1024 * 1024)).toFixed(2)} MB
                   </h6>
                 </div>
               </div>
@@ -311,7 +440,7 @@ const ResidentDetail = () => {
                 <div>
                   <h6>{uploadedFiles.addressProof.name}</h6>
                   <h6 className={styles.p}>
-                    {uploadedFiles.addressProof.size} MB
+                    {(uploadedFiles.addressProof.size / (1024 * 1024)).toFixed(2)} MB
                   </h6>
                 </div>
               </div>
@@ -354,7 +483,7 @@ const ResidentDetail = () => {
                 <div>
                   <h6>{uploadedFiles.rentAgreement.name}</h6>
                   <h6 className={styles.p}>
-                    {uploadedFiles.rentAgreement.size} MB
+                    {(uploadedFiles.rentAgreement.size / (1024 * 1024)).toFixed(2)} MB
                   </h6>
                 </div>
               </div>

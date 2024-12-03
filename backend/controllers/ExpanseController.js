@@ -32,8 +32,12 @@ class ExpanseController {
       if (!result || result.length === 0) {
         return res.status(404).send({ message: "No expenses found" });
       }
+      let TotalExpanse = 0;
+      for (let i = 0; i < result.length; i++) {
+        TotalExpanse += result[i].amount;
+      }
 
-      return res.status(200).send({ message: httpSuccess, data: result });
+      return res.status(200).send({ message: "httpSuccess", data: TotalExpanse });
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: "Internal server error" });

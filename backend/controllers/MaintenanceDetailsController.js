@@ -71,7 +71,8 @@ class MaintenanceDetailsController {
   }
   async allPendingMaintenance(req, res) {
     try {
-      const result = await maintenanceDetailsModel.model.find({paymentStatus: "Pending" }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
+      const { societyId } = req.params;
+      const result = await maintenanceDetailsModel.model.find({societyId : societyId ,paymentStatus: "Pending" }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
       if (!result || result.length === 0) {
         return res.status(404).send({ message: "No due maintenance found" });
       }
@@ -110,7 +111,8 @@ class MaintenanceDetailsController {
   
   async getTotalMaintenanceAmount(req, res) {
     try {
-      const result = await maintenanceDetailsModel.model.find();
+      const { societyId } = req.params
+      const result = await maintenanceDetailsModel.model.find({societyId : societyId});
 
       if (!result || result.length === 0) {
         return res.status(404).send({ message: 'No maintenance records found' });

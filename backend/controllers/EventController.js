@@ -1,7 +1,9 @@
-const { httpErrors, httpSuccess } = require("../constents");
-const eventDetailsModel = require("../models/EventDetailsModel");
-const eventModel = require("../models/EventModel");
-const memberModel = require("../models/MemberModel");
+
+const { httpErrors, httpSuccess } = require("../constents")
+const eventDetilsModel = require("../models/EventDetailsModel")
+const eventModel = require("../models/EventModel")
+const memberModel = require("../models/MemberModel")
+
 
 class EventController {
   async createEvent(req, res) {

@@ -1,6 +1,6 @@
 import { createImportantNumber } from "@/axiosApi/ApiHelper";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 import UseDecodeToken from "../../../UseDecodeToken";
 
 export const useAddImportantNumber = (handleClose) => {

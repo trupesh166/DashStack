@@ -50,7 +50,7 @@ const data = [
   },
 ];
 
-export const RequestTracking = () => {
+const RequestTracking = () => {
   const [createRequest, setCreateRequest] = useState(false);
   const [viewRequest, setViewRequest] = useState({
     open: false,
@@ -230,3 +230,5 @@ export const RequestTracking = () => {
     </>
   );
 };
+
+export default RequestTracking;

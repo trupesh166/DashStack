@@ -61,3 +61,7 @@ export { AddAnnouncementModal } from "./Announcement/AddAnnouncementModal";
 export { EditAnnouncementModal } from "./Announcement/EditAnnouncementModal";
 export { ViewAnnouncementModal } from "./Announcement/ViewAnnouncementModal";
 // Announcement End
+
+// Visitor Tracking Start
+export { AddVisitorDetailsModal } from "./VisitorTracking/AddVisitorDetailsModal";
+// Visitor Tracking End

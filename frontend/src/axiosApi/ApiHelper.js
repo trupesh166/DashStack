@@ -72,7 +72,6 @@ export const updateExpense = (expanseId, data) =>
 export const deleteExpense = (expanseId) =>
   request("delete", `/expanse/delete/${expanseId}`);
 
-
 // // Notes Management
 export const createNotes = (data) =>
   request("post", "/expanseNote/create", data);
@@ -113,7 +112,8 @@ export const deleteSecurityProtocol = (id) =>
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
-export const createVisitor = (data) => request("post", `/visitor/createvisitor`, data)
+export const createVisitor = (data) =>
+  request("post", `/visitor/createvisitor`, data);
 
 // Announcement Management
 export const createAnnouncement = (data) =>

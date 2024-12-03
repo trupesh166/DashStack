@@ -9,45 +9,70 @@ const sendEmail = require("../mailconfig/Nodemailer");
 const { generateOtp } = require('../mailconfig/otpService')
 const jwt = require("jsonwebtoken")
 const session = require("express-session")
+const announcementModel = require("../models/AnnouncementModel")
+const maintenanceDetailsModel = require("../models/MaintenanceDetailsModel")
 
 class UserController {
   async loginUser(req, res) {
     try {
-      const { email, password } = req.body
-      if (!email || !password) throw httpErrors[400]
-      let user
-      if (email.length === 10 && typeof (Number(email) === "Number")) {
-        const phone = Number(email)
-        user = await userModel.model.findOne({ phoneNumber: phone })
-        if (!user) throw httpErrors[500]
+      const { email, password } = req.body;
+  
+      if (!email || !password) {
+        return res.status(400).send({ message: "Email and password are required" });
+      }
+      let user;
+      if (email.length === 10 && !isNaN(Number(email))) {
+        const phone = Number(email);
+        user = await userModel.model.findOne({ phoneNumber: phone });
+        if (!user) {
+          return res.status(404).send({ message: "User not found with this phone number" });
+        }
       } else {
-        user = await userModel.model.findOne({ email: email })
-        if (!user) throw httpErrors[500]
+        user = await userModel.model.findOne({ email: email });
+        if (!user) {
+          return res.status(404).send({ message: "User not found with this email" });
+        }
       }
-      let societyData
+  
+      let societyData;
       if (user.role === "Chairman") {
-        societyData = await societyHandlerModel.model.findOne({ userId: user._id })
+        societyData = await societyHandlerModel.model.findOne({ userId: user._id });
       } else if (user.role === "Member") {
-        societyData = await memberModel.model.findOne({ userId: user._id })
+        societyData = await memberModel.model.findOne({ userId: user._id });
       } else if (user.role === "Security") {
-        societyData = await securityModel.model.findOne({ userId: user._id })
+        societyData = await securityModel.model.findOne({ userId: user._id });
       }
-      const payload = { ...user._doc, societyData: societyData }
-      if (!bcrypt.compareSync(password, user.password)) return res.status(500).send({ message: "Invalid Password" })
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" })
-      if (!token) throw httpErrors[500]
-      return res.status(200).send({ message: httpSuccess, token })
+  
+      const payload = { ...user._doc, societyData: societyData };
+  
+      const passwordMatch = bcrypt.compareSync(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).send({ message: "Invalid password" });
+      }
+  
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
+      if (!token) {
+        return res.status(500).send({ message: "Error generating token" });
+      }
+  
+      return res.status(200).send({ message: "Login successful", token });
+  
     } catch (error) {
-      console.log(error)
-      throw httpErrors[500]
+      console.error("Login error:", error);
+  
+      if (error.name === "ValidationError") {
+        return res.status(400).send({ message: "Invalid request data" });
+      }
+  
+      return res.status(500).send({ message: "An error occurred during login" });
     }
   }
   async forgotPassword(req, res) {
     try {
-      const { email } = req.body;
-      const user = await userModel.model.findOne({ email: email });
+        const { email } = req.body;
+        const user = await userModel.model.findOne({ email: email });
 
-      if (!user) return res.status(404).json({ message: 'User not found.' });
+        if (!user) return res.status(404).json({ message: 'User not found.' });
 
       const otp = generateOtp();
       user.otp = otp;
@@ -55,13 +80,13 @@ class UserController {
       user.otpExpires = otpExpires
       await user.save();
 
-      req.session.email = email;
-      req.session.otp = otp;
-      req.session.otpExpires = otpExpires;
-
-      const subject = 'Password Reset OTP';
-      const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
-      await sendEmail({ to: user.email, subject, text });
+        req.session.email = email ;
+        req.session.otp = otp ;
+        req.session.otpExpires = otpExpires ;
+        
+        const subject = 'Password Reset OTP';
+        const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
+        await sendEmail({ to: user.email, subject, text });
 
       res.status(200).send({ message: 'OTP sent to your email.' });
     } catch (error) {
@@ -107,8 +132,8 @@ class UserController {
   };
   async editProfile(req, res) {
     try {
-      const { firstName, lastName, email, phoneNumber, societyName, country, state, city, zipCode, societyId } = req.body;
-
+      const { firstName, lastName, email, phoneNumber, societyName , country, state, city, zipCode, societyId } = req.body;
+  
       const userId = req.user._id; // User ID from JWT token
 
       // Find user in the database
@@ -116,13 +141,13 @@ class UserController {
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-
+  
       // Update User Information
       const updateData = {};
 
       if (email) updateData.email = email;
       if (phoneNumber) updateData.phoneNumber = phoneNumber;
-
+  
       // Create or update the fullName as a combination of firstName and lastName
       if (firstName || lastName) {
         updateData.fullName = `${firstName} ${lastName}`;
@@ -133,32 +158,32 @@ class UserController {
 
       // If the user is a Chairman, update their assigned society data
       if (user.role === "Chairman" && societyId) {
-        // Find the corresponding society handler
         const societyHandler = await societyHandlerModel.model.findOne({ userId: userId });
         if (!societyHandler) {
           return res.status(404).json({ message: "Society not assigned to this user." });
         }
-
+  
         // Update society handler with new society ID
         const updateSocietyHandlerData = { selectSociety: societyId };
 
-        // Update the society handler
         await societyHandlerModel.model.findByIdAndUpdate(societyHandler._id, updateSocietyHandlerData);
-
+  
         // Now, update the societyModel with the same location information
+
         const society = await societyModel.model.findById(societyId);
         if (!society) {
           return res.status(404).json({ message: "Society not found." });
         }
-
+  
         // Update the society model with new location details
+
         const updateSocietyData = {};
         if (societyName) updateSocietyData.societyName = societyName;
         if (country) updateSocietyData.country = country;
         if (state) updateSocietyData.state = state;
         if (city) updateSocietyData.city = city;
         if (zipCode) updateSocietyData.zipCode = zipCode;
-
+  
         // Update the society model
         await societyModel.model.findByIdAndUpdate(societyId, updateSocietyData, { new: true });
 
@@ -168,6 +193,7 @@ class UserController {
       }
 
       // Return success response for general user
+
       return res.status(200).json({
         message: "Profile updated successfully.",
         data: updateData,
@@ -177,7 +203,7 @@ class UserController {
       return res.status(500).json({ message: "Error updating profile.", error: error.message });
     }
   }
-
+  
 
   async authenticationPermission(req, res) {
     try {
@@ -191,8 +217,8 @@ class UserController {
       throw httpErrors[500]
     }
   }
-
-
+  
+  
 }
 
 const userController = new UserController();

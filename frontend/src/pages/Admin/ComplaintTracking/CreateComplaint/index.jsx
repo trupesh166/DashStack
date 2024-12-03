@@ -11,7 +11,7 @@ import {
 } from "@/components";
 import Icons from "@/constants/Icons";
 
-export const ComplaintCreate = () => {
+const ComplaintCreate = () => {
   const [createComplaint, setCreateComplaint] = useState(false);
   const [viewComplaint, setViewComplaint] = useState({
     open: false,
@@ -219,3 +219,5 @@ export const ComplaintCreate = () => {
     </>
   );
 };
+
+export default ComplaintCreate;

@@ -9,13 +9,8 @@ const UseDecodeToken = () => {
     const decodeToken = () => {
       let token;
 
-      if (localStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
-        token = localStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
-      } else if (sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
+      if (sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
         token = sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
-      } else {
-        const cookies = parseCookies();
-        token = cookies[import.meta.env.VITE_TOKEN_NAME];
       }
 
       if (!token) {

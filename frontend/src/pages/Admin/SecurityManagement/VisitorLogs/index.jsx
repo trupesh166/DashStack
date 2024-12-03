@@ -3,7 +3,7 @@ import { Avatar, Tag, Spin } from "antd";
 import { DSCard, DSTable } from "@/components";
 import { useVisitorLogs } from "@/hook/Admin/SecurityManagement/VisitorLogs";
 
-export const VisitorLogs = () => {
+const VisitorLogs = () => {
   const { data, isLoading } = useVisitorLogs();
 
   const columns = [
@@ -61,3 +61,5 @@ export const VisitorLogs = () => {
     </DSCard>
   );
 };
+
+export default VisitorLogs;

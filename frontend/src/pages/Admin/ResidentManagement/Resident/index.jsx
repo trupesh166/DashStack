@@ -56,30 +56,29 @@ export const Resident = () => {
     <>
 
       <div className='mb-5'>
-        <ResidentDetail 
-        formData={FormData} 
-        userPhoto={userPhoto} 
-        residentType={residentType} 
-        setResidentType={setResidentType} 
-        uploadedFiles={uploadedFiles} 
-        setUserPhoto={setUserPhoto} 
-        setUploadedFiles={setUploadedFiles} 
+        <ResidentDetail
+        formData={FormData}
+        userPhoto={userPhoto}
+        residentType={residentType}
+        setResidentType={setResidentType}
+        uploadedFiles={uploadedFiles}
+        setUserPhoto={setUserPhoto}
+        setUploadedFiles={setUploadedFiles}
         handleInputChange={handleInputChange}
         ownerInfo={ownerInfo}
         handleOwnerInfoChange={handleOwnerInfoChange}  />
       </div>
-      <div className='mb-5'>
+      <div className="mb-5">
         <FamilyDetail />
       </div>
-      <div className='mb-5'>
+      <div className="mb-5">
         <VehicleDetail />
       </div>
 
-      <div className='d-flex gap-5 justify-content-end'>
+      <div className="d-flex gap-5 justify-content-end">
         <DSButton className="bg-white">Cancel</DSButton>
         <DSButton onClick={() => submitResident({...formData, residentStatus:residentType}, ownerInfo, uploadedFiles, userPhoto)} >Create</DSButton>
       </div>
-
     </>
-  )
-}
+  );
+};

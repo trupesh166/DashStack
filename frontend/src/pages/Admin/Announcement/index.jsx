@@ -14,7 +14,7 @@ import {
   DSHead,
 } from "@/components";
 
-export const Announcement = () => {
+const Announcement = () => {
   const { submitAnnouncement } = useAddAnnouncement();
   const { announcements, refetchAnnouncements } = useListAnnouncement();
   const {
@@ -155,3 +155,5 @@ export const Announcement = () => {
     </>
   );
 };
+
+export default Announcement;

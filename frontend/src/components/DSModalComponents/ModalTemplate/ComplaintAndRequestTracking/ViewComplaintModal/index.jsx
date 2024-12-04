@@ -10,7 +10,6 @@ export const ViewComplaintModal = ({
   handleClose,
   complaintData
 }) => {
-  console.log(complaintData)
   return (
     <div className={styles.viewComplaint}>
       <DSModal

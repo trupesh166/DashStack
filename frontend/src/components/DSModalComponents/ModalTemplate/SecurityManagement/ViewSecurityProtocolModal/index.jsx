@@ -8,7 +8,16 @@ export const ViewSecurityProtocolModal = ({
   handleCancel,
   handleClose,
   handleOk,
+  protocol
 }) => {
+  console.log(protocol)
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return {
+      date: date.toLocaleDateString(), // Formats to 'MM/DD/YYYY'
+      time: date.toLocaleTimeString(), // Formats to 'HH:MM:SS AM/PM'
+    };
+  };
   return (
     <div className={styles.viewSecurityProtocolModal}>
       <DSModal
@@ -25,30 +34,27 @@ export const ViewSecurityProtocolModal = ({
             <h5 className={styles.silver}>Title</h5>
           </Col>
           <Col>
-            <h5 className={styles.dark}>Physical Security</h5>
+            <h5 className={styles.dark}>{protocol?.title}</h5>
           </Col>
         </Row>
 
         <Row className="mb-4">
-          <Col>
+          <Col span={24}>
             <h5 className={styles.silver}>Description</h5>
           </Col>
-          <Col>
-            <h5 className={styles.dark}>
-              A visual representation of your spending categories visual
-              representation.{" "}
-            </h5>
+          <Col span={24}>
+            <h5 className={styles.dark}>{protocol?.discription}</h5>
           </Col>
         </Row>
 
         <Row className="mb-4">
           <Col span={12}>
             <h5 className={styles.silver}>Date</h5>
-            <h5 className={styles.dark}>01/02/2024</h5>
+            <h5 className={styles.dark}>{formatDate(protocol?.createdAt).date}</h5>
           </Col>
           <Col span={12}>
             <h5 className={styles.silver}>Time</h5>
-            <h5 className={styles.dark}>3:45 PM</h5>
+            <h5 className={styles.dark}>{formatDate(protocol?.createdAt).time}</h5>
           </Col>
         </Row>
       </DSModal>

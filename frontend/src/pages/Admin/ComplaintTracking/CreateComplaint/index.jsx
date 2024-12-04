@@ -14,7 +14,7 @@ import { useAddComplaint, useListComplaint, useDeleteComplaint } from "@/hook/Ad
 
 const ComplaintCreate = () => {
 
-  const { dataListComplaint, fetchListComplaint } = useListComplaint()
+  const { dataListComplaint, fetchListComplaint } = useListComplaint("Complain")
   const {
     formData,
     handleChange,
@@ -35,12 +35,7 @@ const ComplaintCreate = () => {
   } = useDeleteComplaint(fetchListComplaint);
 
 
-  const [createComplaint, setCreateComplaint] = useState(false);
   const [viewComplaint, setViewComplaint] = useState({
-    open: false,
-    data: null,
-  });
-  const [deleteComplaint, setDeleteComplaint] = useState({
     open: false,
     data: null,
   });
@@ -79,14 +74,13 @@ const ComplaintCreate = () => {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Badge>{record.unitId.unitNumber}</Badge>,
+      render: (text, record) => <Badge color={"blue"}>{record.unitId.unitNumber}</Badge>,
     },
     {
       title: "Priority",
       key: "priority",
       dataIndex: "priorityStatus",
       render: (priority) => {
-        console.log(priority)
         let color =
           priority === "High"
             ? "red"

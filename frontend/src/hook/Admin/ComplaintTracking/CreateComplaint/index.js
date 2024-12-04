@@ -63,7 +63,7 @@ export const useAddComplaint = (onSubmitSuccess) => {
         setFormData((prev) => ({ ...prev, [key]: value }));
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (type) => {
         if (!societyId) return
         const { complainerName, complaintName, description, wing, unit } = formData;
         if (!complainerName || !complaintName || !description || !wing || !unit) {
@@ -71,6 +71,7 @@ export const useAddComplaint = (onSubmitSuccess) => {
             return;
         }
         setIsSubmitting(true);
+        console.log("formData ====> ", formData)
 
         const data = {
             societyId: societyId,
@@ -80,8 +81,9 @@ export const useAddComplaint = (onSubmitSuccess) => {
             wingId: formData.wing,
             unitId: formData.unit,
             priorityStatus: formData.priority,
+            status: formData.status,
             complaintype: formData.status,
-            complaintype:"Complain"
+            complaintype:type
         }
         try {
             if (editingComplaintId) {
@@ -90,7 +92,7 @@ export const useAddComplaint = (onSubmitSuccess) => {
                     toast.success("Complaint updated successfully.");
                 }
             } else {
-                console.log(data)
+                console.log("create data ====> ", data)
                 const response = await createComplaint({ ...data });
                 if (response.message === "Success") {
                     toast.success("Complaint created successfully.");

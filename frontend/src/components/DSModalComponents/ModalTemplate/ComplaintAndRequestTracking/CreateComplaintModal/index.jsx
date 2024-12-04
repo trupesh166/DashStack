@@ -29,10 +29,14 @@ export const CreateComplaintModal = ({
       if (societyId) {
         const result = await listWing(societyId)
         if (result && result?.data) {
-          result?.data.map((value) => {
-            setWing((prev) => [...prev, { value: value._id, label: value.wingName }]);
-          })
+          const uniqueWings = result?.data.map((value) => ({
+            value: value._id,
+            label: value.wingName,
+            key: value._id,
+          }));
+          setWing(uniqueWings)
         }
+  
       }
     } catch (error) {
       console.log(error)
@@ -40,13 +44,15 @@ export const CreateComplaintModal = ({
   }
   const GetUnit = async () => {
     try {
-      console.log(selectWingId)
       if (selectWingId) {
         const result = await listUnit(selectWingId)
         if (result && result?.data) {
-          result?.data.map((value) => {
-            setUnit((prev) => [...prev, { value: value._id, label: value.unitNumber }]);
-          })
+          const uniqueUnits = result?.data.map((value) => ({
+            value: value._id,
+            label: value.unitNumber,
+            key: value._id,
+          }));
+          setUnit(uniqueUnits)
         }
       }
     } catch (error) {
@@ -60,14 +66,19 @@ export const CreateComplaintModal = ({
 
   useEffect(() => {
     GetWing()
-  }, [societyId])
+  }, [societyId, open])
   useEffect(() => {
     if (formData.wing) {
       setSelectWingId(formData.wing);
-      GetUnit(); 
+      GetUnit();
     }
   }, [formData.wing]);
 
+  const handleModalClose = () => {
+    setWing([]); 
+    setUnit([]); 
+    handleCancel();
+  };
 
   return (
     <div className={styles.createComplaint}>
@@ -75,9 +86,9 @@ export const CreateComplaintModal = ({
         title={isEdit ? "Edit Complaint" : "Create Complaint"}
         open={open}
         closeIcon
-        handleOk={handleOk}
-        onCancel={handleCancel}
-        handleClose={handleClose}
+        handleOk={() => handleOk("Complain")}
+        onCancel={handleModalClose}
+        handleClose={handleModalClose}
         IsFooter
         handleContent={isEdit ? "Edit" : "Create"}
         disabledButton={false}
@@ -115,7 +126,10 @@ export const CreateComplaintModal = ({
           <DSSelect
             label={"Wing"}
             placeholder={"Select Wing"}
-            options={wing}
+            options={wing.map((option) => ({
+              ...option,
+              key: option.key || option.value,
+            }))}
             require={true}
             name="wing"
             value={formData?.wing}

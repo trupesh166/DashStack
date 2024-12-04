@@ -2,6 +2,8 @@ import { Card, Divider } from 'antd'
 import React, { useState } from 'react'
 import { DSButton } from '../..'
 import Icons from '../../../constants/Icons'
+import { PaymentMethodDetailModal } from '../../DSModalComponents/ModalTemplate/PaymentPortalModal/PaymentMethodModa'
+import { PaymentMethodModal } from '../../DSModalComponents/ModalTemplate/PaymentPortalModal/PaymentMethodModal'
 
 export const DueMaintenanceCard = ({
   dueDate,
@@ -10,6 +12,8 @@ export const DueMaintenanceCard = ({
 }) => {
 
   const [status, setStatus] = useState(false);
+  const [paymentMethodModal, setPaymentMethodModal] = useState(false)
+  const [paymentMethodDetailModal, setPaymentMethodDetailModal] = useState(false)
 
   return (
     <>
@@ -27,10 +31,44 @@ export const DueMaintenanceCard = ({
           <h6>Due Maintenance Amount</h6>
           <h6>{penaltyAmount}</h6>
         </div>
-        <DSButton block variant="primary" onClick={() => setStatus(!status)}>
+        <DSButton
+          block
+          variant="primary"
+          onClick={() => {
+            setPaymentMethodModal(true)
+            setStatus(!status)
+          }}
+        >
           Pay Now
         </DSButton>
       </Card>
+
+      {/* Payment Method Modal */}
+      {
+        paymentMethodModal && (
+          <PaymentMethodModal
+            open={paymentMethodModal}
+            handleCancel={() => setPaymentMethodModal(false)}
+            handleClose={() => setPaymentMethodModal(false)}
+            handleOk={() => {
+              setPaymentMethodModal(false)
+              setPaymentMethodDetailModal(true)
+            }}
+          />
+        )
+      }
+
+      {/* Payment Detail Page */}
+      {
+        paymentMethodDetailModal && (
+          <PaymentMethodDetailModal
+            open={paymentMethodDetailModal}
+            handleCancel={() => setPaymentMethodDetailModal(false)}
+            handleClose={() => setPaymentMethodDetailModal(false)}
+            handleOk={() => setPaymentMethodDetailModal(false)}
+          />
+        )
+      }
     </>
   )
 }

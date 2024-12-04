@@ -44,9 +44,9 @@ export const MaintananceDetails = () => {
         rootClass={"mb-4"}
         title="Pending Maintanance"
         className="announcement-card-grid"
-        headerContent={(
-          <DSButton variant={"primary"} onClick={handalNavigate}>View Invoice</DSButton>
-        )}
+        headerContent={
+          location.pathname === "/resident/payment/maintenance-invoices" && <DSButton variant={"primary"} onClick={handalNavigate}>View Invoice</DSButton>
+        }
       >
         <MaintenanceCard
           date="11/01/2024"

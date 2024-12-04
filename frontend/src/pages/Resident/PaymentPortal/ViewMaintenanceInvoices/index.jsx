@@ -25,7 +25,7 @@ const data = [
 
 export const ViewMaintenanceInvoices = () => {
 
-  const [maintenanceInvoicesModal, setMaintenanceInvoicesModal] = useState(true)
+  const [maintenanceInvoicesModal, setMaintenanceInvoicesModal] = useState(false)
 
   const columns = [
     {

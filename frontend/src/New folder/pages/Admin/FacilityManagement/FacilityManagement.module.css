@@ -1,3 +1,0 @@
-.GridWrapper {
-  grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
-}

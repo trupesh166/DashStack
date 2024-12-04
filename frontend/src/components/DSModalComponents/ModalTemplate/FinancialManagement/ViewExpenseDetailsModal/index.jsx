@@ -14,6 +14,7 @@ export const ViewExpenseDetailsModal = ({
   Description,
   Date,
   Amount,
+  expense,
 }) => {
   return (
     <div className={style.viewExpenseDetails}>

@@ -34,7 +34,9 @@ import {
   Polls,
   CommunitiesDiscussion,
   MaintenanceInvoices,
+  ViewMaintenanceInvoices,
   OtherIncomeInvoice,
+  ViewOtherIncomeInvoice,
   SecurityProtocolsResident,
 
   /* Security Panel */
@@ -250,11 +252,29 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "maintenance-invoices",
-                      element: <MaintenanceInvoices />,
+                      children: [
+                        {
+                          index: true,
+                          element: <MaintenanceInvoices />,
+                        },
+                        {
+                          path: "view-invoices",
+                          element: <ViewMaintenanceInvoices />
+                        },
+                      ]
                     },
                     {
                       path: "other-income-invoice",
-                      element: <OtherIncomeInvoice />,
+                      children: [
+                        {
+                          index: true,
+                          element: <OtherIncomeInvoice />,
+                        },
+                        {
+                          path: "view-invoices",
+                          element: <ViewOtherIncomeInvoice />
+                        },
+                      ]
                     },
                   ],
                 },

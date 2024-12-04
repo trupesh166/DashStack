@@ -1,0 +1,12 @@
+.DashboardTop {
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: var(--space-xl);
+}
+
+.ChartCard {
+  grid-column: span 2;
+}
+
+.ComplaintCard {
+  grid-column: span 3;
+}

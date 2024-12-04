@@ -7,6 +7,7 @@ const tokenName = import.meta.env.VITE_TOKEN_NAME;
 
 const axiosApi = axios.create({
   baseURL: backendUrl,
+  withCredentials: true,
 });
 
 // Helper to get cookie by name

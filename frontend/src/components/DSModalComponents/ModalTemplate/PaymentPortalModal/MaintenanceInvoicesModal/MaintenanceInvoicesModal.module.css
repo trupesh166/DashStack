@@ -1,0 +1,14 @@
+.card {
+  background-color: var(--clr-pearl);
+  margin-bottom: 15px;
+}
+
+.InputWrapper {
+  row-gap: var(--space-sm);
+  column-gap: var(--space-xl);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.colSpan {
+  grid-column: span 2;
+}

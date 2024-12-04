@@ -33,7 +33,7 @@ export const Expense = () => {
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "discription",
       key: "description",
       ellipsis: {
         showTitle: false,
@@ -57,16 +57,18 @@ export const Expense = () => {
     },
     {
       title: "Bill Format",
-      dataIndex: "billFormat",
+      dataIndex: "billDocument",
       key: "billFormat",
-      render: (format) => (
-        <Tag
-          icon={format === "PDF" ? Icons.Pdf : Icons.Jpg}
-          color={format === "PDF" ? "volcano" : "geekblue"}
-        >
-          {format}
-        </Tag>
-      ),
+      render: (data) => {
+        return (
+          <Tag
+            icon={data?.format === "pdf" ? Icons.Pdf : Icons.Jpg}
+            color={data?.format === "pdf" ? "volcano" : "geekblue"}
+          >
+            {data?.format}
+          </Tag>
+        );
+      },
     },
     {
       title: "Action",
@@ -78,6 +80,7 @@ export const Expense = () => {
             size="small"
             icon={Icons.Edit}
             className="clr-success"
+            onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
@@ -108,7 +111,7 @@ export const Expense = () => {
 
   const handleDeleteClick = (expense) => {
     setSelectedExpense(expense);
-    setDeleteComplaint(true); // Open delete confirmation modal
+    setDeleteComplaint(true);
   };
 
   return (
@@ -119,13 +122,11 @@ export const Expense = () => {
           <DSButton
             variant={"primary"}
             icon={Icons.AddSquare}
-            onClick={() => setAddExpensesModalOpen(true)}
+            // onClick={openCreateModal}
           >
             Add New Expenses details
           </DSButton>
         }
-        button={true}
-        onClick={() => setAddExpensesModalOpen(true)}
       >
         <DSTable
           tableColumn={columns}
@@ -137,10 +138,26 @@ export const Expense = () => {
       <div>
         {/* Add Expense Modal */}
         <AddExpensesDetailsModal
-          open={addExpensesModalOpen}
-          handleOk={() => setAddExpensesModalOpen(false)}
-          handleCancel={() => setAddExpensesModalOpen(false)}
-          handleClose={() => setAddExpensesModalOpen(false)}
+          // open={isModalOpen}
+          // handleOk={handleSubmit}
+          // handleCancel={closeModal}
+          // handleClose={closeModal}
+          // isEdit={isEdit}
+          addExpensesDetails={{
+          //   title,
+          //   description,
+          //   date,
+          //   amount,
+          //   bill,
+          }}
+          setAddExpensesDetails={{
+            // setTitle,
+          //   setDescription,
+          //   setDate,
+          //   setAmount,
+          //   handleFileChange,
+          //   handleFileRemove,
+          }}
         />
 
         {/* View Expense Modal */}
@@ -161,7 +178,7 @@ export const Expense = () => {
           title={"Delete Expense?"}
           isModalOpen={deleteComplaint}
           handleClose={() => setDeleteComplaint(false)}
-          handleOk={handleDelete} // Call handleDelete when confirmed
+          handleOk={handleDelete}
           onCancel={() => setDeleteComplaint(false)}
           children={"Are you sure you want to delete this?"}
         />

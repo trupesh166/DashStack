@@ -11,6 +11,8 @@ const UseDecodeToken = () => {
 
       if (sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
         token = sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
+      }else{
+        token = localStorage.getItem(import.meta.env.VITE_TOKEN_NAME)
       }
 
       if (!token) {

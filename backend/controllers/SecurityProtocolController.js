@@ -4,9 +4,9 @@ const { httpErrors, httpSuccess } = require("../constents.js");
 class SecurityProtocolController {
   async createProtocols(req, res) {
     try {
-      const { societyId, title, discription, date, time } = req.body;
+      const { societyId, title, discription } = req.body;
 
-      if (!societyId || !title || !discription || !date || !time) {
+      if (!societyId || !title || !discription) {
         return res.status(400).json({ message: "All fields are required (societyId, title, description, date, time)." });
       }
 

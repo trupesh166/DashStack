@@ -15,10 +15,10 @@ export const register = (data) =>
   request("post", "/society-handler/create", data);
 export const loginUser = (data) => request("post", "/user/login", data);
 export const forgotPassword = (data) =>
-  request("post", "/auth/forgot-password", data);
-export const verifyOtp = (data) => request("post", "/auth/verify-otp", data);
+  request("post", "/user/forgot-password", data);
+export const verifyOtp = (data) => request("post", "/user/verify-otp", data);
 export const resetPassword = (data) =>
-  request("post", "/auth/reset-password", data);
+  request("post", "/user/reset-password", data);
 
 /* Society  */
 export const createSociety = (data) => request("post", "/society/create", data);
@@ -48,8 +48,7 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // Wing Management
-export const listWing = (societyId) =>
-  request("get", `/wing/list/${societyId}`);
+export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
@@ -94,7 +93,7 @@ export const editFacility = (id, data) =>
 // Complaint Management
 export const createComplaint = (data) =>
   request("post", "/complain/create", data);
-export const listComplaint = (data) => request("get", "/complain/list", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
 export const updateComplaint = (id, data) =>
   request("put", `/complain/update/${id}`, data);
 export const deleteComplaint = (id) =>
@@ -148,5 +147,5 @@ export const editImportantNumber = (id, data) =>
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
 
-// // Image Management
-// export const imageDetails = (data) => request("post", "/image-details", data);
+// Image Management
+export const imageDetails = (data) => request("post", "/image-details", data);

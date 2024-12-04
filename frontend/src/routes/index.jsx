@@ -1,5 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AdminAsideData, ResidentAsidData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants";
+import {
+  AdminAsideData,
+  ResidentAsidData,
+  SecurityAsideData,
+  StyleGuideAsideMenu,
+} from "@/constants";
 import {
   AdminDashBoard,
   Cards,
@@ -193,10 +198,6 @@ const DashStackRoute = createBrowserRouter(
                       path: "register",
                       element: <Register />,
                     },
-                    {
-                      path: "login",
-                      element: <Login />,
-                    },
                   ],
                 },
               ],
@@ -242,7 +243,7 @@ const DashStackRoute = createBrowserRouter(
                       path: "communities-discussion",
                       element: <CommunitiesDiscussion />,
                     },
-                  ]
+                  ],
                 },
                 {
                   path: "payment",
@@ -255,15 +256,15 @@ const DashStackRoute = createBrowserRouter(
                       path: "other-income-invoice",
                       element: <OtherIncomeInvoice />,
                     },
-                  ]
+                  ],
                 },
                 {
                   path: "security-protocols",
                   element: <SecurityProtocolsResident />,
                 },
-              ]
-            }
-          ]
+              ],
+            },
+          ],
         },
         {
           /* Security Route */
@@ -279,11 +280,11 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "emergency",
-                  element: <EmergencyManagement />
-                }
+                  element: <EmergencyManagement />,
+                },
               ],
-            }
-          ]
+            },
+          ],
         },
         {
           /* Authentication Routes For Super Admin */

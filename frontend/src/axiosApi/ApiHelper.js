@@ -27,7 +27,7 @@ export const getSociety = () => request("get", "/society/list");
 /* User */
 export const userRegistration = (data) =>
   request("post", "/auth/user/insertUser", data);
-export const getUser = () => request("get", "/member/671ac29415a25bbaedeb52ca");
+export const getUser = (societyId) => request("get", `/member/${societyId}`);
 export const editUser = () => request("get", "auth/user/edit-user/");
 export const vacateUser = () => request("get", "auth/user/vacate-user/");
 

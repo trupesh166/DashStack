@@ -2,8 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 // Base URL for the backend
-// const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
-const backendUrl = 'http://localhost:5000';
+const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
 const tokenName = import.meta.env.VITE_TOKEN_NAME;
 
 const axiosApi = axios.create({

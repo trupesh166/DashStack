@@ -22,7 +22,6 @@ export const useLogin = () => {
 
       const token = response.token;
 
-      // Store token based on rememberMe preference
       if (rememberMe) {
         localStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
       } else {

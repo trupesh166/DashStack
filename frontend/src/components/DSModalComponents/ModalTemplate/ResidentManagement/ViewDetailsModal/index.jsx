@@ -1,14 +1,20 @@
-import React from 'react'
-import style from "./ViewDetailsModal.module.css"
-import { Avatar, Card, Col, Drawer, Flex, Row } from 'antd'
-import Icons from '../../../../../constants/Icons'
-import { DSCard } from '../../../..'
-import Icon from '@ant-design/icons'
+import React from "react";
+import style from "./ViewDetailsModal.module.css";
+import { Avatar, Card, Col, Drawer, Flex, Row } from "antd";
+import Icons from "@/constants/Icons";
+import { DSCard } from "../../../..";
 
 export const ViewDetailsModal = ({
   title,
   open,
   handleClose,
+  ImgSrc,
+  name,
+  email,
+  Wing,
+  Unit,
+  Age,
+  Gender,
 }) => {
   return (
     <div>
@@ -20,25 +26,25 @@ export const ViewDetailsModal = ({
         style={{ backgroundColor: "#f0f2f5" }}
         width={470}
       >
-        <Row justify="center" className='mb-5'>
-          <Col span={24} className='text-center mb-1'>
-            <Avatar size={100} src={""} />
+        <Row justify="center" className="mb-5">
+          <Col span={24} className="text-center mb-1">
+            <Avatar size={100} src={ImgSrc} />
           </Col>
-          <Col span={24} className='text-center mb-1'>
-            <h3 className='fw-semibold'>Roger Lubin</h3>
+          <Col span={24} className="text-center mb-1">
+            <h3 className="fw-semibold">{name}</h3>
           </Col>
-          <Col span={24} className='text-center mb-1'>
-            <h5>RogerLubin@gmail.com</h5>
+          <Col span={24} className="text-center mb-1">
+            <h5>{email}</h5>
           </Col>
         </Row>
 
-        <DSCard rootClass={"mb-4"} >
+        <DSCard rootClass={"mb-4"}>
           <Row>
             <Col span={12} style={{ fontWeight: "600" }}>
               Wing
             </Col>
             <Col span={12} style={{ textAlign: "right" }}>
-              A
+              {Wing}
             </Col>
           </Row>
           <hr className={style.hr} />
@@ -47,7 +53,7 @@ export const ViewDetailsModal = ({
               Unit
             </Col>
             <Col span={12} style={{ textAlign: "right" }}>
-              101
+              {Unit}
             </Col>
           </Row>
           <hr className={style.hr} />
@@ -56,7 +62,7 @@ export const ViewDetailsModal = ({
               Age
             </Col>
             <Col span={12} style={{ textAlign: "right" }}>
-              20
+              {Age}
             </Col>
           </Row>
           <hr className={style.hr} />
@@ -65,13 +71,17 @@ export const ViewDetailsModal = ({
               Gender
             </Col>
             <Col span={12} style={{ textAlign: "right" }}>
-              Male
+              {Gender}
             </Col>
           </Row>
         </DSCard>
 
         <DSCard title={"Document"} rootClass={"mb-4"}>
-          <Row justify={"space-between"} align={"middle"} className={style.document} >
+          <Row
+            justify={"space-between"}
+            align={"middle"}
+            className={style.document}
+          >
             <Col>
               <Row align={"middle"} gutter={12}>
                 <Col>
@@ -88,14 +98,18 @@ export const ViewDetailsModal = ({
             </Col>
           </Row>
 
-          <Row justify={"space-between"} align={"middle"} className={style.document} >
+          <Row
+            justify={"space-between"}
+            align={"middle"}
+            className={style.document}
+          >
             <Col>
               <Row align={"middle"} gutter={12}>
                 <Col>
                   <h3>{Icons.Pdf}</h3>
                 </Col>
                 <Col>
-                  <h6>Adharcard Front Side.JPG</h6>
+                  <h6>aadharcard Front Side</h6>
                   <p style={{ color: "var(--clr-silver)" }}>3.5 MB</p>
                 </Col>
               </Row>
@@ -129,31 +143,8 @@ export const ViewDetailsModal = ({
               <h6>Brother</h6>
             </div>
           </DSCard>
-
-          <DSCard>
-            <div className={"card-grid"}>
-              <h6 className="fw-semibold">First Name</h6>
-              <h6>Lubin Roger</h6>
-            </div>
-            <div className={"card-grid"}>
-              <h6 className="fw-semibold">Phone No</h6>
-              <h6>0123456789</h6>
-            </div>
-            <div className={"card-grid"}>
-              <h6 className="fw-semibold">Age</h6>
-              <h6>22</h6>
-            </div>
-            <div className={"card-grid"}>
-              <h6 className="fw-semibold">Gender</h6>
-              <h6>Female</h6>
-            </div>
-            <div className={"card-grid"}>
-              <h6 className="fw-semibold">Relation</h6>
-              <h6>Sister</h6>
-            </div>
-          </DSCard>
         </Card>
       </Drawer>
     </div>
-  )
-}
+  );
+};

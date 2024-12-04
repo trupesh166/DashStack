@@ -8,10 +8,7 @@ const UseDecodeToken = () => {
   useEffect(() => {
     const decodeToken = () => {
       let token;
-
-      if (sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME)) {
-        token = sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
-      }
+      token = sessionStorage.getItem(import.meta.env.VITE_TOKEN_NAME);
 
       if (!token) {
         console.error(

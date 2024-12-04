@@ -98,17 +98,6 @@ export const useAddExpense = (onSubmitSuccess) => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const response = await deleteExpense(id)
-      console.log(response)
-      if (onSubmitSuccess) onSubmitSuccess();
-    } catch (error) {
-      console.error("Error deleting expense:", error);
-      toast.error("Failed to Delete expense.");
-    }
-  }
-
   return {
     title,
     setTitle,
@@ -127,7 +116,6 @@ export const useAddExpense = (onSubmitSuccess) => {
     openEditModal,
     closeModal,
     handleSubmit,
-    isEdit,
-    handleDelete
+    isEdit
   };
 };

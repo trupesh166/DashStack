@@ -8,7 +8,9 @@ export const ViewComplaintModal = ({
   handleOk,
   handleCancel,
   handleClose,
+  complaintData
 }) => {
+  console.log(complaintData)
   return (
     <div className={styles.viewComplaint}>
       <DSModal
@@ -30,41 +32,38 @@ export const ViewComplaintModal = ({
             />
           </Col>
           <Col>
-            <h4 className="fw-semibold">Evelyn Harper</h4>
-            <h5 type="secondary">Aug 5, 2024</h5>
+            <h4 className="fw-semibold">{complaintData?.complainerName}</h4>
+            {/* <h5 type="secondary">Aug 5, 2024</h5> */}
           </Col>
         </Row>
 
         <Row gutter={[0, 16]} className="mb-4">
           <Col span={24}>
-            <h5 strong>Request Name</h5>
-            <div>Unethical Behavior</div>
+            <h5 strong>Complaint Name</h5>
+            <div>{complaintData?.complaintName}</div>
           </Col>
           <Col span={24}>
             <h5 strong>Description</h5>
-            <div>
-              Offering, giving, receiving, or soliciting of value to influence
-              the actions of an individual.
-            </div>
+            <div>{complaintData?.discription}</div>
           </Col>
         </Row>
 
         <Row className="mb-4">
           <Col span={6}>
             <h5>Wing</h5>
-            <div>A</div>
+            <div>{complaintData?.wingId?.wingName}</div>
           </Col>
           <Col span={6}>
             <h5>Unit</h5>
-            <div>1002</div>
+            <div>{complaintData?.unitId?.unitNumber}</div>
           </Col>
           <Col span={6}>
             <h5>Priority</h5>
-            <div>Medium</div>
+            <div>{complaintData?.priorityStatus}</div>
           </Col>
           <Col span={6}>
             <h5>Status</h5>
-            <div>Open</div>
+            <div>{complaintData?.status}</div>
           </Col>
         </Row>
       </DSModal>

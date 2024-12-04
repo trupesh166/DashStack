@@ -93,7 +93,7 @@ export const editFacility = (id, data) =>
 // Complaint Management
 export const createComplaint = (data) =>
   request("post", "/complain/create", data);
-export const listComplaint = (data) => request("get", "/complain/list", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
 export const updateComplaint = (id, data) =>
   request("put", `/complain/update/${id}`, data);
 export const deleteComplaint = (id) =>

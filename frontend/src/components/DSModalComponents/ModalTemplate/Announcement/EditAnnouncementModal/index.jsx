@@ -1,6 +1,4 @@
-import React from "react";
-import styles from "./EditAnnouncementModal.module.css";
-import { DSDatePicker, DSInput, DSModal } from "../../../..";
+import { DSDatePicker, DSInput, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
 import { Flex } from "antd";
 

@@ -4,6 +4,10 @@ const { default: mongoose } = require("mongoose"); class SocietyHandlerModel {
       {
         userId: { type: mongoose.Types.ObjectId, required: true, ref: "tbl_users" },
         selectSociety: { type: mongoose.Types.ObjectId, required: true, ref: "tbl_societies" },
+        country: { type: String, required: true },
+        state: { type: String, required: true },
+        city: { type: String, required: true },
+        zipCode: { type: String, length: 6, required: true },
       },
       { timestamps: true }
     );

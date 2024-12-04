@@ -25,7 +25,9 @@ export const useForgetPassword = () => {
 
       const response = await forgotPassword(email);
 
-      if (response.data?.status === 1) {
+      console.log(response)
+
+      if (response && response.message) {
         toast.success(response.data?.message || "OTP sent successfully!");
         navigate("/otp");
       } else {

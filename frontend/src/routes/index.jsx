@@ -13,17 +13,11 @@ import {
   FacilityManagement,
   Note,
   SecurityGuard,
-  SecurityProtocols,
-  VisitorLogs,
   Login,
   Register,
-  ResidentManagement,
-  ComplaintCreate,
-  RequestTracking,
   ForgetPassword,
   OTP,
   ResetPassword,
-  Announcement,
   Expense,
 
   /* Resident Panel */
@@ -49,6 +43,34 @@ import ProtectedRoute from "./ProtectedRoute";
 import Income from "../pages/Admin/FinancialMaintenance/Income";
 import { EditProfile } from "../pages/Admin/Dashboard/EditProfile";
 import { Resident } from "../pages/Admin/ResidentManagement/Resident";
+import { lazy } from "react";
+import { elements } from "chart.js";
+
+// Admin
+const Announcement = lazy(() => import("../pages/Admin/Announcement/"));
+const ComplaintCreate = lazy(() =>
+  import("../pages/Admin/ComplaintTracking/CreateComplaint/")
+);
+const RequestTracking = lazy(() =>
+  import("../pages/Admin/ComplaintTracking/RequestTracking/")
+);
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/FinancialMaintenance/Note"));
+// const ResidentManagement = lazy(() => import("../pages/Admin/FinancialMaintenance/Expanse"));
+const VisitorLogs = lazy(() =>
+  import("../pages/Admin/SecurityManagement/VisitorLogs")
+);
+const SecurityProtocols = lazy(() =>
+  import("../pages/Admin/SecurityManagement/SecurityProtocols/")
+);
+const ResidentManagement = lazy(() =>
+  import("../pages/Admin/ResidentManagement/")
+);
 
 const DashStackRoute = createBrowserRouter(
   /* All Paths */
@@ -57,15 +79,20 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: (
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          ),
+          element: "true",
+        },
+        {
+          path: "member",
+          element: <ProtectedRoute />,
           children: [
             {
-              index: true,
-              element: "<AdminDashBoard />",
+              elements: <DashboardLayout />,
+              children: [
+                {
+                  index: true,
+                  element: "<AdminDashBoard />",
+                },
+              ],
             },
           ],
         },
@@ -159,15 +186,20 @@ const DashStackRoute = createBrowserRouter(
               ],
             },
             {
-              element: <AuthLayouts />,
+              element: <ProtectedRoute />,
               children: [
                 {
-                  path: "register",
-                  element: <Register />,
-                },
-                {
-                  path: "login",
-                  element: <Login />,
+                  element: <AuthLayouts />,
+                  children: [
+                    {
+                      path: "register",
+                      element: <Register />,
+                    },
+                    {
+                      path: "login",
+                      element: <Login />,
+                    },
+                  ],
                 },
               ],
             },
@@ -275,23 +307,28 @@ const DashStackRoute = createBrowserRouter(
         },
         {
           /* Authentication Routes For Super Admin */
-          element: <AuthLayouts />,
+          element: <ProtectedRoute />,
           children: [
             {
-              path: "login",
-              element: <Login />,
-            },
-            {
-              path: "forgot-password",
-              element: <ForgetPassword />,
-            },
-            {
-              path: "otp",
-              element: <OTP />,
-            },
-            {
-              path: "reset-password",
-              element: <ResetPassword />,
+              element: <AuthLayouts />,
+              children: [
+                {
+                  path: "login",
+                  element: <Login />,
+                },
+                {
+                  path: "forgot-password",
+                  element: <ForgetPassword />,
+                },
+                {
+                  path: "otp",
+                  element: <OTP />,
+                },
+                {
+                  path: "reset-password",
+                  element: <ResetPassword />,
+                },
+              ],
             },
           ],
         },

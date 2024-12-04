@@ -15,10 +15,10 @@ export const register = (data) =>
   request("post", "/society-handler/create", data);
 export const loginUser = (data) => request("post", "/user/login", data);
 export const forgotPassword = (data) =>
-  request("post", "/auth/forgot-password", data);
-export const verifyOtp = (data) => request("post", "/auth/verify-otp", data);
+  request("post", "/user/forgot-password", data);
+export const verifyOtp = (data) => request("post", "/user/verify-otp", data);
 export const resetPassword = (data) =>
-  request("post", "/auth/reset-password", data);
+  request("post", "/user/reset-password", data);
 
 /* Society  */
 export const createSociety = (data) => request("post", "/society/create", data);
@@ -50,10 +50,6 @@ export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 // Wing Management
 export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
-// Wing Management
-// export const listWing = (societyId) =>
-//   request("get", `/wing/list/${societyId}`);
-
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
 export const createMember = (data) =>
@@ -75,7 +71,6 @@ export const updateExpense = (expanseId, data) =>
   request("put", `/expanse/update/${expanseId}`, data);
 export const deleteExpense = (expanseId) =>
   request("delete", `/expanse/delete/${expanseId}`);
-
 
 // // Notes Management
 export const createNotes = (data) =>
@@ -117,7 +112,8 @@ export const deleteSecurityProtocol = (id) =>
 // Visitor Management
 export const listVisitor = (societyId) =>
   request("get", `/visitor/getvisitor/${societyId}`);
-export const createVisitor = (data) => request("post", `/visitor/createvisitor`, data)
+export const createVisitor = (data) =>
+  request("post", `/visitor/createvisitor`, data);
 
 // Announcement Management
 export const createAnnouncement = (data) =>
@@ -151,5 +147,5 @@ export const editImportantNumber = (id, data) =>
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
 
-// // Image Management
-// export const imageDetails = (data) => request("post", "/image-details", data);
+// Image Management
+export const imageDetails = (data) => request("post", "/image-details", data);

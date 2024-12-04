@@ -1,24 +1,52 @@
 import React from "react";
-import styles from "./AddNote.module.css";
-import { DSDatePicker, DSInput, DSModal } from "../../../..";
+import { DSDatePicker, DSInput, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
+import styles from "./AddNote.module.css";
 
-export const AddNote = ({ open, handleOk, handleCancel, handleClose }) => {
+export const AddNote = ({
+  open,
+  handleOk,
+  handleCancel,
+  handleClose,
+  title,
+  setTitle,
+  description,
+  headerTitle,
+  setDescription,
+  date,
+  setScheduleDate,
+  isSubmitting,
+}) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleOk({
+      title,
+      description,
+      date,
+    });
+  };
+
+  const isButtonDisabled = isSubmitting || !title || !description || !date;
+
   return (
     <div className={styles.addNote}>
       <DSModal
-        title="Add Note"
+        title={headerTitle}
         open={open}
-        closeIcon
-        handleOk={handleOk}
+        handleOk={handleSubmit}
         onCancel={handleCancel}
         handleClose={handleClose}
         IsFooter
         handleContent="Save"
-        disabledButton={false}
+        disabledButton={isButtonDisabled}
       >
         <div className="mb-4">
-          <DSInput label={"Title"} placeholder={"Enter Title"} />
+          <DSInput
+            label="Title"
+            placeholder="Enter Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
 
         <div className="mb-4">
@@ -29,6 +57,8 @@ export const AddNote = ({ open, handleOk, handleCancel, handleClose }) => {
               minRows: 2,
               maxRows: 6,
             }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
@@ -36,14 +66,16 @@ export const AddNote = ({ open, handleOk, handleCancel, handleClose }) => {
           <DSDatePicker
             block
             type="Date"
-            label={"Date"}
-            placeholder={"Select Date"}
+            label="Schedule Date"
+            placeholder="Select Date"
             style={{
               width: "100%",
               height: "45px",
               borderRadius: "10px",
               padding: "0px 10px",
             }}
+            value={date}
+            onChange={(date) => setScheduleDate(date)}
           />
         </div>
       </DSModal>

@@ -30,7 +30,7 @@ export const useAddExpense = (onSubmitSuccess) => {
     setDescription(expense.discription);
     setDate(formattedDate);
     setAmount(expense.amount);
-    setBill(expense.billDocument || null); // Preload bill if applicable
+    setBill(expense.billDocument || null);
     setIsEdit(true)
     setIsModalOpen(true);
   };

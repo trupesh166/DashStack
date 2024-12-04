@@ -5,7 +5,7 @@ import { listExpense, imageDetails } from "@/axiosApi/ApiHelper";
 export const useListExpense = () => {
   const [dataListExpense, setDataListExpense] = useState([]);
   const { societyId } = UseDecodeToken();
-
+  console.log("societyId ====> ", societyId)
   const fetchListExpense = async () => {
     if (!societyId) return;
     try {

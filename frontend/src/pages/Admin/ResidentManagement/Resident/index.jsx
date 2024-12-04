@@ -56,14 +56,15 @@ export const Resident = () => {
     <>
 
       <div className='mb-5'>
-        <ResidentDetail
-        formData={FormData}
-        userPhoto={userPhoto}
-        residentType={residentType}
-        setResidentType={setResidentType}
-        uploadedFiles={uploadedFiles}
-        setUserPhoto={setUserPhoto}
-        setUploadedFiles={setUploadedFiles}
+        <ResidentDetail 
+        formData={FormData} 
+        userPhoto={userPhoto} 
+        residentType={residentType} 
+        setResidentType={setResidentType} 
+        uploadedFiles={uploadedFiles} 
+        setUserPhoto={setUserPhoto} 
+        setUploadedFiles={setUploadedFiles} 
+
         handleInputChange={handleInputChange}
         ownerInfo={ownerInfo}
         handleOwnerInfoChange={handleOwnerInfoChange}  />

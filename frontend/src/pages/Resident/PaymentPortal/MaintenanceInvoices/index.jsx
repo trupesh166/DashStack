@@ -1,9 +1,10 @@
 import React from 'react'
+import { MaintananceDetails } from '../../../../components/PersonalDetails/MaintananceDetails'
 
 export const MaintenanceInvoices = () => {
   return (
     <div>
-      <h1>Maintenance Invoices</h1>
+      <MaintananceDetails />
     </div>
   )
 }

@@ -23,7 +23,7 @@ export const useForgetPassword = () => {
     try {
       setLoading(true);
 
-      const response = await forgotPassword(email);
+      const response = await forgotPassword({email: email});
 
       console.log(response)
 

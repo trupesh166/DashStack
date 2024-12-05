@@ -33,7 +33,7 @@ const data = [
 ];
 
 const SecurityProtocols = () => {
-  const { dataListProtocols, fetchListProtocols } = useListSecurityProtocols();
+  const { dataListProtocols, fetchListProtocols, isLoading } = useListSecurityProtocols();
   const {
     formData,
     handleChange,
@@ -140,6 +140,7 @@ const SecurityProtocols = () => {
           dataSource={dataListProtocols}
           tableColumn={columns}
           pagination={false}
+          loading={isLoading}
           rowClassName={(record, index) =>
             index % 2 === 0 ? "table-row-light" : "table-row-dark"
           }

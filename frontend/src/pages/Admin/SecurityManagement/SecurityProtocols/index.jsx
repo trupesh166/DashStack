@@ -85,7 +85,7 @@ const SecurityProtocols = () => {
       key: "time",
       render: (createdAt) => {
         const { time } = formatDate(createdAt);
-        return time; 
+        return time;
       },
     },
     {
@@ -167,10 +167,10 @@ const SecurityProtocols = () => {
         isEdit={isEdit}
         handleChange={handleChange}
         isSubmitting={isSubmitting}
-        // handleCancel={() => setAddSecurityProtocolModal(false)}
-        // handleClose={() => setAddSecurityProtocolModal(false)}
-        // handleOk={() => setAddSecurityProtocolModal(false)}
-        // protocol={selectedProtocol} // Pass the selected protocol data if editing
+      // handleCancel={() => setAddSecurityProtocolModal(false)}
+      // handleClose={() => setAddSecurityProtocolModal(false)}
+      // handleOk={() => setAddSecurityProtocolModal(false)}
+      // protocol={selectedProtocol} // Pass the selected protocol data if editing
       />
 
       {/* View Security Protocol Modal */}
@@ -178,12 +178,12 @@ const SecurityProtocols = () => {
         // open={viewSecurityProtocolModal}
         open={!!viewProtocolData}
         protocol={viewProtocolData}
-        handleCancel={() => setViewProtocolData(null)} 
+        handleCancel={() => setViewProtocolData(null)}
         handleClose={() => setViewProtocolData(null)}
-        // handleCancel={() => setViewSecurityProtocolModal(false)}
-        // handleClose={() => setViewSecurityProtocolModal(false)}
-        // handleOk={() => setViewSecurityProtocolModal(false)}
-        // protocol={selectedProtocol} // Pass the selected protocol data for viewing
+      // handleCancel={() => setViewSecurityProtocolModal(false)}
+      // handleClose={() => setViewSecurityProtocolModal(false)}
+      // handleOk={() => setViewSecurityProtocolModal(false)}
+      // protocol={selectedProtocol} // Pass the selected protocol data for viewing
       />
 
       {/* Remove Security Protocol Modal */}
@@ -197,7 +197,7 @@ const SecurityProtocols = () => {
         }}
         onCancel={() => setShowDeleteModal(false)}
         children={"Are you sure you want to delete this Protocol?"}
-        // protocol={selectedProtocol} // Pass the selected protocol data for deletion
+      // protocol={selectedProtocol} // Pass the selected protocol data for deletion
       />
     </div>
   );

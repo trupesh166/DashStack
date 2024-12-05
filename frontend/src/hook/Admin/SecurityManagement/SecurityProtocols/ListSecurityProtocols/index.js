@@ -7,7 +7,7 @@ export const useListSecurityProtocols = () => {
   const [dataListProtocols, setDataListProtocols] = useState([]);
 
   const fetchListProtocols = async () => {
-    if(!societyId) return
+    if (!societyId) return
     try {
       const response = await listSecurityProtocol(societyId);
       setDataListProtocols(response?.data || []);

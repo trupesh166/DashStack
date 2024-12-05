@@ -127,15 +127,15 @@ export const updateAnnouncement = (id, data) =>
 export const deleteAnnouncement = (id) =>
   request("delete", `/announcement/delete/${id}`);
 
-// // Security Guard Management
-// export const createGuard = (data) =>
-//   request("post", "/security/createsecurity", data);
-// export const listGuard = (societyId) =>
-//   request("get", `/security/getsecurity/${societyId}`);
-// export const editGuard = (id, data) =>
-//   request("put", `/security/updatesecurity/${id}`, data);
-// export const deleteGuard = (id) =>
-//   request("delete", `/security/deletesecurity/${id}`);
+// Security Guard Management
+export const createGuard = (data) =>
+  request("post", "/security/createsecurity", data);
+export const listGuard = (societyId) =>
+  request("get", `/security/getsecurity/${societyId}`);
+export const editGuard = (id, data) =>
+  request("put", `/security/updatesecurity/${id}`, data);
+export const deleteGuard = (id) =>
+  request("delete", `/security/deletesecurity/${id}`);
 
 // Important Number Management
 export const createImportantNumber = (data) =>

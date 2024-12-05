@@ -9,6 +9,7 @@ import {
   ViewSecurityModal,
 } from "@/components";
 import Icons from "@/constants/Icons";
+import { useAddSecurity, useListSecurity, useDeleteSecurity } from "@/hook/Admin/SecurityGuard";
 
 const data = [
   {
@@ -35,10 +36,53 @@ const data = [
 ];
 
 export const SecurityGuard = () => {
+  const { dataListSecurity, fetchListSecurity, isLoading } = useListSecurity();
+  const { 
+    openCreateModal, 
+    openEditModal, 
+    closeModal, 
+    formData, 
+    handleSubmit, 
+    isModalOpen, 
+    isSubmitting, 
+    isEdit,
+    handleInputChange,
+    handleFileChange,
+    handleFileRemove
+  } = useAddSecurity(fetchListSecurity);
+  const { 
+    securityDelete, 
+    loading: deleteLoading, 
+    setShowDeleteModal, 
+    showDeleteModal 
+  } = useDeleteSecurity(fetchListSecurity);
+
   const [addSecurity, setAddSecurity] = useState(false);
   const [viewSecurity, setViewSecurity] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null); // Store the selected record
+
+  const tableData = dataListSecurity.map((item) => ({
+    _id: item._id,
+    name: item.userId?.fullName || "N/A",
+    email: item.userId?.email || "N/A",
+    phone: item.userId?.phoneNumber || "N/A",
+    shift: item.shift,
+    date: new Date(item.joiningDate).toLocaleDateString(), // Format date
+    time: item.shiftTime,
+    gender: item.gender,
+    avatar: item.profileImage || "https://via.placeholder.com/150", 
+    bill: item.adharCardImage || "https://via.placeholder.com/150",
+  }));
+
+  const handleDelete = async () => {
+    if (selectedRecord && selectedRecord._id) {
+      const result = await securityDelete(selectedRecord._id);
+      if (result.success) {
+        setShowDeleteModal(false);
+      }
+    }
+  };
 
   const columns = [
     {
@@ -63,8 +107,8 @@ export const SecurityGuard = () => {
       key: "shift",
       render: (shift) => (
         <Tag
-          color={shift === "Day" ? "gold" : "gray"}
-          icon={shift === "Day" ? "☀️" : "🌙"}
+          color={shift === "Day Shift" ? "gold" : "gray"}
+          icon={shift === "Day Shift" ? "☀️" : "🌙"}
         >
           {shift}
         </Tag>
@@ -99,8 +143,8 @@ export const SecurityGuard = () => {
             icon={Icons.Edit}
             className="clr-success"
             onClick={() => {
-              setSelectedRecord(record); // Set selected record for editing
-              setAddSecurity(true); // Open AddSecurityModal instead of Edit
+              openEditModal(record);
+              setSelectedRecord(record);
             }}
           />
           <DSButton
@@ -109,8 +153,8 @@ export const SecurityGuard = () => {
             icon={Icons.EyeShow}
             className="clr-cult"
             onClick={() => {
-              setSelectedRecord(record); // Set selected record for viewing
-              setViewSecurity(true); // Open the View Modal
+              setSelectedRecord(record);
+              setViewSecurity(true);
             }}
           />
           <DSButton
@@ -119,8 +163,8 @@ export const SecurityGuard = () => {
             icon={Icons.Trash}
             className="clr-primary"
             onClick={() => {
-              setSelectedRecord(record); // Set selected record for deletion
-              setDeleteComplaint(true); // Open the Delete Modal
+              setSelectedRecord(record);
+              setShowDeleteModal(true);
             }}
           />
         </Space>
@@ -136,16 +180,17 @@ export const SecurityGuard = () => {
           <DSButton
             icon={Icons.AddSquare}
             variant={"primary"}
-            onClick={() => setAddSecurity(true)}
+            onClick={openCreateModal}
           >
             Add Security
           </DSButton>
         }
       >
         <DSTable
-          dataSource={data}
+          dataSource={tableData}
           tableColumn={columns}
           pagination={false}
+          loading={isLoading}
           rowClassName={(record, index) =>
             index % 2 === 0 ? "table-row-light" : "table-row-dark"
           }
@@ -154,11 +199,17 @@ export const SecurityGuard = () => {
 
       {/* Add Security Modal */}
       <AddSecurityModal
-        open={addSecurity}
-        handleCancel={() => setAddSecurity(false)}
-        handleClose={() => setAddSecurity(false)}
-        handleOk={() => setAddSecurity(false)}
-        record={selectedRecord} // Pass selected record if needed
+        open={isModalOpen}
+        handleCancel={closeModal}
+        handleClose={closeModal}
+        handleOk={handleSubmit}
+        record={selectedRecord}
+        isSubmitting={isSubmitting}
+        formData={formData}
+        handleInputChange={handleInputChange}
+        handleFileChange={handleFileChange}
+        handleFileRemove={handleFileRemove}
+        isEdit={isEdit}
       />
 
       {/* View Security Modal */}
@@ -173,12 +224,13 @@ export const SecurityGuard = () => {
       {/* Remove Security Modal */}
       <DeleteModal
         title={"Delete Security?"}
-        isModalOpen={deleteComplaint}
-        handleClose={() => setDeleteComplaint(false)}
-        handleOk={() => setDeleteComplaint(false)}
-        onCancel={() => setDeleteComplaint(false)}
+        isModalOpen={showDeleteModal}
+        handleClose={() => setShowDeleteModal(false)}
+        handleOk={handleDelete}
+        onCancel={() => setShowDeleteModal(false)}
         children={"Are you sure you want to delete this Security?"}
         record={selectedRecord} // Pass selected record to Delete Modal
+        loading={deleteLoading}
       />
     </>
   );

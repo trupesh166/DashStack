@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./AddSecurityModal.module.css";
 import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
 import Icons from "../../../../../constants/Icons";
@@ -9,49 +9,80 @@ export const AddSecurityModal = ({
   handleCancel,
   handleClose,
   handleOk,
+  formData,
+  handleInputChange,
+  handleFileChange,
+  handleFileRemove,
+  isSubmitting,
+  isEdit,
 }) => {
-  const fileInputRef = useRef(null);
+  const photoInputRef = useRef(null);
+  const billInputRef = useRef(null);
 
-  const handleUploadClick = () => {
-    fileInputRef.current.click();
+  const handlePhotoUploadClick = () => {
+    photoInputRef.current.click();
+  };
+
+  const handleBillUploadClick = () => {
+    billInputRef.current.click();
   };
 
   return (
     <div className={styles.addSecurityModal}>
       <DSModal
-        title={"Add Security"}
+        title={isEdit ? "Edit Security" : "Add Security"}
         open={open}
         closeIcon
         handleCancel={handleCancel}
         handleClose={handleClose}
         handleOk={handleOk}
         IsFooter={true}
-        handleContent={"Create"}
-        disabledButton={false}
+        handleContent={isSubmitting ? "Submitting..." : isEdit ? "Update" : "Create"}
+        disabledButton={isSubmitting}
       >
         <Flex
           align="center"
           gap={"middle"}
           className="mb-4 cursor-pointer"
-          onClick={handleUploadClick}
+          onClick={handlePhotoUploadClick}
         >
           <input
             type="file"
             className="d-none"
-            ref={fileInputRef}
-            accept="image/*"
+            ref={photoInputRef}
+            name={"photo"}
+            onChange={(e) => handleFileChange(e, "photo")}
           />
-          <Avatar size={64} icon={Icons.User} />
+          <Avatar size={64} src={formData?.photo ? formData?.photo : Icons.User} />
           <h5 className={styles.h5}>Add Photo</h5>
         </Flex>
 
         <DSInput
           className="mb-4"
           label={"Full Name"}
+          name="fullName"
+          value={formData?.fullName}
           placeholder={"Enter Full Name"}
+          onChange={handleInputChange}
         />
 
-        <DSInput className="mb-4" label={"Phone Number"} placeholder={"+91"} />
+        <DSInput
+          className="mb-4"
+          label={"Eamil"}
+          name="email"
+          value={formData?.email}
+          placeholder={"Enter Email"}
+          onChange={handleInputChange}
+        />
+
+        <DSInput
+          className="mb-4"
+          label={"Phone Number"}
+          name="phoneNumber"
+          value={formData?.phoneNumber}
+          placeholder={"+91"}
+          onChange={handleInputChange}
+        />
 
         <Flex
           gap={"middle"}
@@ -62,21 +93,27 @@ export const AddSecurityModal = ({
           <DSSelect
             block={true}
             label={"Gender"}
+            name="gender"
+            value={formData?.gender}
             placeholder={"Select Gender"}
             options={[
               { label: "Male", value: "Male" },
               { label: "Female", value: "Female" },
             ]}
+            onChange={(value) => handleInputChange({ target: { name: "gender", value } })}
             style={{ width: "100%", height: "45px", borderRadius: "20px" }}
           />
           <DSSelect
             block={true}
             label={"Shift"}
+            name="shift"
+            value={formData?.shift}
             placeholder={"Select Shift"}
             options={[
               { label: "Day Shift", value: "Day Shift" },
               { label: "Night Shift", value: "Night Shift" },
             ]}
+            onChange={(value) => handleInputChange({ target: { name: "shift", value } })}
             style={{ width: "100%", height: "45px", borderRadius: "10px" }}
           />
         </Flex>
@@ -85,7 +122,10 @@ export const AddSecurityModal = ({
           <DSDatePicker
             block={true}
             label={"Shift Date"}
+            name="shiftDate"
+            value={formData?.shiftDate}
             placeholder={"Select Date"}
+            onChange={(date) => handleInputChange({ target: { name: "shiftDate", value: date } })}
             style={{
               height: "45px",
               borderRadius: "10px",
@@ -95,19 +135,24 @@ export const AddSecurityModal = ({
           <DSInput
             block={true}
             label={"Shift Time*"}
+            name="shiftTime"
+            value={formData?.shiftTime}
             placeholder={"Select Time"}
+            onChange={handleInputChange}
           />
         </Flex>
 
         <div className="mb-4">
           <label>Upload Bill</label>
           <input
-            ref={fileInputRef}
+            ref={billInputRef}
             className="d-none"
             label={"Upload Bill"}
             type="file"
+            name="bill"
+            onChange={(e) => handleFileChange(e, "bill")}
           />
-          <div className={styles.uploadImage} onClick={handleUploadClick}>
+          <div className={styles.uploadImage} onClick={handleBillUploadClick}>
             {Icons.AddImage}
             <h6 className="fw-bold">
               Upload a file <span className="fw-bold">or drag and drop</span>

@@ -14,7 +14,7 @@ import { useAddComplaint, useListComplaint, useDeleteComplaint } from "@/hook/Ad
 
 const ComplaintCreate = () => {
 
-  const { dataListComplaint, fetchListComplaint } = useListComplaint("Complain")
+  const { dataListComplaint, fetchListComplaint, isLoading } = useListComplaint("Complain")
   const {
     formData,
     handleChange,
@@ -217,7 +217,7 @@ const ComplaintCreate = () => {
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} loading={isLoading} />
       </DSCard>
 
       {/* Create Complaint Modal */}

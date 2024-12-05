@@ -18,7 +18,7 @@ import {
 
 export const Expense = () => {
   // const { tableData, isLoading, fetchData } = useViewExpanse();
-  const { dataListExpense, fetchListExpense } = useListExpense();
+  const { dataListExpense, fetchListExpense, isLoading } = useListExpense();
   const {
     title,
     setTitle,
@@ -164,7 +164,7 @@ export const Expense = () => {
         <DSTable
           tableColumn={columns}
           dataSource={dataListExpense}
-          // loading={isLoading}
+          loading={isLoading}
           pagination={false}
         />
       </DSCard>

@@ -52,6 +52,12 @@ export const useAddExpense = (onSubmitSuccess) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    if (!file) return;
+    const allowedFormats = ["image/jpeg", "application/pdf"];
+    if (!allowedFormats.includes(file.type)) {
+      alert("Only JPG and PDF formats are allowed.");
+      return;
+    }
     setBill(file);
   };
 

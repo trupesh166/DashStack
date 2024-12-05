@@ -53,7 +53,7 @@ const data = [
 
 const RequestTracking = () => {
 
-  const { dataListComplaint, fetchListComplaint } = useListComplaint("Request")
+  const { dataListComplaint, fetchListComplaint, isLoading } = useListComplaint("Request")
   const {
     formData,
     handleChange,
@@ -225,7 +225,7 @@ const RequestTracking = () => {
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} loading={isLoading} />
       </DSCard>
 
       {/* Create Request Modal */}

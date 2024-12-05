@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { DSModal, DSRadioButton } from '../../../..'
-import { Radio, Space } from 'antd';
+import { Avatar, Radio, Space } from 'antd';
+import styles from "./PaymentMethodModal.module.css"
+import Icons from '../../../../../constants/Icons';
 
 export const PaymentMethodModal = ({
   open,
@@ -24,13 +26,48 @@ export const PaymentMethodModal = ({
       disabledButton={false}
       handleContent="Pay Now"
     >
-      <Radio.Group onChange={onChange} value={value}>
-        <Space direction="vertical">
-          <Radio value={"Master Card"}>Master Card</Radio>
-          <Radio value={"Visa Card"}>Visa Card</Radio>
-          <Radio value={"Cash Payment"}>Cash Payment</Radio>
-        </Space>
+      <Radio.Group
+        className={styles.paymentRadioGroup}
+        onChange={onChange}
+      >
+        <Radio.Button value="mastercard" className={styles.radioButton}>
+          <div className={styles.radioContent}>
+            <Avatar
+              shape="square"
+              size={"large"}
+              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+              alt="Mastercard"
+            />
+            Master Card
+          </div>
+        </Radio.Button>
+        <Radio.Button value="visa" className={styles.radioButton}>
+          <div className={styles.radioContent}>
+            <Avatar
+              shape="square"
+              size={"large"}
+              alt="Visa"
+              style={{ color: "var(--clr-cult)", backgroundColor: "#F4F4F4" }}
+            >
+              Visa
+            </Avatar>
+            Visa Card
+          </div>
+        </Radio.Button>
+        <Radio.Button value="cash" className={styles.radioButton}>
+          <div className={styles.radioContent}>
+            <Avatar
+              shape="square"
+              size={"large"}
+              icon={Icons.Moneys}
+              alt="Cash"
+              style={{ color: "var(--clr-dark)", backgroundColor: "#F4F4F4" }}
+            />
+            Cash Payment
+          </div>
+        </Radio.Button>
       </Radio.Group>
+
     </DSModal>
   )
 }

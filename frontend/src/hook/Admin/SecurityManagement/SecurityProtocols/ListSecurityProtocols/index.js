@@ -8,7 +8,7 @@ export const useListSecurityProtocols = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchListProtocols = async () => {
-    if(!societyId) return
+    if (!societyId) return
     try {
       setIsLoading(true)
       const response = await listSecurityProtocol(societyId);

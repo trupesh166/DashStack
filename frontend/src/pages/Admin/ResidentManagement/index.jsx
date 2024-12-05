@@ -12,12 +12,14 @@ const ResidentManagement = () => {
 
   const { tableData, isLoading } = useResidentData();
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
-  const [modalData, setModalData] = useState({});
+  const [modalData, setModalData] = useState(null);
 
   const handleViewDetails = (record) => {
     setModalData(record);
     setViewDetailsModal(true);
   };
+
+  console.log(modalData?.familyMembers);
 
   return (
     <>
@@ -46,18 +48,22 @@ const ResidentManagement = () => {
       </DSCard>
 
       {/* View Details Modal */}
-      <ViewDetailsModal
-        title={"View Owner Details"}
-        open={viewDetailsModal}
-        handleClose={() => setViewDetailsModal(false)}
-        ImgSrc={modalData?.avatar}
-        name={modalData?.fullName}
-        email={modalData?.email}
-        Wing={modalData?.wing}
-        Unit={modalData?.unitNumber}
-        Age={modalData?.age}
-        Gender={modalData?.gender}
-      />
+      {modalData && (
+        <ViewDetailsModal
+          title={"View Owner Details"}
+          open={viewDetailsModal}
+          handleClose={() => setViewDetailsModal(false)}
+          ImgSrc={modalData?.avatar}
+          name={modalData?.fullName}
+          email={modalData?.email}
+          Wing={modalData?.wing}
+          Unit={modalData?.unitNumber}
+          Age={modalData?.age}
+          Gender={modalData?.gender}
+          documentType={modalData?.documents}
+          memberCount={modalData?.familyMembers}
+        />
+      )}
     </>
   );
 };

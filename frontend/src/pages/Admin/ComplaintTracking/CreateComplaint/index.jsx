@@ -10,11 +10,15 @@ import {
   DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
-import { useAddComplaint, useListComplaint, useDeleteComplaint } from "@/hook/Admin/ComplaintTracking";
+import {
+  useAddComplaint,
+  useListComplaint,
+  useDeleteComplaint,
+} from "@/hook/Admin/ComplaintTracking";
 
 const ComplaintCreate = () => {
-
-  const { dataListComplaint, fetchListComplaint } = useListComplaint("Complain")
+  const { dataListComplaint, fetchListComplaint } =
+    useListComplaint("Complain");
   const {
     formData,
     handleChange,
@@ -25,7 +29,7 @@ const ComplaintCreate = () => {
     closeModal,
     handleSubmit,
     isEdit,
-  } = useAddComplaint(fetchListComplaint)
+  } = useAddComplaint(fetchListComplaint);
   const {
     complaintDelete,
     deleteComplaintData,
@@ -33,7 +37,6 @@ const ComplaintCreate = () => {
     showDeleteModal,
     setShowDeleteModal,
   } = useDeleteComplaint(fetchListComplaint);
-
 
   const [viewComplaint, setViewComplaint] = useState({
     open: false,
@@ -74,7 +77,9 @@ const ComplaintCreate = () => {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Badge color={"blue"}>{record.unitId.unitNumber}</Badge>,
+      render: (text, record) => (
+        <Badge color={"blue"}>{record.unitId.unitNumber}</Badge>
+      ),
     },
     {
       title: "Priority",
@@ -85,8 +90,8 @@ const ComplaintCreate = () => {
           priority === "High"
             ? "red"
             : priority === "Medium"
-              ? "blue"
-              : "green";
+            ? "blue"
+            : "green";
         return (
           <Tag color={color} key={priority}>
             {priority?.toUpperCase()}
@@ -117,26 +122,24 @@ const ComplaintCreate = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
-            onClick={
-              () => setViewComplaint({ open: true, data: record })
-            }
+            className="view-btn"
+            onClick={() => setViewComplaint({ open: true, data: record })}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
+            className="delete-btn"
             onClick={() => {
-              setShowDeleteModal(true)
-              setDeleteComplaintData(record)
+              setShowDeleteModal(true);
+              setDeleteComplaintData(record);
             }}
           />
         </Space>
@@ -190,7 +193,7 @@ const ComplaintCreate = () => {
     }
   };
 
-  console.log("dataListComplaint ======> ", dataListComplaint)
+  console.log("dataListComplaint ======> ", dataListComplaint);
 
   return (
     <>
@@ -209,15 +212,16 @@ const ComplaintCreate = () => {
       <DSCard
         title={"Create Complaint"}
         headerContent={
-          <DSButton
-            variant={"primary"}
-            onClick={openCreateModal}
-          >
+          <DSButton variant={"primary"} onClick={openCreateModal}>
             Create Complaint
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} />
+        <DSTable
+          tableColumn={columns}
+          dataSource={dataListComplaint}
+          pagination={false}
+        />
       </DSCard>
 
       {/* Create Complaint Modal */}

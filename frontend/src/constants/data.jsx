@@ -388,14 +388,14 @@ export const ResidentManagementColumns = (onEdit, onViewDetails) => [
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => onEdit(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={() => onViewDetails(record)}
           />
         </Space>

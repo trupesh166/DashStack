@@ -13,7 +13,7 @@ import {
   // useViewExpanse,
   useDeleteExpense,
   useListExpense,
-  useAddExpense
+  useAddExpense,
 } from "@/hook/Admin/FinancialMaintenance/";
 
 export const Expense = () => {
@@ -102,21 +102,21 @@ export const Expense = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={() => handleViewClick(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
+            className="delete-btn"
             onClick={() => handleDeleteClick(record)}
           />
         </Space>

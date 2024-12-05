@@ -34,7 +34,7 @@ export const vacateUser = () => request("get", "auth/user/vacate-user/");
 /* Maintenance Management */
 export const createMaintenance = (data) =>
   request("post", "/maintain/create", data);
-export const listMaintenance = () => request("get", `/maintain-detail/member/`);
+export const listMaintenance = (societyId) => request("get", `/maintain-detail/member/${societyId}`);
 export const dueMaintenance = () => request("get", `/maintain-detail/due/`);
 export const pendingMaintenance = () =>
   request("get", `/maintain-detail/pending/`);

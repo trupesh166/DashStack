@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   DSButton,
   DSCard,
@@ -6,62 +6,40 @@ import {
   ViewMaintenanceDetailsModal,
 } from "@/components";
 import { Avatar, Tag } from "antd";
-import Icons from "@/constants/Icons";
+import UseDecodeToken from "@/hook/UseDecodeToken";
+import useMaintenanceData from "@/hook/Admin/FinancialMaintenance/Income/Maintenance/ListMaintenance";
 import styles from "./Maintenance.module.css";
-
-const data = [
-  {
-    key: "1",
-    avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-    name: "Brooklyn Simmons",
-    wingName: "A",
-    unitNumber: 1001,
-    date: "10/02/2024",
-    residentStatus: "Owner",
-    phone: "94564 96321",
-    amount: 1000,
-    penaltyAmount: null,
-    paymentStatus: "Panding",
-    paymentMethod: "Cash",
-  },
-  {
-    key: "2",
-    avatar:
-      "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
-    name: "Simmons Brooklyn",
-    wingName: "B",
-    unitNumber: 1010,
-    date: "10/02/2024",
-    residentStatus: "Tenant",
-    phone: "94564 96321",
-    amount: 1000,
-    penaltyAmount: 250,
-    paymentStatus: "Done",
-    paymentMethod: "Online",
-  },
-];
+import Icons from "../../../../../constants/Icons";
 
 export const Maintenance = () => {
+  const { societyId } = UseDecodeToken();
+  const { maintenanceData, isLoading } = useMaintenanceData(societyId);
   const [viewMaintenanceDetails, setViewMaintenanceDetails] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   const columns = [
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "fullName",
+      key: "fullName",
       render: (text, record) => (
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Avatar src={record.avatar} width="40" style={{ marginRight: 8 }} />
+          <Avatar src={record.avatar} style={{ marginRight: 8 }} />
           {text}
         </div>
       ),
     },
     {
-      title: "Unit Number",
+      title: "Wing & Unit",
       key: "unitNumber",
       render: (record) => (
-        <div className="d-flex align-items-center justify-content-center gap-4">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Avatar>{record.wingName}</Avatar>
           {record.unitNumber}
         </div>
@@ -70,30 +48,17 @@ export const Maintenance = () => {
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
-      align: "center",
-    },
-    {
-      title: "Status",
-      dataIndex: "residentStatus",
-      key: "residentStatus",
-      render: (residentStatus) => (
-        <Tag
-          className={styles.button}
-          bordered={false}
-          color={residentStatus === "Owner" ? "blue" : "pink"}
-          icon={residentStatus === "Owner" ? Icons.TagUser : Icons.User}
-        >
-          {residentStatus}
-        </Tag>
+      dataIndex: "dueDate",
+      key: "dueDate",
+      render: (dueDate) => (
+        <div>{dueDate ? new Date(dueDate).toLocaleDateString() : "--"}</div>
       ),
       align: "center",
     },
     {
       title: "Phone Number",
-      dataIndex: "phone",
-      key: "phone",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
       align: "center",
     },
     {
@@ -101,24 +66,21 @@ export const Maintenance = () => {
       dataIndex: "amount",
       key: "amount",
       render: (amount) => (
-        <div style={{ color: "var(--clr-success)" }}>
-          {Icons.Rupee} {amount}
-        </div>
+        <div style={{ color: "var(--clr-success)" }}>₹ {amount}</div>
       ),
       align: "center",
     },
     {
-      title: "penalty",
+      title: "Penalty",
       dataIndex: "penaltyAmount",
       key: "penaltyAmount",
       render: (penaltyAmount) => (
         <Tag
-          className={styles.button}
-          bordered={false}
-          color={penaltyAmount ? "var(--clr-danger)" : "var(--clr-silver)"}
-          icon={penaltyAmount ? Icons.Rupee : ""}
+          color={
+            penaltyAmount !== "--" ? "var(--clr-danger)" : "var(--clr-silver)"
+          }
         >
-          {penaltyAmount || "--"}
+          ₹ {penaltyAmount}
         </Tag>
       ),
       align: "center",
@@ -128,29 +90,8 @@ export const Maintenance = () => {
       dataIndex: "paymentStatus",
       key: "paymentStatus",
       render: (paymentStatus) => (
-        <Tag
-          className={styles.button}
-          bordered={false}
-          color={paymentStatus === "Panding" ? "warning" : "success"}
-          icon={paymentStatus === "Panding" ? Icons.Timer : Icons.Verify}
-        >
+        <Tag color={paymentStatus === "Pending" ? "warning" : "success"}>
           {paymentStatus}
-        </Tag>
-      ),
-      align: "center",
-    },
-    {
-      title: "Method",
-      dataIndex: "paymentMethod",
-      key: "paymentMethod",
-      render: (paymentMethod) => (
-        <Tag
-          className={styles.button}
-          bordered={false}
-          color={paymentMethod === "Online" ? "blue" : "default"}
-          icon={paymentMethod === "Online" ? Icons.Wallet : Icons.Money}
-        >
-          {paymentMethod}
         </Tag>
       ),
       align: "center",
@@ -160,14 +101,14 @@ export const Maintenance = () => {
       key: "action",
       render: (_, record) => (
         <DSButton
+          type="primary"
+          size="small"
+          icon={Icons.EyeShow}
+          className="view-btn"
           onClick={() => {
             setSelectedRecord(record);
             setViewMaintenanceDetails(true);
           }}
-          type="primary"
-          size="small"
-          icon={Icons.EyeShow}
-          className="clr-cult"
         />
       ),
       align: "center",
@@ -176,18 +117,19 @@ export const Maintenance = () => {
 
   return (
     <>
-      <DSCard title={"Maintenance  Details"}>
+      <DSCard title={"Maintenance Details"}>
         <DSTable
-          dataSource={data}
+          dataSource={maintenanceData}
           tableColumn={columns}
           pagination={false}
           rowClassName={(record, index) =>
             index % 2 === 0 ? "table-row-light" : "table-row-dark"
           }
+          loading={isLoading}
         />
       </DSCard>
 
-      {/* View  */}
+      {/* View Maintenance Details Modal */}
       {selectedRecord && (
         <ViewMaintenanceDetailsModal
           open={viewMaintenanceDetails}

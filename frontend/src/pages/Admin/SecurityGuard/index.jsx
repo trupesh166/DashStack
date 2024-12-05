@@ -97,7 +97,7 @@ export const SecurityGuard = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => {
               setSelectedRecord(record); // Set selected record for editing
               setAddSecurity(true); // Open AddSecurityModal instead of Edit
@@ -107,7 +107,7 @@ export const SecurityGuard = () => {
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={() => {
               setSelectedRecord(record); // Set selected record for viewing
               setViewSecurity(true); // Open the View Modal
@@ -117,7 +117,7 @@ export const SecurityGuard = () => {
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-primary"
+            className="delete-btn"
             onClick={() => {
               setSelectedRecord(record); // Set selected record for deletion
               setDeleteComplaint(true); // Open the Delete Modal

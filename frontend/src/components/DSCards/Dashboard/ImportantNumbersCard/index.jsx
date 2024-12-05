@@ -9,7 +9,11 @@ import {
   EditImportantNumberModal,
 } from "../../..";
 import styles from "./ImportantNumbersCard.module.css";
-import { useAddImportantNumber, useListImportantNumber, useEditImportantNumber } from "@/hook/Admin/ImportantNumbers";
+import {
+  useAddImportantNumber,
+  useListImportantNumber,
+  useEditImportantNumber,
+} from "@/hook/Admin/ImportantNumbers";
 // import { useAddImportantNumber } from "../../../../hook/Admin/ImportantNumbers/AddImportantNumbers";
 // import { useListImportantNumber } from "../../../../hook/Admin/ImportantNumbers/ListImportantNumbers";
 // import { useEditImportantNumber } from "../../../../hook/Admin/ImportantNumbers/EditImportantNumbers";
@@ -52,9 +56,14 @@ export const ImportantNumbersCard = () => {
   const [deleteComplaint, setDeleteComplaint] = useState(false);
   const [editFormData, setEditFormData] = useState();
 
-  const { handleSubmit, handleInputChange, formValues } = useAddImportantNumber()
-  const { importantNumber, fetchimportantNumber } = useListImportantNumber()
-  const { edithandleSubmit, handleEditInputChange } = useEditImportantNumber(editFormData, setEditFormData, fetchimportantNumber)
+  const { handleSubmit, handleInputChange, formValues } =
+    useAddImportantNumber();
+  const { importantNumber, fetchimportantNumber } = useListImportantNumber();
+  const { edithandleSubmit, handleEditInputChange } = useEditImportantNumber(
+    editFormData,
+    setEditFormData,
+    fetchimportantNumber
+  );
   // const {
   //   importantNumberDelete,
   //   loading,
@@ -64,18 +73,17 @@ export const ImportantNumbersCard = () => {
   //   setShowDeleteModal,
   // } = useDeleteImportantNumber();
 
-
   const handleClose = async () => {
-    setAddImportantNumber(false)
-    setEditImportantNumber(false)
-    setDeleteComplaint(false)
-    await fetchimportantNumber()
-  }
+    setAddImportantNumber(false);
+    setEditImportantNumber(false);
+    setDeleteComplaint(false);
+    await fetchimportantNumber();
+  };
 
   const handleEdit = (data) => {
-    setEditImportantNumber(true)
-    setEditFormData(data)
-  }
+    setEditImportantNumber(true);
+    setEditFormData(data);
+  };
 
   // const handleDeleteImportantNumber = async () => {
   //   if(importantNumberData){
@@ -133,9 +141,15 @@ export const ImportantNumbersCard = () => {
               <DSButton
                 icon={Icons.Trash}
                 size={"small"}
-                className="clr-danger"
+                className="delete-btn"
               />
-              <DSButton icon={Icons.Edit} size={"small"} className="clr-cult" onClick={() => handleEdit(item)} />
+              <DSButton
+                icon={Icons.Edit}
+                size={"small"}
+                c
+                className="edit-btn"
+                onClick={() => handleEdit(item)}
+              />
             </div>
           </div>
         ))}
@@ -147,12 +161,11 @@ export const ImportantNumbersCard = () => {
         handleCancel={() => handleClose()}
         handleClose={() => handleClose()}
         handleOk={(e) => {
-          handleSubmit(e)
-          handleClose()
+          handleSubmit(e);
+          handleClose();
         }}
         handleInputChange={handleInputChange}
         formValues={formValues}
-
       />
 
       {/* Edit Important Number Modal */}
@@ -161,8 +174,8 @@ export const ImportantNumbersCard = () => {
         handleCancel={() => handleClose()}
         handleClose={() => handleClose()}
         handleOk={() => {
-          setEditImportantNumber(false)
-          edithandleSubmit(editFormData)
+          setEditImportantNumber(false);
+          edithandleSubmit(editFormData);
         }}
         formValues={editFormData}
         handleInputChange={handleEditInputChange}

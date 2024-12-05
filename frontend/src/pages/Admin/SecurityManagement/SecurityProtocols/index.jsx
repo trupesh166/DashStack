@@ -9,7 +9,11 @@ import {
   ViewSecurityProtocolModal,
 } from "@/components";
 import Icons from "@/constants/Icons";
-import { useAddSecurityProtocol, useListSecurityProtocols, useDeleteSecurityProtocol } from "@/hook/Admin/SecurityManagement";
+import {
+  useAddSecurityProtocol,
+  useListSecurityProtocols,
+  useDeleteSecurityProtocol,
+} from "@/hook/Admin/SecurityManagement";
 
 const data = [
   {
@@ -85,7 +89,7 @@ const SecurityProtocols = () => {
       key: "time",
       render: (createdAt) => {
         const { time } = formatDate(createdAt);
-        return time; 
+        return time;
       },
     },
     {
@@ -97,33 +101,21 @@ const SecurityProtocols = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
-            // onClick={() => {
-            //   setSelectedProtocol(record); // Set the selected protocol
-            //   setAddSecurityProtocolModal(true); // Open the Add Security Protocol modal
-            // }}
+            className="edit-btn"
             onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
-            // onClick={() => {
-            //   setSelectedProtocol(record); // Set the selected protocol
-            //   setViewSecurityProtocolModal(true); // Open the View Security Protocol modal
-            // }}
+            className="view-btn"
             onClick={() => setViewProtocolData(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-primary"
-            // onClick={() => {
-            //   setSelectedProtocol(record); // Set the selected protocol
-            //   setDeleteComplaint(true); // Open the Delete Modal
-            // }}
+            className="delete-btn"
             onClick={() => {
               setDeleteProtocolData(record);
               setShowDeleteModal(true);
@@ -139,10 +131,7 @@ const SecurityProtocols = () => {
       <DSCard
         title="Security Protocols"
         headerContent={
-          <DSButton
-            variant={"primary"}
-            onClick={openCreateModal}
-          >
+          <DSButton variant={"primary"} onClick={openCreateModal}>
             Create Protocol
           </DSButton>
         }
@@ -178,7 +167,7 @@ const SecurityProtocols = () => {
         // open={viewSecurityProtocolModal}
         open={!!viewProtocolData}
         protocol={viewProtocolData}
-        handleCancel={() => setViewProtocolData(null)} 
+        handleCancel={() => setViewProtocolData(null)}
         handleClose={() => setViewProtocolData(null)}
         // handleCancel={() => setViewSecurityProtocolModal(false)}
         // handleClose={() => setViewSecurityProtocolModal(false)}

@@ -37,7 +37,7 @@ export const useAddImportantNumber = (handleClose) => {
         ...formValues,
         societyId: societyId,
       });
-      toast.success("Society created successfully!");
+      toast.success("Important Number Add successfully!");
       setFormValues({
         fullName: "",
         phoneNumber: "",

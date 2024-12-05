@@ -80,19 +80,19 @@ const tableColumn = [
           type="primary"
           size="small"
           icon={Icons.Edit}
-          className="clr-success"
+          className="edit-btn"
         />
         <DSButton
           type="primary"
           size="small"
           icon={Icons.EyeShow}
-          className="clr-cult"
+          className="view-btn"
         />
         <DSButton
           type="primary"
           size="small"
           icon={Icons.Trash}
-          className="clr-primary"
+          className="delete-btn"
         />
       </Space>
     ),

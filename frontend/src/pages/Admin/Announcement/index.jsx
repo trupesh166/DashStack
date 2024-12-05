@@ -13,6 +13,7 @@ import {
   DeleteModal,
   DSHead,
 } from "@/components";
+import dayjs from "dayjs";
 
 const Announcement = () => {
   const { submitAnnouncement } = useAddAnnouncement();
@@ -55,7 +56,7 @@ const Announcement = () => {
 
   const handleDeleteAnnouncement = async () => {
     if (deleteAnnouncementData) {
-      const result = await announcementDelete(deleteAnnouncementData._id); // API Call to delete
+      const result = await announcementDelete(deleteAnnouncementData._id);
       if (result.success) {
         setShowDeleteModal(false);
         setDeleteAnnouncementData(null);
@@ -69,7 +70,7 @@ const Announcement = () => {
   return (
     <>
       <DSHead
-        title="Expanse Note || SMC"
+        title="Expanse Note || SMS"
         description="Manage your financial notes and announcements effectively with Expanse Note."
         keywords="financial, notes, society, announcements, updates"
         ogTitle="Expanse Note || SMC"
@@ -89,23 +90,34 @@ const Announcement = () => {
         }
         className="announcement-card-grid"
       >
-        {announcements?.map((announcement) => (
-          <AnnouncementCard
-            key={announcement?._id}
-            title={announcement?.announcementTitle}
-            description={announcement?.announcementDescription}
-            date={new Date(announcement?.announcementDate).toLocaleDateString()}
-            time={new Date(announcement?.announcementTime).toLocaleDateString(
-              "en-CA"
-            )}
-            items={[
-              { label: "Edit", key: "edit" },
-              { label: "View", key: "view" },
-              { label: "Delete", key: "delete" },
-            ]}
-            onAction={(key) => handleActionClick(key, announcement)}
-          />
-        ))}
+        {announcements?.map((announcement) => {
+          const formattedDate = dayjs(announcement?.announcementDate);
+          const formattedTime = dayjs(announcement?.announcementTime);
+
+          return (
+            <AnnouncementCard
+              key={announcement?._id}
+              title={announcement?.announcementTitle}
+              description={announcement?.announcementDescription}
+              date={
+                formattedDate.isValid()
+                  ? formattedDate.format("YYYY-MM-DD")
+                  : "Invalid Date"
+              }
+              time={
+                formattedTime.isValid()
+                  ? formattedTime.format("YYYY-MM-DD")
+                  : "Invalid Time"
+              }
+              items={[
+                { label: "Edit", key: "edit" },
+                { label: "View", key: "view" },
+                { label: "Delete", key: "delete" },
+              ]}
+              onAction={(key) => handleActionClick(key, announcement)}
+            />
+          );
+        })}
 
         {/* Add/Edit Modal */}
         {addAnnouncement && (
@@ -130,12 +142,20 @@ const Announcement = () => {
             ModalTitle={"View Announcement"}
             title={viewAnnouncement?.data?.announcementTitle}
             Description={viewAnnouncement?.data?.announcementDescription}
-            date={new Date(
-              viewAnnouncement?.data?.announcementDate
-            ).toLocaleDateString()}
-            time={new Date(
-              viewAnnouncement?.data?.announcementTime
-            ).toLocaleDateString("en-CA")}
+            date={
+              dayjs(viewAnnouncement?.data?.announcementDate).isValid()
+                ? dayjs(viewAnnouncement?.data?.announcementDate).format(
+                    "YYYY-MM-DD"
+                  )
+                : "Invalid Date"
+            }
+            time={
+              dayjs(viewAnnouncement?.data?.announcementTime).isValid()
+                ? dayjs(viewAnnouncement?.data?.announcementTime).format(
+                    "YYYY-MM-DD"
+                  )
+                : "Invalid Time"
+            }
           />
         )}
 

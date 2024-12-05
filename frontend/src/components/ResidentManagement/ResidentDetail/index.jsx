@@ -1,26 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./ResidentDetail.module.css";
 import { Avatar, Col, Row } from "antd";
 import { DSCard, DSInput, DSSelect } from "../..";
 import Icons from "../../../constants/Icons";
-import { useAddResident } from "../../../hook/Admin/ResidentManagement/AddResident";
 import { listUnit, listWing } from "../../../axiosApi/ApiHelper";
 import UseDecodeToken from "../../../hook/UseDecodeToken";
+import styles from "./ResidentDetail.module.css";
 
-const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFiles, setUserPhoto, setUploadedFiles, formData, handleInputChange, ownerInfo, handleOwnerInfoChange }) => {
+const ResidentDetail = ({
+  userPhoto,
+  residentType,
+  setResidentType,
+  uploadedFiles,
+  setUserPhoto,
+  setUploadedFiles,
+  formData,
+  handleInputChange,
+  ownerInfo,
+  handleOwnerInfoChange,
+}) => {
   const aadharFrontRef = useRef(null);
   const aadharBackRef = useRef(null);
   const addressProofRef = useRef(null);
   const rentAgreementRef = useRef(null);
   const userPhotoRef = useRef(null);
 
-  const { societyId } = UseDecodeToken()
+  const { societyId } = UseDecodeToken();
   // const { userPhoto, residentType, setResidentType, uploadedFiles, setUserPhoto, setUploadedFiles, formData, handleInputChange,
   //   //  ownerInfo
   // } = useAddResident()
-  const [wing, setWing] = useState([])
-  const [unit, setUnit] = useState([])
-  const [selectWingId, setSelectWingId] = useState("")
+  const [wing, setWing] = useState([]);
+  const [unit, setUnit] = useState([]);
+  const [selectWingId, setSelectWingId] = useState("");
 
   // const [userPhoto, setUserPhoto] = useState(null);
   // const [residentType, setResidentType] = useState("");
@@ -58,13 +68,12 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
   //   }
   // };
 
-
   const handleFileChange = (event, fileType) => {
     const file = event.target.files[0];
     if (file) {
       setUploadedFiles((prevState) => ({
         ...prevState,
-        [fileType]: file
+        [fileType]: file,
       }));
     }
   };
@@ -82,7 +91,7 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
       setUserPhoto(URL.createObjectURL(file));
       setUploadedFiles((prevState) => ({
         ...prevState,
-        [fileType]: file
+        [fileType]: file,
       }));
     }
   };
@@ -90,40 +99,45 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
   const GetWing = async () => {
     try {
       if (societyId) {
-        const result = await listWing(societyId)
+        const result = await listWing(societyId);
         if (result && result?.data) {
           result?.data.map((value) => {
-            setWing((prev) => [...prev, { value: value._id, label: value.wingName }]);
-          })
+            setWing((prev) => [
+              ...prev,
+              { value: value._id, label: value.wingName },
+            ]);
+          });
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const GetUnit = async () => {
     try {
       if (selectWingId) {
-        const result = await listUnit(selectWingId)
+        const result = await listUnit(selectWingId);
         if (result && result?.data) {
           result?.data.map((value) => {
-            setUnit((prev) => [...prev, { value: value._id, label: value.unitNumber }]);
-          })
+            setUnit((prev) => [
+              ...prev,
+              { value: value._id, label: value.unitNumber },
+            ]);
+          });
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    GetUnit()
-  }, [selectWingId])
+    GetUnit();
+  }, [selectWingId]);
 
   useEffect(() => {
-    GetWing()
-  }, [societyId])
-
+    GetWing();
+  }, [societyId]);
 
   return (
     <DSCard>
@@ -206,7 +220,7 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                     type="text"
                     placeholder={"Enter Full Name"}
                     require={true}
-                    name={'fullName'}
+                    name={"fullName"}
                     value={ownerInfo.fullName}
                     onChange={handleOwnerInfoChange}
                   />
@@ -219,7 +233,7 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                     placeholder={"+91"}
                     maxLength={13}
                     require={true}
-                    name={'phoneNumber'}
+                    name={"phoneNumber"}
                     value={ownerInfo.phoneNumber}
                     onChange={handleOwnerInfoChange}
                   />
@@ -231,7 +245,7 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                     type="text"
                     placeholder={"Enter Address"}
                     require={true}
-                    name={'address'}
+                    name={"address"}
                     value={ownerInfo.address}
                     onChange={handleOwnerInfoChange}
                   />
@@ -294,8 +308,8 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                 name="wing"
                 value={formData.wing}
                 onChange={(value) => {
-                  setSelectWingId(value)
-                  handleInputChange("wing", value)
+                  setSelectWingId(value);
+                  handleInputChange("wing", value);
                 }}
               />
             </Col>
@@ -354,7 +368,10 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                 <div>
                   <h6>{uploadedFiles.aadharFront.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.aadharFront.size / (1024 * 1024)).toFixed(2)} MB
+                    {(uploadedFiles.aadharFront.size / (1024 * 1024)).toFixed(
+                      2
+                    )}{" "}
+                    MB
                   </h6>
                 </div>
               </div>
@@ -397,7 +414,8 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                 <div>
                   <h6>{uploadedFiles.aadharBack.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.aadharBack.size / (1024 * 1024)).toFixed(2)} MB
+                    {(uploadedFiles.aadharBack.size / (1024 * 1024)).toFixed(2)}{" "}
+                    MB
                   </h6>
                 </div>
               </div>
@@ -440,7 +458,10 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                 <div>
                   <h6>{uploadedFiles.addressProof.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.addressProof.size / (1024 * 1024)).toFixed(2)} MB
+                    {(uploadedFiles.addressProof.size / (1024 * 1024)).toFixed(
+                      2
+                    )}{" "}
+                    MB
                   </h6>
                 </div>
               </div>
@@ -483,7 +504,10 @@ const ResidentDetail = ({ userPhoto, residentType, setResidentType, uploadedFile
                 <div>
                   <h6>{uploadedFiles.rentAgreement.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.rentAgreement.size / (1024 * 1024)).toFixed(2)} MB
+                    {(uploadedFiles.rentAgreement.size / (1024 * 1024)).toFixed(
+                      2
+                    )}{" "}
+                    MB
                   </h6>
                 </div>
               </div>

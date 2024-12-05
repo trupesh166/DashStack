@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Avatar, Card, Col, Drawer, Row, Image, Button } from "antd";
-import Icons from "@/constants/Icons";
 import { DSButton, DSCard } from "../../../..";
-import style from "./ViewDetailsModal.module.css";
-
 import { Document, Page } from "react-pdf";
 import clsx from "clsx";
+import style from "./ViewDetailsModal.module.css";
+import Icons from "../../../../../constants/Icons";
 
 export const ViewDetailsModal = ({
   title,
@@ -121,31 +120,28 @@ export const ViewDetailsModal = ({
                 </Row>
               </Col>
               <Col>
-                <DSButton
-                  icon={Icons.EyeShow}
-                  onClick={() => handleImagePreview(content.url)}
-                  correct
-                  URL
-                />
-                {/* Conditionally render the image or PDF */}
                 {content.url.endsWith(".png") ||
                 content.url.endsWith(".jpg") ? (
-                  <Image
-                    style={{ display: "none" }}
-                    src={content.url}
-                    preview={{
-                      visible,
-                      src: currentImageUrl,
-                      onVisibleChange: (value) => setVisible(value),
-                    }}
-                  />
+                  <>
+                    <DSButton
+                      icon={Icons.EyeShow}
+                      onClick={() => handleImagePreview(content.url)}
+                    />
+                    <Image
+                      style={{ display: "none" }}
+                      src={content.url}
+                      preview={{
+                        visible,
+                        src: currentImageUrl,
+                        onVisibleChange: (value) => setVisible(value),
+                      }}
+                    />
+                  </>
                 ) : content.url.endsWith(".pdf") ? (
                   <Button
                     onClick={() => setVisible(true)}
-                    icon={<Icons.EyeShow />}
-                  >
-                    View PDF
-                  </Button>
+                    icon={Icons.EyeShow}
+                  />
                 ) : null}
               </Col>
             </Row>
@@ -164,7 +160,7 @@ export const ViewDetailsModal = ({
         {OwnerDetails && (
           <Card title="Owner Details" className="mb-4">
             {OwnerDetails?.map((content) => (
-              <DSCard key={content.key}>
+              <DSCard key={content.fullName}>
                 <div className={"card-grid"}>
                   <h6 className="fw-semibold">Full Name</h6>
                   <h6>{content.fullName}</h6>
@@ -190,7 +186,7 @@ export const ViewDetailsModal = ({
             {memberCount?.map((content) => (
               <DSCard
                 rootClass={clsx(memberCount?.length > 1 ? "mb-4" : "mb-0")}
-                key={content.key}
+                key={content.fullName}
               >
                 <div className={"card-grid"}>
                   <h6 className="fw-semibold">Full Name</h6>

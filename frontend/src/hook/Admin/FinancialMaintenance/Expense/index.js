@@ -1,6 +1,10 @@
 import { useState } from "react";
 import dayjs from "dayjs";
-import { createExpense, updateExpense, deleteExpense } from "@/axiosApi/ApiHelper";
+import {
+  createExpense,
+  updateExpense,
+  deleteExpense,
+} from "@/axiosApi/ApiHelper";
 import UseDecodeToken from "@/hook/UseDecodeToken";
 import toast from "react-hot-toast";
 
@@ -23,15 +27,15 @@ export const useAddExpense = (onSubmitSuccess) => {
   };
 
   const openEditModal = (expense) => {
-    console.log("expense =====> ", expense)
     const formattedDate = dayjs(expense.date);
+    console.log(formattedDate);
     setEditingExpenseId(expense._id);
     setTitle(expense.title);
     setDescription(expense.discription);
     setDate(formattedDate);
     setAmount(expense.amount);
     setBill(expense.billDocument || null);
-    setIsEdit(true)
+    setIsEdit(true);
     setIsModalOpen(true);
   };
 
@@ -47,7 +51,7 @@ export const useAddExpense = (onSubmitSuccess) => {
     setAmount("");
     setBill(null);
     setEditingExpenseId(null);
-    setIsEdit(false)
+    setIsEdit(false);
   };
 
   const handleFileChange = (event) => {
@@ -122,6 +126,6 @@ export const useAddExpense = (onSubmitSuccess) => {
     openEditModal,
     closeModal,
     handleSubmit,
-    isEdit
+    isEdit,
   };
 };

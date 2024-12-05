@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Icons from "@/constants/Icons";
 import {
   ChartCard,
   ComplaintCard,
@@ -7,7 +8,6 @@ import {
   TotalUserCard,
   UpcomingActivityCard,
 } from "@/components";
-import Icons from "@/constants/Icons";
 import styles from "./Dashboard.module.css";
 
 export const Dashboard = () => {

@@ -1,56 +1,21 @@
-import React, { useState } from "react";
-import Icons from "@/constants/Icons";
+import { useState } from "react";
 import clsx from "clsx";
+import Icons from "@/constants/Icons";
 import {
   AddImportantNumberModal,
   DeleteModal,
   DSButton,
   DSCard,
   EditImportantNumberModal,
-} from "../../..";
-import styles from "./ImportantNumbersCard.module.css";
+} from "@/components/";
 import {
   useAddImportantNumber,
   useListImportantNumber,
   useEditImportantNumber,
 } from "@/hook/Admin/ImportantNumbers";
-// import { useAddImportantNumber } from "../../../../hook/Admin/ImportantNumbers/AddImportantNumbers";
-// import { useListImportantNumber } from "../../../../hook/Admin/ImportantNumbers/ListImportantNumbers";
-// import { useEditImportantNumber } from "../../../../hook/Admin/ImportantNumbers/EditImportantNumbers";
+import styles from "./ImportantNumbersCard.module.css";
 
 export const ImportantNumbersCard = () => {
-  const ImportantNumber = [
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-    {
-      fullName: "afseawef",
-      phoneNumber: "12345465",
-      work: "xtdfhbfdh",
-    },
-  ];
   const [addImportantNumber, setAddImportantNumber] = useState(false);
   const [editImportantNumber, setEditImportantNumber] = useState(false);
   const [deleteComplaint, setDeleteComplaint] = useState(false);

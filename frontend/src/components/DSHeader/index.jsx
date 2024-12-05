@@ -12,6 +12,7 @@ export const DSHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = UseDecodeToken();
+  console.log(token);
 
   const dropdownItems = [
     {

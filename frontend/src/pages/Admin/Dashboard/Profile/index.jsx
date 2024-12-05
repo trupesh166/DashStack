@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import styles from "./EditProfile.module.css";
+import styles from "./Profile.module.css";
 import { DSButton, DSCard, DSInput, DSSelect } from "../../../../components";
+import UseDecodeToken from "@/hook/UseDecodeToken";
 import { Avatar, Col, Row } from "antd";
-import UseDecodeToken from "../../../../hook/UseDecodeToken";
 
-export const EditProfile = () => {
+export const Profile = () => {
   const { token } = UseDecodeToken();
   console.log(token);
   const [userdetail, setUserDetail] = useState({

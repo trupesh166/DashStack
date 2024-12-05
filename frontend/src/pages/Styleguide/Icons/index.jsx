@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import styles from "./Icons.module.css";
 import Icons from "@/constants/Icons";
+import styles from "./Icons.module.css";
 
 export const DSIcons = () => {
   return (

@@ -1,6 +1,6 @@
+import clsx from "clsx";
 import { DSButton } from "@/components";
 import styles from "./PasswordUpdateSuccess.module.css";
-import clsx from "clsx";
 
 export const PasswordUpdateSuccess = () => {
   return (

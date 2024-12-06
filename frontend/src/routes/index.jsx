@@ -34,9 +34,7 @@ import {
   Polls,
   CommunitiesDiscussion,
   MaintenanceInvoices,
-  ViewMaintenanceInvoices,
   OtherIncomeInvoice,
-  ViewOtherIncomeInvoice,
   SecurityProtocolsResident,
 
   /* Security Panel */
@@ -84,6 +82,9 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
+          element: "true",
+        },
+        {
           path: "member",
           element: <ProtectedRoute />,
           children: [
@@ -110,22 +111,16 @@ const DashStackRoute = createBrowserRouter(
                   element: <AdminDashBoard />,
                 },
                 {
-                  key: "/admin",
                   path: "profile",
                   element: <EditProfile />,
                 },
                 {
                   path: "residents",
-                  children: [
-                    {
-                      index: true,
-                      element: <ResidentManagement />,
-                    },
-                    {
-                      path: "resident-detail",
-                      element: <Resident />,
-                    },
-                  ],
+                  element: <ResidentManagement />,
+                },
+                {
+                  path: "resident-detail",
+                  element: <Resident />,
                 },
                 {
                   path: "financial",
@@ -193,9 +188,28 @@ const DashStackRoute = createBrowserRouter(
                 },
               ],
             },
+            {
+              element: <ProtectedRoute />,
+              children: [
+                {
+                  element: <AuthLayouts />,
+                  children: [
+                    {
+                      path: "register",
+                      element: <Register />,
+                    },
+                    {
+                      path: "login",
+                      element: <Login />,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {
+          /*  Resident Route */
           path: "resident",
           element: <ProtectedRoute />,
           children: [
@@ -240,29 +254,11 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "maintenance-invoices",
-                      children: [
-                        {
-                          index: true,
-                          element: <MaintenanceInvoices />,
-                        },
-                        {
-                          path: "view-invoices",
-                          element: <ViewMaintenanceInvoices />,
-                        },
-                      ],
+                      element: <MaintenanceInvoices />,
                     },
                     {
                       path: "other-income-invoice",
-                      children: [
-                        {
-                          index: true,
-                          element: <OtherIncomeInvoice />,
-                        },
-                        {
-                          path: "view-invoices",
-                          element: <ViewOtherIncomeInvoice />,
-                        },
-                      ],
+                      element: <OtherIncomeInvoice />,
                     },
                   ],
                 },
@@ -275,6 +271,7 @@ const DashStackRoute = createBrowserRouter(
           ],
         },
         {
+          /* Security Route */
           path: "security",
           element: <ProtectedRoute />,
           children: [
@@ -294,24 +291,85 @@ const DashStackRoute = createBrowserRouter(
           ],
         },
         {
-          path: "style-guide",
-          element: <DashboardLayout items={StyleGuideAsideMenu} />,
+          /* Authentication Routes For Super Admin */
+          element: <ProtectedRoute />,
           children: [
             {
-              index: true,
-              element: <FontFamily />,
-            },
-            {
-              path: "button",
-              element: <DSButtons />,
+              element: <AuthLayouts />,
+              children: [
+                {
+                  path: "login",
+                  element: <Login />,
+                },
+                {
+                  path: "forgot-password",
+                  element: <ForgetPassword />,
+                },
+                {
+                  path: "otp",
+                  element: <OTP />,
+                },
+                {
+                  path: "reset-password",
+                  element: <ResetPassword />,
+                },
+              ],
             },
           ],
         },
+      ],
+    },
+    {
+      /* StyleGuide Routes */
+      path: "style-guide",
+      element: <DashboardLayout items={StyleGuideAsideMenu} />,
+      children: [
         {
-          path: "*",
-          element: <>404 - Page Not Found</>,
+          index: true,
+          element: <FontFamily />,
+        },
+        {
+          path: "button",
+          element: <DSButtons />,
+        },
+        {
+          path: "input",
+          element: <Inputs />,
+        },
+        {
+          path: "checkbox",
+          element: <CheckBox />,
+        },
+        {
+          path: "modal",
+          element: <Modal />,
+        },
+        {
+          path: "table",
+          element: "table",
+        },
+        {
+          path: "icons",
+          element: <DSIcons />,
+        },
+        {
+          path: "tabs",
+          element: <Tabs />,
+        },
+        {
+          path: "tags",
+          element: "tags",
+        },
+        {
+          path: "cards",
+          element: <Cards />,
         },
       ],
+    },
+    {
+      /* Default Route (404) */
+      path: "*",
+      element: <>404 - Page Not Found</>,
     },
   ],
   {

@@ -6,7 +6,11 @@ import {
   DSCard,
   OtherIncomeCard,
 } from "@/components";
-import { useListOtherIncome, useAddOtherIncome, useDeleteOtherIncome } from "@/hook/Admin/FinancialMaintenance";
+import {
+  useListOtherIncome,
+  useAddOtherIncome,
+  useDeleteOtherIncome,
+} from "@/hook/Admin/FinancialMaintenance";
 import { DeleteModal } from "../../../../../components";
 
 export const OtherIncome = () => {
@@ -29,7 +33,7 @@ export const OtherIncome = () => {
     openDeleteModal,
     closeDeleteModal,
     handleDelete,
-  } = useDeleteOtherIncome(fetchListOtherIncome)
+  } = useDeleteOtherIncome(fetchListOtherIncome);
 
   const handleActionClick = (key, otherIncome) => {
     if (key === "edit") {
@@ -48,32 +52,28 @@ export const OtherIncome = () => {
       <DSCard
         title={"Other Income"}
         headerContent={
-          <DSButton
-            variant={"primary"}
-            onClick={openCreateModal}
-          >
+          <DSButton variant={"primary"} onClick={openCreateModal}>
             Create Other Income
           </DSButton>
         }
+        className={"announcement-card-grid"}
       >
-        <Flex gap={"small"}>
-          {dataListOtherIncome?.map((content) => (
-            <OtherIncomeCard
-              key={content.id}
-              title={content.title}
-              amount={content.amount}
-              totalMember={content.MemberCount}
-              date={new Date(content?.date).toLocaleDateString()}
-              dueDate={new Date(content?.dueDate).toLocaleDateString()}
-              description={content.description}
-              items={[
-                { label: "Edit", key: "edit" },
-                { label: "Delete", key: "delete" },
-              ]}
-              onAction={(key) => handleActionClick(key, content)}
-            />
-          ))}
-        </Flex>
+        {dataListOtherIncome?.map((content) => (
+          <OtherIncomeCard
+            key={content._id}
+            title={content.title}
+            amount={content.amount}
+            totalMember={content.MemberCount}
+            date={new Date(content?.date).toLocaleDateString()}
+            dueDate={new Date(content?.dueDate).toLocaleDateString()}
+            description={content.description}
+            items={[
+              { label: "Edit", key: "edit" },
+              { label: "Delete", key: "delete" },
+            ]}
+            onAction={(key) => handleActionClick(key, content)}
+          />
+        ))}
       </DSCard>
 
       {/* Create Other Income Modal */}
@@ -97,7 +97,6 @@ export const OtherIncome = () => {
         handleOk={handleDelete}
         confirmLoading={isDeleting}
       />
-
     </>
   );
 };

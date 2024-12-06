@@ -34,7 +34,8 @@ export const vacateUser = () => request("get", "auth/user/vacate-user/");
 /* Maintenance Management */
 export const createMaintenance = (data) =>
   request("post", "/maintain/create", data);
-export const listMaintenance = (societyId) => request("get", `/maintain-detail/member/${societyId}`);
+export const listMaintenance = (societyId) =>
+  request("get", `/maintain-detail/member/${societyId}`);
 export const dueMaintenance = () => request("get", `/maintain-detail/due/`);
 export const pendingMaintenance = () =>
   request("get", `/maintain-detail/pending/`);
@@ -43,12 +44,13 @@ export const completedMaintenance = () =>
 export const getMaintenanceDetailsByMember = () =>
   request("get", `/maintain-detail/list/`);
 
-// // Unit Management
+// Unit Management
 export const createUnit = (data) => request("post", "/unit/create", data);
 export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // Wing Management
-export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
+export const listWing = (societyId) =>
+  request("get", `/wing/list/${societyId}`);
 
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
@@ -148,6 +150,12 @@ export const editImportantNumber = (id, data) =>
   request("put", `/workernumber/updateimportantnumber/${id}`, data);
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
+
+// /visitor/createemergency
+
+export const createEmergency = (data) =>
+  request("post", "/visitor/createemergency", data);
+
 
 // Image Management
 export const imageDetails = (data) => request("post", "/image-details", data);

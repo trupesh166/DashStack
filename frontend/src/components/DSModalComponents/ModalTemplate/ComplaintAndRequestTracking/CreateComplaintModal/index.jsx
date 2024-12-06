@@ -6,7 +6,6 @@ import { Flex } from "antd";
 import { listUnit, listWing } from "@/axiosApi/ApiHelper";
 import UseDecodeToken from "@/hook/UseDecodeToken";
 
-
 export const CreateComplaintModal = ({
   open,
   handleOk,
@@ -14,59 +13,57 @@ export const CreateComplaintModal = ({
   handleClose,
   formData,
   handleChange,
-  isEdit
+  isEdit,
 }) => {
+  const { societyId } = UseDecodeToken();
+  console.log(formData);
 
-  const { societyId } = UseDecodeToken()
-  console.log(formData)
-
-  const [wing, setWing] = useState([])
-  const [unit, setUnit] = useState([])
-  const [selectWingId, setSelectWingId] = useState(formData.wing || "")
+  const [wing, setWing] = useState([]);
+  const [unit, setUnit] = useState([]);
+  const [selectWingId, setSelectWingId] = useState(formData.wing || "");
 
   const GetWing = async () => {
     try {
       if (societyId) {
-        const result = await listWing(societyId)
+        const result = await listWing(societyId);
         if (result && result?.data) {
           const uniqueWings = result?.data.map((value) => ({
             value: value._id,
             label: value.wingName,
             key: value._id,
           }));
-          setWing(uniqueWings)
+          setWing(uniqueWings);
         }
-  
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   const GetUnit = async () => {
     try {
       if (selectWingId) {
-        const result = await listUnit(selectWingId)
+        const result = await listUnit(selectWingId);
         if (result && result?.data) {
           const uniqueUnits = result?.data.map((value) => ({
             value: value._id,
             label: value.unitNumber,
             key: value._id,
           }));
-          setUnit(uniqueUnits)
+          setUnit(uniqueUnits);
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    GetUnit()
-  }, [selectWingId])
+    GetUnit();
+  }, [selectWingId]);
 
   useEffect(() => {
-    GetWing()
-  }, [societyId, open])
+    GetWing();
+  }, [societyId, open]);
   useEffect(() => {
     if (formData.wing) {
       setSelectWingId(formData.wing);
@@ -75,8 +72,8 @@ export const CreateComplaintModal = ({
   }, [formData.wing]);
 
   const handleModalClose = () => {
-    setWing([]); 
-    setUnit([]); 
+    setWing([]);
+    setUnit([]);
     handleCancel();
   };
 
@@ -134,8 +131,8 @@ export const CreateComplaintModal = ({
             name="wing"
             value={formData?.wing}
             onChange={(value) => {
-              setSelectWingId(value)
-              handleChange("wing", value)
+              setSelectWingId(value);
+              handleChange("wing", value);
             }}
           />
           <DSSelect

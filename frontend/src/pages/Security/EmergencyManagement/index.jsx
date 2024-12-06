@@ -1,13 +1,21 @@
+import React from "react";
 import clsx from "clsx";
 import { DSButton, DSInput, DSSelect } from "@/components";
+import { useEmergencyManagement } from "@/hook/Security/EmergencyAlert";
 import styles from "./EmergencyManagement.module.css";
 
 export const EmergencyManagement = () => {
+  const { formData, handleChange, handleSubmit, isDisabled, isSubmitting } =
+    useEmergencyManagement();
+
   return (
     <div className={styles.emergencyManagement}>
       <div className={styles.card}>
         <h2>Alert</h2>
-        <form className={clsx(styles.FromWrapper, "d-flex flex-column")}>
+        <form
+          onSubmit={handleSubmit}
+          className={clsx(styles.FromWrapper, "d-flex flex-column")}
+        >
           <div className={clsx(styles.InputWrapper, "d-flex flex-column")}>
             <DSSelect
               className={styles.selectInput}
@@ -21,16 +29,26 @@ export const EmergencyManagement = () => {
                 { label: "High Winds", value: "High Winds" },
                 { label: "Thunder", value: "Thunder" },
               ]}
+              value={formData.alertType}
+              onChange={(value) => handleChange("alertType", value)}
               require
             />
             <DSInput
               type="textarea"
               label={"Description"}
               placeholder={"Enter Description"}
+              value={formData.description}
+              onChange={(e) => handleChange("description", e.target.value)}
               require
             />
           </div>
-          <DSButton type="submit" variant={"primary"} block>
+          <DSButton
+            type="submit"
+            variant={"primary"}
+            block
+            disabled={isDisabled}
+            loading={isSubmitting}
+          >
             Send
           </DSButton>
         </form>

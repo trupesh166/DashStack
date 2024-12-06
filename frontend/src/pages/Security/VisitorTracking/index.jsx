@@ -1,42 +1,21 @@
-import React, { useState } from 'react'
-import { AddVisitorDetailsModal, DSButton, DSCard, DSSelect, DSTable } from '../../../components'
-import Icons from '../../../constants/Icons'
-import { Avatar, Flex, Space, Tag } from 'antd'
-import { useAddVisitorDetails, useListVisitorDetails } from '../../../hook/Security';
-
-const data = [
-  {
-    key: "1",
-    name: "Brooklyn Simmons",
-    phone: "94564 96321",
-    date: "10/02/2024",
-    unit: {
-      wingName: "A",
-      unitNumber: 1001,
-    },
-    time: "2:45 PM",
-  },
-  {
-    key: "2",
-    name: "Brooklyn Simmons",
-    phone: "94564 96321",
-    date: "10/02/2024",
-    wingName: "A",
-    unit: {
-      wingName: "A",
-      unitNumber: 1002,
-    },
-    time: "2:45 PM",
-  },
-];
+import React, { useState, useEffect } from "react";
+import {
+  AddVisitorDetailsModal,
+  DSButton,
+  DSCard,
+  DSSelect,
+  DSTable,
+} from "@/components";
+import Icons from "@/constants/Icons";
+import { Avatar, Flex } from "antd";
+import { useAddVisitorDetails, useListVisitorDetails } from "@/hook/Security";
 
 export const VisitorTracking = () => {
-
   const columns = [
     {
       title: "Visitor Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "visitorName",
+      key: "visitorName",
       render: (text, record) => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar src={record.avatar} width="40" style={{ marginRight: 8 }} />
@@ -48,51 +27,60 @@ export const VisitorTracking = () => {
       title: "Phone Number",
       dataIndex: "phone",
       key: "phone",
-      align: "center"
+      align: "center",
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
-      align: "center"
+      align: "center",
     },
     {
       title: "Unit Number",
       dataIndex: "unit",
       key: "unit",
       render: (unit) => (
-        <div className='d-flex gap-3 align-items-center justify-content-center'>
-          <Avatar style={{ backgroundColor: "var(--clr-pearl)", color: "var(--clr-cult)" }} >{unit.wingName}</Avatar>
-          {unit.unitNumber}
+        <div className="d-flex gap-3 align-items-center justify-content-center">
+          <Avatar
+            style={{
+              backgroundColor: "var(--clr-pearl)",
+              color: "var(--clr-cult)",
+            }}
+          >
+            {unit?.wingName?.charAt(0)}
+          </Avatar>
+          {unit?.unitNumber}
         </div>
       ),
-      align: "center"
+      align: "center",
     },
     {
       title: "Time",
       dataIndex: "time",
       key: "time",
-      align: "center"
+      align: "center",
     },
   ];
 
-  const { submitVisitorDetails } = useAddVisitorDetails()
-  const { visitorDetails, refetchVisitorDetails } = useListVisitorDetails()
-  const [addVisitorDetailsModal, setAddVisitorDetailsModal] = useState(false)
+  const { submitVisitorDetails } = useAddVisitorDetails();
+  const { visitorDetails, refetchVisitorDetails } = useListVisitorDetails();
+  const [addVisitorDetailsModal, setAddVisitorDetailsModal] = useState(false);
 
   const handleModalSubmit = async (formData) => {
-    const result = await submitVisitorDetails(formData, refetchVisitorDetails)
-    if (result.success) {
-      setAddVisitorDetailsModal(false)
+    try {
+      await submitVisitorDetails(formData, refetchVisitorDetails);
+      setAddVisitorDetailsModal(false);
+    } catch (error) {
+      console.error("Error submitting visitor details:", error);
     }
-  }
+  };
 
   return (
     <>
       <DSCard
         title="Visitor Tracking"
         headerContent={
-          <Flex align='center' gap={"middle"}>
+          <Flex align="center" gap={"middle"}>
             <DSSelect
               defaultValue="Week"
               options={[
@@ -106,34 +94,31 @@ export const VisitorTracking = () => {
               variant={"primary"}
               onClick={() => setAddVisitorDetailsModal(true)}
             >
-              Add Visiter details
+              Add Visitor Details
             </DSButton>
           </Flex>
         }
       >
-
         <DSTable
           dataSource={visitorDetails}
           tableColumn={columns}
-          pagination={false}
+          pagination={{
+            pageSize: 10,
+          }}
           rowClassName={(record, index) =>
             index % 2 === 0 ? "table-row-light" : "table-row-dark"
           }
         />
-
       </DSCard>
 
-      {
-        addVisitorDetailsModal && (
-          <AddVisitorDetailsModal
-            open={addVisitorDetailsModal}
-            handleCancel={() => setAddVisitorDetailsModal(false)}
-            handleClose={() => setAddVisitorDetailsModal(false)}
-            handleOk={(formData) => handleModalSubmit(formData)}
-          />
-        )
-      }
-
+      {addVisitorDetailsModal && (
+        <AddVisitorDetailsModal
+          open={addVisitorDetailsModal}
+          handleCancel={() => setAddVisitorDetailsModal(false)}
+          handleClose={() => setAddVisitorDetailsModal(false)}
+          handleOk={(formData) => handleModalSubmit(formData)}
+        />
+      )}
     </>
-  )
-}
+  );
+};

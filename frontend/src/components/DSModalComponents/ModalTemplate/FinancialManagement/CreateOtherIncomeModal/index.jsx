@@ -46,7 +46,7 @@ export const CreateOtherIncomeModal = ({
           <div className="mb-4">
             <DSInput
               block
-              label={"Title*"}
+              label={"Title"}
               placeholder={"Enter Title"}
               require={true}
               value={formData?.title}

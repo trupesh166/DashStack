@@ -13,11 +13,13 @@ export { DSHead } from "./DSHead/";
 export { DSCard } from "./DSCards";
 export { DSEventsCard } from "./DSCards/DSEventsCard/";
 export { MemberCard } from "./DSCards/MemberCard";
+export { VehicleCard } from "./DSCards/VehicleCard";
 export { EventCard } from "./DSCards/EventCard";
 export { MaintenanceCard } from "./DSCards/MaintenanceCard/";
 export { NoteCard } from "./DSCards/NoteCard/";
 export { FacilityCard } from "./DSCards/FacilityCard/";
 export { AnnouncementCard } from "./DSCards/AnnouncementCard/";
+export { OtherIncomeCard } from "./DSCards/OtherIncome/";
 export * from "./DSCards/Dashboard";
 
 /* FormComponents */

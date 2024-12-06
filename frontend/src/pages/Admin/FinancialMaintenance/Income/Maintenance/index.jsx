@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import styles from "./Maintenance.module.css";
+import { useState } from "react";
 import {
   DSButton,
   DSCard,
   DSTable,
   ViewMaintenanceDetailsModal,
-} from "../../..";
+} from "@/components";
 import { Avatar, Tag } from "antd";
-import Icons from "../../../../constants/Icons";
+import Icons from "@/constants/Icons";
+import styles from "./Maintenance.module.css";
 
 const data = [
   {
@@ -26,7 +26,8 @@ const data = [
   },
   {
     key: "2",
-    avatar: "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
+    avatar:
+      "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
     name: "Simmons Brooklyn",
     wingName: "B",
     unitNumber: 1010,

@@ -7,6 +7,7 @@ const { default: mongoose } = require("mongoose"); class MemberModel {
         userId: { type: mongoose.Types.ObjectId, ref: "tbl_users", required: true },
         societyId: { type: mongoose.Types.ObjectId, ref: "tbl_societies", required: true },
         age: { type: Number, required: true },
+        gender: { type: String, required: true, enum: ["Male", "Female", "Others"] },
         wing: { type: mongoose.Types.ObjectId, ref: "tbl_wings", required: true },
         unit: { type: mongoose.Types.ObjectId, ref: "tbl_units", required: true, unique: true },
         profileImage: { type: String, required: true },

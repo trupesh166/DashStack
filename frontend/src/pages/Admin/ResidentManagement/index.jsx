@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { Avatar, Space, Tag } from "antd";
-import { DSButton, DSModal, DSCheckbox, DSCard, DSTable } from "@/components";
+import { DSButton, DSCard, DSTable } from "@/components";
 import Icons from "@/constants/Icons";
 import { getUser } from "@/axiosApi/ApiHelper";
 import toast from "react-hot-toast";
-import styles from "./ResidentManagement.module.css";
 import { useNavigate } from "react-router-dom";
-import { ViewDetailsModal } from "../../../components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
+import { ViewDetailsModal } from "@/components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
+import styles from "./ResidentManagement.module.css";
 
-export const ResidentManagement = () => {
+const ResidentManagement = () => {
   const [tableData, setTableData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -166,3 +166,5 @@ export const ResidentManagement = () => {
     </>
   );
 };
+
+export default ResidentManagement;

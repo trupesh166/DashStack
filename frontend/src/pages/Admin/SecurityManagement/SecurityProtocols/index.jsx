@@ -27,7 +27,7 @@ const data = [
   },
 ];
 
-export const SecurityProtocols = () => {
+const SecurityProtocols = () => {
   const [addSecurityProtocolModal, setAddSecurityProtocolModal] =
     useState(false);
   const [viewSecurityProtocolModal, setViewSecurityProtocolModal] =
@@ -150,3 +150,4 @@ export const SecurityProtocols = () => {
     </div>
   );
 };
+export default SecurityProtocols;

@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import {
-  DSButton,
-  DSCard,
-  DSTabs,
-  SetMaintenance,
-} from "../../../../components";
-import Icons from "../../../../constants/Icons";
-import styles from "./Income.module.css";
+import { useState } from "react";
+import { DSButton, DSCard, DSTabs, SetMaintenance } from "@/components";
+import Icons from "@/constants/Icons";
 import { Flex } from "antd";
-import { Maintenance } from "../../../../components/FinancialManagement/Income/Maintenance";
-import { OtherIncome } from "../../../../components/FinancialManagement/Income/OtherIncome";
+import { Maintenance } from "./Maintenance";
+import { OtherIncome } from "./OtherIncome";
+import styles from "./Income.module.css";
 
 const Income = () => {
   const [maintenance, setMaintenance] = useState(false);

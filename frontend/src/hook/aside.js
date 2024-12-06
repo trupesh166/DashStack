@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { AdminAsideData, StyleGuideAsideMenu } from "@/constants/";
+import { AdminAsideData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants/";
 
 export const Aside = () => {
   const location = useLocation();
@@ -24,6 +24,7 @@ export const Aside = () => {
 
     const matchingItem =
       findMatchingItem(AdminAsideData, location.pathname) ||
+      findMatchingItem(SecurityAsideData, location.pathname) ||
       findMatchingItem(StyleGuideAsideMenu, location.pathname);
 
     if (matchingItem && matchingItem.label && matchingItem.label.props.to) {

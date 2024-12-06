@@ -47,7 +47,7 @@ export const OtherIncomeCard = ({
         <div>
           <h6>Description</h6>
           <span className="fw-medium lh-base h6">{description}</span>
-        </div>
+        </div>  
       </DSEventsCard>
 
       {/* Edit Other Income Modal */}

@@ -10,14 +10,35 @@ import {
   DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
+import {
+  useAddComplaint,
+  useListComplaint,
+  useDeleteComplaint,
+} from "@/hook/Admin/ComplaintTracking";
 
 const ComplaintCreate = () => {
-  const [createComplaint, setCreateComplaint] = useState(false);
+
+  const { dataListComplaint, fetchListComplaint, isLoading } = useListComplaint("Complain")
+  const {
+    formData,
+    handleChange,
+    isSubmitting,
+    isModalOpen,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    handleSubmit,
+    isEdit,
+  } = useAddComplaint(fetchListComplaint);
+  const {
+    complaintDelete,
+    deleteComplaintData,
+    setDeleteComplaintData,
+    showDeleteModal,
+    setShowDeleteModal,
+  } = useDeleteComplaint(fetchListComplaint);
+
   const [viewComplaint, setViewComplaint] = useState({
-    open: false,
-    data: null,
-  });
-  const [deleteComplaint, setDeleteComplaint] = useState({
     open: false,
     data: null,
   });
@@ -41,7 +62,7 @@ const ComplaintCreate = () => {
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "discription",
       key: "description",
       ellipsis: {
         showTitle: false,
@@ -56,12 +77,14 @@ const ComplaintCreate = () => {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Badge>{text}</Badge>,
+      render: (text, record) => (
+        <Badge color={"blue"}>{record.unitId.unitNumber}</Badge>
+      ),
     },
     {
       title: "Priority",
       key: "priority",
-      dataIndex: "priority",
+      dataIndex: "priorityStatus",
       render: (priority) => {
         let color =
           priority === "High"
@@ -71,7 +94,7 @@ const ComplaintCreate = () => {
             : "green";
         return (
           <Tag color={color} key={priority}>
-            {priority.toUpperCase()}
+            {priority?.toUpperCase()}
           </Tag>
         );
       },
@@ -99,26 +122,25 @@ const ComplaintCreate = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
-            onClick={() => setCreateComplaint(true)} // Open Create Modal
+            className="edit-btn"
+            onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
-            onClick={
-              () => setViewComplaint({ open: true, data: record }) // Open View Modal
-            }
+            className="view-btn"
+            onClick={() => setViewComplaint({ open: true, data: record })}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
-            onClick={
-              () => setDeleteComplaint({ open: true, data: record }) // Open Delete Modal
-            }
+            className="delete-btn"
+            onClick={() => {
+              setShowDeleteModal(true);
+              setDeleteComplaintData(record);
+            }}
           />
         </Space>
       ),
@@ -158,6 +180,21 @@ const ComplaintCreate = () => {
     },
   ];
 
+  const handleDeleteComplaint = async () => {
+    if (deleteComplaintData) {
+      const result = await complaintDelete(deleteComplaintData._id);
+      if (result.success) {
+        setShowDeleteModal(false);
+        setDeleteComplaintData(null);
+        await refetchAnnouncements();
+      } else {
+        console.log("Error deleting announcement");
+      }
+    }
+  };
+
+  console.log("dataListComplaint ======> ", dataListComplaint);
+
   return (
     <>
       <DSHead
@@ -175,29 +212,30 @@ const ComplaintCreate = () => {
       <DSCard
         title={"Create Complaint"}
         headerContent={
-          <DSButton
-            variant={"primary"}
-            onClick={() => setCreateComplaint(true)}
-          >
+          <DSButton variant={"primary"} onClick={openCreateModal}>
             Create Complaint
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} loading={isLoading} />
       </DSCard>
 
       {/* Create Complaint Modal */}
       <CreateComplaintModal
-        open={createComplaint}
-        handleCancel={() => setCreateComplaint(false)}
-        handleClose={() => setCreateComplaint(false)}
-        handleOk={() => setCreateComplaint(false)}
+        open={isModalOpen}
+        handleCancel={closeModal}
+        handleClose={closeModal}
+        handleOk={handleSubmit}
+        formData={formData}
+        handleChange={handleChange}
+        isSubmitting={isSubmitting}
+        isEdit={isEdit}
       />
 
       {/* View Complaint Modal */}
       <ViewComplaintModal
         open={viewComplaint.open}
-        complaintData={viewComplaint.data} // Pass complaint data
+        complaintData={viewComplaint.data}
         handleCancel={() => setViewComplaint({ open: false, data: null })}
         handleClose={() => setViewComplaint({ open: false, data: null })}
         handleOk={() => setViewComplaint({ open: false, data: null })}
@@ -206,13 +244,10 @@ const ComplaintCreate = () => {
       {/* Remove Complaint Modal */}
       <DeleteModal
         title={"Delete Complaint?"}
-        isModalOpen={deleteComplaint.open}
-        handleClose={() => setDeleteComplaint({ open: false, data: null })}
-        handleOk={() => {
-          console.log("Delete this record:", deleteComplaint.data);
-          setDeleteComplaint({ open: false, data: null });
-        }}
-        onCancel={() => setDeleteComplaint({ open: false, data: null })}
+        isModalOpen={showDeleteModal}
+        handleClose={() => setShowDeleteModal(false)}
+        handleOk={handleDeleteComplaint}
+        onCancel={() => setShowDeleteModal(false)}
       >
         Are you sure you want to delete this complaint?
       </DeleteModal>

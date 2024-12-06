@@ -9,6 +9,7 @@ export const ViewSecurityModal = ({
   handleCancel,
   handleClose,
   handleOk,
+  record
 }) => {
   return (
     <div>
@@ -24,11 +25,11 @@ export const ViewSecurityModal = ({
         <Flex gap={"middle"} align="center" className="mb-5">
           <Avatar
             size={64}
-            src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"
+            src={record?.avatar || "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"}
           />
           <div>
-            <h4 className="fw-semibold">Cody Fisher</h4>
-            <h5>Feb 10, 2024</h5>
+            <h4 className="fw-semibold">{record?.name}</h4>
+            {/* <h5>Feb 10, 2024</h5> */}
           </div>
         </Flex>
 
@@ -43,7 +44,7 @@ export const ViewSecurityModal = ({
                 borderRadius: "58px",
               }}
             >
-              ☀️ Day
+             {record?.shift ==="Day Shift" ? "☀️" : "🌙" } {record?.shift}
             </h6>
           </div>
           <div>
@@ -56,7 +57,7 @@ export const ViewSecurityModal = ({
                 borderRadius: "58px",
               }}
             >
-              2:45 PM
+             {record?.time}
             </h6>
           </div>
           <div>
@@ -67,9 +68,10 @@ export const ViewSecurityModal = ({
                 color: "var(--clr-fuchsia)",
                 backgroundColor: "#FFF1F6",
                 borderRadius: "58px",
+                color: record?.gender === "Male" ? "blue" : "pink",
               }}
             >
-              {Icons.User} Female
+              {Icons.User} {record?.gender}
             </h6>
           </div>
         </Flex>

@@ -15,10 +15,10 @@ export const register = (data) =>
   request("post", "/society-handler/create", data);
 export const loginUser = (data) => request("post", "/user/login", data);
 export const forgotPassword = (data) =>
-  request("post", "/auth/forgot-password", data);
-export const verifyOtp = (data) => request("post", "/auth/verify-otp", data);
+  request("post", "/user/forgot-password", data);
+export const verifyOtp = (data) => request("post", "/user/verify-otp", data);
 export const resetPassword = (data) =>
-  request("post", "/auth/reset-password", data);
+  request("post", "/user/reset-password", data);
 
 /* Society  */
 export const createSociety = (data) => request("post", "/society/create", data);
@@ -27,14 +27,14 @@ export const getSociety = () => request("get", "/society/list");
 /* User */
 export const userRegistration = (data) =>
   request("post", "/auth/user/insertUser", data);
-export const getUser = () => request("get", "/member/671ac29415a25bbaedeb52ca");
+export const getUser = (societyId) => request("get", `/member/${societyId}`);
 export const editUser = () => request("get", "auth/user/edit-user/");
 export const vacateUser = () => request("get", "auth/user/vacate-user/");
 
 /* Maintenance Management */
 export const createMaintenance = (data) =>
   request("post", "/maintain/create", data);
-export const listMaintenance = () => request("get", `/maintain-detail/member/`);
+export const listMaintenance = (societyId) => request("get", `/maintain-detail/member/${societyId}`);
 export const dueMaintenance = () => request("get", `/maintain-detail/due/`);
 export const pendingMaintenance = () =>
   request("get", `/maintain-detail/pending/`);
@@ -48,8 +48,7 @@ export const createUnit = (data) => request("post", "/unit/create", data);
 export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // Wing Management
-export const listWing = (societyId) =>
-  request("get", `/wing/list/${societyId}`);
+export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
 
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
@@ -63,6 +62,8 @@ export const listByUnit = (unitId) =>
 // Event Management
 export const createEvent = (data) => request("post", "/event/create", data);
 export const getEvents = (id) => request("get", `/event/${id}`);
+export const updateEvents = (data) => request("put", "/event/update", data);
+export const deleteEvent = (id) => request("delete", `/event/delete/${id}`);
 
 // Expense Management
 export const createExpense = (data) => request("post", "/expanse/create", data);
@@ -94,7 +95,7 @@ export const editFacility = (id, data) =>
 // Complaint Management
 export const createComplaint = (data) =>
   request("post", "/complain/create", data);
-export const listComplaint = (data) => request("get", "/complain/list", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
 export const updateComplaint = (id, data) =>
   request("put", `/complain/update/${id}`, data);
 export const deleteComplaint = (id) =>
@@ -128,15 +129,15 @@ export const updateAnnouncement = (id, data) =>
 export const deleteAnnouncement = (id) =>
   request("delete", `/announcement/delete/${id}`);
 
-// // Security Guard Management
-// export const createGuard = (data) =>
-//   request("post", "/security/createsecurity", data);
-// export const listGuard = (societyId) =>
-//   request("get", `/security/getsecurity/${societyId}`);
-// export const editGuard = (id, data) =>
-//   request("put", `/security/updatesecurity/${id}`, data);
-// export const deleteGuard = (id) =>
-//   request("delete", `/security/deletesecurity/${id}`);
+// Security Guard Management
+export const createGuard = (data) =>
+  request("post", "/security/createsecurity", data);
+export const listGuard = (societyId) =>
+  request("get", `/security/getsecurity/${societyId}`);
+export const editGuard = (id, data) =>
+  request("put", `/security/updatesecurity/${id}`, data);
+export const deleteGuard = (id) =>
+  request("delete", `/security/deletesecurity/${id}`);
 
 // Important Number Management
 export const createImportantNumber = (data) =>
@@ -148,5 +149,5 @@ export const editImportantNumber = (id, data) =>
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
 
-// // Image Management
-// export const imageDetails = (data) => request("post", "/image-details", data);
+// Image Management
+export const imageDetails = (data) => request("post", "/image-details", data);

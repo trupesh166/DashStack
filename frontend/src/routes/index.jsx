@@ -1,5 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AdminAsideData, ResidentAsidData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants";
+import {
+  AdminAsideData,
+  ResidentAsidData,
+  SecurityAsideData,
+  StyleGuideAsideMenu,
+} from "@/constants";
 import {
   AdminDashBoard,
   Cards,
@@ -29,7 +34,9 @@ import {
   Polls,
   CommunitiesDiscussion,
   MaintenanceInvoices,
+  ViewMaintenanceInvoices,
   OtherIncomeInvoice,
+  ViewOtherIncomeInvoice,
   SecurityProtocolsResident,
 
   /* Security Panel */
@@ -77,9 +84,6 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: "true",
-        },
-        {
           path: "member",
           element: <ProtectedRoute />,
           children: [
@@ -106,16 +110,22 @@ const DashStackRoute = createBrowserRouter(
                   element: <AdminDashBoard />,
                 },
                 {
+                  key: "/admin",
                   path: "profile",
                   element: <EditProfile />,
                 },
                 {
                   path: "residents",
-                  element: <ResidentManagement />,
-                },
-                {
-                  path: "resident-detail",
-                  element: <Resident />,
+                  children: [
+                    {
+                      index: true,
+                      element: <ResidentManagement />,
+                    },
+                    {
+                      path: "resident-detail",
+                      element: <Resident />,
+                    },
+                  ],
                 },
                 {
                   path: "financial",
@@ -183,28 +193,9 @@ const DashStackRoute = createBrowserRouter(
                 },
               ],
             },
-            {
-              element: <ProtectedRoute />,
-              children: [
-                {
-                  element: <AuthLayouts />,
-                  children: [
-                    {
-                      path: "register",
-                      element: <Register />,
-                    },
-                    {
-                      path: "login",
-                      element: <Login />,
-                    },
-                  ],
-                },
-              ],
-            },
           ],
         },
         {
-          /*  Resident Route */
           path: "resident",
           element: <ProtectedRoute />,
           children: [
@@ -242,31 +233,48 @@ const DashStackRoute = createBrowserRouter(
                       path: "communities-discussion",
                       element: <CommunitiesDiscussion />,
                     },
-                  ]
+                  ],
                 },
                 {
                   path: "payment",
                   children: [
                     {
                       path: "maintenance-invoices",
-                      element: <MaintenanceInvoices />,
+                      children: [
+                        {
+                          index: true,
+                          element: <MaintenanceInvoices />,
+                        },
+                        {
+                          path: "view-invoices",
+                          element: <ViewMaintenanceInvoices />,
+                        },
+                      ],
                     },
                     {
                       path: "other-income-invoice",
-                      element: <OtherIncomeInvoice />,
+                      children: [
+                        {
+                          index: true,
+                          element: <OtherIncomeInvoice />,
+                        },
+                        {
+                          path: "view-invoices",
+                          element: <ViewOtherIncomeInvoice />,
+                        },
+                      ],
                     },
-                  ]
+                  ],
                 },
                 {
                   path: "security-protocols",
                   element: <SecurityProtocolsResident />,
                 },
-              ]
-            }
-          ]
+              ],
+            },
+          ],
         },
         {
-          /* Security Route */
           path: "security",
           element: <ProtectedRoute />,
           children: [
@@ -279,92 +287,31 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "emergency",
-                  element: <EmergencyManagement />
-                }
-              ],
-            }
-          ]
-        },
-        {
-          /* Authentication Routes For Super Admin */
-          element: <ProtectedRoute />,
-          children: [
-            {
-              element: <AuthLayouts />,
-              children: [
-                {
-                  path: "login",
-                  element: <Login />,
-                },
-                {
-                  path: "forgot-password",
-                  element: <ForgetPassword />,
-                },
-                {
-                  path: "otp",
-                  element: <OTP />,
-                },
-                {
-                  path: "reset-password",
-                  element: <ResetPassword />,
+                  element: <EmergencyManagement />,
                 },
               ],
             },
           ],
         },
-      ],
-    },
-    {
-      /* StyleGuide Routes */
-      path: "style-guide",
-      element: <DashboardLayout items={StyleGuideAsideMenu} />,
-      children: [
         {
-          index: true,
-          element: <FontFamily />,
+          path: "style-guide",
+          element: <DashboardLayout items={StyleGuideAsideMenu} />,
+          children: [
+            {
+              index: true,
+              element: <FontFamily />,
+            },
+            {
+              path: "button",
+              element: <DSButtons />,
+            },
+          ],
         },
         {
-          path: "button",
-          element: <DSButtons />,
-        },
-        {
-          path: "input",
-          element: <Inputs />,
-        },
-        {
-          path: "checkbox",
-          element: <CheckBox />,
-        },
-        {
-          path: "modal",
-          element: <Modal />,
-        },
-        {
-          path: "table",
-          element: "table",
-        },
-        {
-          path: "icons",
-          element: <DSIcons />,
-        },
-        {
-          path: "tabs",
-          element: <Tabs />,
-        },
-        {
-          path: "tags",
-          element: "tags",
-        },
-        {
-          path: "cards",
-          element: <Cards />,
+          path: "*",
+          element: <>404 - Page Not Found</>,
         },
       ],
-    },
-    {
-      /* Default Route (404) */
-      path: "*",
-      element: <>404 - Page Not Found</>,
     },
   ],
   {

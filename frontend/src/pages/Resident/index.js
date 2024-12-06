@@ -12,4 +12,6 @@ export { CommunitiesDiscussion } from "./Community/CommunitiesDiscussion/";
 
 /* Payment Portal */
 export { MaintenanceInvoices } from "./PaymentPortal/MaintenanceInvoices/";
+export { ViewMaintenanceInvoices } from "./PaymentPortal/ViewMaintenanceInvoices/";
 export { OtherIncomeInvoice } from "./PaymentPortal/OtherIncomeInvoice/";
+export { ViewOtherIncomeInvoice } from "./PaymentPortal/ViewOtherIncomeInvoice/";

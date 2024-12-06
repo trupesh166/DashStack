@@ -1,15 +1,13 @@
-import React from 'react'
-import styles from "./EmergencyManagement.module.css"
-import { DSButton, DSInput, DSSelect } from '../../../components'
-import clsx from 'clsx'
+import clsx from "clsx";
+import { DSButton, DSInput, DSSelect } from "@/components";
+import styles from "./EmergencyManagement.module.css";
 
 export const EmergencyManagement = () => {
   return (
     <div className={styles.emergencyManagement}>
       <div className={styles.card}>
         <h2>Alert</h2>
-        <form
-          className={clsx(styles.FromWrapper, "d-flex flex-column")}>
+        <form className={clsx(styles.FromWrapper, "d-flex flex-column")}>
           <div className={clsx(styles.InputWrapper, "d-flex flex-column")}>
             <DSSelect
               className={styles.selectInput}
@@ -26,7 +24,7 @@ export const EmergencyManagement = () => {
               require
             />
             <DSInput
-              type='textarea'
+              type="textarea"
               label={"Description"}
               placeholder={"Enter Description"}
               require
@@ -38,5 +36,5 @@ export const EmergencyManagement = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};

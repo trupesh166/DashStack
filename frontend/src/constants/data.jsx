@@ -1,6 +1,8 @@
-import Icons from "@/constants/Icons";
+import { Avatar, Space, Tag } from "antd";
 import { NavLink } from "react-router-dom";
-import { authOne, authTwo } from "../assets/images";
+import { authOne, authTwo } from "@/assets/images";
+import Icons from "@/constants/Icons";
+import { DSButton } from "@/components";
 
 const getItem = (label, key, icon, path, children) => {
   const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
@@ -102,96 +104,73 @@ export const ResidentAsidData = [
     "Personal Detail",
     "/resident/personal-detail",
     Icons.User,
-    "/resident/personal-detail",
+    "/resident/personal-detail"
   ),
   getItem(
     "Service And Complaint",
     "/resident/service",
     Icons.User,
-    "/resident/service",
+    "/resident/service"
   ),
   getItem(
     "Events Participation",
     "/resident/events",
     Icons.User,
-    "/resident/events",
+    "/resident/events"
   ),
-  getItem(
-    "Community",
-    "community",
-    Icons.User,
-    null,
-    [
-      getItem(
-        "Access Forums",
-        "/resident/community/access-forums",
-        null,
-        "/resident/community/access-forums",
-      ),
-      getItem(
-        "Polls",
-        "/resident/community/polls",
-        null,
-        "/resident/community/polls",
-      ),
-      getItem(
-        "Communities Discussion",
-        "/resident/community/communities-discussion",
-        null,
-        "/resident/community/communities-discussion",
-      ),
-    ]
-  ),
-  getItem(
-    "Payment Portal",
-    "payment_portal",
-    Icons.User,
-    null,
-    [
-      getItem(
-        "Maintenance Invoices",
-        "/resident/payment/maintenance-invoices",
-        null,
-        "/resident/payment/maintenance-invoices",
-      ),
-      getItem(
-        "Other Income Invoice",
-        "/resident/payment/other-income-invoice",
-        null,
-        "/resident/payment/other-income-invoice",
-      ),
-    ]
-  ),
+  getItem("Community", "community", Icons.User, null, [
+    getItem(
+      "Access Forums",
+      "/resident/community/access-forums",
+      null,
+      "/resident/community/access-forums"
+    ),
+    getItem(
+      "Polls",
+      "/resident/community/polls",
+      null,
+      "/resident/community/polls"
+    ),
+    getItem(
+      "Communities Discussion",
+      "/resident/community/communities-discussion",
+      null,
+      "/resident/community/communities-discussion"
+    ),
+  ]),
+  getItem("Payment Portal", "payment_portal", Icons.User, null, [
+    getItem(
+      "Maintenance Invoices",
+      "/resident/payment/maintenance-invoices",
+      null,
+      "/resident/payment/maintenance-invoices"
+    ),
+    getItem(
+      "Other Income Invoice",
+      "/resident/payment/other-income-invoice",
+      null,
+      "/resident/payment/other-income-invoice"
+    ),
+  ]),
   getItem(
     "Security Protocols",
     "/resident/security-protocols",
     Icons.User,
-    "/resident/security-protocols",
+    "/resident/security-protocols"
   ),
-]
+];
 
 export const SecurityAsideData = [
-  getItem(
-    "Security",
-    "security",
-    Icons.SecurityGuard,
-    null,
-    [
-      getItem(
-        "Visitor Tracking",
-        "/security",
-        null,
-        "/security",
-      ),
-      getItem(
-        "Emergency Management",
-        "/security/emergency",
-        null,
-        "/security/emergency"
-      ),
-    ]
-  )
-]
+  getItem("Security", "security", Icons.SecurityGuard, null, [
+    getItem("Visitor Tracking", "/security", null, "/security"),
+    getItem(
+      "Emergency Management",
+      "/security/emergency",
+      null,
+      "/security/emergency"
+    ),
+  ]),
+];
 
 const StyleGuideGetItem = (label, key, path, children) => {
   const wrappedLabel = path ? <NavLink to={`${path}`}>{label}</NavLink> : label;
@@ -341,5 +320,87 @@ export const pendingMaintenancesData = [
     fullName: "Roger Lubin",
     dueDays: "2 Month Pending",
     maintenanceAmount: "5000",
+  },
+];
+
+/* Tables Columns */
+
+export const ResidentManagementColumns = (onEdit, onViewDetails) => [
+  {
+    title: "Full Name",
+    dataIndex: "fullName",
+    key: "fullName",
+    render: (text, record) => (
+      <Space>
+        <Avatar src={record.avatar} size={40} style={{ marginRight: 8 }} />
+        {text}
+      </Space>
+    ),
+  },
+  {
+    title: "Unit",
+    dataIndex: "unitNumber",
+    key: "unitNumber",
+    render: (_, record) => (
+      <Tag color="blue">
+        {record.wing} - {record.unitNumber}
+      </Tag>
+    ),
+  },
+  {
+    title: "Unit Status",
+    dataIndex: "unitStatus",
+    key: "unitStatus",
+    render: (status) => (
+      <Tag color={status === "Occupied" ? "green" : "purple"}>{status}</Tag>
+    ),
+  },
+  {
+    title: "Resident Status",
+    dataIndex: "residentStatus",
+    key: "residentStatus",
+    render: (status) => (
+      <Tag color={status === "Owner" ? "blue" : "pink"}>{status}</Tag>
+    ),
+  },
+  {
+    title: "Phone Number",
+    dataIndex: "phoneNumber",
+    key: "phoneNumber",
+  },
+  {
+    title: "Family Members",
+    dataIndex: "member",
+    key: "member",
+  },
+  {
+    title: "Vehicles",
+    dataIndex: "vehicle",
+    key: "vehicle",
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) =>
+      record.unitStatus !== "Vacate" ? (
+        <Space size="middle">
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.Edit}
+            className="edit-btn"
+            onClick={() => onEdit(record)}
+          />
+          <DSButton
+            type="primary"
+            size="small"
+            icon={Icons.EyeShow}
+            className="view-btn"
+            onClick={() => onViewDetails(record)}
+          />
+        </Space>
+      ) : (
+        <Tag>--</Tag>
+      ),
   },
 ];

@@ -16,7 +16,7 @@ class UserController {
   async loginUser(req, res) {
     try {
       const { email, password } = req.body;
-  
+
       if (!email || !password) {
         return res.status(400).send({ message: "Email and password are required" });
       }
@@ -33,7 +33,7 @@ class UserController {
           return res.status(404).send({ message: "User not found with this email" });
         }
       }
-  
+
       let societyData;
       if (user.role === "Chairman") {
         societyData = await societyHandlerModel.model.findOne({ userId: user._id });
@@ -42,91 +42,93 @@ class UserController {
       } else if (user.role === "Security") {
         societyData = await securityModel.model.findOne({ userId: user._id });
       }
-  
+
       const payload = { ...user._doc, societyData: societyData };
-  
+
       const passwordMatch = bcrypt.compareSync(password, user.password);
       if (!passwordMatch) {
         return res.status(401).send({ message: "Invalid password" });
       }
-  
+
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
       if (!token) {
         return res.status(500).send({ message: "Error generating token" });
       }
-  
+
       return res.status(200).send({ message: "Login successful", token });
-  
+
     } catch (error) {
       console.error("Login error:", error);
-  
+
       if (error.name === "ValidationError") {
         return res.status(400).send({ message: "Invalid request data" });
       }
-  
+
       return res.status(500).send({ message: "An error occurred during login" });
     }
   }
   async forgotPassword(req, res) {
     try {
-        const { email } = req.body;
-        const user = await userModel.model.findOne({ email: email });
+      console.log(req.body)
+      const { email } = req.body;
+      const user = await userModel.model.findOne({ email: email });
 
-        if (!user) return res.status(404).json({ message: 'User not found.' });
+      if (!user) return res.status(404).json({ message: 'User not found.' });
 
-        const otp = generateOtp();
-        user.otp = otp;
-        const otpExpires = Date.now() + 15 * 60 *1000
-        user.otpExpires = otpExpires
-        await user.save();
+      const otp = generateOtp();
+      user.otp = otp;
+      const otpExpires = Date.now() + 15 * 60 * 1000
+      user.otpExpires = otpExpires
+      await user.save();
 
-        req.session.email = email ;
-        req.session.otp = otp ;
-        req.session.otpExpires = otpExpires ;
+      req.session.email = email;
+      req.session.otp = otp;
+      req.session.otpExpires = otpExpires;
 
-        const subject = 'Password Reset OTP';
-        const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
-        await sendEmail({ to: user.email, subject, text });
+      const subject = 'Password Reset OTP';
+      const text = `Your OTP for password reset is: ${otp}. It is valid for 15 minutes.`;
+      await sendEmail({ to: user.email, subject, text });
 
-        res.status(200).json({ message: 'OTP sent to your email.' });
+      res.status(200).send({ message: 'OTP sent to your email.' });
     } catch (error) {
-        res.status(500).json({ message: 'Error processing request.', error: error.message });
+      res.status(500).json({ message: 'Error processing request.', error: error.message });
     }
   }
   async verifyOtp(req, res) {
     try {
-        const {otp } = req.body;
+      const { otp } = req.body;
 
-        if (!otp)  return res.status(400).json({ message: 'OTP are required.' });
+      if (!otp) return res.status(400).json({ message: 'OTP are required.' });
 
-        const {email , otp:storedOtp , otpExpires} = req.session
-        if(!email || !storedOtp) return res.status(401).json({message : "OTP session expires. Try Again"})
+      const { email, otp: storedOtp, otpExpires } = req.session
+      if (!email || !storedOtp) return res.status(401).json({ message: "OTP session expires. Try Again" })
 
-        if (storedOtp !== otp) return res.status(401).json({ message: 'Invalid OTP.' });
-        if (Date.now() > otpExpires)  return res.status(401).json({ message: 'OTP has expired. Please request a new one.' });
+      if (storedOtp !== otp) return res.status(401).json({ message: 'Invalid OTP.' });
+      if (Date.now() > otpExpires) return res.status(401).json({ message: 'OTP has expired. Please request a new one.' });
 
-        res.status(200).json({ message: 'OTP verified successfully. You can now reset your password.' });
+      res.status(200).json({ message: 'OTP verified successfully. You can now reset your password.' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error processing request.', error: error.message });
+      console.error(error);
+      res.status(500).json({ message: 'Error processing request.', error: error.message });
     }
   }
-  async resetPassword(req, res){
+  async resetPassword(req, res) {
     try {
-      const { email, newPassword } = req.body;
-        const user = await userModel.model.findOne({ email: email });
+      const { newPassword } = req.body;
+      const { email } = req.session
+      const user = await userModel.model.findOne({ email: email });
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
-        }
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
 
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        user.password = hashedPassword;
-        await user.save();
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+      await user.save();
 
-        res.status(200).json({ message: 'Password reset successfully.' });
+      res.status(200).json({ message: 'Password reset successfully.' });
     } catch (error) {
-        res.status(500).json({ message: 'Error resetting password.', error: error.message });
+      res.status(500).json({ message: 'Error resetting password.', error: error.message });
     }
   };
   async editProfile(req, res) {
@@ -134,16 +136,18 @@ class UserController {
       const { firstName, lastName, email, phoneNumber, societyName , country, state, city, zipCode, societyId } = req.body;
   
       const userId = req.user._id;
+
+  
       const user = await userModel.model.findById(userId);
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-  
+
       const updateData = {};
   
       if (email) updateData.email = email;
       if (phoneNumber) updateData.phoneNumber = phoneNumber;
-  
+
       if (firstName || lastName) {
         updateData.fullName = `${firstName} ${lastName}`;
       }
@@ -155,23 +159,24 @@ class UserController {
         if (!societyHandler) {
           return res.status(404).json({ message: "Society not assigned to this user." });
         }
-  
+ 
         const updateSocietyHandlerData = { selectSociety: societyId };
 
         await societyHandlerModel.model.findByIdAndUpdate(societyHandler._id, updateSocietyHandlerData);
-  
+
         const society = await societyModel.model.findById(societyId);
         if (!society) {
           return res.status(404).json({ message: "Society not found." });
         }
-  
+
+        
         const updateSocietyData = {};
         if (societyName) updateSocietyData.societyName = societyName;
         if (country) updateSocietyData.country = country;
         if (state) updateSocietyData.state = state;
         if (city) updateSocietyData.city = city;
         if (zipCode) updateSocietyData.zipCode = zipCode;
-  
+
         await societyModel.model.findByIdAndUpdate(societyId, updateSocietyData, { new: true });
   
         return res.status(200).json({
@@ -187,7 +192,7 @@ class UserController {
         console.error(error);
         return res.status(500).json({ message: "Error updating profile.", error: error.message });
     }
-}
+
   async authenticationPermission(req, res) {
     try {
       const { id, password } = req.body // id : Society Chairman Id
@@ -200,22 +205,23 @@ class UserController {
       throw httpErrors[500]
     }
   }
-  async searchUserByName(req,res) {
+
+  async searchUserByName(req, res) {
     try {
-      const {name} = req.body ;
+      const { name } = req.body;
 
       console.log(name);
-      
-      if(!name || name.length < 2){
+
+      if (!name || name.length < 2) {
         return res.status(400).json({ message: "Please provide a valid search term (at least 2 characters)." });
       }
 
       //  This searches for users whose fullName field matches the regex pattern.
-      const regex = new RegExp(name , 'i');
-      const users = await userModel.model.find({fullName : regex}).select('fullName email phoneNumber')
+      const regex = new RegExp(name, 'i');
+      const users = await userModel.model.find({ fullName: regex }).select('fullName email phoneNumber')
 
-      if(users.length === 0){
-        return res.status(400).json({ message: "No users found matching your search term."});
+      if (users.length === 0) {
+        return res.status(400).json({ message: "No users found matching your search term." });
       }
 
       return res.status(200).json({
@@ -227,37 +233,38 @@ class UserController {
       return res.status(500).json({ message: "Error Searching User.", error: error.message });
     }
   }
-  async UserDetails(req,res) {
+  async UserDetails(req, res) {
     try {
-      
-      const userId = req.user._id ;
+
+      const userId = req.user._id;
       const user = await userModel.model.findById(userId);
-      if(!user) return res.status(400).json({ message: "User not found" });
-      
-      const memberDetails = await memberModel.model.findOne({userId : userId}).populate('familyMember').populate("vehicle");
-      if(!memberDetails) return res.status(400).json({ message: "member not found" });
-      
-      const maintenanceDetails = await maintenanceDetailsModel.model.find({memberId : memberDetails._id})
+      if (!user) return res.status(400).json({ message: "User not found" });
+
+      const memberDetails = await memberModel.model.findOne({ userId: userId }).populate('familyMember').populate("vehicle");
+      if (!memberDetails) return res.status(400).json({ message: "member not found" });
+
+      const maintenanceDetails = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id })
       const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id, penaltyAmount: { $gt: 0 } });
-      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id, paymentStatus:"Pending"});
-      const annoucements = await announcementModel.model.find({societyId : memberDetails.societyId});
-      
+      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberDetails._id, paymentStatus: "Pending" });
+      const annoucements = await announcementModel.model.find({ societyId: memberDetails.societyId });
+
       const responseData = {
-        userDetails : user ,
-        memberDetails : memberDetails ,
-        familyMembers : memberDetails.familyMember ,
-        vehicles : memberDetails.vehicle ,
-        maintenance : maintenanceDetails,
-        pendingMaintenance : pendingMaintenance ,
-        dueMaintenance : dueMaintenance ,
-        annoucements : annoucements    
+        userDetails: user,
+        memberDetails: memberDetails,
+        familyMembers: memberDetails.familyMember,
+        vehicles: memberDetails.vehicle,
+        maintenance: maintenanceDetails,
+        pendingMaintenance: pendingMaintenance,
+        dueMaintenance: dueMaintenance,
+        annoucements: annoucements
       }
-      return res.status(200).json({ message: "User details fetch successfully.", data : responseData });  
+      return res.status(200).json({ message: "User details fetch successfully.", data: responseData });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Error Fetching User Details.", error: error.message });
-    }   
+    }
   }
+
 }
 
 const userController = new UserController();

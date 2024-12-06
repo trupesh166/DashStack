@@ -1,70 +1,53 @@
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import UseDecodeToken from "../hook/UseDecodeToken";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
+import { DSLoader } from "../components/DSLoader";
 
-const adminRoutes = [
-  "/admin",
-  "/admin/residents",
-  "/admin/financial",
-  "/admin/facility",
-  "/admin/complaint",
-  "/admin/security",
-  "/admin/guard",
-  "/admin/announcement",
-];
-const securityRoutes = ["/security"];
-const authRestrictedRoutes = [
-  "/admin/login",
-  "/admin/register",
-  "/login",
-  "/forgot-password",
-  "/otp",
-  "/reset-password",
-];
+function ProtectedRoute() {
+  // const { token } = UseDecodeToken();
+  // const [isAuthorized, setIsAuthorized] = useState(false);
+  // const [loading, setLoading] = useState(true);
 
-export default function ProtectedRoute() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const isAdminRoute = adminRoutes.some((route) =>
-    location.pathname.startsWith(route)
-  );
-  const isSecurityRoute = securityRoutes.some((route) =>
-    location.pathname.startsWith(route)
-  );
-  const isAuthRestrictedRoute = authRestrictedRoutes.includes(
-    location.pathname
-  );
-
-  const { token } = UseDecodeToken();
+  // Define the roles that are allowed to access the route
+  // const requiredRoles = ["Chairman", "resident", "security"];
 
   // useEffect(() => {
-  //   console.log(token);
-  //   if (!token) {
-  //     if (isAdminRoute) {
-  //       navigate("/admin/login");
-  //       toast.error("Admin Token Not Found");
+  //   if (token) {
+  //     const role = token.role;
+  //     if (requiredRoles.includes(role)) {
+  //       setIsAuthorized(true);
   //     } else {
-  //       navigate("/login");
-  //       toast.error("Not Found");
+  //       setIsAuthorized(false);
   //     }
+  //     setLoading(false);
   //   } else {
-  //     if (isAuthRestrictedRoute) {
-  //       switch (token.role) {
-  //         case "Chairman":
-  //           navigate("/admin");
-  //         case "Security":
-  //           navigate("/security");
-  //         case "Member":
-  //           navigate("/member");
-  //         default:
-  //           navigate("/");
-  //       }
-  //     }
+  //     setLoading(false);
   //   }
-  // }, [location.pathname]);
+  // }, [token]);
 
-  // Allow access to appropriate routes based on role
+  // if (loading) {
+  //   return <DSLoader />;
+  // }
+
+  // if (!token) {
+  //   return (
+  //     <>
+  //       <Navigate to="/login" replace />
+  //       <Outlet />
+  //     </>
+  //   );
+  // }
+
+  // if (!isAuthorized) {
+  //   return (
+  //     <>
+  //       <Navigate to="/" replace />;
+  //       <Outlet />
+  //     </>
+  //   );
+  // }
+  
   return <Outlet />;
 }
+
+export default ProtectedRoute;

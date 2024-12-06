@@ -3,6 +3,7 @@ import { DSDatePicker, DSInput, DSModal } from "@/components/";
 import TextArea from "antd/es/input/TextArea";
 import { Flex, TimePicker } from "antd";
 import useDecodeToken from "@/hook/useDecodeToken";
+import dayjs from "dayjs";
 
 export const AddAnnouncementModal = ({
   open,
@@ -22,13 +23,26 @@ export const AddAnnouncementModal = ({
   });
 
   useEffect(() => {
-    setFormData({
-      societyId: societyId || "",
-      announcementTitle: editData?.announcementTitle || "",
-      announcementDescription: editData?.announcementDescription || "",
-      announcementDate: editData?.announcementDate || null,
-      announcementTime: editData?.announcementTime || null,
-    });
+    if (editData) {
+      const formattedDate = dayjs(editData?.announcementDate);
+      const formattedTime = dayjs(editData?.announcementTime);
+
+      setFormData({
+        societyId: societyId || "",
+        announcementTitle: editData?.announcementTitle || "",
+        announcementDescription: editData?.announcementDescription || "",
+        announcementDate: formattedDate.isValid() ? formattedDate : null,
+        announcementTime: formattedTime.isValid() ? formattedTime : null,
+      });
+    } else {
+      setFormData({
+        societyId: societyId || "",
+        announcementTitle: "",
+        announcementDescription: "",
+        announcementDate: null,
+        announcementTime: null,
+      });
+    }
   }, [editData, societyId]);
 
   const handleChange = (key, value) => {
@@ -51,7 +65,7 @@ export const AddAnnouncementModal = ({
           announcementDate: null,
           announcementTime: null,
         });
-        handleCancel();
+        handleCancel(); // Close the modal and reset form data
       }}
       handleClose={handleClose}
       handleOk={handleSave}

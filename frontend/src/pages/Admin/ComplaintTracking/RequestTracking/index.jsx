@@ -10,6 +10,11 @@ import {
   DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
+import {
+  useListComplaint,
+  useAddComplaint,
+  useDeleteComplaint,
+} from "@/hook/Admin/ComplaintTracking";
 
 const data = [
   {
@@ -51,12 +56,28 @@ const data = [
 ];
 
 const RequestTracking = () => {
-  const [createRequest, setCreateRequest] = useState(false);
+
+  const { dataListComplaint, fetchListComplaint, isLoading } = useListComplaint("Request")
+  const {
+    formData,
+    handleChange,
+    isSubmitting,
+    isModalOpen,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    handleSubmit,
+    isEdit,
+  } = useAddComplaint(fetchListComplaint);
+  const {
+    complaintDelete,
+    deleteComplaintData,
+    setDeleteComplaintData,
+    showDeleteModal,
+    setShowDeleteModal,
+  } = useDeleteComplaint(fetchListComplaint);
+
   const [viewRequest, setViewRequest] = useState({
-    open: false,
-    data: null,
-  });
-  const [deleteRequest, setDeleteRequest] = useState({
     open: false,
     data: null,
   });
@@ -64,7 +85,7 @@ const RequestTracking = () => {
   const columns = [
     {
       title: "Requester Name",
-      dataIndex: "requesterName",
+      dataIndex: "complainerName",
       key: "requesterName",
       render: (text, record) => (
         <Space>
@@ -75,12 +96,12 @@ const RequestTracking = () => {
     },
     {
       title: "Request Name",
-      dataIndex: "requestName",
+      dataIndex: "complaintName",
       key: "requestName",
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "discription",
       key: "description",
       ellipsis: {
         showTitle: false,
@@ -91,21 +112,23 @@ const RequestTracking = () => {
         </Tooltip>
       ),
     },
-    {
-      title: "Request Date",
-      dataIndex: "requestDate",
-      key: "requestDate",
-    },
+    // {
+    //   title: "Request Date",
+    //   dataIndex: "requestDate",
+    //   key: "requestDate",
+    // },
     {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Tag color={record.unitColor}>{text}</Tag>,
+      render: (text, record) => (
+        <Tag color={"blue"}>{record.unitId.unitNumber}</Tag>
+      ),
     },
     {
       title: "Priority",
       key: "priority",
-      dataIndex: "priority",
+      dataIndex: "priorityStatus",
       render: (priority) => {
         let color =
           priority === "High"
@@ -115,7 +138,7 @@ const RequestTracking = () => {
             : "green";
         return (
           <Tag color={color} key={priority}>
-            {priority.toUpperCase()}
+            {priority?.toUpperCase()}
           </Tag>
         );
       },
@@ -144,15 +167,15 @@ const RequestTracking = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
-            onClick={() => setCreateRequest(true)} // Open Create Request modal
+            className="edit-btn"
+            onClick={() => openEditModal(record)}
           />
           {/* View Button */}
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={
               () => setViewRequest({ open: true, data: record }) // Open View Request modal
             }
@@ -162,15 +185,28 @@ const RequestTracking = () => {
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
-            onClick={
-              () => setDeleteRequest({ open: true, data: record }) // Open Delete Request modal
-            }
+            onClick={() => {
+              setShowDeleteModal(true);
+              setDeleteComplaintData(record);
+            }}
           />
         </Space>
       ),
     },
   ];
+
+  const handleDeleteComplaint = async () => {
+    if (deleteComplaintData) {
+      const result = await complaintDelete(deleteComplaintData._id);
+      if (result.success) {
+        setShowDeleteModal(false);
+        setDeleteComplaintData(null);
+        await refetchAnnouncements();
+      } else {
+        console.log("Error deleting announcement");
+      }
+    }
+  };
 
   return (
     <>
@@ -189,26 +225,30 @@ const RequestTracking = () => {
       <DSCard
         title={"Request Tracking"}
         headerContent={
-          <DSButton variant={"primary"} onClick={() => setCreateRequest(true)}>
+          <DSButton variant={"primary"} onClick={openCreateModal}>
             Create Request
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={data} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} loading={isLoading} />
       </DSCard>
 
       {/* Create Request Modal */}
       <CreateRequestModal
-        open={createRequest}
-        handleCancel={() => setCreateRequest(false)}
-        handleClose={() => setCreateRequest(false)}
-        handleOk={() => setCreateRequest(false)}
+        open={isModalOpen}
+        handleCancel={closeModal}
+        handleClose={closeModal}
+        handleOk={handleSubmit}
+        formData={formData}
+        handleChange={handleChange}
+        isSubmitting={isSubmitting}
+        isEdit={isEdit}
       />
 
       {/* View Request Modal */}
       <ViewRequestModal
         open={viewRequest.open}
-        requestData={viewRequest.data} // Pass selected request data
+        complaintData={viewRequest.data}
         handleCancel={() => setViewRequest({ open: false, data: null })}
         handleClose={() => setViewRequest({ open: false, data: null })}
         handleOk={() => setViewRequest({ open: false, data: null })}
@@ -217,13 +257,10 @@ const RequestTracking = () => {
       {/* Remove Request Modal */}
       <DeleteModal
         title={"Delete Request?"}
-        isModalOpen={deleteRequest.open}
-        handleClose={() => setDeleteRequest({ open: false, data: null })}
-        handleOk={() => {
-          console.log("Deleting request:", deleteRequest.data);
-          setDeleteRequest({ open: false, data: null });
-        }}
-        onCancel={() => setDeleteRequest({ open: false, data: null })}
+        isModalOpen={showDeleteModal}
+        handleClose={() => setShowDeleteModal(false)}
+        handleOk={handleDeleteComplaint}
+        onCancel={() => setShowDeleteModal(false)}
       >
         Are you sure you want to delete this request?
       </DeleteModal>

@@ -19,12 +19,12 @@ export const useLogin = () => {
     try {
       const response = await loginUser({ email, password });
       toast.success("Login successful!");
-
+      console.log("login response =====> " , response)
       const token = response.token;
 
-      // Store token based on rememberMe preference
       if (rememberMe) {
         localStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
+        sessionStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
       } else {
         sessionStorage.setItem(import.meta.env.VITE_TOKEN_NAME, token);
       }

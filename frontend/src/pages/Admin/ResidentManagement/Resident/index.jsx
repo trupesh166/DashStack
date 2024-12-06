@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import ResidentDetail from '../../../../components/ResidentManagement/ResidentDetail'
-import { FamilyDetail } from '../../../../components/ResidentManagement/FamilyDetail'
-import { VehicleDetail } from '../../../../components/ResidentManagement/VehicleDetail'
-import { DSButton } from '../../../../components'
-import { useAddResident } from '../../../../hook/Admin/ResidentManagement/AddResident'
-import toast from 'react-hot-toast'
+import React, { useState } from "react";
+import ResidentDetail from "../../../../components/ResidentManagement/ResidentDetail";
+import { FamilyDetail } from "../../../../components/ResidentManagement/FamilyDetail";
+import { VehicleDetail } from "../../../../components/ResidentManagement/VehicleDetail";
+import { DSButton } from "../../../../components";
+import { useAddResident } from "../../../../hook/Admin/ResidentManagement/AddResident";
 
 export const Resident = () => {
-
-  const { submitResident } = useAddResident()
+  const { submitResident } = useAddResident();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -18,16 +16,16 @@ export const Resident = () => {
     wing: "",
     unit: "",
     gender: "",
-  })
+  });
   const [ownerInfo, setOwnerInfo] = useState({
     fullName: "",
     phoneNumber: "",
     address: "",
-  })
+  });
   const [userPhoto, setUserPhoto] = useState(null);
   const [residentType, setResidentType] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState({
-    profileImage:null,
+    profileImage: null,
     aadharFront: null,
     aadharBack: null,
     addressProof: null,
@@ -46,27 +44,27 @@ export const Resident = () => {
     }
   };
   const handleOwnerInfoChange = (e) => {
-    const { name, value } = e.target
-    setOwnerInfo((prev) => ({...prev, [name]: value}))
-  }
+    const { name, value } = e.target;
+    setOwnerInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
-  console.log("formData ==> ", formData)
+  console.log("formData ==> ", formData);
 
   return (
     <>
-
-      <div className='mb-5'>
+      <div className="mb-5">
         <ResidentDetail
-        formData={FormData}
-        userPhoto={userPhoto}
-        residentType={residentType}
-        setResidentType={setResidentType}
-        uploadedFiles={uploadedFiles}
-        setUserPhoto={setUserPhoto}
-        setUploadedFiles={setUploadedFiles}
-        handleInputChange={handleInputChange}
-        ownerInfo={ownerInfo}
-        handleOwnerInfoChange={handleOwnerInfoChange}  />
+          formData={FormData}
+          userPhoto={userPhoto}
+          residentType={residentType}
+          setResidentType={setResidentType}
+          uploadedFiles={uploadedFiles}
+          setUserPhoto={setUserPhoto}
+          setUploadedFiles={setUploadedFiles}
+          handleInputChange={handleInputChange}
+          ownerInfo={ownerInfo}
+          handleOwnerInfoChange={handleOwnerInfoChange}
+        />
       </div>
       <div className="mb-5">
         <FamilyDetail />
@@ -77,7 +75,18 @@ export const Resident = () => {
 
       <div className="d-flex gap-5 justify-content-end">
         <DSButton className="bg-white">Cancel</DSButton>
-        <DSButton onClick={() => submitResident({...formData, residentStatus:residentType}, ownerInfo, uploadedFiles, userPhoto)} >Create</DSButton>
+        <DSButton
+          onClick={() =>
+            submitResident(
+              { ...formData, residentStatus: residentType },
+              ownerInfo,
+              uploadedFiles,
+              userPhoto
+            )
+          }
+        >
+          Create
+        </DSButton>
       </div>
     </>
   );

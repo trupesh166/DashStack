@@ -65,3 +65,12 @@ export { ViewAnnouncementModal } from "./Announcement/ViewAnnouncementModal";
 // Visitor Tracking Start
 export { AddVisitorDetailsModal } from "./VisitorTracking/AddVisitorDetailsModal";
 // Visitor Tracking End
+
+// Payment Portal Modal
+// Maintenance Invoices Modal Start
+export { MaintenanceInvoicesModal } from "./PaymentPortalModal/MaintenanceInvoicesModal";
+// Maintenance Invoices Modal End
+
+// Event Invoices Modal Start
+export { EventInvoicesModal } from "./PaymentPortalModal/EventInvoicesModal";
+// Event Invoices Modal End

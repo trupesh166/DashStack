@@ -85,7 +85,6 @@ class EventController {
         { _id: eventId },
         { societyId, title, date, dueDate, amount, description }
       );
-
       if (!result || result.modifiedCount <= 0) {
         return res.status(500).send({ message: "Failed to update event" });
       }
@@ -98,8 +97,10 @@ class EventController {
 
   async deleteEvent(req, res) {
     try {
+      console.log(req.params)
       const { eventId } = req.params;
       const result = await eventModel.model.deleteOne({ _id: eventId });
+      console.log(result)
       if (!result || result.deletedCount <= 0) {
         return res.status(500).send({ message: "Failed to delete event" });
       }

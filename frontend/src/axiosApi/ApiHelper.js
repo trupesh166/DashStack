@@ -62,6 +62,8 @@ export const listByUnit = (unitId) =>
 // Event Management
 export const createEvent = (data) => request("post", "/event/create", data);
 export const getEvents = (id) => request("get", `/event/${id}`);
+export const updateEvents = (data) => request("put", "/event/update", data);
+export const deleteEvent = (id) => request("delete", `/event/delete/${id}`);
 
 // Expense Management
 export const createExpense = (data) => request("post", "/expanse/create", data);

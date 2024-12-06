@@ -8,41 +8,39 @@ export const CreateOtherIncomeModal = ({
   handleOk,
   handleCancel,
   handleClose,
+  formData,
+  handleInputChange,
+  isEdit,
+  isSubmitting,
 }) => {
-  const [createOtherIncome, setCreateOtherIncome] = useState({
-    title: "",
-    date: "",
-    dueDate: "",
-    description: "",
-    amount: "",
-  });
 
   const isFormValid =
-    createOtherIncome.title &&
-    createOtherIncome.date &&
-    createOtherIncome.dueDate &&
-    createOtherIncome.description &&
-    createOtherIncome.amount;
+  formData.title &&
+  formData.date &&
+  formData.dueDate &&
+  formData.description &&
+  formData.amount;
 
-  const handleChange = (field, value) => {
-    setCreateOtherIncome((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
+  // const handleChange = (field, value) => {
+  //   setCreateOtherIncome((prevState) => ({
+  //     ...prevState,
+  //     [field]: value,
+  //   }));
+  // };
 
   return (
     <div>
       <DSModal
-        title="Create Other Income"
+        title={isEdit ? "Edit Other Income" : "Create Other Income"}
         open={open}
         closeIcon
         handleOk={handleOk}
         onCancel={handleCancel}
         handleClose={handleClose}
         IsFooter
-        handleContent="Apply"
-        disabledButton={!isFormValid}
+        handleContent={isEdit ? "Update" : "Apply"}
+        disabledButton={!isFormValid || isSubmitting}
+        confirmLoading={isSubmitting}
       >
         <div>
           <div className="mb-4">
@@ -51,8 +49,8 @@ export const CreateOtherIncomeModal = ({
               label={"Title*"}
               placeholder={"Enter Title"}
               require={true}
-              value={createOtherIncome.title}
-              onChange={(e) => handleChange("title", e.target.value)}
+              value={formData?.title}
+              onChange={(e) => handleInputChange("title", e.target.value)}
             />
           </div>
 
@@ -68,8 +66,8 @@ export const CreateOtherIncomeModal = ({
                 borderRadius: "10px",
                 padding: "0px 10px",
               }}
-              value={createOtherIncome.date}
-              onChange={(date) => handleChange("date", date)}
+              value={formData?.date}
+              onChange={(date) => handleInputChange("date", date)}
             />
 
             <DSDatePicker
@@ -83,8 +81,8 @@ export const CreateOtherIncomeModal = ({
                 borderRadius: "10px",
                 padding: "0px 10px",
               }}
-              value={createOtherIncome.dueDate}
-              onChange={(date) => handleChange("dueDate", date)}
+              value={formData?.dueDate}
+              onChange={(date) => handleInputChange("dueDate", date)}
             />
           </div>
 
@@ -94,8 +92,8 @@ export const CreateOtherIncomeModal = ({
               type="textarea"
               placeholder={"Enter Description"}
               require={true}
-              value={createOtherIncome.description}
-              onChange={(e) => handleChange("description", e.target.value)}
+              value={formData?.description}
+              onChange={(e) => handleInputChange("description", e.target.value)}
             />
           </div>
 
@@ -106,8 +104,8 @@ export const CreateOtherIncomeModal = ({
               prefix={Icons.Rupee}
               placeholder={"0000"}
               require={true}
-              value={createOtherIncome.amount}
-              onChange={(e) => handleChange("amount", e.target.value)}
+              value={formData?.amount}
+              onChange={(e) => handleInputChange("amount", e.target.value)}
             />
           </div>
         </div>

@@ -5,9 +5,25 @@ import { Flex } from "antd";
 import { Maintenance } from "./Maintenance";
 import { OtherIncome } from "./OtherIncome";
 import styles from "./Income.module.css";
+import { useAddMaintenance,  } from '@/hook/Admin/FinancialMaintenance/';
+import useMaintenanceData from "../../../../hook/Admin/FinancialMaintenance/Income/Maintenance/ListMaintenance";
 
 const Income = () => {
-  const [maintenance, setMaintenance] = useState(false);
+  const {
+    handleVerifyPassword,
+    maintenanceOpen: maintenance,
+    setMaintenanceOpen: setMaintenance,
+    handleMaintenanceClose,
+    password,
+    errorMessage,
+    handlePasswordChange,
+    isInvalid,
+    isModalOpen,
+    isSubmitting,
+    handleClose: closeHookModal,
+  } = useAddMaintenance();
+
+  // const [maintenance, setMaintenance] = useState(false);
   const [activeTab, setActiveTab] = useState("1");
 
   const onChange = (key) => {
@@ -81,9 +97,16 @@ const Income = () => {
       {/* Set Maintenance Modal */}
       <SetMaintenance
         open={maintenance}
-        handleOk={() => setMaintenance(false)}
-        handleCancel={() => setMaintenance(false)}
-        handleClose={() => setMaintenance(false)}
+        handleOk={handleVerifyPassword}
+        handleCancel={handleMaintenanceClose}
+        handleClose={handleMaintenanceClose}
+        password={password}
+        errorMessage={errorMessage}
+        handlePasswordChange={handlePasswordChange}
+        isInvalid={isInvalid}
+        isModalOpen={isModalOpen}
+        isSubmitting={isSubmitting}
+        closeHookModal={closeHookModal}
       />
     </>
   );

@@ -9,3 +9,5 @@ export { useAddExpense } from "./Expense/index"
 export { useListExpense } from "./Expense/ListExpense"
 export { useDeleteExpense } from "./Expense/DeleteExpense/index"
 
+export { useAddMaintenance } from "./Income/Maintenance/AddMaintenance"
+

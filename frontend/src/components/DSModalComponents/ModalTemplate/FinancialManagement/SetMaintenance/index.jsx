@@ -1,33 +1,60 @@
 import React, { useState } from 'react';
 import { AddMaintenanceModal, DSModal, DSPasswordInput } from '../../../..';
+import { useAddMaintenance } from '@/hook/Admin/FinancialMaintenance/';
 
 export const SetMaintenance = ({
   open,
   handleOk,
   handleCancel,
   handleClose,
+  password,
+  handlePasswordChange,
+  errorMessage,
+  isInvalid,
+  isModalOpen,
+  isSubmitting,
+  closeHookModal,
+  handleVerifyPassword,
 }) => {
-  const [password, setPassword] = useState('');
-  const [isInvalid, setIsInvalid] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [addMaintenance, setAddMaintenance] = useState(false)
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setIsInvalid(false);
-    setErrorMessage('');
-  };
+  // const {
+  //   isInvalid,
+  //   isModalOpen,
+  //   isSubmitting,
+  //   handleClose: closeHookModal,
+  //   verifyAndCreateMaintenance,
+  //   handleVerifyPassword
+  // } = useAddMaintenance();
 
+  // const [isInvalid, setIsInvalid] = useState(false);
+  // const [password, setPassword] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
+  // const [addMaintenance, setAddMaintenance] = useState(false)
+  // const [maintenanceData, setMaintenanceData] = useState(null);
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  //   setIsInvalid(false);
+  //   setErrorMessage('');
+  // };
+
+  // const handleSubmit = () => {
+  //   if (password !== '123') {
+  //     setIsInvalid(true);
+  //     setErrorMessage('Incorrect Password.');
+  //   } else {
+  //     setIsInvalid(false);
+  //     setErrorMessage('');
+  //     setAddMaintenance(true)
+  //     handleOk();
+  //   }
+  // };
   const handleSubmit = () => {
-    if (password !== '123') {
-      setIsInvalid(true);
-      setErrorMessage('Incorrect Password.');
-    } else {
-      setIsInvalid(false);
-      setErrorMessage('');
-      setAddMaintenance(true)
-      handleOk();
-    }
+    handleVerifyPassword();
+    // handleOk();
+  };
+  const handleMaintenanceModalOpen = (data) => {
+    // setMaintenanceData(data);
+    closeHookModal();
   };
 
   return (
@@ -36,19 +63,19 @@ export const SetMaintenance = ({
         title="Set Maintenance"
         open={open}
         closeIcon
-        handleOk={handleSubmit}
+        handleOk={handleOk}
         onCancel={handleCancel}
         handleClose={handleClose}
         IsFooter
         handleContent="Continue"
-        disabledButton={false}
-
+        disabledButton={!password}
+        // confirmLoading={isSubmitting}
       >
         <DSPasswordInput
           label={"Password"}
           placeholder={"Enter Password"}
           value={password}
-          onChange={handlePasswordChange}
+          onChange={(e) => handlePasswordChange(e.target.value)}
           isInvalid={isInvalid}
           errorMessage={errorMessage}
           require={true}
@@ -56,10 +83,10 @@ export const SetMaintenance = ({
       </DSModal>
 
       <AddMaintenanceModal
-        open={addMaintenance}
-        handleCancel={() => setAddMaintenance(false)}
-        handleClose={() => setAddMaintenance(false)}
-        handleOk={() => setAddMaintenance(false)}
+        open={isModalOpen}
+        handleCancel={closeHookModal}
+        handleClose={closeHookModal}
+        handleOk={(data) => handleMaintenanceModalOpen(data)}
       />
 
     </>

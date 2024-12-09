@@ -48,7 +48,13 @@ const tableColumn = [
     render: (priorityStatus) => (
       <Tag
         className={styles.button}
-        color={priorityStatus === "Medium" ? "var(--clr-cult)" : priorityStatus === "Low" ? "var(--clr-success)" : "var(--clr-danger)"}
+        color={
+          priorityStatus === "Medium"
+            ? "var(--clr-cult)"
+            : priorityStatus === "Low"
+            ? "var(--clr-success)"
+            : "var(--clr-danger)"
+        }
         bordered={false}
       >
         {priorityStatus}
@@ -62,7 +68,13 @@ const tableColumn = [
     render: (status) => (
       <Tag
         className={styles.button}
-        color={status === "Open" ? "blue" : status === "Pending" ? "warning" : "success"}
+        color={
+          status === "Open"
+            ? "blue"
+            : status === "Pending"
+            ? "warning"
+            : "success"
+        }
         bordered={false}
       >
         {status}
@@ -75,7 +87,6 @@ const tableColumn = [
     key: "Action",
     render: (_, { record }) => (
       <Space size="small">
-
         <DSButton
           type="primary"
           size="small"
@@ -182,7 +193,7 @@ export const ComplaintCard = ({ className }) => {
       }
     >
       <div className={styles.body}>
-        <DSTable tableColumn={tableColumn} tableDataSource={dataSource} />
+        <DSTable  tableColumn={tableColumn} tableDataSource={dataSource} />
       </div>
 
       {/* Edit Complaint Modal */}

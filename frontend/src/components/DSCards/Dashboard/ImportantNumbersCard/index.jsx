@@ -89,6 +89,7 @@ export const ImportantNumbersCard = () => {
               styles.importantNumber,
               "d-flex align-items-center"
             )}
+            key={item._id}
           >
             <div className={styles.detail}>
               <h6 className="lh-base">
@@ -111,7 +112,6 @@ export const ImportantNumbersCard = () => {
               <DSButton
                 icon={Icons.Edit}
                 size={"small"}
-                c
                 className="edit-btn"
                 onClick={() => handleEdit(item)}
               />

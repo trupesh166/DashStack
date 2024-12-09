@@ -9,7 +9,7 @@ export const ViewSecurityModal = ({
   handleCancel,
   handleClose,
   handleOk,
-  record
+  record,
 }) => {
   return (
     <div>
@@ -25,7 +25,10 @@ export const ViewSecurityModal = ({
         <Flex gap={"middle"} align="center" className="mb-5">
           <Avatar
             size={64}
-            src={record?.avatar || "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"}
+            src={
+              record?.avatar ||
+              "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg"
+            }
           />
           <div>
             <h4 className="fw-semibold">{record?.name}</h4>
@@ -44,7 +47,7 @@ export const ViewSecurityModal = ({
                 borderRadius: "58px",
               }}
             >
-             {record?.shift ==="Day Shift" ? "☀️" : "🌙" } {record?.shift}
+              {record?.shift === "Day Shift" ? "☀️" : "🌙"} {record?.shift}
             </h6>
           </div>
           <div>
@@ -57,7 +60,7 @@ export const ViewSecurityModal = ({
                 borderRadius: "58px",
               }}
             >
-             {record?.time}
+              {record?.time}
             </h6>
           </div>
           <div>
@@ -65,7 +68,6 @@ export const ViewSecurityModal = ({
             <h6
               style={{
                 padding: "5px 12px",
-                color: "var(--clr-fuchsia)",
                 backgroundColor: "#FFF1F6",
                 borderRadius: "58px",
                 color: record?.gender === "Male" ? "blue" : "pink",

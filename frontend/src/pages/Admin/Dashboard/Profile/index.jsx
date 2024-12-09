@@ -6,7 +6,6 @@ import { Avatar, Col, Row } from "antd";
 
 export const Profile = () => {
   const { token } = UseDecodeToken();
-  console.log(token);
   const [userdetail, setUserDetail] = useState({
     firstName: "",
     lastName: "",

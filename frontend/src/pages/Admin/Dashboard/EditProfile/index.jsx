@@ -6,7 +6,6 @@ import UseDecodeToken from "../../../../hook/UseDecodeToken";
 
 export const EditProfile = () => {
   const { token } = UseDecodeToken();
-  console.log(token);
   const [userdetail, setUserDetail] = useState({
     firstName: "",
     lastName: "",

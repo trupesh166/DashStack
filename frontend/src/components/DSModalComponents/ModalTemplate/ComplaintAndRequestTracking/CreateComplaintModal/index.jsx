@@ -16,7 +16,6 @@ export const CreateComplaintModal = ({
   isEdit,
 }) => {
   const { societyId } = UseDecodeToken();
-  console.log(formData);
 
   const [wing, setWing] = useState([]);
   const [unit, setUnit] = useState([]);

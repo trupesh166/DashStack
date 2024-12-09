@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, NavLink } from "react-router-dom";
 import {
   AdminAsideData,
   ResidentAsidData,
@@ -82,7 +82,8 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: "true",
+          index: true,
+          element: <NavLink to={"/login"}>Login</NavLink>,
         },
         {
           path: "member",

@@ -375,7 +375,7 @@ const DashStackRoute = createBrowserRouter(
   ],
   {
     /* Base URL */
-    basename: "/",
+    basename: "/DashStack",
   }
 );
 

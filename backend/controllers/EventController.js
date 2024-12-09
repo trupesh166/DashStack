@@ -1,6 +1,6 @@
 
-const { httpErrors, httpSuccess } = require("../constents")
-const eventDetilsModel = require("../models/EventDetailsModel")
+const { httpErrors, httpSuccess } = require("../constents");
+const eventDetilsModel = require("../models/EventDetailsModel");
 const eventModel = require("../models/EventModel")
 const memberModel = require("../models/MemberModel")
 
@@ -20,7 +20,7 @@ class EventController {
       const societyMembers = await memberModel.model.find({ societyId: societyId });
       await Promise.all(
         societyMembers.map(async (data) => {
-          const eventDetails = await eventDetailsModel.model.create({
+          const eventDetails = await eventDetilsModel.model.create({
             societyId,
             eventId: result._id,
             memberId: data._id,
@@ -44,7 +44,7 @@ class EventController {
       const { societyId } = req.params;
       const events = await eventModel.model.find({ societyId: societyId });
       if (!events || events.length === 0) {
-        return res.status(404).send({ message: "No events found" });
+        return res.status(405).send({ message: "No events found" });
       }
 
       let MemberCount = await memberModel.model.countDocuments({ societyId: societyId });
@@ -65,7 +65,7 @@ class EventController {
       const { eventId } = req.params;
       const result = await eventModel.model.findById(eventId);
       if (!result) {
-        return res.status(404).send({ message: "Event not found" });
+        return res.status(405).send({ message: "Event not found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {

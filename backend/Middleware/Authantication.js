@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
-const authenticate = (req, res, next) => {
-  const token = req.headers["authorization"];
+const authanticate = (req,res) => {
+    const token = req.headers["authorization"];
 
   if (!token) {
     return res.status(401).send({ message: "No token provided." });
@@ -18,6 +18,6 @@ const authenticate = (req, res, next) => {
   } catch (error) {
     return res.status(401).send({ message: "Invalid or expired token." });
   }
-};
+}
 
-module.exports = authenticate;
+module.exports = authanticate

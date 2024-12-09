@@ -3,6 +3,7 @@ import {
   useAddAnnouncement,
   useListAnnouncement,
   useDeleteAnnouncement,
+  useEditAnnouncement
 } from "@/hook/Admin/Announcement";
 import {
   AddAnnouncementModal,
@@ -17,6 +18,7 @@ import dayjs from "dayjs";
 
 const Announcement = () => {
   const { submitAnnouncement } = useAddAnnouncement();
+  const { handleUpdateAnnouncement } = useEditAnnouncement();
   const { announcements, refetchAnnouncements } = useListAnnouncement();
   const {
     announcementDelete,
@@ -33,9 +35,11 @@ const Announcement = () => {
 
   const [addAnnouncement, setAddAnnouncement] = useState(false);
   const [editAnnouncementData, setEditAnnouncementData] = useState(null);
+  const [editAnnouncementId, setEditAnnouncementId] = useState(null);
 
   const handleActionClick = (key, announcement) => {
     if (key === "edit") {
+      setEditAnnouncementId(announcement._id)
       setEditAnnouncementData(announcement);
       setAddAnnouncement(true);
     } else if (key === "view") {
@@ -47,7 +51,12 @@ const Announcement = () => {
   };
 
   const handleModalSubmit = async (formData) => {
-    const result = await submitAnnouncement(formData, refetchAnnouncements);
+    let result
+    if(editAnnouncementData){
+      result = await handleUpdateAnnouncement(formData, refetchAnnouncements, editAnnouncementId);
+    }else{
+      result = await submitAnnouncement(formData, refetchAnnouncements);
+    }
     if (result.success) {
       setAddAnnouncement(false);
       setEditAnnouncementData(null);
@@ -97,6 +106,7 @@ const Announcement = () => {
           return (
             <AnnouncementCard
               key={announcement?._id}
+              _id={announcement?._id}
               title={announcement?.announcementTitle}
               description={announcement?.announcementDescription}
               date={

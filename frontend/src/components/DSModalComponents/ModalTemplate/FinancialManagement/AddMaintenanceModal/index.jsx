@@ -14,7 +14,7 @@ export const AddMaintenanceModal = ({
     maintenanceAmount: "",
     penaltyAmount: "",
     dueDate: null,
-    penaltyDays: "",
+    penaltyDays: [],
   });
   const { submitCreateMaintenance, setIsModalOpen } = useAddMaintenance()
 

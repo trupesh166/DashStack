@@ -2,8 +2,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 // Base URL for the backend
-const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
-// const backendUrl = "http://localhost:5000";
+// const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+const backendUrl = "http://localhost:5000";
 const tokenName = import.meta.env.VITE_TOKEN_NAME;
 
 const axiosApi = axios.create({
@@ -62,6 +62,9 @@ axiosApi.interceptors.response.use(
         break;
       case 404:
         toast.error("API not available (404)");
+        break;
+      case 405:
+        toast.error("Data not available (405)");
         break;
       case 500:
         toast.error("Server Error (500)");

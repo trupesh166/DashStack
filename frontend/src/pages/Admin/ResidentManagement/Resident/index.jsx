@@ -24,13 +24,21 @@ export const Resident = () => {
   });
   const [userPhoto, setUserPhoto] = useState(null);
   const [residentType, setResidentType] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState({
+  let [uploadedFiles, setUploadedFiles] = useState({
     profileImage: null,
     aadharFront: null,
     aadharBack: null,
     addressProof: null,
     rentAgreement: null,
   });
+  const [profileImage, setProfileImage] = useState(null);
+  const [aadharFront, setAadharFront] = useState(null);
+  const [aadharBack, setAadharBack] = useState(null);
+  const [addressProof, setAddressProof] = useState(null);
+  const [rentAgreement, setRentAgreement] = useState(null);
+  const [familyDetails, setFamilyDetails] = useState([]);
+  const [vehicleDetails, setVehicleDetails] = useState([]);
+
   const handleInputChange = (eName, value) => {
     if (typeof eName === "object" && eName.target) {
       // Handles input fields
@@ -47,6 +55,20 @@ export const Resident = () => {
     const { name, value } = e.target;
     setOwnerInfo((prev) => ({ ...prev, [name]: value }));
   };
+  const handleFamilyDetailChange = (index, field, value) => {
+    setFamilyDetails((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+  const handleVehicleDetailChange = (index, field, value) => {
+    setVehicleDetails((prev) => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
 
   console.log("formData ==> ", formData);
 
@@ -58,19 +80,39 @@ export const Resident = () => {
           userPhoto={userPhoto}
           residentType={residentType}
           setResidentType={setResidentType}
-          uploadedFiles={uploadedFiles}
+          uploadedFiles={{
+            profileImage,
+            aadharFront,
+            aadharBack,
+            addressProof,
+            rentAgreement,
+          }}
           setUserPhoto={setUserPhoto}
-          setUploadedFiles={setUploadedFiles}
+          setUploadedFiles={{
+            setProfileImage,
+            setAadharFront,
+            setAadharBack,
+            setAddressProof,
+            setRentAgreement,
+          }}
           handleInputChange={handleInputChange}
           ownerInfo={ownerInfo}
           handleOwnerInfoChange={handleOwnerInfoChange}
         />
       </div>
       <div className="mb-5">
-        <FamilyDetail />
+        <FamilyDetail
+          familyDetails={familyDetails}
+          setFamilyDetails={setFamilyDetails}
+          onChange={handleFamilyDetailChange}
+        />
       </div>
       <div className="mb-5">
-        <VehicleDetail />
+        <VehicleDetail
+          vehicleDetails={vehicleDetails}
+          setVehicleDetails={setVehicleDetails}
+          onChange={handleVehicleDetailChange}
+        />
       </div>
 
       <div className="d-flex gap-5 justify-content-end">
@@ -80,8 +122,13 @@ export const Resident = () => {
             submitResident(
               { ...formData, residentStatus: residentType },
               ownerInfo,
-              uploadedFiles,
-              userPhoto
+              familyDetails,
+              vehicleDetails,
+              profileImage,
+              aadharFront,
+              aadharBack,
+              addressProof,
+              rentAgreement,
             )
           }
         >

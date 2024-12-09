@@ -117,11 +117,16 @@ const DashStackRoute = createBrowserRouter(
                 },
                 {
                   path: "residents",
-                  element: <ResidentManagement />,
-                },
-                {
-                  path: "resident-detail",
-                  element: <Resident />,
+                  children: [
+                    {
+                      index: true,
+                      element: <ResidentManagement />,
+                    },
+                    {
+                      path: "resident-detail",
+                      element: <Resident />,
+                    },
+                  ],
                 },
                 {
                   path: "financial",

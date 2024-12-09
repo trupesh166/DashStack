@@ -15,6 +15,7 @@ export const useVisitorLogs = () => {
       setIsLoading(true);
       try {
         const response = await listVisitor(societyId);
+        console.log(response)
 
         if (response.message === "Success" && response.data) {
           const formattedData = response.data.map((item, index) => ({

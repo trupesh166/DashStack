@@ -25,12 +25,12 @@ class UserController {
         const phone = Number(email);
         user = await userModel.model.findOne({ phoneNumber: phone });
         if (!user) {
-          return res.status(404).send({ message: "User not found with this phone number" });
+          return res.status(405).send({ message: "User not found with this phone number" });
         }
       } else {
         user = await userModel.model.findOne({ email: email });
         if (!user) {
-          return res.status(404).send({ message: "User not found with this email" });
+          return res.status(405).send({ message: "User not found with this email" });
         }
       }
 
@@ -73,7 +73,7 @@ class UserController {
       const { email } = req.body;
       const user = await userModel.model.findOne({ email: email });
 
-      if (!user) return res.status(404).json({ message: 'User not found.' });
+      if (!user) return res.status(405).json({ message: 'User not found.' });
 
       const otp = generateOtp();
       user.otp = otp;
@@ -119,7 +119,7 @@ class UserController {
       const user = await userModel.model.findOne({ email: email });
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
+        return res.status(405).json({ message: 'User not found.' });
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -133,43 +133,43 @@ class UserController {
   };
   async editProfile(req, res) {
     try {
-      const { firstName, lastName, email, phoneNumber, societyName , country, state, city, zipCode, societyId } = req.body;
-  
+      const { firstName, lastName, email, phoneNumber, societyName, country, state, city, zipCode, societyId } = req.body;
+
       const userId = req.user._id;
 
-  
+
       const user = await userModel.model.findById(userId);
       if (!user) {
-        return res.status(404).json({ message: "User not found." });
+        return res.status(405).json({ message: "User not found." });
       }
 
       const updateData = {};
-  
+
       if (email) updateData.email = email;
       if (phoneNumber) updateData.phoneNumber = phoneNumber;
 
       if (firstName || lastName) {
         updateData.fullName = `${firstName} ${lastName}`;
       }
-  
+
       await userModel.model.findByIdAndUpdate(userId, updateData, { new: true });
-  
+
       if (user.role === "Chairman" && societyId) {
         const societyHandler = await societyHandlerModel.model.findOne({ userId: userId });
         if (!societyHandler) {
-          return res.status(404).json({ message: "Society not assigned to this user." });
+          return res.status(405).json({ message: "Society not assigned to this user." });
         }
- 
+
         const updateSocietyHandlerData = { selectSociety: societyId };
 
         await societyHandlerModel.model.findByIdAndUpdate(societyHandler._id, updateSocietyHandlerData);
 
         const society = await societyModel.model.findById(societyId);
         if (!society) {
-          return res.status(404).json({ message: "Society not found." });
+          return res.status(405).json({ message: "Society not found." });
         }
 
-        
+
         const updateSocietyData = {};
         if (societyName) updateSocietyData.societyName = societyName;
         if (country) updateSocietyData.country = country;
@@ -178,21 +178,21 @@ class UserController {
         if (zipCode) updateSocietyData.zipCode = zipCode;
 
         await societyModel.model.findByIdAndUpdate(societyId, updateSocietyData, { new: true });
-  
+
         return res.status(200).json({
           message: "Profile updated successfully, and society and society handler updated.",
         });
       }
-  
+
       return res.status(200).json({
         message: "Profile updated successfully.",
         data: updateData,
       });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Error updating profile.", error: error.message });
+      console.error(error);
+      return res.status(500).json({ message: "Error updating profile.", error: error.message });
     }
-
+  }
   async authenticationPermission(req, res) {
     try {
       const { id, password } = req.body // id : Society Chairman Id

@@ -1,8 +1,9 @@
 import { updateAnnouncement } from "@/axiosApi/ApiHelper";
+import toast from "react-hot-toast";
 
-export const EditAnnouncement = () => {
-  const handleUpdateAnnouncement = async (formData, refetchAnnouncements) => {
-    const response = await updateAnnouncement(formData);
+export const useEditAnnouncement = () => {
+  const handleUpdateAnnouncement = async (formData, refetchAnnouncements, editAnnouncementId) => {
+    const response = await updateAnnouncement(editAnnouncementId, formData);
     toast.success("Announcement updated successfully:", response.data);
     refetchAnnouncements();
     return { success: true };

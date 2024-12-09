@@ -28,71 +28,96 @@ const ResidentDetail = ({
   // const { userPhoto, residentType, setResidentType, uploadedFiles, setUserPhoto, setUploadedFiles, formData, handleInputChange,
   //   //  ownerInfo
   // } = useAddResident()
+  let { setProfileImage, setAadharFront, setAadharBack, setAddressProof, setRentAgreement } = setUploadedFiles
   const [wing, setWing] = useState([]);
   const [unit, setUnit] = useState([]);
   const [selectWingId, setSelectWingId] = useState("");
-
-  // const [userPhoto, setUserPhoto] = useState(null);
-  // const [residentType, setResidentType] = useState("");
-  // const [uploadedFiles, setUploadedFiles] = useState({
-  //   aadharFront: null,
-  //   aadharBack: null,
-  //   addressProof: null,
-  //   rentAgreement: null,
-  // });
+  const [aadharFrontDetails, setAadharFrontDetails] = useState(null);
+  const [aadharBackDetails, setAadharBackDetails] = useState(null);
+  const [addressDetails, setAddressDetails] = useState(null);
+  const [rentAgreementDetails, setRentAgreementDetails] = useState(null);
 
   // const handleFileChange = (event, fileType) => {
   //   const file = event.target.files[0];
   //   if (file) {
   //     setUploadedFiles((prevState) => ({
   //       ...prevState,
-  //       [fileType]: {
-  //         name: file.name,
-  //         size: (file.size / (1024 * 1024)).toFixed(2),
-  //       },
+  //       [fileType]: file,
   //     }));
-  //   }
-  // };
-
-  // const handleFileRemove = (fileType) => {
-  //   setUploadedFiles((prevState) => ({
-  //     ...prevState,
-  //     [fileType]: null,
-  //   }));
-  // };
-
-  // const handleUserPhotoChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setUserPhoto(URL.createObjectURL(file));
   //   }
   // };
 
   const handleFileChange = (event, fileType) => {
     const file = event.target.files[0];
-    if (file) {
-      setUploadedFiles((prevState) => ({
-        ...prevState,
-        [fileType]: file,
-      }));
+    switch (fileType) {
+      case "aadharFront":
+        setAadharFront(file);
+        setAadharFrontDetails({
+          name: file.name,
+          // size: (file.size / (1024 * 1024)).toFixed(2)
+          size: file.size
+        })
+        break;
+      case "aadharBack":
+        setAadharBack(file);
+        setAadharBackDetails({
+          name: file.name,
+          // size: (file.size / (1024 * 1024)).toFixed(2)
+          size: file.size
+        })
+        break;
+      case "addressProof":
+        setAddressProof(file);
+        setAddressDetails({
+          name: file.name,
+          // size: (file.size / (1024 * 1024)).toFixed(2)
+          size: file.size
+        })
+        break;
+      case "rentAgreement":
+        setRentAgreement(file);
+        setRentAgreementDetails({
+          name: file.name,
+          // size: (file.size / (1024 * 1024)).toFixed(2)
+          size: file.size
+        })
+        break;
+      default:
+        break;
     }
   };
 
   const handleFileRemove = (fileType) => {
-    setUploadedFiles((prevState) => ({
-      ...prevState,
-      [fileType]: null,
-    }));
+    switch (fileType) {
+      case "profileImage":
+        setProfileImage(null);
+        break;
+      case "aadharFront":
+        setAadharFront(null);
+        setAadharFrontDetails(null)
+        break;
+      case "aadharBack":
+        setAadharBack(null);
+        setAadharBackDetails(null);
+        break;
+      case "addressProof":
+        setAddressProof(null);
+        setAddressDetails(null);
+        break;
+      case "rentAgreement":
+        setRentAgreement(null);
+        setRentAgreementDetails(null);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleUserPhotoChange = (event, fileType) => {
+  const handleUserPhotoChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setUserPhoto(URL.createObjectURL(file));
-      setUploadedFiles((prevState) => ({
-        ...prevState,
-        [fileType]: file,
-      }));
+      setProfileImage(file)
     }
   };
 
@@ -101,12 +126,11 @@ const ResidentDetail = ({
       if (societyId) {
         const result = await listWing(societyId);
         if (result && result?.data) {
-          result?.data.map((value) => {
-            setWing((prev) => [
-              ...prev,
-              { value: value._id, label: value.wingName },
-            ]);
-          });
+          const wings = result.data.map((value) => ({
+            value: value._id,
+            label: value.wingName,
+          }));
+          setWing(wings);
         }
       }
     } catch (error) {
@@ -118,12 +142,11 @@ const ResidentDetail = ({
       if (selectWingId) {
         const result = await listUnit(selectWingId);
         if (result && result?.data) {
-          result?.data.map((value) => {
-            setUnit((prev) => [
-              ...prev,
-              { value: value._id, label: value.unitNumber },
-            ]);
-          });
+          const units = result.data.map((value) => ({
+            value: value._id,
+            label: value.unitNumber,
+          }));
+          setUnit(units);
         }
       }
     } catch (error) {
@@ -151,7 +174,7 @@ const ResidentDetail = ({
               type="file"
               className="d-none"
               ref={userPhotoRef}
-              onChange={(e) => handleUserPhotoChange(e, "profileImage")}
+              onChange={(e) => handleUserPhotoChange(e)}
             />
             <Avatar
               size={100}
@@ -361,14 +384,14 @@ const ResidentDetail = ({
             </h6>
             <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
-          {uploadedFiles?.aadharFront && (
+          {aadharFrontDetails && (
             <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
-                  <h6>{uploadedFiles.aadharFront.name}</h6>
+                  <h6>{aadharFrontDetails.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.aadharFront.size / (1024 * 1024)).toFixed(
+                    {(aadharFrontDetails.size / (1024 * 1024)).toFixed(
                       2
                     )}{" "}
                     MB
@@ -407,14 +430,14 @@ const ResidentDetail = ({
             </h6>
             <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
-          {uploadedFiles.aadharBack && (
+          {aadharBackDetails && (
             <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
-                  <h6>{uploadedFiles.aadharBack.name}</h6>
+                  <h6>{aadharBackDetails.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.aadharBack.size / (1024 * 1024)).toFixed(2)}{" "}
+                    {(aadharBackDetails.size / (1024 * 1024)).toFixed(2)}{" "}
                     MB
                   </h6>
                 </div>
@@ -451,14 +474,14 @@ const ResidentDetail = ({
             </h6>
             <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
-          {uploadedFiles.addressProof && (
+          {addressDetails && (
             <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
-                  <h6>{uploadedFiles.addressProof.name}</h6>
+                  <h6>{addressDetails.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.addressProof.size / (1024 * 1024)).toFixed(
+                    {(addressDetails.size / (1024 * 1024)).toFixed(
                       2
                     )}{" "}
                     MB
@@ -497,14 +520,14 @@ const ResidentDetail = ({
             </h6>
             <p className={styles.p}>PNG, JPG, GIF up to 10MB</p>
           </div>
-          {uploadedFiles.rentAgreement && (
+          {rentAgreementDetails && (
             <div className={styles.uploadDocument}>
               <div className="d-flex gap-3 align-items-center">
                 <h2>{Icons.Jpg}</h2>
                 <div>
-                  <h6>{uploadedFiles.rentAgreement.name}</h6>
+                  <h6>{rentAgreementDetails.name}</h6>
                   <h6 className={styles.p}>
-                    {(uploadedFiles.rentAgreement.size / (1024 * 1024)).toFixed(
+                    {(rentAgreementDetails.size / (1024 * 1024)).toFixed(
                       2
                     )}{" "}
                     MB

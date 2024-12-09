@@ -55,7 +55,7 @@ export const listWing = (societyId) =>
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
 export const createMember = (data) =>
-  request("post", "/member/createMember", data);
+  request("post", "/member/createMemberss", data);
 export const getMemberById = (memberId) =>
   request("get", `/member/list/${memberId}`);
 export const listByUnit = (unitId) =>

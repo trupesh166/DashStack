@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DSCard, DSInput, DSSelect } from "../..";
 import { Col, Row } from "antd";
 
-export const VehicleDetail = () => {
+export const VehicleDetail = ({vehicleDetails, setVehicleDetails, onChange}) => {
   const [vehicleCount, setVehicleCount] = useState(0);
 
   return (
@@ -18,8 +18,12 @@ export const VehicleDetail = () => {
             { label: 4, value: 4 },
             { label: 5, value: 5 },
           ]}
-          onChange={(value) => setVehicleCount(value)}
-        />
+          // onChange={(value) => setVehicleCount(value)}
+          onChange={(value) => {
+            setVehicleCount(value);
+            setVehicleDetails((prev) => prev.slice(0, value)); // Adjust vehicle details based on count
+          }}
+          />
       }
     >
       <div className="vehicleDetails">
@@ -33,10 +37,12 @@ export const VehicleDetail = () => {
                     label={`Vehicle Type* (Vehicle ${index + 1})`}
                     placeholder={"Enter Vehicle"}
                     options={[
-                      { label: "Two Wheelers", value: "Two Wheelers" },
-                      { label: "Four Wheelers", value: "Four Wheelers" },
+                      { label: "Two Wheelers", value: "Two_Wheeler" },
+                      { label: "Four Wheelers", value: "Four_Wheeler" },
                     ]}
                     require={true}
+                    value={vehicleDetails[index]?.vehicleType || ""}
+                    onChange={(value) => onChange(index, "vehicleType", value)}
                   />
                 </Col>
                 <Col span={8}>
@@ -44,6 +50,8 @@ export const VehicleDetail = () => {
                     label={`Vehicle Name (Vehicle ${index + 1})`}
                     placeholder={"Enter Name"}
                     require={true}
+                    value={vehicleDetails[index]?.vehicleName || ""}
+                    onChange={(e) => onChange(index, "vehicleName", e.target.value)}
                   />
                 </Col>
                 <Col span={8}>
@@ -51,6 +59,8 @@ export const VehicleDetail = () => {
                     label={`Vehicle Number (Vehicle ${index + 1})`}
                     placeholder={"Enter Number"}
                     require={true}
+                    value={vehicleDetails[index]?.vehicleNumber || ""}
+                    onChange={(e) => onChange(index, "vehicleNumber", e.target.value)}
                   />
                 </Col>
               </Row>

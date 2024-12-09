@@ -6,6 +6,7 @@ export const DeleteModal = ({
   children,
   handleClose,
   Title,
+  loading = false,
   isModalOpen,
   ...rest
 }) => {
@@ -20,6 +21,7 @@ export const DeleteModal = ({
       disabledButton={false}
       handleContent={"Delete"}
       danger={true}
+      confirmLoading={loading}
       {...rest}
     >
       <h6 className="lh-base clr-gray fw-normal">{children}</h6>

@@ -10,20 +10,43 @@ import {
 } from "@/components";
 import Icons from "@/constants/Icons";
 import {
-  useViewExpanse,
-  useDeleteExpanse,
-} from "@/hook/Admin/FinancialMaintenance/Expenses";
+  // useViewExpanse,
+  useDeleteExpense,
+  useListExpense,
+  useAddExpense,
+} from "@/hook/Admin/FinancialMaintenance/";
 
 export const Expense = () => {
-  const { tableData, isLoading, fetchData } = useViewExpanse();
-
+  // const { tableData, isLoading, fetchData } = useViewExpanse();
+  const { dataListExpense, fetchListExpense, isLoading } = useListExpense();
   const {
-    deleteComplaint,
-    setDeleteComplaint,
-    selectedExpense,
-    setSelectedExpense,
-    handleDelete,
-  } = useDeleteExpanse(fetchData);
+    title,
+    setTitle,
+    description,
+    setDescription,
+    date,
+    setDate,
+    amount,
+    setAmount,
+    bill,
+    handleFileChange,
+    handleFileRemove,
+    isSubmitting,
+    isModalOpen,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+    handleSubmit,
+    isEdit,
+  } = useAddExpense(fetchListExpense);
+  const {
+    expenseDelete,
+    loading,
+    showDeleteModal,
+    setShowDeleteModal,
+    deleteExpenseData,
+    setDeleteExpenseData,
+  } = useDeleteExpense(fetchListExpense);
 
   const columns = [
     {
@@ -79,29 +102,29 @@ export const Expense = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => openEditModal(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={() => handleViewClick(record)}
           />
           <DSButton
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
-            onClick={() => handleDeleteClick(record)} // Show modal for delete
+            className="delete-btn"
+            onClick={() => handleDeleteClick(record)}
           />
         </Space>
       ),
     },
   ];
 
-  const [addExpensesModalOpen, setAddExpensesModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
   const [viewModalOpen, setViewModalOpen] = useState(false);
 
   const handleViewClick = (expense) => {
@@ -111,7 +134,17 @@ export const Expense = () => {
 
   const handleDeleteClick = (expense) => {
     setSelectedExpense(expense);
-    setDeleteComplaint(true);
+    setDeleteExpenseData(expense);
+    setShowDeleteModal(true);
+  };
+
+  const handleDelete = async () => {
+    if (selectedExpense) {
+      const response = await expenseDelete(selectedExpense._id);
+      if (response.success) {
+        setShowDeleteModal(false);
+      }
+    }
   };
 
   return (
@@ -122,7 +155,7 @@ export const Expense = () => {
           <DSButton
             variant={"primary"}
             icon={Icons.AddSquare}
-            // onClick={openCreateModal}
+            onClick={openCreateModal}
           >
             Add New Expenses details
           </DSButton>
@@ -130,7 +163,7 @@ export const Expense = () => {
       >
         <DSTable
           tableColumn={columns}
-          dataSource={tableData}
+          dataSource={dataListExpense}
           loading={isLoading}
           pagination={false}
         />
@@ -138,25 +171,25 @@ export const Expense = () => {
       <div>
         {/* Add Expense Modal */}
         <AddExpensesDetailsModal
-          // open={isModalOpen}
-          // handleOk={handleSubmit}
-          // handleCancel={closeModal}
-          // handleClose={closeModal}
-          // isEdit={isEdit}
+          open={isModalOpen}
+          handleOk={handleSubmit}
+          handleCancel={closeModal}
+          handleClose={closeModal}
+          isEdit={isEdit}
           addExpensesDetails={{
-          //   title,
-          //   description,
-          //   date,
-          //   amount,
-          //   bill,
+            title,
+            description,
+            date,
+            amount,
+            bill,
           }}
           setAddExpensesDetails={{
-            // setTitle,
-          //   setDescription,
-          //   setDate,
-          //   setAmount,
-          //   handleFileChange,
-          //   handleFileRemove,
+            setTitle,
+            setDescription,
+            setDate,
+            setAmount,
+            handleFileChange,
+            handleFileRemove,
           }}
         />
 
@@ -167,20 +200,17 @@ export const Expense = () => {
           handleCancel={() => setViewModalOpen(false)}
           handleClose={() => setViewModalOpen(false)}
           expense={selectedExpense}
-          title={selectedExpense?.title}
-          Description={selectedExpense?.description}
-          Date={selectedExpense?.date}
-          Amount={selectedExpense?.amount}
         />
 
         {/* Remove Expense Modal */}
         <DeleteModal
           title={"Delete Expense?"}
-          isModalOpen={deleteComplaint}
-          handleClose={() => setDeleteComplaint(false)}
+          isModalOpen={showDeleteModal}
+          handleClose={() => setShowDeleteModal(false)}
           handleOk={handleDelete}
-          onCancel={() => setDeleteComplaint(false)}
+          onCancel={() => setShowDeleteModal(false)}
           children={"Are you sure you want to delete this?"}
+          loading={loading}
         />
       </div>
     </div>

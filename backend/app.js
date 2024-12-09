@@ -24,6 +24,7 @@ const visitorRouter = require('./routes/VisitorRouter')
 const facilityRouter = require('./routes/FacilityRouter')
 const { extractPublicId, httpSuccess } = require('./constents')
 const { cloudinary } = require('./cloudinaryConfig')
+const bodyParser = require('body-parser');
 
 dotenv.config()
 const app = express()
@@ -42,7 +43,9 @@ app.use(cors({
   },
   credentials: true,
 }));
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(session({
   secret: 'keyboard cat',

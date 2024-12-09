@@ -41,8 +41,8 @@ export const ViewMaintenanceDetailsModal = ({
               className={styles.img}
             />
             <div>
-              <h4 className="fw-semibold">{record.name}</h4>
-              <h5>{record.date}</h5>
+              <h4 className="fw-semibold">{record.fullName}</h4>
+              <h5>{new Date(record.dueDate).toLocaleDateString()}</h5>
             </div>
           </Flex>
 

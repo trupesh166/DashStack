@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { AdminAsideData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants/";
+import {
+  AdminAsideData,
+  SecurityAsideData,
+  StyleGuideAsideMenu,
+} from "@/constants/";
 
 export const Aside = () => {
   const location = useLocation();

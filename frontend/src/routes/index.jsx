@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, NavLink } from "react-router-dom";
 import {
   AdminAsideData,
   ResidentAsidData,
@@ -34,9 +34,7 @@ import {
   Polls,
   CommunitiesDiscussion,
   MaintenanceInvoices,
-  ViewMaintenanceInvoices,
   OtherIncomeInvoice,
-  ViewOtherIncomeInvoice,
   SecurityProtocolsResident,
 
   /* Security Panel */
@@ -84,7 +82,8 @@ const DashStackRoute = createBrowserRouter(
       path: "/",
       children: [
         {
-          element: "true",
+          index: true,
+          element: <NavLink to={"/login"}>Login</NavLink>,
         },
         {
           path: "member",
@@ -200,6 +199,10 @@ const DashStackRoute = createBrowserRouter(
                       path: "register",
                       element: <Register />,
                     },
+                    {
+                      path: "login",
+                      element: <Login />,
+                    },
                   ],
                 },
               ],
@@ -252,29 +255,11 @@ const DashStackRoute = createBrowserRouter(
                   children: [
                     {
                       path: "maintenance-invoices",
-                      children: [
-                        {
-                          index: true,
-                          element: <MaintenanceInvoices />,
-                        },
-                        {
-                          path: "view-invoices",
-                          element: <ViewMaintenanceInvoices />
-                        },
-                      ]
+                      element: <MaintenanceInvoices />,
                     },
                     {
                       path: "other-income-invoice",
-                      children: [
-                        {
-                          index: true,
-                          element: <OtherIncomeInvoice />,
-                        },
-                        {
-                          path: "view-invoices",
-                          element: <ViewOtherIncomeInvoice />
-                        },
-                      ]
+                      element: <OtherIncomeInvoice />,
                     },
                   ],
                 },

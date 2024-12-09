@@ -19,7 +19,7 @@ export const useLogin = () => {
     try {
       const response = await loginUser({ email, password });
       toast.success("Login successful!");
-      console.log("login response =====> " , response)
+      console.log("login response =====> ", response);
       const token = response.token;
 
       if (rememberMe) {
@@ -35,7 +35,9 @@ export const useLogin = () => {
       if (role === "Chairman") {
         navigate("/admin");
       } else if (role === "Member") {
-        navigate("/");
+        navigate("/user");
+      } else if (role === "Security") {
+        navigate("/security");
       } else {
         toast.error("Unauthorized role. Please contact support.");
         navigate("/login");

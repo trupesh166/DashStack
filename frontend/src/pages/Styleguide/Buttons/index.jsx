@@ -1,6 +1,6 @@
-import { DSButton } from "@/components";
-import Icons from "@/constants/Icons";
 import clsx from "clsx";
+import Icons from "@/constants/Icons";
+import { DSButton } from "@/components";
 import styles from "../Styleguide.module.css";
 
 export const DSButtons = () => {

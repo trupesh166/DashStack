@@ -99,7 +99,7 @@ export const UpcomingActivityCard = () => {
       }
     >
       <div className={styles.body}>
-        {UpcomingActivityData.map((item, index) => {
+        {UpcomingActivityData?.map((item, index) => {
           const color =
             activityProfileColor[index % activityProfileColor.length];
 

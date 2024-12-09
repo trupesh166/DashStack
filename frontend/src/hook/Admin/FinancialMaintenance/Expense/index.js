@@ -1,6 +1,10 @@
 import { useState } from "react";
 import dayjs from "dayjs";
-import { createExpense, updateExpense, deleteExpense } from "@/axiosApi/ApiHelper";
+import {
+  createExpense,
+  updateExpense,
+  deleteExpense,
+} from "@/axiosApi/ApiHelper";
 import UseDecodeToken from "@/hook/UseDecodeToken";
 import toast from "react-hot-toast";
 
@@ -23,15 +27,15 @@ export const useAddExpense = (onSubmitSuccess) => {
   };
 
   const openEditModal = (expense) => {
-    console.log("expense =====> ", expense)
     const formattedDate = dayjs(expense.date);
+    console.log(formattedDate);
     setEditingExpenseId(expense._id);
     setTitle(expense.title);
     setDescription(expense.discription);
     setDate(formattedDate);
     setAmount(expense.amount);
-    setBill(expense.billDocument || null); // Preload bill if applicable
-    setIsEdit(true)
+    setBill(expense.billDocument || null);
+    setIsEdit(true);
     setIsModalOpen(true);
   };
 
@@ -47,11 +51,17 @@ export const useAddExpense = (onSubmitSuccess) => {
     setAmount("");
     setBill(null);
     setEditingExpenseId(null);
-    setIsEdit(false)
+    setIsEdit(false);
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    if (!file) return;
+    const allowedFormats = ["image/jpeg", "application/pdf"];
+    if (!allowedFormats.includes(file.type)) {
+      alert("Only JPG and PDF formats are allowed.");
+      return;
+    }
     setBill(file);
   };
 
@@ -116,6 +126,6 @@ export const useAddExpense = (onSubmitSuccess) => {
     openEditModal,
     closeModal,
     handleSubmit,
-    isEdit
+    isEdit,
   };
 };

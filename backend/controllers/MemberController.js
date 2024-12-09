@@ -4,50 +4,58 @@ const randomstring = require("randomstring");
 const sendEmail = require("../mailconfig/Nodemailer");
 const bcrypt = require("bcrypt");
 const userModel = require("../models/UserModel");
+const util = require('util');
 
 class MemberController {
   async createMember(req, res) {
     try {
       console.log("body =====> ", req.body)
       console.log("files =====> ", req.files)
+      console.log("body =====> ", JSON.stringify(req.body, null, 2));
+      console.log("files =====> ", JSON.stringify(req.files, null, 2));
+
       let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, gender } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
 
-      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !gender || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
-      if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
+      // Validate required fields
+      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) {
+        return res.status(400).send({ message: "All required fields must be provid." });
+      }
+
+      // Validate tenant data
+      if (residentStatus === "Tenant" && !OwnerInfo) {
+        return res.status(400).send({ message: "Owner information is required for tenants." });
+      }
+
+      // Parse family members and vehicle details
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
       phoneNumber = Number(phoneNumber);
       age = Number(age);
 
-      // Map family members and convert data types
       familyMember = familyMember.map((member) => ({
         ...member,
         age: Number(member.age),
         phoneNumber: Number(member.phoneNumber),
       }));
 
-      // Generate random password and hash it
       const password = randomstring.generate({ length: 8, charset: "alphabetic" });
       const encryptedPass = bcrypt.hashSync(password, 5);
       if (!encryptedPass) {
         return res.status(500).send({ message: "Error generating password." });
       }
 
-      // Create user for the member
       const user = await userModel.model.create({ fullName, email, password: encryptedPass, phoneNumber, role: "Member" });
       if (!user) {
         return res.status(500).send({ message: "Error creating user." });
       }
 
-      // Upload the files and get paths
       profileImage = profileImage[0].path;
       aadharFront = aadharFront[0].path;
       aadharBack = aadharBack[0].path;
       veraBill = veraBill[0].path;
       agreement = agreement[0].path;
 
-      // Send email with login credentials
       const emailText = `Dear ${fullName},
 
       We have generated a password for your account. Please use the following credentials to log in:
@@ -61,7 +69,6 @@ class MemberController {
       const subject = "Login Credential For Dashstack";
       sendEmail({ to: email, subject, text: emailText });
 
-      // Prepare member data for storage
       const data = {
         userId: user._id,
         residentStatus,
@@ -93,7 +100,7 @@ class MemberController {
 
       return res.status(200).send({ message: httpSuccess });
     } catch (error) {
-      console.log(error);
+      console.log("error ====> ", error);
       return res.status(500).send({ message: "Error creating member.", error: error.message });
     }
   }
@@ -103,7 +110,7 @@ class MemberController {
       const { societyId } = req.params;
       const members = await memberModel.model.find({ societyId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
       if (!members || members.length === 0) {
-        return res.status(404).send({ message: "No members found for the given society." });
+        return res.status(405).send({ message: "No members found for the given society." });
       }
       return res.status(200).send({ message: httpSuccess, data: members });
     } catch (error) {
@@ -117,7 +124,7 @@ class MemberController {
       const { wingId } = req.params;
       const members = await memberModel.model.find({ wing: wingId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
       if (!members || members.length === 0) {
-        return res.status(404).send({ message: "No members found in the given wing." });
+        return res.status(405).send({ message: "No members found in the given wing." });
       }
       return res.status(200).send({ message: httpSuccess, data: members });
     } catch (error) {
@@ -131,7 +138,7 @@ class MemberController {
       const { unitId } = req.params;
       const member = await memberModel.model.findOne({ unit: unitId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
       if (!member) {
-        return res.status(404).send({ message: "No member found for the given unit." });
+        return res.status(405).send({ message: "No member found for the given unit." });
       }
       return res.status(200).send({ message: httpSuccess, data: member });
     } catch (error) {
@@ -143,9 +150,9 @@ class MemberController {
   async getMemberById(req, res) {
     try {
       const { memberId } = req.params;
-      const member = await memberModel.model.findOne({ _id: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      const member = await memberModel.model.findOne({ userId: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
       if (!member) {
-        return res.status(404).send({ message: "Member not found." });
+        return res.status(405).send({ message: "Member not found." });
       }
       return res.status(200).send({ message: httpSuccess, data: member });
     } catch (error) {
@@ -177,7 +184,7 @@ class MemberController {
       // Find existing member and update user details
       const member = await memberModel.model.findOne({ _id: memberId });
       if (!member) {
-        return res.status(404).send({ message: "Member not found." });
+        return res.status(405).send({ message: "Member not found." });
       }
 
       const user = await userModel.model.findOneAndUpdate({ _id: member.userId }, { fullName, email, phoneNumber, role: "Member" }, { new: true });

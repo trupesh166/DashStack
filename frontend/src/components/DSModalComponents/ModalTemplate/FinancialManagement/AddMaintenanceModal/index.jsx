@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./AddMaintenanceModal.module.css";
 import Icons from "../../../../../constants/Icons";
 import { DSDatePicker, DSInput, DSModal, DSSelect } from "../../../..";
+import { useAddMaintenance } from "../../../../../hook/Admin/FinancialMaintenance";
 
 export const AddMaintenanceModal = ({
   open,
@@ -13,8 +14,16 @@ export const AddMaintenanceModal = ({
     maintenanceAmount: "",
     penaltyAmount: "",
     dueDate: null,
-    penaltyDays: "",
+    penaltyDays: [],
   });
+  const { submitCreateMaintenance, setIsModalOpen } = useAddMaintenance()
+
+  const handleInputChange = (field, value) => {
+    setAddMaintenance((prevState) => ({
+        ...prevState,
+        [field]: value,
+    }));
+};
 
   const isFormValid =
     addMaintenance.maintenanceAmount &&
@@ -22,12 +31,23 @@ export const AddMaintenanceModal = ({
     addMaintenance.dueDate &&
     addMaintenance.penaltyDays;
 
-  const handleChange = (field, value) => {
-    setAddMaintenance((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
+    
+    const handleApply =async () => {
+      if (isFormValid) {
+        const result = await submitCreateMaintenance(addMaintenance);
+        console.log(result)
+        if(result === "Success"){
+          setIsModalOpen(false)
+          setAddMaintenance({
+            maintenanceAmount: "",
+            penaltyAmount: "",
+            dueDate: null,
+            penaltyDays: "",
+          })
+        }
+      }
+    }
+
 
   return (
     <div className={styles.addMaintenance}>
@@ -35,7 +55,7 @@ export const AddMaintenanceModal = ({
         title="Add Maintenance Detail"
         open={open}
         closeIcon
-        handleOk={handleOk}
+        handleOk={handleApply}
         onCancel={handleCancel}
         handleClose={handleClose}
         IsFooter
@@ -51,7 +71,7 @@ export const AddMaintenanceModal = ({
               prefix={Icons.Rupee}
               value={addMaintenance.maintenanceAmount}
               onChange={(e) =>
-                handleChange("maintenanceAmount", e.target.value)
+                handleInputChange("maintenanceAmount", e.target.value)
               }
             />
             <DSInput
@@ -60,7 +80,7 @@ export const AddMaintenanceModal = ({
               placeholder={"0000"}
               prefix={Icons.Rupee}
               value={addMaintenance.penaltyAmount}
-              onChange={(e) => handleChange("penaltyAmount", e.target.value)}
+              onChange={(e) => handleInputChange("penaltyAmount", e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -76,7 +96,7 @@ export const AddMaintenanceModal = ({
                 padding: "0px 10px",
               }}
               value={addMaintenance.dueDate}
-              onChange={(date) => handleChange("dueDate", date)}
+              onChange={(date) => handleInputChange("dueDate", date)}
             />
           </div>
           <div className="mb-4">
@@ -89,13 +109,13 @@ export const AddMaintenanceModal = ({
                 borderRadius: "10px",
               }}
               value={addMaintenance.penaltyDays}
-              onChange={(value) => handleChange("penaltyDays", value)}
+              onChange={(value) => handleInputChange("penaltyDays", value)}
               options={[
-                { label: "1 Day", value: "1 Day" },
-                { label: "2 Day", value: "2 Day" },
-                { label: "3 Day", value: "3 Day" },
-                { label: "4 Day", value: "4 Day" },
-                { label: "5 Day", value: "5 Day" },
+                { label: "1 Day", value: 1 },
+                { label: "2 Day", value: 2 },
+                { label: "3 Day", value: 3 },
+                { label: "4 Day", value: 4 },
+                { label: "5 Day", value: 5 },
               ]}
             />
           </div>

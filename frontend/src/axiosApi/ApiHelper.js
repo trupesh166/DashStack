@@ -34,7 +34,8 @@ export const vacateUser = () => request("get", "auth/user/vacate-user/");
 /* Maintenance Management */
 export const createMaintenance = (data) =>
   request("post", "/maintain/create", data);
-export const listMaintenance = () => request("get", `/maintain-detail/member/`);
+export const listMaintenance = (societyId) =>
+  request("get", `/maintain-detail/member/${societyId}`);
 export const dueMaintenance = () => request("get", `/maintain-detail/due/`);
 export const pendingMaintenance = () =>
   request("get", `/maintain-detail/pending/`);
@@ -43,17 +44,18 @@ export const completedMaintenance = () =>
 export const getMaintenanceDetailsByMember = () =>
   request("get", `/maintain-detail/list/`);
 
-// // Unit Management
+// Unit Management
 export const createUnit = (data) => request("post", "/unit/create", data);
 export const listUnit = (wingId) => request("get", `/unit/list/${wingId}`);
 
 // Wing Management
-export const listWing = (societyId) => request("get", `/wing/list/${societyId}`)
+export const listWing = (societyId) =>
+  request("get", `/wing/list/${societyId}`);
 
 // Member Management
 export const listMember = () => request("get", `/auth/user/getUser`);
 export const createMember = (data) =>
-  request("post", "/member/createMember", data);
+  request("post", "/member/createMemberss", data);
 export const getMemberById = (memberId) =>
   request("get", `/member/list/${memberId}`);
 export const listByUnit = (unitId) =>
@@ -62,6 +64,8 @@ export const listByUnit = (unitId) =>
 // Event Management
 export const createEvent = (data) => request("post", "/event/create", data);
 export const getEvents = (id) => request("get", `/event/${id}`);
+export const updateEvents = (data) => request("put", "/event/update", data);
+export const deleteEvent = (id) => request("delete", `/event/delete/${id}`);
 
 // Expense Management
 export const createExpense = (data) => request("post", "/expanse/create", data);
@@ -93,7 +97,7 @@ export const editFacility = (id, data) =>
 // Complaint Management
 export const createComplaint = (data) =>
   request("post", "/complain/create", data);
-export const listComplaint = (data) => request("get", "/complain/list", data);
+export const listComplaint = (data) => request("post", "/complain/list", data);
 export const updateComplaint = (id, data) =>
   request("put", `/complain/update/${id}`, data);
 export const deleteComplaint = (id) =>
@@ -127,15 +131,15 @@ export const updateAnnouncement = (id, data) =>
 export const deleteAnnouncement = (id) =>
   request("delete", `/announcement/delete/${id}`);
 
-// // Security Guard Management
-// export const createGuard = (data) =>
-//   request("post", "/security/createsecurity", data);
-// export const listGuard = (societyId) =>
-//   request("get", `/security/getsecurity/${societyId}`);
-// export const editGuard = (id, data) =>
-//   request("put", `/security/updatesecurity/${id}`, data);
-// export const deleteGuard = (id) =>
-//   request("delete", `/security/deletesecurity/${id}`);
+// Security Guard Management
+export const createGuard = (data) =>
+  request("post", "/security/createsecurity", data);
+export const listGuard = (societyId) =>
+  request("get", `/security/getsecurity/${societyId}`);
+export const editGuard = (id, data) =>
+  request("put", `/security/updatesecurity/${id}`, data);
+export const deleteGuard = (id) =>
+  request("delete", `/security/deletesecurity/${id}`);
 
 // Important Number Management
 export const createImportantNumber = (data) =>
@@ -146,6 +150,12 @@ export const editImportantNumber = (id, data) =>
   request("put", `/workernumber/updateimportantnumber/${id}`, data);
 export const deleteImportantNumber = (id) =>
   request("delete", `/workernumber/delete/${id}`);
+
+// /visitor/createemergency
+
+export const createEmergency = (data) =>
+  request("post", "/visitor/createemergency", data);
+
 
 // Image Management
 export const imageDetails = (data) => request("post", "/image-details", data);

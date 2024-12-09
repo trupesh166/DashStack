@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,10 +8,9 @@ import {
   LineElement,
   Tooltip,
 } from "chart.js";
-
-import styles from "./Chart.module.css";
 import clsx from "clsx";
-import { DSCard, DSSelect } from "../../..";
+import { DSCard, DSSelect } from "@/components/";
+import styles from "./Chart.module.css";
 
 ChartJS.register(
   CategoryScale,

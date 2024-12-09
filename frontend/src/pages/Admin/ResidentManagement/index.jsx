@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { DSButton, DSCard, DSTable } from "@/components";
-import Icons from "@/constants/Icons";
 import { useNavigate } from "react-router-dom";
-import { ViewDetailsModal } from "@/components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
+import Icons from "@/constants/Icons";
+import { DSButton, DSCard, DSTable } from "@/components";
 import { ResidentManagementColumns } from "@/constants";
 import useResidentData from "@/hook/Admin/ResidentManagement/ResidentDetails";
+import { ViewDetailsModal } from "@/components/DSModalComponents/ModalTemplate/ResidentManagement/ViewDetailsModal";
 import styles from "./ResidentManagement.module.css";
 
 const ResidentManagement = () => {
@@ -12,11 +12,18 @@ const ResidentManagement = () => {
 
   const { tableData, isLoading } = useResidentData();
   const [viewDetailsModal, setViewDetailsModal] = useState(false);
-  const [modalData, setModalData] = useState({});
+  const [modalData, setModalData] = useState(null);
 
   const handleViewDetails = (record) => {
     setModalData(record);
     setViewDetailsModal(true);
+  };
+
+  const handleEditDetails = (record) => {
+    // Pass the record data to the next page using navigate
+    navigate("/admin/residents/resident-detail", {
+      state: { record }, // This will pass the entire record object
+    });
   };
 
   return (
@@ -29,7 +36,7 @@ const ResidentManagement = () => {
           <DSButton
             variant={"primary"}
             icon={Icons.AddSquare}
-            onClick={() => navigate("/admin/resident-detail")}
+            onClick={() => navigate("/admin/residents/resident-detail")}
           >
             Add New Resident details
           </DSButton>
@@ -37,7 +44,10 @@ const ResidentManagement = () => {
       >
         <div className={styles.rmTable}>
           <DSTable
-            tableColumn={ResidentManagementColumns(handleViewDetails)}
+            tableColumn={ResidentManagementColumns(
+              handleEditDetails,
+              handleViewDetails
+            )}
             pagination={false}
             loading={isLoading}
             dataSource={tableData}
@@ -57,6 +67,8 @@ const ResidentManagement = () => {
         Unit={modalData?.unitNumber}
         Age={modalData?.age}
         Gender={modalData?.gender}
+        documentType={modalData?.documents}
+        memberCount={modalData?.familyMembers}
       />
     </>
   );

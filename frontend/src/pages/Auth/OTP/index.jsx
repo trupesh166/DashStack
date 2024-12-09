@@ -1,20 +1,17 @@
-import { DSButton } from "@/components";
 import clsx from "clsx";
-import styles from "../Auth.module.css";
-import { DSInputOtp } from "../../../components";
-import Icons from "../../../constants/Icons";
+import Icons from "@/constants/Icons";
+import { DSButton, DSInputOtp } from "@/components";
 import { useVerifyOtp } from "@/hook/Auth/VerifyOtp";
+import styles from "../Auth.module.css";
 
 export const OTP = () => {
-  const { loading, handleInputChange, handleSubmit, otp, isFormValid } = useVerifyOtp();
+  const { loading, handleInputChange, handleSubmit, otp } = useVerifyOtp();
 
   return (
     <div className={clsx(styles.FromWrapper, "d-flex flex-column")}>
       <div className={clsx(styles.contentWrapper, "d-flex flex-column")}>
         <h2>Enter OTP</h2>
-        <p>
-          Please enter the 6 digit code that was sent to your phone number.
-        </p>
+        <p>Please enter the 6 digit code that was sent to your phone number.</p>
       </div>
       <form>
         <DSInputOtp

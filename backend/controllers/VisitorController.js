@@ -4,10 +4,10 @@ const visitorModel = require('../models/VisitorModel');
 class VisitorController {
   async createvisitor(req, res) {
     try {
-      const { visitorName, time, societyId, wingId, unitId, date, securityId } = req.body;
+      const { visitorName, phoneNumber , time, societyId, wingId, unitId, date, securityId } = req.body;
       console.log(req.body);
 
-      if (!visitorName || !time || !societyId || !unitId || !date || !securityId || !wingId) {
+      if (!visitorName || !phoneNumber || !time || !societyId || !unitId || !date || !securityId || !wingId) {
         return res.status(400).json({ message: 'Missing required fields. Please provide all required information.' });
       }
 
@@ -33,7 +33,7 @@ class VisitorController {
 
       const result = await visitorModel.model.find({ societyId }).populate([ { path: 'unitId' }, { path: 'securityId' }, { path: 'wingId' }, ]);
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: 'No visitors found for the given society.' });
+        return res.status(405).json({ message: 'No visitors found for the given society.' });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -70,7 +70,7 @@ class VisitorController {
         { path: 'securityId' },
       ]);
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: 'No emergency announcements found.' });
+        return res.status(405).json({ message: 'No emergency announcements found.' });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });

@@ -10,7 +10,11 @@ import {
   DSHead,
 } from "@/components";
 import Icons from "@/constants/Icons";
-import { useListComplaint, useAddComplaint, useDeleteComplaint } from "@/hook/Admin/ComplaintTracking";
+import {
+  useListComplaint,
+  useAddComplaint,
+  useDeleteComplaint,
+} from "@/hook/Admin/ComplaintTracking";
 
 const data = [
   {
@@ -53,7 +57,7 @@ const data = [
 
 const RequestTracking = () => {
 
-  const { dataListComplaint, fetchListComplaint } = useListComplaint("Request")
+  const { dataListComplaint, fetchListComplaint, isLoading } = useListComplaint("Request")
   const {
     formData,
     handleChange,
@@ -64,7 +68,7 @@ const RequestTracking = () => {
     closeModal,
     handleSubmit,
     isEdit,
-  } = useAddComplaint(fetchListComplaint)
+  } = useAddComplaint(fetchListComplaint);
   const {
     complaintDelete,
     deleteComplaintData,
@@ -117,7 +121,9 @@ const RequestTracking = () => {
       title: "Unit Number",
       dataIndex: "unitNumber",
       key: "unitNumber",
-      render: (text, record) => <Tag color={"blue"}>{record.unitId.unitNumber}</Tag>,
+      render: (text, record) => (
+        <Tag color={"blue"}>{record.unitId.unitNumber}</Tag>
+      ),
     },
     {
       title: "Priority",
@@ -128,8 +134,8 @@ const RequestTracking = () => {
           priority === "High"
             ? "red"
             : priority === "Medium"
-              ? "blue"
-              : "green";
+            ? "blue"
+            : "green";
         return (
           <Tag color={color} key={priority}>
             {priority?.toUpperCase()}
@@ -161,7 +167,7 @@ const RequestTracking = () => {
             type="primary"
             size="small"
             icon={Icons.Edit}
-            className="clr-success"
+            className="edit-btn"
             onClick={() => openEditModal(record)}
           />
           {/* View Button */}
@@ -169,7 +175,7 @@ const RequestTracking = () => {
             type="primary"
             size="small"
             icon={Icons.EyeShow}
-            className="clr-cult"
+            className="view-btn"
             onClick={
               () => setViewRequest({ open: true, data: record }) // Open View Request modal
             }
@@ -179,10 +185,9 @@ const RequestTracking = () => {
             type="primary"
             size="small"
             icon={Icons.Trash}
-            className="clr-danger"
             onClick={() => {
-              setShowDeleteModal(true)
-              setDeleteComplaintData(record)
+              setShowDeleteModal(true);
+              setDeleteComplaintData(record);
             }}
           />
         </Space>
@@ -225,7 +230,7 @@ const RequestTracking = () => {
           </DSButton>
         }
       >
-        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} />
+        <DSTable tableColumn={columns} dataSource={dataListComplaint} pagination={false} loading={isLoading} />
       </DSCard>
 
       {/* Create Request Modal */}

@@ -3,12 +3,14 @@ import UseDecodeToken from "@/hook/UseDecodeToken";
 import { listExpense, imageDetails } from "@/axiosApi/ApiHelper";
 
 export const useListExpense = () => {
-  const [dataListExpense, setDataListExpense] = useState([]);
   const { societyId } = UseDecodeToken();
-
+  const [dataListExpense, setDataListExpense] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  console.log("societyId ====> ", societyId)
   const fetchListExpense = async () => {
     if (!societyId) return;
     try {
+      setIsLoading(true)
       let response = await listExpense(societyId);
       response = response?.data?.data
       
@@ -28,11 +30,13 @@ export const useListExpense = () => {
       setDataListExpense(mergedData);
     } catch (err) {
       console.error("Failed to fetch Note:", err);
+    }finally{
+      setIsLoading(false)
     }
   };
   useEffect(() => {
     fetchListExpense();
   }, [societyId]);
 
-  return { dataListExpense, fetchListExpense };
+  return { dataListExpense, fetchListExpense, isLoading };
 };

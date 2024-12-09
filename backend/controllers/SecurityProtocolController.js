@@ -4,10 +4,10 @@ const { httpErrors, httpSuccess } = require("../constents.js");
 class SecurityProtocolController {
   async createProtocols(req, res) {
     try {
+      console.log(req.body)
       const { societyId, title, discription } = req.body;
-
       if (!societyId || !title || !discription) {
-        return res.status(400).json({ message: "All fields are required (societyId, title, description, date, time)." });
+        return res.status(400).json({ message: "All fields are required (societyId, title, description)." });
       }
 
       const result = await securityProtocolModel.model.create({ ...req.body });
@@ -32,7 +32,7 @@ class SecurityProtocolController {
 
       const result = await securityProtocolModel.model.find({ societyId });
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No security protocols found for the given society." });
+        return res.status(405).json({ message: "No security protocols found for the given society." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -51,7 +51,7 @@ class SecurityProtocolController {
 
       const result = await securityProtocolModel.model.find({ _id : id });
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No security protocols found for the given society." });
+        return res.status(405).json({ message: "No security protocols found for the given society." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -72,7 +72,7 @@ class SecurityProtocolController {
       const result = await securityProtocolModel.model.deleteOne({ _id: id });
 
       if (!result || result.deletedCount < 1) {
-        return res.status(404).json({ message: "Security protocol not found." });
+        return res.status(405).json({ message: "Security protocol not found." });
       }
 
       return res.status(200).json({ message: httpSuccess });

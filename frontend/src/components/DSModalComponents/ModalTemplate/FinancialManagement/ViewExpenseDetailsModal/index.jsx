@@ -9,13 +9,11 @@ export const ViewExpenseDetailsModal = ({
   handleOk,
   handleCancel,
   handleClose,
-  IsFooter,
-  title,
-  Description,
-  Date,
-  Amount,
+  IsFooter = false,
   expense,
 }) => {
+  console.log(expense)
+  const { title, discription, date, amount, billDocument } = expense || {}
   return (
     <div className={style.viewExpenseDetails}>
       <DSModal
@@ -44,7 +42,7 @@ export const ViewExpenseDetailsModal = ({
               <h5 className={style.silver}>Description</h5>
             </Col>
             <Col span={24}>
-              <h5 className={style.dark}>{Description}</h5>
+              <h5 className={style.dark}>{discription}</h5>
             </Col>
           </Row>
 
@@ -54,7 +52,7 @@ export const ViewExpenseDetailsModal = ({
                 <h5 className={style.silver}>Date</h5>
               </Col>
               <Col span={24}>
-                <h5 className={style.dark}>{Date}</h5>
+                <h5 className={style.dark}>{date}</h5>
               </Col>
             </Col>
             <Col span={12}>
@@ -63,7 +61,7 @@ export const ViewExpenseDetailsModal = ({
               </Col>
               <Col span={24}>
                 <h6 className={style.dark}>
-                  {Icons.Rupee} {Amount}
+                  {Icons.Rupee} {amount}
                 </h6>
               </Col>
             </Col>
@@ -76,15 +74,17 @@ export const ViewExpenseDetailsModal = ({
             <Col span={24}>
               <Row>
                 <Col span={2}>
-                  <h2>{Icons.Jpg}</h2>
+                  <h2>{billDocument?.format === "pdf" ? Icons.Pdf : Icons.Jpg}</h2>
                 </Col>
                 <Col span={20}>
                   <Row>
                     <Col span={24}>
-                      <h6 className={style.dark}>Adharcard Front Side.JPG</h6>
+                      <h6 className={style.dark}>{billDocument?.display_name}</h6>
                     </Col>
                     <Col span={24}>
-                      <h6 className={style.silver}>3.5 MB</h6>
+                      <h6 className={style.silver}>{billDocument?.bytes
+                        ? `${(billDocument?.bytes / (1024 * 1024)).toFixed(2)} MB`
+                        : "Unknown Size"}</h6>
                     </Col>
                   </Row>
                 </Col>

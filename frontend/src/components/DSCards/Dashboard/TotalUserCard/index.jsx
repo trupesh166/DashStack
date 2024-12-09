@@ -24,7 +24,12 @@ export const TotalUserCard = ({
             background: designBoxColor,
           }}
         ></div>
-        <div className="d-flex justify-content-between align-items-center">
+        <div
+          className={clsx(
+            styles.designBoxContent,
+            "d-flex justify-content-between align-items-center"
+          )}
+        >
           <div className={styles.detail}>
             <h6 className="fw-semibold">{title}</h6>
             <h3 className="fw-bold">

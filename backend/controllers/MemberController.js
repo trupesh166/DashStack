@@ -150,7 +150,7 @@ class MemberController {
   async getMemberById(req, res) {
     try {
       const { memberId } = req.params;
-      const member = await memberModel.model.findOne({ _id: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
+      const member = await memberModel.model.findOne({ userId: memberId }).populate([{ path: "userId" }, { path: "wing" }, { path: "unit" }]);
       if (!member) {
         return res.status(405).send({ message: "Member not found." });
       }

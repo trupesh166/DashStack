@@ -162,8 +162,8 @@ class MaintenanceDetailsController {
     try {
       const {memberId} = req.params
       const maintenanceDetails = await maintenanceDetailsModel.model.find({memberId : memberId})
-      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: { $gt: 0 } });
-      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus:"Pending"});
+      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: 0, paymentStatus:"Pending" });
+      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus:"Pending", penaltyAmount: { $gt: 0 }});
 
       const responseData = {
         maintenance : maintenanceDetails,
@@ -176,7 +176,6 @@ class MaintenanceDetailsController {
       return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
-
 
   async updateMaintenanceDetails(req, res) {
     try {

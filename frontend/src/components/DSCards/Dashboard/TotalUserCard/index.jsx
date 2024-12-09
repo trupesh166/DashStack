@@ -11,6 +11,7 @@ export const TotalUserCard = ({
   cardIconBackground,
   cardIconColor,
   designBoxColor,
+  designBoxCardColor,
 }) => {
   return (
     <div className="position-relative">
@@ -24,7 +25,18 @@ export const TotalUserCard = ({
             background: designBoxColor,
           }}
         ></div>
-        <div className="d-flex justify-content-between align-items-center">
+        <div
+          className={styles.designBoxCard}
+          style={{
+            background: `linear-gradient(35deg, #fff 70%, ${designBoxCardColor})`,
+          }}
+        ></div>
+        <div
+          className={clsx(
+            styles.designBoxContent,
+            "d-flex justify-content-between align-items-center"
+          )}
+        >
           <div className={styles.detail}>
             <h6 className="fw-semibold">{title}</h6>
             <h3 className="fw-bold">

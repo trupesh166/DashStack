@@ -1,0 +1,37 @@
+.editSecurityModal {
+  font-family: var(--font-primary);
+}
+
+.UserImg {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background-color: #D3D3D3;
+  color: var(--clr-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--text-xl);
+}
+
+.h5 {
+  color: var(--clr-cult);
+}
+
+.uploadImage {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed #D3D3D3;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.silver {
+  color: var(--clr-silver);
+}
+
+.dark {
+  color: var(--clr-dark);
+}

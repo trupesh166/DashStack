@@ -1,19 +1,38 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { AdminAsideData, SecurityAsideData, StyleGuideAsideMenu } from "@/constants/";
 
 export const Aside = () => {
-    const location = useLocation();
-    const [currentPage, setCurrentPage] = useState(location.pathname);
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState(location.pathname);
 
-    useEffect(() => {
-        switch (location.pathname) {
-            case "/":
-                setCurrentPage("/");
-                break;
-            default:
-                break;
+  useEffect(() => {
+    const findMatchingItem = (data, path) => {
+      for (const item of data) {
+        if (item.key === path) {
+          return item;
         }
-    }, [location.pathname]);
+        if (item.children) {
+          const childMatch = findMatchingItem(item.children, path);
+          if (childMatch) {
+            return childMatch;
+          }
+        }
+      }
+      return null;
+    };
 
-    return { currentPage };
+    const matchingItem =
+      findMatchingItem(AdminAsideData, location.pathname) ||
+      findMatchingItem(SecurityAsideData, location.pathname) ||
+      findMatchingItem(StyleGuideAsideMenu, location.pathname);
+
+    if (matchingItem && matchingItem.label && matchingItem.label.props.to) {
+      setCurrentPage(matchingItem.label.props.to);
+    } else {
+      setCurrentPage(location.pathname);
+    }
+  }, [location.pathname]);
+
+  return { currentPage };
 };

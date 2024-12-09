@@ -1,0 +1,20 @@
+.viewMaintenanceDetails {
+  font-family: Poppins;
+}
+
+.memberDetail h5 {
+  color: var(--clr-silver);
+}
+
+.center {
+  text-align: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+}

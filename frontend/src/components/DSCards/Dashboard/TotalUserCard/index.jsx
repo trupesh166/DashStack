@@ -11,6 +11,7 @@ export const TotalUserCard = ({
   cardIconBackground,
   cardIconColor,
   designBoxColor,
+  designBoxCardColor,
 }) => {
   return (
     <div className="position-relative">
@@ -22,6 +23,12 @@ export const TotalUserCard = ({
           className={styles.designBox}
           style={{
             background: designBoxColor,
+          }}
+        ></div>
+        <div
+          className={styles.designBoxCard}
+          style={{
+            background: `linear-gradient(35deg, #fff 70%, ${designBoxCardColor})`,
           }}
         ></div>
         <div

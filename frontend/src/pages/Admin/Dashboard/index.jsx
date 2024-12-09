@@ -14,6 +14,7 @@ export const Dashboard = () => {
   return (
     <div className={clsx(styles.DashboardTop, "d-grid")}>
       <TotalUserCard
+        designBoxCardColor="#f7ca8c"
         title={"Total Balance"}
         amount="2,22,520"
         icon={Icons.Document}
@@ -22,6 +23,7 @@ export const Dashboard = () => {
         cardIconColor={"rgba(255, 106, 0)"}
       />
       <TotalUserCard
+        designBoxCardColor="#39973D"
         title={"Total Income"}
         amount="55,000"
         icon={Icons.MoneyRecive}
@@ -30,6 +32,7 @@ export const Dashboard = () => {
         cardIconColor={"rgba(57, 151, 61)"}
       />
       <TotalUserCard
+        designBoxCardColor="#869FF3"
         title={"Total Expense"}
         amount="20,550"
         icon={Icons.MoneySend}
@@ -38,6 +41,7 @@ export const Dashboard = () => {
         cardIconColor={"rgba(134, 159, 243)"}
       />
       <TotalUserCard
+        designBoxCardColor="#EB37C3"
         title={"Total Unit"}
         amount="20,550"
         icon={Icons.Buildings}

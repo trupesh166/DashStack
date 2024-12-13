@@ -7,6 +7,30 @@
   width: 100%;
 }
 
+.select :global .ant-select-clear,
+.select :global .ant-select-arrow,
+.select :global .ant-select-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+.select .clearIcon {
+  display: flex;
+  align-items: center;
+}
+
+.parent :global .ant-select-selection-item {
+  padding-inline-end: 28px;
+}
+.parent :global .ant-select-arrow {
+  transform: translateY(-50%);
+  margin: 0;
+  top: 50%;
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*
 .select:global.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
   box-shadow: none;

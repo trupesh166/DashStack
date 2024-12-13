@@ -24,8 +24,6 @@ export const DSSelect = ({
   key = "select",
   ...rest
 }) => {
-  const finalClassName = clsx(styles.select, "w-100", rootClassName);
-
   return (
     <div className={clsx(styles.parent, parentClassName)} key={key}>
       {label && (
@@ -43,7 +41,7 @@ export const DSSelect = ({
         value={value}
         onChange={onChange}
         status={isInvalid && "error"}
-        className={finalClassName}
+        className={clsx(styles.select, "w-100", rootClassName)}
         placeholder={placeholder ? placeholder : '"Select a value"'}
         mode={mode}
         popupClassName={styles.selectPopup}
